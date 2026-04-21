@@ -423,7 +423,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         body {
             margin: 0;
             color: var(--ink);
-            background: #f5f8fa;
+            background: var(--bfv-bg);
             font-family: var(--bfv-font-sans);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
@@ -437,11 +437,12 @@ function boat_forecast_viewer_render_single($payload, $post) {
             overflow-x: visible;
         }
         .bfv-hero {
-            background: var(--bfv-hero-ink);
-            color: #fff;
+            background: var(--bfv-surface);
+            color: var(--bfv-ink);
+            border: 1px solid var(--bfv-line);
             border-radius: var(--bfv-radius-md);
-            padding: 28px;
-            box-shadow: var(--shadow);
+            padding: 18px 22px;
+            box-shadow: var(--bfv-shadow-xs);
             position: relative;
             overflow: hidden;
         }
@@ -452,7 +453,8 @@ function boat_forecast_viewer_render_single($payload, $post) {
             width: 220px;
             height: 220px;
             border-radius: 999px;
-            background: rgba(90,200,184,.08);
+            background: var(--bfv-accent-soft);
+            opacity: .6;
         }
         .bfv-kicker {
             display: inline-block;
@@ -461,18 +463,21 @@ function boat_forecast_viewer_render_single($payload, $post) {
             text-transform: uppercase;
             padding: 6px 10px;
             border-radius: 999px;
-            background: rgba(255,255,255,.10);
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink-sub);
+            border: 1px solid var(--bfv-line);
         }
         .bfv-title {
-            margin: 14px 0 8px;
-            font-size: clamp(28px, 5vw, 40px);
+            margin: 10px 0 6px;
+            font-size: clamp(24px, 4.4vw, 34px);
             line-height: 1.3;
             letter-spacing: 0.04em;
             font-feature-settings: "palt";
+            color: var(--bfv-ink);
         }
         .bfv-sub {
-            color: rgba(255,255,255,.84);
-            font-size: 15px;
+            color: var(--bfv-ink-sub);
+            font-size: 14px;
             line-height: 1.7;
             max-width: 760px;
         }
@@ -490,11 +495,12 @@ function boat_forecast_viewer_render_single($payload, $post) {
             border-radius: 999px;
             font-size: 13px;
             font-weight: 700;
-            background: rgba(255,255,255,.18);
-            color: #fff;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            color: var(--bfv-ink);
             text-decoration: none;
         }
-        .bfv-jump:hover { text-decoration: underline; }
+        .bfv-jump:hover { background: var(--bfv-accent-soft); border-color: var(--bfv-accent); color: var(--bfv-accent); text-decoration: none; }
         .bfv-badge {
             display: inline-flex;
             align-items: center;
@@ -503,13 +509,15 @@ function boat_forecast_viewer_render_single($payload, $post) {
             border-radius: 999px;
             font-size: 13px;
             font-weight: 700;
-            background: rgba(255,255,255,.14);
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            color: var(--bfv-ink-sub);
         }
-        .bfv-badge.is-on { background: rgba(255,255,255,.20); }
-        .bfv-badge.is-off { background: rgba(0,0,0,.14); }
+        .bfv-badge.is-on { background: var(--bfv-good-soft); color: var(--bfv-good); border-color: rgba(30,123,101,.25); }
+        .bfv-badge.is-off { background: var(--bfv-surface-sub); color: var(--bfv-muted); }
         .bfv-note {
             margin-top: 14px;
-            color: rgba(255,255,255,.88);
+            color: var(--bfv-ink-sub);
             font-size: 14px;
         }
         .bfv-grid {
@@ -554,11 +562,10 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 640px;
         }
         .bfv-table th,
         .bfv-table td {
-            padding: 12px 14px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--line);
             text-align: left;
             vertical-align: top;
@@ -569,12 +576,12 @@ function boat_forecast_viewer_render_single($payload, $post) {
             letter-spacing: .06em;
             text-transform: uppercase;
             color: var(--muted);
-            background: var(--bg);
+            background: var(--bfv-surface-sub);
             white-space: nowrap;
         }
         .bfv-race-link {
-            color: var(--accent);
-            font-weight: 800;
+            color: var(--bfv-accent);
+            font-weight: 700;
             text-decoration: none;
         }
         .bfv-race-link:hover {
@@ -657,9 +664,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-card {
             background: var(--panel);
             border: 1px solid var(--line);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            padding: 18px;
+            border-radius: var(--bfv-radius-md);
+            box-shadow: var(--bfv-shadow-xs);
+            padding: 16px;
             width: 100%;
             max-width: 100%;
             overflow: hidden;
@@ -694,14 +701,14 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-bets {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 10px;
         }
         .bfv-betbox {
-            border-radius: 12px;
+            border-radius: var(--bfv-radius-sm);
             padding: 14px;
-            background: var(--bg);
-            border: 1px solid var(--line);
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
         }
         .bfv-betbox main, .bfv-betbox strong { display: block; }
         .bfv-betbox strong {
@@ -713,7 +720,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-betbox .bfv-bet { font-size: 20px; }
         .bfv-odds { font-size: 12px; color: #777; margin-left: 4px; font-weight: normal; }
-        .bfv-betbox.is-main { background: var(--accent-soft); border-color: rgba(30, 123, 101, .20); }
+        .bfv-betbox.is-main { background: var(--bfv-accent-soft); border-color: var(--bfv-accent); }
         .bfv-comment {
             margin-top: 14px;
             padding: 14px 16px;
@@ -766,7 +773,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             width: 28px;
             min-width: 28px;
             background: transparent;
-            color: var(--accent);
+            color: var(--bfv-accent);
             font-weight: 800;
             font-size: 28px;
             line-height: 1;
@@ -783,14 +790,14 @@ function boat_forecast_viewer_render_single($payload, $post) {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 1px solid #ccc;
             border-radius: 999px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
             line-height: 1;
-            flex: 0 0 18px;
+            flex: 0 0 20px;
         }
         .bfv-waku-name {
             font-weight: 700;
