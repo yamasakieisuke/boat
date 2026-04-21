@@ -18,9 +18,19 @@
 | Phase | 対象 | ステータス | ファイル |
 |---|---|---|---|
 | 1 | 共通デザイントークン(色/タイポ/shadow/radius) | ✅ pushed | `phase-1-tokens.md` |
-| 2 | 予想一覧(archive)リデザイン | ⏳ 着手予定 | `phase-2-archive.md` |
-| 3 | 予想詳細(single)リデザイン | 📝 下書き | `phase-3-single.md` |
-| 4 | レビュー(review)リデザイン | 📝 下書き | `phase-4-review.md` |
+| 2 | 予想一覧(archive)骨格リデザイン | ✅ pushed | `phase-2-archive.md` |
+| 3 | 予想詳細(single)骨格リデザイン | ✅ pushed | `phase-3-single.md` |
+| 4 | レビュー(review)骨格リデザイン | 📝 下書き | `phase-4-review.md` |
+| 5 | archive 整列(カード並び/日付ヘッダ) | 📝 追補 | `phase-5-archive-align.md` |
+| 6 | レビュー(review)詳細 | 📝 追補 | `phase-6-review.md` |
+| 7 | レースカード(.bfv-card)密度整理 | 📝 追補 | `phase-7-race-card.md` |
+| 8 | 12R早見表リデザイン | 📝 追補 | `phase-8-summary-table.md` |
+| 9 | 予算/展示/コメント実データ表の統一 | 📝 追補 | `phase-9-budget-detail.md` |
+| 10 | 詳細ページ ヒーロー・サイド情報磨き込み | 📝 追補 | `phase-10-hero-nav.md` |
+
+### 進行順おすすめ
+Phase 4 → 6(レビュー画面まとめ) → 7 → 8 → 9 → 10(詳細の中身を段階的に)
+1 Phaseずつ Claude Code に流し、push 後に実機スクショをチャットへ戻してください。
 
 ## 原則
 

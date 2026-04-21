@@ -2420,56 +2420,73 @@ function boat_forecast_viewer_render_review() {
             background: var(--bfv-bg);
             color: var(--bfv-ink);
             font-family: var(--bfv-font-sans);
-            line-height: 1.5;
+            line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         a { color: inherit; }
-        .bfrv-shell { width: min(1040px, calc(100% - 24px)); margin: 0 auto; padding: 28px 0 56px; }
+        .bfrv-shell {
+            width: min(1120px, calc(100% - 24px));
+            margin: 0 auto;
+            padding: 20px 0 72px;
+        }
+
+        /* ==== HERO ==== */
         .bfrv-hero {
             background: var(--bfv-hero-ink);
             color: #fff;
             border-radius: var(--bfv-radius-md);
-            padding: 22px 24px;
+            padding: 24px 26px 22px;
             box-shadow: var(--bfv-shadow-sm);
             margin-bottom: 18px;
         }
         .bfrv-kicker {
-            display: inline-block;
-            font-size: 12px;
-            letter-spacing: .08em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            padding: 5px 10px;
+            padding: 4px 10px;
             border-radius: 999px;
-            background: rgba(255,255,255,.12);
-            margin-bottom: 10px;
+            background: rgba(255,255,255,.10);
+            color: rgba(255,255,255,.82);
+            margin-bottom: 12px;
         }
-        .bfrv-hero h1 { margin: 0 0 6px; font-size: clamp(24px, 4.4vw, 34px); letter-spacing: .04em; }
-        .bfrv-hero > p { color: rgba(255,255,255,.78) !important; }
+        .bfrv-hero h1 {
+            margin: 0 0 6px;
+            font-size: clamp(24px, 4.2vw, 34px);
+            letter-spacing: 0.02em;
+            font-feature-settings: "palt";
+        }
+        .bfrv-hero p {
+            margin: 0;
+            color: rgba(255,255,255,.70);
+            font-size: 13px;
+        }
+
         .bfrv-stats {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 10px;
-            margin-top: 14px;
+            margin-top: 18px;
         }
         .bfrv-stat {
-            background: rgba(255,255,255,.08);
+            background: rgba(255,255,255,.06);
             border: 1px solid rgba(255,255,255,.10);
             border-radius: var(--bfv-radius-md);
-            padding: 14px 16px;
-            min-width: 0;
+            padding: 12px 14px;
             text-align: left;
-        }
-        .bfrv-stat.is-primary {
-            background: rgba(255,255,255,.16);
-            border-color: rgba(255,255,255,.22);
+            min-width: 0;
         }
         .bfrv-stat strong {
             display: block;
-            font-size: 11px;
-            letter-spacing: .06em;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-            color: rgba(255,255,255,.65);
+            color: rgba(255,255,255,.55);
             margin-bottom: 6px;
         }
         .bfrv-stat span {
@@ -2477,20 +2494,25 @@ function boat_forecast_viewer_render_review() {
             font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.02em;
-            line-height: 1.15;
+            font-variant-numeric: tabular-nums;
+            color: #fff;
         }
-        /* ナビ */
+        @media (max-width: 640px) {
+            .bfrv-stats { grid-template-columns: repeat(2, 1fr); }
+            .bfrv-stat span { font-size: 22px; }
+        }
+
+        /* ==== NAV (既存の .bfv-gnav がここに出力される) ==== */
         .bfv-gnav {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
             align-items: center;
             margin-bottom: 14px;
-            padding: 8px 12px;
-            background: rgba(255,255,255,.85);
+            padding: 6px 10px;
+            background: var(--bfv-surface);
             border: 1px solid var(--bfv-line);
             border-radius: 999px;
-            backdrop-filter: blur(8px);
         }
         .bfv-gnav-link {
             display: inline-flex;
@@ -2498,152 +2520,175 @@ function boat_forecast_viewer_render_review() {
             gap: 4px;
             padding: 5px 14px;
             border-radius: 999px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--bfv-ink);
             text-decoration: none;
             transition: background .15s, color .15s;
         }
-        .bfv-gnav-link:hover { background: rgba(26,25,21,.06); }
+        .bfv-gnav-link:hover { background: var(--bfv-surface-sub); }
         .bfv-gnav-active { background: var(--bfv-ink) !important; color: #fff !important; }
-        /* リスト */
-        .bfrv-list { display: grid; gap: 12px; }
-        .bfrv-row {
-            background: var(--bfv-surface);
-            border: 1px solid var(--bfv-line);
-            border-radius: var(--bfv-radius-md);
-            padding: 16px 18px;
-            box-shadow: var(--bfv-shadow-xs);
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 16px;
-            align-items: start;
-            transition: border-color .16s ease, box-shadow .16s ease;
-        }
-        .bfrv-row:hover { border-color: var(--bfv-line-strong); box-shadow: var(--bfv-shadow-sm); }
-        .bfrv-row-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0 0 6px;
-            letter-spacing: .02em;
-        }
-        .bfrv-row-meta {
-            font-size: 13px;
-            color: var(--bfv-muted);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .bfrv-pill {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
-        }
-        .bfrv-pill.is-good { background: var(--bfv-good-soft); color: var(--bfv-good); border-color: rgba(30,123,101,.25); }
-        .bfrv-pill.is-mid  { background: #fefbea; color: #916626; border-color: rgba(145,102,38,.25); }
-        .bfrv-pill.is-low  { background: var(--bfv-warn-soft); color: var(--bfv-warn); border-color: rgba(178,35,35,.25); }
-        .bfrv-summary-lines {
-            margin: 10px 0 0;
-            padding-left: 16px;
-            font-size: 13px;
-            color: var(--bfv-ink-sub);
-        }
-        .bfrv-summary-lines li + li { margin-top: 4px; }
-        .bfrv-link-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 16px;
-            border-radius: 999px;
-            background: var(--bfv-ink);
-            color: #fff;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
-            white-space: nowrap;
-            transition: background .15s;
-        }
-        .bfrv-link-btn:hover { background: var(--bfv-accent); text-decoration: none; }
-        .bfrv-empty {
-            text-align: center;
-            padding: 48px;
-            color: var(--bfv-muted);
-            font-size: 15px;
-        }
-        /* ── 月別セクション ── */
+
+        /* ==== MONTH GROUPS ==== */
         .bfrv-month-section { margin-top: 22px; }
-        .bfrv-month-header {
+        .bfrv-month-header,
+        details.bfrv-month-details > summary {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 15px;
+            align-items: baseline;
+            gap: 14px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--bfv-ink);
-            padding: 10px 14px;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
-            border-radius: var(--bfv-radius-md);
+            padding: 10px 2px;
+            background: transparent;
+            border-radius: 0;
+            border-bottom: 1px solid var(--bfv-line);
             margin-bottom: 10px;
+            user-select: none;
+        }
+        .bfrv-month-header > span:first-child,
+        details.bfrv-month-details > summary > span:first-child {
+            font-size: 18px;
+            letter-spacing: 0.02em;
         }
         .bfrv-month-header .bfrv-month-badge {
-            font-size: 12px;
-            font-weight: 700;
-            padding: 3px 10px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 8px;
             border-radius: 999px;
             background: var(--bfv-accent);
             color: #fff;
         }
-        .bfrv-month-header .bfrv-month-stat {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--bfv-muted);
+        .bfrv-month-header .bfrv-month-stat,
+        details.bfrv-month-details .bfrv-month-stat {
+            margin-left: auto;
             font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.04em;
         }
-        /* <details> 折りたたみ */
-        details.bfrv-month-details { margin-top: 22px; }
+
+        details.bfrv-month-details { margin-top: 28px; }
         details.bfrv-month-details > summary {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            list-style: none;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--bfv-ink);
-            padding: 10px 14px;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
-            border-radius: var(--bfv-radius-md);
-            user-select: none;
-            transition: background .15s, border-color .15s;
+            list-style: none;
         }
-        details.bfrv-month-details > summary:hover { background: var(--bfv-accent-soft); border-color: var(--bfv-accent); }
         details.bfrv-month-details > summary::-webkit-details-marker { display: none; }
         details.bfrv-month-details > summary::before {
             content: "▶";
-            font-size: 11px;
+            font-size: 9px;
             color: var(--bfv-muted);
             transition: transform .2s;
+            margin-right: 4px;
         }
         details.bfrv-month-details[open] > summary::before { transform: rotate(90deg); }
-        details.bfrv-month-details .bfrv-month-stat {
+        details.bfrv-month-details .bfrv-list { margin-top: 10px; }
+
+        /* ==== ROW LIST ==== */
+        .bfrv-list { display: grid; gap: 8px; }
+        .bfrv-row {
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            padding: 14px 16px;
+            box-shadow: var(--bfv-shadow-xs);
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 14px;
+            align-items: center;
+            transition: border-color .15s, box-shadow .15s;
+        }
+        .bfrv-row:hover {
+            border-color: var(--bfv-line-strong);
+            box-shadow: var(--bfv-shadow-sm);
+        }
+        .bfrv-row-title {
+            margin: 0 0 6px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .bfrv-row-title > span {
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--bfv-muted);
+        }
+        .bfrv-row-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--bfv-ink-sub);
+        }
+        .bfrv-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink-sub);
+            letter-spacing: 0.02em;
+            font-variant-numeric: tabular-nums;
+        }
+        .bfrv-pill.is-good { background: var(--bfv-good-soft); color: var(--bfv-good); }
+        .bfrv-pill.is-mid  { background: #fcf5e3; color: #8a6420; }
+        .bfrv-pill.is-low  { background: var(--bfv-warn-soft); color: var(--bfv-warn); }
+
+        .bfrv-summary-lines {
+            margin: 10px 0 0;
+            padding-left: 16px;
+            font-size: 12px;
+            color: var(--bfv-muted);
+            list-style: disc;
+        }
+        .bfrv-summary-lines li { margin-top: 2px; }
+
+        .bfrv-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: transparent;
+            border: 1px solid var(--bfv-line-strong);
+            color: var(--bfv-ink);
+            text-decoration: none;
             font-size: 12px;
             font-weight: 600;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            transition: background .15s, color .15s, border-color .15s;
+        }
+        .bfrv-link-btn:hover {
+            background: var(--bfv-accent);
+            color: #fff;
+            border-color: var(--bfv-accent);
+        }
+
+        .bfrv-empty {
+            text-align: center;
+            padding: 56px 20px;
             color: var(--bfv-muted);
-            font-family: var(--bfv-font-mono);
+            font-size: 14px;
+            background: var(--bfv-surface);
+            border: 1px dashed var(--bfv-line-strong);
+            border-radius: var(--bfv-radius-md);
         }
-        details.bfrv-month-details .bfrv-list {
-            margin-top: 10px;
-        }
+
         @media (max-width: 640px) {
             .bfrv-row { grid-template-columns: 1fr; }
-            .bfrv-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-            .bfrv-stat { padding: 12px 14px; }
-            .bfrv-stat span { font-size: 24px; }
+            .bfrv-link-btn { justify-self: start; }
         }
     </style>
 </head>
@@ -2651,9 +2696,9 @@ function boat_forecast_viewer_render_review() {
 <div class="bfrv-shell">
     <?php boat_forecast_viewer_render_nav('review'); ?>
     <section class="bfrv-hero">
-        <span class="bfrv-kicker">📊 Review</span>
+        <span class="bfrv-kicker">Review · 振り返り</span>
         <h1>振り返り一覧</h1>
-        <p style="margin:0;color:rgba(255,255,255,.8);font-size:14px;">振り返りデータがある開催をまとめています。</p>
+        <p>振り返りデータがある開催をまとめています。</p>
         <div class="bfrv-stats">
             <div class="bfrv-stat">
                 <strong>対象開催数</strong>
