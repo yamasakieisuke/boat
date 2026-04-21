@@ -1922,7 +1922,7 @@ function boat_forecast_viewer_render_archive($query) {
         }
         .bfva-shell { width: min(1040px, calc(100% - 24px)); margin: 0 auto; padding: 28px 0 56px; }
         .bfva-hero {
-            background: #08131a;
+            background: #0d4f70;
             color: #fff;
             border-radius: 12px;
             padding: 24px;
