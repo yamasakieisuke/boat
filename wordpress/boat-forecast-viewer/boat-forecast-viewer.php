@@ -320,6 +320,57 @@ function boat_forecast_viewer_pick_waku_stats($row) {
     return ['label' => '---', 'stats' => []];
 }
 
+/**
+ * Phase 1: Common design tokens.
+ * Inject this at the top of every <style> block used by render_single / render_archive / render_review.
+ * Keeps existing class names intact — just normalizes colors, typography, radius and shadow.
+ */
+function boat_forecast_viewer_common_root_css() {
+    return <<<'CSS'
+    :root {
+        /* ===== v5.21 redesign tokens (Phase 1) ===== */
+        --bfv-bg:          #f0eee9;
+        --bfv-surface:     #ffffff;
+        --bfv-surface-sub: #f6f4ef;
+        --bfv-ink:         #1a1915;
+        --bfv-ink-sub:     #5a5750;
+        --bfv-muted:       #8a8680;
+        --bfv-line:        rgba(26,25,21,0.10);
+        --bfv-line-strong: rgba(26,25,21,0.18);
+        --bfv-accent:      #b5542a;      /* warm brick */
+        --bfv-accent-soft: #f6e6db;
+        --bfv-good:        #1e7b65;
+        --bfv-good-soft:   #e6f6f2;
+        --bfv-warn:        #b22323;
+        --bfv-warn-soft:   #fdf3f3;
+        --bfv-hero-ink:    #1a1915;      /* hero dark bg (warm near-black) */
+        --bfv-radius-sm:   8px;
+        --bfv-radius-md:   12px;
+        --bfv-radius-lg:   16px;
+        --bfv-shadow-xs:   0 1px 0 rgba(26,25,21,0.04);
+        --bfv-shadow-sm:   0 1px 2px rgba(26,25,21,0.06), 0 1px 1px rgba(26,25,21,0.04);
+        --bfv-shadow-md:   0 4px 12px rgba(26,25,21,0.06), 0 1px 2px rgba(26,25,21,0.04);
+        --bfv-font-sans:   "IBM Plex Sans JP","Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Helvetica Neue",Arial,Meiryo,sans-serif;
+        --bfv-font-mono:   "IBM Plex Mono","JetBrains Mono",SFMono-Regular,Consolas,Menlo,monospace;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        html { scroll-behavior: smooth; }
+    }
+CSS;
+}
+
+/**
+ * Phase 1: Web font links (IBM Plex Sans JP / IBM Plex Mono from Google Fonts).
+ * Output this inside <head>, before <style>, in render_single / render_archive / render_review.
+ */
+function boat_forecast_viewer_font_links() {
+    return <<<HTML
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+JP:wght@400;500;600;700&display=swap">
+HTML;
+}
+
 function boat_forecast_viewer_render_nav($active = '') {
     $archive_url = esc_url(get_post_type_archive_link('forecast_day') ?: home_url('/race/'));
     $review_url  = esc_url(home_url('/review/'));
@@ -349,7 +400,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo esc_html(get_the_title($post)); ?></title>
+<?php echo boat_forecast_viewer_font_links(); ?>
     <style>
+<?php echo boat_forecast_viewer_common_root_css(); ?>
         *, *::before, *::after { box-sizing: border-box; }
         :root {
             --bg: #f5f8fa;
@@ -371,7 +424,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             margin: 0;
             color: var(--ink);
             background: #f5f8fa;
-            font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Arial, "Noto Sans JP", Meiryo, sans-serif;
+            font-family: var(--bfv-font-sans);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -384,9 +437,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
             overflow-x: visible;
         }
         .bfv-hero {
-            background: #08131a;
+            background: var(--bfv-hero-ink);
             color: #fff;
-            border-radius: 12px;
+            border-radius: var(--bfv-radius-md);
             padding: 28px;
             box-shadow: var(--shadow);
             position: relative;
@@ -1911,18 +1964,20 @@ function boat_forecast_viewer_render_archive($query) {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Race Forecast Archive</title>
+<?php echo boat_forecast_viewer_font_links(); ?>
     <style>
+<?php echo boat_forecast_viewer_common_root_css(); ?>
         body {
             margin: 0;
-            background: #f5f8fa;
-            color: #08131a;
-            font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Arial, "Noto Sans JP", Meiryo, sans-serif;
+            background: var(--bfv-bg);
+            color: var(--bfv-ink);
+            font-family: var(--bfv-font-sans);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         .bfva-shell { width: min(1040px, calc(100% - 24px)); margin: 0 auto; padding: 28px 0 56px; }
         .bfva-hero {
-            background: #0d4f70;
+            background: var(--bfv-hero-ink);
             color: #fff;
             border-radius: 12px;
             padding: 24px;
@@ -2000,8 +2055,8 @@ function boat_forecast_viewer_render_archive($query) {
             gap: 6px;
             padding: 6px 10px;
             border-radius: 999px;
-            background: #f5f8fa;
-            color: #08131a;
+            background: var(--bfv-bg);
+            color: var(--bfv-ink);
             text-decoration: none;
             font-size: 12px;
             font-weight: 700;
@@ -2172,13 +2227,15 @@ function boat_forecast_viewer_render_review() {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>振り返り一覧 — ボートレース予想</title>
+<?php echo boat_forecast_viewer_font_links(); ?>
     <style>
+<?php echo boat_forecast_viewer_common_root_css(); ?>
         *, *::before, *::after { box-sizing: border-box; }
         body {
             margin: 0;
-            background: #f5f8fa;
-            color: #08131a;
-            font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Arial, "Noto Sans JP", Meiryo, sans-serif;
+            background: var(--bfv-bg);
+            color: var(--bfv-ink);
+            font-family: var(--bfv-font-sans);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -2186,9 +2243,9 @@ function boat_forecast_viewer_render_review() {
         a { color: inherit; }
         .bfrv-shell { width: min(1040px, calc(100% - 24px)); margin: 0 auto; padding: 28px 0 56px; }
         .bfrv-hero {
-            background: #08131a;
+            background: var(--bfv-hero-ink);
             color: #fff;
-            border-radius: 12px;
+            border-radius: var(--bfv-radius-md);
             padding: 28px;
             box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.14), 0px 1px 2px 0px rgba(0,0,0,0.22);
             margin-bottom: 18px;

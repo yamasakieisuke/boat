@@ -58,3 +58,4 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 - `docs/RESULTS_ACQUISITION.md` — 結果データ取得の仕組み
 - `docs/wordpress_handover.md` — WP 側プラグインの引き継ぎ
 - `docs/version_history.md` — v5.20 までの変更履歴
+- `docs/claude-design-assets/README.md` — Claude Design 連携素材と投入手順
