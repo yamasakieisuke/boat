@@ -1288,7 +1288,11 @@ function boat_forecast_viewer_render_single($payload, $post) {
             background: var(--bfv-surface-2);
             z-index: 5;
         }
-        /* 順マーク: 艇セル内に inline prefix として配置（td の display は触らない） */
+        /* sticky 1列目内: [マーク + 枠番] を1行目に固定、選手名を2行目に折返し */
+        .sticky-name-table td:nth-child(1),
+        .sticky-score-table td:nth-child(1) {
+            line-height: 1.35;
+        }
         .bfv-rank-mark {
             display: inline-block;
             margin-right: 4px;
@@ -1298,22 +1302,29 @@ function boat_forecast_viewer_render_single($payload, $post) {
             line-height: 1;
             vertical-align: middle;
         }
-        /* sticky 1列目内の waku-name-cell は名前がセル幅で折り返すように inline に */
+        /* waku-name-cell を inline-flex + flex-wrap にして、chip を1行目・
+           name を flex-basis: 100% で強制2行目へ */
         .sticky-name-table td:nth-child(1) .bfv-waku-name-cell,
         .sticky-score-table td:nth-child(1) .bfv-waku-name-cell {
-            display: inline;
-            white-space: normal;
+            display: inline-flex;
+            flex-wrap: wrap;
+            align-items: center;
+            column-gap: 4px;
+            row-gap: 2px;
+            vertical-align: middle;
+            max-width: 100%;
         }
         .sticky-name-table td:nth-child(1) .bfv-waku-chip,
         .sticky-score-table td:nth-child(1) .bfv-waku-chip {
-            vertical-align: middle;
-            margin-right: 4px;
+            flex: 0 0 auto;
         }
         .sticky-name-table td:nth-child(1) .bfv-waku-name,
         .sticky-score-table td:nth-child(1) .bfv-waku-name {
-            display: inline;
+            flex: 0 0 100%;
+            display: block;
             word-break: break-all;
             overflow-wrap: anywhere;
+            font-size: inherit;
         }
         @media (max-width: 960px) {
             .bfv-grid { grid-template-columns: 1fr; }
