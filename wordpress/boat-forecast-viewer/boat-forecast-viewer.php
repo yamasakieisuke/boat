@@ -1274,30 +1274,39 @@ function boat_forecast_viewer_render_single($payload, $post) {
             position: sticky;
             left: 0;
             z-index: 4;
-        }
-        .sticky-score-table th:nth-child(2),
-        .sticky-score-table td:nth-child(2) {
-            position: sticky;
-            left: 44px;
-            z-index: 4;
-            min-width: 108px;
+            min-width: 140px;
         }
         .sticky-name-table td:nth-child(1),
-        .sticky-score-table td:nth-child(1),
-        .sticky-score-table td:nth-child(2) {
+        .sticky-score-table td:nth-child(1) {
             background: var(--bfv-surface);
             box-shadow: 1px 0 0 var(--bfv-border-soft);
         }
         .sticky-name-table tr:nth-child(even) td:nth-child(1),
-        .sticky-score-table tr:nth-child(even) td:nth-child(1),
-        .sticky-score-table tr:nth-child(even) td:nth-child(2) {
+        .sticky-score-table tr:nth-child(even) td:nth-child(1) {
             background: var(--bfv-surface-2);
         }
         .sticky-name-table th:nth-child(1),
-        .sticky-score-table th:nth-child(1),
-        .sticky-score-table th:nth-child(2) {
+        .sticky-score-table th:nth-child(1) {
             background: var(--bfv-surface-2);
             z-index: 5;
+        }
+        /* 順マーク + 艇セル統合（sticky-score-table 用） */
+        .bfv-rank-name-cell {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .bfv-rank-mark {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            min-width: 20px;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--bfv-accent);
+            line-height: 1;
         }
         @media (max-width: 960px) {
             .bfv-grid { grid-template-columns: 1fr; }
@@ -1916,8 +1925,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                         <div class="bfv-detail-wrap">
                             <table class="bfv-detail-table sticky-score-table">
                                 <tr>
-                                    <th>順</th>
-                                    <th>艇</th>
+                                    <th>順 / 艇</th>
                                     <th>級</th>
                                     <th>総合</th>
                                     <th>全勝寄与</th>
@@ -1934,8 +1942,10 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     $breakdown = isset($row['breakdown']) && is_array($row['breakdown']) ? $row['breakdown'] : [];
                                 ?>
                                 <tr>
-                                    <td class="bfv-rank-cell"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></td>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?></td>
+                                    <td class="bfv-rank-name-cell">
+                                        <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
+                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?>
+                                    </td>
                                     <td><?php echo boat_forecast_viewer_render_grade($row['grade'] ?? ''); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($row['score'] ?? '', 2)); ?><?php echo boat_forecast_viewer_render_meter($row['score'] ?? 0, 1.0, 'score'); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($breakdown['global_win_rate'] ?? '-', 2)); ?></td>
