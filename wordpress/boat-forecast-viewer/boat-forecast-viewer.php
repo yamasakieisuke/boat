@@ -2353,8 +2353,8 @@ function boat_forecast_viewer_render_review() {
             background: var(--bfv-hero-ink);
             color: #fff;
             border-radius: var(--bfv-radius-md);
-            padding: 28px;
-            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.14), 0px 1px 2px 0px rgba(0,0,0,0.22);
+            padding: 22px 24px;
+            box-shadow: var(--bfv-shadow-sm);
             margin-bottom: 18px;
         }
         .bfrv-kicker {
@@ -2367,22 +2367,41 @@ function boat_forecast_viewer_render_review() {
             background: rgba(255,255,255,.12);
             margin-bottom: 10px;
         }
-        .bfrv-hero h1 { margin: 0 0 10px; font-size: clamp(26px, 5vw, 40px); }
+        .bfrv-hero h1 { margin: 0 0 6px; font-size: clamp(24px, 4.4vw, 34px); letter-spacing: .04em; }
+        .bfrv-hero > p { color: rgba(255,255,255,.78) !important; }
         .bfrv-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 16px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 14px;
         }
         .bfrv-stat {
-            background: rgba(255,255,255,.10);
-            border-radius: 12px;
-            padding: 10px 18px;
-            min-width: 100px;
-            text-align: center;
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: var(--bfv-radius-md);
+            padding: 14px 16px;
+            min-width: 0;
+            text-align: left;
         }
-        .bfrv-stat strong { display: block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-bottom: 4px; }
-        .bfrv-stat span { font-size: 24px; font-weight: 800; }
+        .bfrv-stat.is-primary {
+            background: rgba(255,255,255,.16);
+            border-color: rgba(255,255,255,.22);
+        }
+        .bfrv-stat strong {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.65);
+            margin-bottom: 6px;
+        }
+        .bfrv-stat span {
+            font-family: var(--bfv-font-mono);
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
         /* ナビ */
         .bfv-gnav {
             display: flex;
@@ -2392,7 +2411,7 @@ function boat_forecast_viewer_render_review() {
             margin-bottom: 14px;
             padding: 8px 12px;
             background: rgba(255,255,255,.85);
-            border: 1px solid rgba(8,19,26,0.14);
+            border: 1px solid var(--bfv-line);
             border-radius: 999px;
             backdrop-filter: blur(8px);
         }
@@ -2404,33 +2423,36 @@ function boat_forecast_viewer_render_review() {
             border-radius: 999px;
             font-size: 13px;
             font-weight: 700;
-            color: #08131a;
+            color: var(--bfv-ink);
             text-decoration: none;
             transition: background .15s, color .15s;
         }
-        .bfv-gnav-link:hover { background: rgba(8,19,26,.06); }
-        .bfv-gnav-active { background: #08131a !important; color: #fff !important; }
+        .bfv-gnav-link:hover { background: rgba(26,25,21,.06); }
+        .bfv-gnav-active { background: var(--bfv-ink) !important; color: #fff !important; }
         /* リスト */
-        .bfrv-list { display: grid; gap: 14px; }
+        .bfrv-list { display: grid; gap: 12px; }
         .bfrv-row {
-            background: #ffffff;
-            border: 1px solid rgba(8,19,26,0.14);
-            border-radius: 12px;
-            padding: 18px 20px;
-            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.14), 0px 1px 2px 0px rgba(0,0,0,0.22);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            padding: 16px 18px;
+            box-shadow: var(--bfv-shadow-xs);
             display: grid;
             grid-template-columns: minmax(0, 1fr) auto;
             gap: 16px;
             align-items: start;
+            transition: border-color .16s ease, box-shadow .16s ease;
         }
+        .bfrv-row:hover { border-color: var(--bfv-line-strong); box-shadow: var(--bfv-shadow-sm); }
         .bfrv-row-title {
             font-size: 18px;
-            font-weight: 800;
+            font-weight: 700;
             margin: 0 0 6px;
+            letter-spacing: .02em;
         }
         .bfrv-row-meta {
             font-size: 13px;
-            color: #5a656b;
+            color: var(--bfv-muted);
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
@@ -2441,16 +2463,17 @@ function boat_forecast_viewer_render_review() {
             border-radius: 999px;
             font-size: 12px;
             font-weight: 700;
-            background: #f5f8fa;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
         }
-        .bfrv-pill.is-good { background: #e6f6f2; color: #1e7b65; }
-        .bfrv-pill.is-mid  { background: #fefbea; color: #916626; }
-        .bfrv-pill.is-low  { background: #fdf3f3; color: #b22323; }
+        .bfrv-pill.is-good { background: var(--bfv-good-soft); color: var(--bfv-good); border-color: rgba(30,123,101,.25); }
+        .bfrv-pill.is-mid  { background: #fefbea; color: #916626; border-color: rgba(145,102,38,.25); }
+        .bfrv-pill.is-low  { background: var(--bfv-warn-soft); color: var(--bfv-warn); border-color: rgba(178,35,35,.25); }
         .bfrv-summary-lines {
             margin: 10px 0 0;
             padding-left: 16px;
             font-size: 13px;
-            color: #5a656b;
+            color: var(--bfv-ink-sub);
         }
         .bfrv-summary-lines li + li { margin-top: 4px; }
         .bfrv-link-btn {
@@ -2459,18 +2482,19 @@ function boat_forecast_viewer_render_review() {
             gap: 6px;
             padding: 8px 16px;
             border-radius: 999px;
-            background: #08131a;
+            background: var(--bfv-ink);
             color: #fff;
             text-decoration: none;
             font-size: 13px;
             font-weight: 700;
             white-space: nowrap;
+            transition: background .15s;
         }
-        .bfrv-link-btn:hover { background: #202a30; text-decoration: none; }
+        .bfrv-link-btn:hover { background: var(--bfv-accent); text-decoration: none; }
         .bfrv-empty {
             text-align: center;
             padding: 48px;
-            color: #5a656b;
+            color: var(--bfv-muted);
             font-size: 15px;
         }
         /* ── 月別セクション ── */
@@ -2480,11 +2504,12 @@ function boat_forecast_viewer_render_review() {
             align-items: center;
             gap: 10px;
             font-size: 15px;
-            font-weight: 800;
-            color: #08131a;
+            font-weight: 700;
+            color: var(--bfv-ink);
             padding: 10px 14px;
-            background: #f0ece2;
-            border-radius: 14px;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
             margin-bottom: 10px;
         }
         .bfrv-month-header .bfrv-month-badge {
@@ -2492,13 +2517,14 @@ function boat_forecast_viewer_render_review() {
             font-weight: 700;
             padding: 3px 10px;
             border-radius: 999px;
-            background: #1e7b65;
+            background: var(--bfv-accent);
             color: #fff;
         }
         .bfrv-month-header .bfrv-month-stat {
             font-size: 12px;
             font-weight: 600;
-            color: #5a656b;
+            color: var(--bfv-muted);
+            font-family: var(--bfv-font-mono);
         }
         /* <details> 折りたたみ */
         details.bfrv-month-details { margin-top: 22px; }
@@ -2509,35 +2535,38 @@ function boat_forecast_viewer_render_review() {
             list-style: none;
             cursor: pointer;
             font-size: 15px;
-            font-weight: 800;
-            color: #08131a;
+            font-weight: 700;
+            color: var(--bfv-ink);
             padding: 10px 14px;
-            background: #ebe7dd;
-            border-radius: 14px;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
             user-select: none;
-            transition: background .15s;
+            transition: background .15s, border-color .15s;
         }
-        details.bfrv-month-details > summary:hover { background: #ddd8cc; }
+        details.bfrv-month-details > summary:hover { background: var(--bfv-accent-soft); border-color: var(--bfv-accent); }
         details.bfrv-month-details > summary::-webkit-details-marker { display: none; }
         details.bfrv-month-details > summary::before {
             content: "▶";
             font-size: 11px;
-            color: #5a656b;
+            color: var(--bfv-muted);
             transition: transform .2s;
         }
         details.bfrv-month-details[open] > summary::before { transform: rotate(90deg); }
         details.bfrv-month-details .bfrv-month-stat {
             font-size: 12px;
             font-weight: 600;
-            color: #5a656b;
+            color: var(--bfv-muted);
+            font-family: var(--bfv-font-mono);
         }
         details.bfrv-month-details .bfrv-list {
             margin-top: 10px;
         }
         @media (max-width: 640px) {
             .bfrv-row { grid-template-columns: 1fr; }
-            .bfrv-stats { gap: 8px; }
-            .bfrv-stat { padding: 8px 12px; }
+            .bfrv-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .bfrv-stat { padding: 12px 14px; }
+            .bfrv-stat span { font-size: 24px; }
         }
     </style>
 </head>
@@ -2561,7 +2590,7 @@ function boat_forecast_viewer_render_review() {
                 <strong>推定的中数</strong>
                 <span><?php echo esc_html((string) $total_hits_est); ?></span>
             </div>
-            <div class="bfrv-stat">
+            <div class="bfrv-stat is-primary">
                 <strong>通算買い目的中率</strong>
                 <span><?php echo esc_html((string) $overall_rate); ?>%</span>
             </div>
