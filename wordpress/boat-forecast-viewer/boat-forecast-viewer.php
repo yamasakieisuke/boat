@@ -216,12 +216,12 @@ function boat_forecast_viewer_render_badge($active, $label) {
 
 function boat_forecast_viewer_conf_class($label) {
     if ($label === 'high') {
-        return 'conf-high';
+        return 'is-conf-high';
     }
     if ($label === 'mid') {
-        return 'conf-mid';
+        return 'is-conf-mid';
     }
-    return 'conf-low';
+    return 'is-conf-low';
 }
 
 function boat_forecast_viewer_mark_for_rank($rank) {
@@ -352,6 +352,14 @@ function boat_forecast_viewer_common_root_css() {
         --bfv-shadow-md:   0 4px 12px rgba(26,25,21,0.06), 0 1px 2px rgba(26,25,21,0.04);
         --bfv-font-sans:   "IBM Plex Sans JP","Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Helvetica Neue",Arial,Meiryo,sans-serif;
         --bfv-font-mono:   "IBM Plex Mono","JetBrains Mono",SFMono-Regular,Consolas,Menlo,monospace;
+
+        /* Phase 7+ handoff naming aliases (map to Phase 1 tokens) */
+        --bfv-border:      var(--bfv-line);
+        --bfv-border-soft: rgba(26,25,21,0.04);
+        --bfv-ink-dim:     var(--bfv-muted);
+        --bfv-surface-2:   var(--bfv-surface-sub);
+        --bfv-ok:          var(--bfv-good);
+        --bfv-ok-soft:     var(--bfv-good-soft);
     }
     @media (prefers-reduced-motion: no-preference) {
         html { scroll-behavior: smooth; }
@@ -603,9 +611,14 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-size: 13px;
             line-height: 1.25;
         }
-        .conf-high { color: var(--good); }
-        .conf-mid { color: #916626; }
-        .conf-low { color: var(--warn); }
+        /* confidence text color (for summary table td etc.) */
+        .is-conf-high { color: var(--bfv-ok); }
+        .is-conf-mid { color: var(--bfv-accent); }
+        .is-conf-low { color: var(--bfv-warn); }
+        /* confidence pill variants (Phase 7) */
+        .bfv-pill.is-conf-high { color: var(--bfv-ok); background: var(--bfv-ok-soft); }
+        .bfv-pill.is-conf-mid  { color: var(--bfv-accent); background: var(--bfv-accent-soft); }
+        .bfv-pill.is-conf-low  { color: var(--bfv-warn); background: var(--bfv-warn-soft); }
         .bfv-rough {
             display: inline-flex;
             align-items: center;
@@ -661,95 +674,119 @@ function boat_forecast_viewer_render_single($payload, $post) {
             gap: 14px;
             margin-top: 18px;
         }
+        /* ===== Phase 7: race card ===== */
         .bfv-card {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: var(--bfv-radius-md);
+            padding: 18px 20px;
+            border-radius: var(--bfv-radius-lg);
+            border: 1px solid var(--bfv-border);
+            background: var(--bfv-surface);
             box-shadow: var(--bfv-shadow-xs);
-            padding: 16px;
+            display: grid;
+            gap: 14px;
             width: 100%;
             max-width: 100%;
             overflow: hidden;
         }
+        .bfv-card + .bfv-card { margin-top: 14px; }
         .bfv-card-head {
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
+            align-items: baseline;
             justify-content: space-between;
             gap: 12px;
-            margin-bottom: 14px;
+            margin-bottom: 0;
         }
         .bfv-card-head h3 {
             margin: 0;
-            font-size: 24px;
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1;
         }
         .bfv-card-sub {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            color: var(--muted);
+            color: var(--bfv-ink-dim);
             font-size: 13px;
         }
         .bfv-pill {
             display: inline-flex;
             align-items: center;
-            padding: 6px 10px;
+            padding: 5px 10px;
             border-radius: 999px;
-            background: var(--bg);
+            background: var(--bfv-surface-2);
+            border: 1px solid var(--bfv-border);
+            color: var(--bfv-ink-dim);
             font-size: 12px;
             font-weight: 700;
         }
         .bfv-bets {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 10px;
         }
         .bfv-betbox {
-            border-radius: var(--bfv-radius-sm);
-            padding: 14px;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
+            padding: 12px 14px;
+            border-radius: var(--bfv-radius-md);
+            border: 1px solid var(--bfv-border);
+            background: var(--bfv-surface-2);
         }
         .bfv-betbox main, .bfv-betbox strong { display: block; }
         .bfv-betbox strong {
-            font-size: 12px;
-            color: var(--muted);
-            margin-bottom: 8px;
-            letter-spacing: .06em;
-            text-transform: uppercase;
+            font-size: 11px;
+            color: var(--bfv-ink-dim);
+            margin-bottom: 6px;
+            letter-spacing: .08em;
         }
         .bfv-betbox .bfv-bet { font-size: 20px; }
-        .bfv-odds { font-size: 12px; color: #777; margin-left: 4px; font-weight: normal; }
-        .bfv-betbox.is-main { background: var(--bfv-accent-soft); border-color: var(--bfv-accent); }
+        .bfv-bet {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+        }
+        .bfv-odds {
+            font-size: 11px;
+            color: var(--bfv-ink-dim);
+            font-weight: 500;
+            margin-left: 4px;
+        }
+        .bfv-betbox.is-main {
+            background: var(--bfv-accent-soft);
+            border-color: var(--bfv-accent);
+        }
+        .bfv-betbox.is-main strong { color: var(--bfv-accent); }
         .bfv-comment {
-            margin-top: 14px;
-            padding: 14px 16px;
-            border-radius: 12px;
-            background: var(--bg);
-            color: var(--muted);
-            font-size: 14px;
+            padding: 10px 12px;
+            background: var(--bfv-surface-2);
+            border-left: 3px solid var(--bfv-accent);
+            border-radius: var(--bfv-radius-sm);
+            font-size: 13px;
+            color: var(--bfv-ink);
         }
         .bfv-reason-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-            margin-top: 14px;
+            gap: 8px;
+        }
+        @media (max-width: 640px) {
+            .bfv-reason-grid { grid-template-columns: 1fr; }
         }
         .bfv-reason {
-            padding: 12px 14px;
-            border-radius: 12px;
-            background: var(--bg);
-            border: 1px solid var(--line);
-            font-size: 13px;
-            color: var(--muted);
+            padding: 10px 12px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-surface-2);
+            font-size: 12.5px;
+            line-height: 1.55;
+            color: var(--bfv-ink);
         }
         .bfv-reason strong {
             display: block;
-            margin-bottom: 6px;
-            color: var(--ink);
-            font-size: 12px;
+            font-size: 11px;
+            color: var(--bfv-ink-dim);
+            margin-bottom: 3px;
             letter-spacing: .05em;
-            text-transform: uppercase;
         }
         .bfv-picks {
             margin-top: 14px;
