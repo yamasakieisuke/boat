@@ -737,8 +737,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
             gap: 14px;
             width: 100%;
             max-width: 100%;
-            overflow: hidden;
         }
+        /* grid child が overflow-x: auto 子孫を持つ場合に shrink を許可 */
+        .bfv-card > * { min-width: 0; }
         .bfv-card + .bfv-card { margin-top: 14px; }
         .bfv-card-head {
             display: flex;
@@ -1087,66 +1088,125 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .verdict-order { color: #1565c0; font-weight: 700; }
         .verdict-box { color: #916626; }
         .verdict-miss { color: rgba(255,255,255,.4); }
-        /* v5.18: コメント実データ */
-        .cmt-good { color: #1f7a4d; font-weight: 700; }
-        .cmt-bad { color: #c62828; font-weight: 700; }
-        .cmt-neutral { color: rgba(255,255,255,.6); }
-        .bfv-cmt-keywords { font-size: 11px; color: rgba(255,255,255,.55); margin-top: 2px; }
-        /* v5.18: 展示実データ */
-        .ex-best { color: #ffd700; font-weight: 700; }
-        .ex-good { color: #1f7a4d; }
-        .ex-slow { color: #c62828; }
-        .bfv-exhibition-order { margin-top: 8px; font-size: 12px; color: rgba(255,255,255,.6); }
-        /* v5.18: 予算別買い目 （v5.20: ライト背景向けに色調整） */
-        .bfv-budget-section { margin-top: 12px; }
-        .bfv-budget-box { background: rgba(8,19,26,.04); border: 1px solid rgba(8,19,26,.10); border-radius: 14px; padding: 12px; margin-top: 8px; color: #08131a; }
-        .bfv-budget-head { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: #08131a; }
-        .bfv-budget-status { font-size: 11px; padding: 2px 8px; border-radius: 999px; }
-        .bfv-budget-ok { background: rgba(31,122,77,.15); color: #1f7a4d; }
-        .bfv-budget-ng { background: rgba(198,40,40,.15); color: #c62828; }
-        .bfv-budget-note { font-size: 11px; color: #5a656b; }
-        .bfv-budget-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; color: #08131a; }
-        .bfv-budget-table th, .bfv-budget-table td { padding: 5px 8px; border: 1px solid rgba(8,19,26,.14); text-align: left; }
-        .bfv-budget-table th { background: rgba(8,19,26,.06); color: #5a656b; font-size: 11px; font-weight: 600; }
+        /* ===== Phase 9: 予算 / 展示 / コメント統一 ===== */
+        /* コメント実データ判定マーク */
+        .bfv-comment-table .cmt-good    { color: var(--bfv-ok); font-weight: 700; }
+        .bfv-comment-table .cmt-bad     { color: var(--bfv-warn); font-weight: 700; }
+        .bfv-comment-table .cmt-neutral { color: var(--bfv-ink-dim); }
+        .bfv-cmt-keywords {
+            margin-top: 3px;
+            font-size: 11px;
+            color: var(--bfv-ink-dim);
+        }
+        /* 展示実データ評価マーク */
+        .bfv-detail-table .ex-best { color: var(--bfv-accent); font-weight: 700; }
+        .bfv-detail-table .ex-good { color: var(--bfv-ok); font-weight: 600; }
+        .bfv-detail-table .ex-slow { color: var(--bfv-warn); font-weight: 600; }
+        .bfv-exhibition-order { margin-top: 8px; font-size: 12px; color: var(--bfv-ink-dim); }
+
+        /* 予算別買い目 */
+        .bfv-budget-section { display: grid; gap: 10px; margin-top: 12px; }
+        .bfv-budget-section h4 {
+            margin: 0;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            color: var(--bfv-accent);
+            font-weight: 600;
+        }
+        .bfv-budget-box {
+            padding: 12px 14px;
+            border-radius: var(--bfv-radius-md);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border-soft);
+        }
+        .bfv-budget-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 6px 10px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--bfv-ink);
+        }
+        .bfv-budget-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .bfv-budget-ok { color: var(--bfv-ok); background: var(--bfv-ok-soft); }
+        .bfv-budget-ng { color: var(--bfv-warn); background: var(--bfv-warn-soft); }
+        .bfv-budget-note { font-size: 12px; color: var(--bfv-ink-dim); }
+        .bfv-budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12.5px;
+        }
+        .bfv-budget-table th,
+        .bfv-budget-table td {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--bfv-border-soft);
+            text-align: left;
+            font-variant-numeric: tabular-nums;
+        }
+        .bfv-budget-table th {
+            background: var(--bfv-surface-2);
+            font-size: 11px;
+            color: var(--bfv-ink-dim);
+            font-weight: 600;
+        }
+        .bfv-budget-table tr:last-child td { border-bottom: none; }
         /* v5.18: review 追加カード行 */
         .bfv-review-grid-extra { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
         .bfv-review-info { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.7); }
         .bfv-review-upsets { margin-top: 6px; font-size: 12px; color: rgba(255,255,255,.6); }
         .bfv-review-upsets li { margin-top: 2px; }
         .bfv-detail-block {
-            margin-top: 14px;
-            border-top: 1px solid rgba(8,19,26,0.14);
-            padding-top: 14px;
+            margin-top: 4px;
+            padding: 14px 16px;
+            border-radius: var(--bfv-radius-md);
+            background: var(--bfv-surface-2);
+            border: 1px solid var(--bfv-border-soft);
         }
         .bfv-detail-block h4 {
-            margin: 0 0 8px;
-            font-size: 14px;
-            color: var(--accent);
+            margin: 0 0 10px;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            color: var(--bfv-ink-dim);
+            font-weight: 600;
         }
         .bfv-detail-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            border-radius: var(--bfv-radius-sm);
+            border: 1px solid var(--bfv-border-soft);
+            background: var(--bfv-surface);
         }
         .bfv-detail-table {
             width: 100%;
             border-collapse: collapse;
             min-width: 820px;
-            font-size: 12px;
-        }
-        .bfv-detail-table th,
-        .bfv-detail-table td {
-            border: 1px solid rgba(8,19,26,0.14);
-            padding: 8px 10px;
-            vertical-align: top;
-            text-align: left;
+            font-size: 12.5px;
         }
         .bfv-detail-table th {
-            background: var(--bg);
-            color: var(--muted);
+            background: var(--bfv-surface-2);
+            text-align: left;
+            padding: 8px 10px;
             font-size: 11px;
-            letter-spacing: .04em;
-            text-transform: uppercase;
+            color: var(--bfv-ink-dim);
+            font-weight: 600;
+            border-bottom: 1px solid var(--bfv-border-soft);
+            white-space: nowrap;
         }
+        .bfv-detail-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--bfv-border-soft);
+            font-variant-numeric: tabular-nums;
+            vertical-align: top;
+        }
+        .bfv-detail-table tr:last-child td { border-bottom: none; }
         .bfv-rank-cell {
             font-weight: 800;
             white-space: nowrap;
@@ -1197,18 +1257,18 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .sticky-name-table td:nth-child(1),
         .sticky-score-table td:nth-child(1),
         .sticky-score-table td:nth-child(2) {
-            background: #ffffff;
-            box-shadow: 1px 0 0 #d9dfe8;
+            background: var(--bfv-surface);
+            box-shadow: 1px 0 0 var(--bfv-border-soft);
         }
         .sticky-name-table tr:nth-child(even) td:nth-child(1),
         .sticky-score-table tr:nth-child(even) td:nth-child(1),
         .sticky-score-table tr:nth-child(even) td:nth-child(2) {
-            background: var(--bg);
+            background: var(--bfv-surface-2);
         }
         .sticky-name-table th:nth-child(1),
         .sticky-score-table th:nth-child(1),
         .sticky-score-table th:nth-child(2) {
-            background: var(--bg);
+            background: var(--bfv-surface-2);
             z-index: 5;
         }
         @media (max-width: 960px) {
