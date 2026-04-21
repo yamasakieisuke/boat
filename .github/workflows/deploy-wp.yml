@@ -26,11 +26,13 @@ jobs:
           port: 21
           local-dir: ./wordpress/boat-forecast-viewer/
           server-dir: /web/boat/wp-content/plugins/boat-forecast-viewer/
+          dangerous-clean-slate: false
           exclude: |
             **/.DS_Store
             **/.git*
             **/node_modules/**
             **/*.map
+            src/**
 
   deploy-sync-endpoint:
     name: Deploy sync endpoint (forecast-sync.php)
