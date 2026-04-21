@@ -847,7 +847,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             padding: 10px 12px;
             background: var(--bfv-surface-2);
             border-left: 3px solid var(--bfv-accent);
-            border-radius: var(--bfv-radius-sm);
+            border-radius: var(--bfv-radius-md);
             font-size: 13px;
             color: var(--bfv-ink);
         }
@@ -861,7 +861,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-reason {
             padding: 10px 12px;
-            border-radius: var(--bfv-radius-sm);
+            border-radius: var(--bfv-radius-md);
             background: var(--bfv-surface-2);
             font-size: 12.5px;
             line-height: 1.55;
