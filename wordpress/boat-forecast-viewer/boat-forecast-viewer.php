@@ -1281,10 +1281,6 @@ function boat_forecast_viewer_render_single($payload, $post) {
             background: var(--bfv-surface);
             box-shadow: 1px 0 0 var(--bfv-border-soft);
         }
-        .sticky-name-table tr:nth-child(even) td:nth-child(1),
-        .sticky-score-table tr:nth-child(even) td:nth-child(1) {
-            background: var(--bfv-surface-2);
-        }
         .sticky-name-table th:nth-child(1),
         .sticky-score-table th:nth-child(1) {
             background: var(--bfv-surface-2);
@@ -1924,9 +1920,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
                     <section class="bfv-detail-block">
                         <h4>システム計算ロジック</h4>
                         <div class="bfv-detail-wrap">
-                            <table class="bfv-detail-table sticky-score-table">
+                            <table class="bfv-detail-table sticky-name-table">
                                 <tr>
-                                    <th>順 / 艇</th>
+                                    <th>艇</th>
                                     <th>級</th>
                                     <th>総合</th>
                                     <th>全勝寄与</th>
@@ -1943,10 +1939,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     $breakdown = isset($row['breakdown']) && is_array($row['breakdown']) ? $row['breakdown'] : [];
                                 ?>
                                 <tr>
-                                    <td class="bfv-rank-name-cell">
-                                        <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
-                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?>
-                                    </td>
+                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?></td>
                                     <td><?php echo boat_forecast_viewer_render_grade($row['grade'] ?? ''); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($row['score'] ?? '', 2)); ?><?php echo boat_forecast_viewer_render_meter($row['score'] ?? 0, 1.0, 'score'); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($breakdown['global_win_rate'] ?? '-', 2)); ?></td>
