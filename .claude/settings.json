@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && git fetch --quiet && LOCAL=$(git rev-parse @) && REMOTE=$(git rev-parse @{u} 2>/dev/null) && if [ \"$LOCAL\" != \"$REMOTE\" ]; then git pull --rebase --autostash 2>&1 | tail -3; else echo '[boat] already up to date'; fi"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && CHANGES=$(git status --porcelain | wc -l | tr -d ' ') && UNPUSHED=$(git log @{u}.. --oneline 2>/dev/null | wc -l | tr -d ' ') && if [ \"$CHANGES\" != \"0\" ]; then echo \"[boat] ⚠️  $CHANGES uncommitted change(s). Run /sync to commit & push.\"; elif [ \"$UNPUSHED\" != \"0\" ]; then echo \"[boat] ⚠️  $UNPUSHED unpushed commit(s). Run: git push\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
