@@ -1,0 +1,56 @@
+name: Deploy WordPress files to heteml
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wordpress/**'
+      - '.github/workflows/deploy-wp.yml'
+  workflow_dispatch:  # 手動実行も可能
+
+jobs:
+  deploy-plugin:
+    name: Deploy plugin (boat-forecast-viewer)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTPS Deploy — plugin
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp-ask.heteml.net
+          username: ask_wp
+          password: ${{ secrets.HETEML_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./wordpress/boat-forecast-viewer/
+          server-dir: /web/boat/wp-content/plugins/boat-forecast-viewer/
+          exclude: |
+            **/.DS_Store
+            **/.git*
+            **/node_modules/**
+            **/*.map
+
+  deploy-sync-endpoint:
+    name: Deploy sync endpoint (forecast-sync.php)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTPS Deploy — forecast-sync.php
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ftp-ask.heteml.net
+          username: ask_wp
+          password: ${{ secrets.HETEML_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./wordpress/
+          server-dir: /web/boat/api/
+          # forecast-sync.php だけをアップロードし、boat-forecast-viewer/ は除外
+          exclude: |
+            **/.DS_Store
+            **/.git*
+            boat-forecast-viewer/**
