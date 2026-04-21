@@ -1267,14 +1267,16 @@ function boat_forecast_viewer_render_single($payload, $post) {
             position: sticky;
             left: 0;
             z-index: 3;
-            min-width: 140px;
+            min-width: 100px;
+            max-width: 140px;
         }
         .sticky-score-table th:nth-child(1),
         .sticky-score-table td:nth-child(1) {
             position: sticky;
             left: 0;
             z-index: 4;
-            min-width: 140px;
+            min-width: 100px;
+            max-width: 140px;
         }
         .sticky-name-table td:nth-child(1),
         .sticky-score-table td:nth-child(1) {
@@ -1286,23 +1288,32 @@ function boat_forecast_viewer_render_single($payload, $post) {
             background: var(--bfv-surface-2);
             z-index: 5;
         }
-        /* 順マーク + 艇セル統合（sticky-score-table 用） */
-        .bfv-rank-name-cell {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
+        /* 順マーク: 艇セル内に inline prefix として配置（td の display は触らない） */
         .bfv-rank-mark {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            min-width: 20px;
-            font-size: 18px;
+            display: inline-block;
+            margin-right: 4px;
+            font-size: inherit;
             font-weight: 800;
             color: var(--bfv-accent);
             line-height: 1;
+            vertical-align: middle;
+        }
+        /* sticky 1列目内の waku-name-cell は名前がセル幅で折り返すように inline に */
+        .sticky-name-table td:nth-child(1) .bfv-waku-name-cell,
+        .sticky-score-table td:nth-child(1) .bfv-waku-name-cell {
+            display: inline;
+            white-space: normal;
+        }
+        .sticky-name-table td:nth-child(1) .bfv-waku-chip,
+        .sticky-score-table td:nth-child(1) .bfv-waku-chip {
+            vertical-align: middle;
+            margin-right: 4px;
+        }
+        .sticky-name-table td:nth-child(1) .bfv-waku-name,
+        .sticky-score-table td:nth-child(1) .bfv-waku-name {
+            display: inline;
+            word-break: break-all;
+            overflow-wrap: anywhere;
         }
         @media (max-width: 960px) {
             .bfv-grid { grid-template-columns: 1fr; }
@@ -1864,7 +1875,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     }
                                 ?>
                                 <tr>
-                                    <td class="bfv-rank-name-cell">
+                                    <td>
                                         <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
                                         <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?>
                                     </td>
