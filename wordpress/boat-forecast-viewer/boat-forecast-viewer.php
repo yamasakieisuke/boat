@@ -1967,62 +1967,165 @@ function boat_forecast_viewer_render_archive($query) {
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
+        /* ===== Phase 2: archive (grid view) ===== */
         body {
             margin: 0;
             background: var(--bfv-bg);
             color: var(--bfv-ink);
             font-family: var(--bfv-font-sans);
+            line-height: 1.55;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        .bfva-shell { width: min(1040px, calc(100% - 24px)); margin: 0 auto; padding: 28px 0 56px; }
-        .bfva-hero {
-            background: var(--bfv-hero-ink);
-            color: #fff;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.14), 0px 1px 2px 0px rgba(0,0,0,0.22);
+        a { color: inherit; }
+
+        .bfva-shell {
+            width: min(1120px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 28px 0 72px;
         }
-        .bfva-hero h1 { margin: 0; font-size: clamp(28px, 5vw, 44px); }
-        .bfva-hero p { display: none; }
-        .bfva-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 18px; }
+
+        .bfva-hero {
+            background: var(--bfv-surface);
+            color: var(--bfv-ink);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            padding: 20px 24px;
+            box-shadow: var(--bfv-shadow-xs);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .bfva-hero h1 {
+            margin: 0;
+            font-size: clamp(22px, 3.6vw, 30px);
+            letter-spacing: 0.04em;
+            font-feature-settings: "palt";
+        }
+        .bfva-hero p {
+            display: block;
+            margin: 0;
+            color: var(--bfv-muted);
+            font-size: 13px;
+        }
+
+        .bfva-grid {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            margin-top: 18px;
+        }
+
         .bfva-card {
-            background: #ffffff;
-            border: 1px solid rgba(8,19,26,0.14);
-            border-radius: 12px;
-            padding: 18px;
-            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.14), 0px 1px 2px 0px rgba(0,0,0,0.22);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            padding: 16px 16px 14px;
+            box-shadow: var(--bfv-shadow-xs);
+            transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .bfva-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--bfv-shadow-md);
+            border-color: var(--bfv-line-strong);
         }
         .bfva-card-head {
             display: flex;
             align-items: baseline;
             justify-content: space-between;
             gap: 10px;
-            margin-bottom: 8px;
+            margin-bottom: 0;
         }
-        .bfva-card h2 { margin: 0 0 8px; font-size: 22px; }
+        .bfva-card h2 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+            font-feature-settings: "palt";
+        }
         .bfva-card-link {
-            color: inherit;
+            color: var(--bfv-ink);
             text-decoration: none;
-            font-weight: 800;
+            font-weight: 700;
         }
-        .bfva-card-link:hover { text-decoration: underline; }
-        .bfva-meta { color: #5a656b; font-size: 14px; display: grid; gap: 6px; }
+        .bfva-card-link:hover { color: var(--bfv-accent); }
+
+        .bfva-card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+            font-size: 12px;
+            color: var(--bfv-muted);
+        }
+        .bfva-card-meta strong {
+            color: var(--bfv-ink);
+            font-weight: 600;
+        }
+        .bfva-card-date {
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            color: var(--bfv-ink-sub);
+        }
+
+        .bfva-card-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 2px;
+        }
+        .bfva-card-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .bfva-card-chip:hover {
+            background: var(--bfv-accent-soft);
+            border-color: var(--bfv-accent);
+            color: var(--bfv-accent);
+        }
+        .bfva-card-chip.has-review::after {
+            content: "●";
+            color: var(--bfv-accent);
+            font-size: 8px;
+        }
+
+        .bfva-card-cta {
+            margin-top: auto;
+            align-self: flex-end;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--bfv-accent);
+            text-decoration: none;
+        }
+        .bfva-card-cta::after { content: " →"; }
+
+        /* ===== venue-specific list view (Phase 2未改修、維持) ===== */
+        .bfva-meta { color: var(--bfv-ink-sub); font-size: 14px; display: grid; gap: 6px; }
         .bfva-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-        .bfva-badge { background: #f5f8fa; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
-        .bfva-badge.is-review { background: #08131a; color: #fff; }
+        .bfva-badge { background: var(--bfv-surface-sub); padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid var(--bfv-line); }
+        .bfva-badge.is-review { background: var(--bfv-ink); color: #fff; border-color: var(--bfv-ink); }
         .bfva-crumbs {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             margin: 0 0 14px;
-            color: #5a656b;
+            color: var(--bfv-muted);
             font-size: 14px;
         }
-        .bfva-crumbs a {
-            color: inherit;
-            text-decoration: none;
-        }
+        .bfva-crumbs a { color: inherit; text-decoration: none; }
         .bfva-crumbs a:hover { text-decoration: underline; }
         .bfva-list {
             display: grid;
@@ -2034,40 +2137,25 @@ function boat_forecast_viewer_render_archive($query) {
             gap: 12px;
             grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
             padding: 16px 18px;
-            background: #ffffff;
-            border: 1px solid rgba(8,19,26,0.14);
-            border-radius: 12px;
-            box-shadow: 0px 1px 3px 1px rgba(0,0,0,0.14), 0px 1px 2px 0px rgba(0,0,0,0.22);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            box-shadow: var(--bfv-shadow-xs);
         }
-        .bfva-row h2 {
-            margin: 0 0 8px;
-            font-size: 22px;
-        }
-        .bfva-mini-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .bfva-mini-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: var(--bfv-bg);
-            color: var(--bfv-ink);
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .bfva-mini-links a:hover { text-decoration: underline; }
+        .bfva-row h2 { margin: 0 0 8px; font-size: 22px; }
         .bfva-side { display: grid; gap: 8px; align-content: start; }
-        .bfva-side a { color: #08131a; text-decoration: none; font-weight: 700; }
-        .bfva-side a:hover { text-decoration: underline; }
+        .bfva-side a { color: var(--bfv-ink); text-decoration: none; font-weight: 700; }
+        .bfva-side a:hover { color: var(--bfv-accent); }
+
         @media (max-width: 720px) {
             .bfva-row { grid-template-columns: 1fr; }
         }
+        @media (max-width: 640px) {
+            .bfva-shell { width: calc(100% - 16px); padding-top: 16px; }
+            .bfva-hero { padding: 16px 18px; }
+            .bfva-grid { grid-template-columns: 1fr; gap: 10px; }
+        }
+
         /* ===== グローバルナビ (archive) ===== */
         .bfv-gnav {
             display: flex;
@@ -2077,7 +2165,7 @@ function boat_forecast_viewer_render_archive($query) {
             margin-bottom: 14px;
             padding: 8px 12px;
             background: rgba(255,255,255,.85);
-            border: 1px solid rgba(8,19,26,0.14);
+            border: 1px solid var(--bfv-line);
             border-radius: 999px;
             backdrop-filter: blur(8px);
         }
@@ -2089,12 +2177,12 @@ function boat_forecast_viewer_render_archive($query) {
             border-radius: 999px;
             font-size: 13px;
             font-weight: 700;
-            color: #08131a;
+            color: var(--bfv-ink);
             text-decoration: none;
             transition: background .15s, color .15s;
         }
-        .bfv-gnav-link:hover { background: rgba(8,19,26,.06); text-decoration: none; }
-        .bfv-gnav-active { background: #08131a !important; color: #fff !important; }
+        .bfv-gnav-link:hover { background: rgba(26,25,21,.06); text-decoration: none; }
+        .bfv-gnav-active { background: var(--bfv-ink) !important; color: #fff !important; }
     </style>
 </head>
 <body>
@@ -2143,21 +2231,33 @@ function boat_forecast_viewer_render_archive($query) {
         </section>
     <?php else : ?>
         <section class="bfva-grid">
-            <?php foreach ($venues as $venue) : ?>
+            <?php foreach ($venues as $venue) :
+                $venue_link = home_url('/race/' . $venue['slug'] . '/');
+                $items = isset($venue['items']) && is_array($venue['items']) ? $venue['items'] : [];
+            ?>
                 <article class="bfva-card">
                     <div class="bfva-card-head">
-                        <h2><a class="bfva-card-link" href="<?php echo esc_url(home_url('/race/' . $venue['slug'] . '/')); ?>"><?php echo esc_html((string) $venue['name']); ?></a></h2>
+                        <h2><a class="bfva-card-link" href="<?php echo esc_url($venue_link); ?>"><?php echo esc_html((string) $venue['name']); ?></a></h2>
+                        <span class="bfva-card-date"><?php echo esc_html((string) $venue['latest_date']); ?></span>
                     </div>
-                    <div class="bfva-meta">
-                        <span>記事数: <?php echo esc_html((string) $venue['count']); ?>件</span>
-                        <span>振り返りあり: <?php echo esc_html((string) $venue['review_count']); ?>件</span>
-                        <span>最新開催: <?php echo esc_html((string) $venue['latest_date']); ?></span>
+                    <div class="bfva-card-meta">
+                        <span>予想 <strong><?php echo (int) $venue['count']; ?></strong></span>
+                        <span>振り返り <strong><?php echo (int) $venue['review_count']; ?></strong></span>
                     </div>
-                    <div class="bfva-mini-links">
-                        <?php foreach ($venue['items'] as $item) : ?>
-                            <a href="<?php echo esc_url(!empty($item['has_review']) ? ($item['link'] . '#review') : $item['link']); ?>"><?php echo esc_html((string) $item['date']); ?><?php if (!empty($item['has_review'])) : ?>・振り返り<?php endif; ?></a>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php if (!empty($items)) : ?>
+                        <div class="bfva-card-list">
+                            <?php foreach ($items as $item) :
+                                $chip_href = !empty($item['has_review']) ? ($item['link'] . '#review') : $item['link'];
+                                $chip_class = 'bfva-card-chip' . (!empty($item['has_review']) ? ' has-review' : '');
+                                $chip_title = !empty($item['has_review']) ? '振り返りあり' : '予想あり';
+                            ?>
+                                <a class="<?php echo esc_attr($chip_class); ?>"
+                                   href="<?php echo esc_url($chip_href); ?>"
+                                   title="<?php echo esc_attr($chip_title); ?>"><?php echo esc_html((string) $item['date']); ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                    <a class="bfva-card-cta" href="<?php echo esc_url($venue_link); ?>">すべて見る</a>
                 </article>
             <?php endforeach; ?>
         </section>
