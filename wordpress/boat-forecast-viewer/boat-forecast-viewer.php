@@ -1267,7 +1267,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             position: sticky;
             left: 0;
             z-index: 3;
-            min-width: 88px;
+            min-width: 140px;
         }
         .sticky-score-table th:nth-child(1),
         .sticky-score-table td:nth-child(1) {
@@ -1832,8 +1832,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                         <div class="bfv-detail-wrap">
                             <table class="bfv-detail-table sticky-name-table">
                                 <tr>
-                                    <th>順</th>
-                                    <th>艇</th>
+                                    <th>順 / 艇</th>
                                     <th>全国勝率</th>
                                     <th>当地勝率</th>
                                     <th>モーター2連</th>
@@ -1869,8 +1868,10 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     }
                                 ?>
                                 <tr>
-                                    <td class="bfv-rank-cell"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></td>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?></td>
+                                    <td class="bfv-rank-name-cell">
+                                        <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
+                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?>
+                                    </td>
                                     <td>今期 <?php echo esc_html((string) ($global['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($global['adopted_pct'] ?? '-')); ?></td>
                                     <td>今期 <?php echo esc_html((string) ($local['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($local['adopted_pct'] ?? '-')); ?></td>
                                     <td>今期 <?php echo esc_html((string) ($motor['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($motor['adopted_pct'] ?? '-')); ?></td>
