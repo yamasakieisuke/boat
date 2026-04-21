@@ -170,27 +170,32 @@ function boat_forecast_viewer_render_grade($grade) {
 function boat_forecast_viewer_waku_colors($waku) {
     $waku = (int) $waku;
     $map = [
-        1 => ['#ffffff', '#222222', '#c9c9c9'],
+        1 => ['#ffffff', '#222222', '#9a9a9a'],
         2 => ['#111111', '#ffffff', '#111111'],
         3 => ['#d73030', '#ffffff', '#d73030'],
         4 => ['#2f6fd6', '#ffffff', '#2f6fd6'],
-        5 => ['#f0d44c', '#222222', '#d3b11f'],
+        5 => ['#f0d44c', '#222222', '#b8960f'],
         6 => ['#4aa35c', '#ffffff', '#4aa35c'],
     ];
     return isset($map[$waku]) ? $map[$waku] : ['#eef3ff', '#222222', '#c8d4f0'];
 }
 
-function boat_forecast_viewer_render_waku_name($waku, $name, $is_female) {
+function boat_forecast_viewer_render_waku_name($waku, $name, $is_female, $size = 'md') {
     list($bg, $fg, $border) = boat_forecast_viewer_waku_colors($waku);
     $female = !empty($is_female) ? '<span class="bfv-female">♥</span>' : '';
+    $size = in_array($size, ['sm', 'md', 'lg'], true) ? $size : 'md';
+    // 氏名の空白を半角1個に正規化（全角スペース・連続 → " "、前後トリム）
+    $name = preg_replace('/[\x{3000}\s]+/u', ' ', (string) $name);
+    $name = trim($name);
     return sprintf(
-        '<span class="bfv-waku-name-cell"><span class="bfv-waku-chip" style="background:%s;color:%s;border-color:%s;">%s</span><span class="bfv-waku-name">%s%s</span></span>',
+        '<span class="bfv-waku-name-cell is-%s"><span class="bfv-waku-chip" style="background:%s;color:%s;border-color:%s;">%s</span><span class="bfv-waku-name">%s%s</span></span>',
+        esc_attr($size),
         esc_attr($bg),
         esc_attr($fg),
         esc_attr($border),
         esc_html((string) $waku),
         $female,
-        esc_html((string) $name)
+        esc_html($name)
     );
 }
 
@@ -880,7 +885,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             gap: 10px;
             align-items: center;
             padding: 12px 14px;
-            border-radius: 12px;
+            border-radius: var(--bfv-radius-md);
             background: var(--panel);
             border: 1px solid var(--line);
         }
@@ -903,26 +908,39 @@ function boat_forecast_viewer_render_single($payload, $post) {
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            flex-wrap: nowrap;
+            min-width: 0;
         }
         .bfv-waku-chip {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
             border: 1px solid #ccc;
             border-radius: 999px;
-            font-size: 12px;
             font-weight: 700;
             line-height: 1;
-            flex: 0 0 20px;
+            flex: 0 0 auto;
+            font-variant-numeric: tabular-nums;
+            box-sizing: border-box;
         }
+        /* size variants */
+        .bfv-waku-name-cell.is-sm .bfv-waku-chip { width: 16px; height: 16px; font-size: 10px; }
+        .bfv-waku-name-cell.is-md .bfv-waku-chip { width: 20px; height: 20px; font-size: 12px; }
+        .bfv-waku-name-cell.is-lg .bfv-waku-chip { width: 24px; height: 24px; font-size: 13px; }
         .bfv-waku-name {
             font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
         }
+        .bfv-waku-name-cell.is-sm .bfv-waku-name { font-size: 12px; }
+        .bfv-waku-name-cell.is-md .bfv-waku-name { font-size: 14px; }
+        .bfv-waku-name-cell.is-lg .bfv-waku-name { font-size: 16px; }
         .bfv-pick-name {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
+            line-height: 1.3;
         }
         .bfv-female {
             color: #d72662;
@@ -960,7 +978,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-review {
             margin-top: 20px;
             padding: 18px;
-            border-radius: 12px;
+            border-radius: var(--bfv-radius-lg);
             background: #08131a;
             color: #fff;
             box-shadow: var(--shadow);
@@ -997,7 +1015,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-review-card {
             background: rgba(255,255,255,.1);
-            border-radius: 16px;
+            border-radius: var(--bfv-radius-md);
             padding: 12px;
             min-width: 0;
         }
@@ -1065,7 +1083,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-review-race {
             padding: 10px 12px;
-            border-radius: 14px;
+            border-radius: var(--bfv-radius-md);
             background: rgba(255,255,255,.10);
             border: 1px solid rgba(255,255,255,.14);
             color: rgba(255,255,255,.92);
@@ -1233,8 +1251,10 @@ function boat_forecast_viewer_render_single($payload, $post) {
             border-bottom: 1px solid var(--bfv-border-soft);
             font-variant-numeric: tabular-nums;
             vertical-align: top;
+            max-width: 140px;
         }
         .bfv-detail-table tr:last-child td { border-bottom: none; }
+        .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; }
         .bfv-rank-cell {
             font-weight: 800;
             white-space: nowrap;
@@ -1303,7 +1323,8 @@ function boat_forecast_viewer_render_single($payload, $post) {
             vertical-align: middle;
         }
         /* waku-name-cell を inline-flex + flex-wrap にして、chip を1行目・
-           name を flex-basis: 100% で強制2行目へ */
+           name を flex-basis: 100% で強制2行目へ。
+           Phase 11 で global に nowrap + ellipsis が付くので明示的に上書き */
         .sticky-name-table td:nth-child(1) .bfv-waku-name-cell,
         .sticky-score-table td:nth-child(1) .bfv-waku-name-cell {
             display: inline-flex;
@@ -1322,7 +1343,10 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .sticky-score-table td:nth-child(1) .bfv-waku-name {
             flex: 0 0 100%;
             display: block;
-            word-break: break-all;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            word-break: keep-all;
             overflow-wrap: anywhere;
             font-size: inherit;
         }
@@ -1332,11 +1356,11 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         @media (max-width: 640px) {
             .bfv-shell { width: min(100% - 16px, 100%); padding-top: 12px; }
-            .bfv-hero { border-radius: 12px; padding: 20px; }
+            .bfv-hero { border-radius: var(--bfv-radius-md); padding: 20px; }
             .bfv-title { font-size: clamp(24px, 9vw, 32px); }
             .bfv-sub { font-size: 13px; line-height: 1.65; }
-            .bfv-panel, .bfv-card { border-radius: 12px; }
-            .bfv-review { padding: 14px; border-radius: 12px; }
+            .bfv-panel, .bfv-card { border-radius: var(--bfv-radius-md); }
+            .bfv-review { padding: 14px; border-radius: var(--bfv-radius-md); }
             .bfv-bets { grid-template-columns: 1fr; }
             .bfv-reason-grid { grid-template-columns: 1fr; }
             .bfv-info-grid { grid-template-columns: 1fr; }
@@ -1736,7 +1760,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                             $keywords = isset($cp['comment_matched_keywords']) && is_array($cp['comment_matched_keywords']) ? $cp['comment_matched_keywords'] : [];
                                         ?>
                                         <tr>
-                                            <td><?php echo boat_forecast_viewer_render_waku_name($cp['waku'] ?? '', $cp['name'] ?? '', !empty($cp['is_female'])); ?></td>
+                                            <td><?php echo boat_forecast_viewer_render_waku_name($cp['waku'] ?? '', $cp['name'] ?? '', !empty($cp['is_female']), 'sm'); ?></td>
                                             <td class="<?php echo esc_attr($cmt_cls); ?>"><?php echo esc_html($cmt_mark); ?></td>
                                             <td>
                                                 <?php if (!empty($cp['comment_text'])) : ?>
@@ -1785,7 +1809,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                         $entry_warn = ($entry !== '' && $waku_str !== '' && $entry !== $waku_str) ? ' ⚠' : '';
                                     ?>
                                     <tr>
-                                        <td><?php echo boat_forecast_viewer_render_waku_name($exrow['waku'] ?? '', $exrow['name'] ?? '', false); ?></td>
+                                        <td><?php echo boat_forecast_viewer_render_waku_name($exrow['waku'] ?? '', $exrow['name'] ?? '', false, 'sm'); ?></td>
                                         <td><strong><?php echo esc_html((string) ($exrow['time'] ?? '')); ?></strong></td>
                                         <td><?php echo esc_html((string) ($exrow['tilt'] ?? '')); ?></td>
                                         <td><?php echo esc_html($entry . $entry_warn); ?></td>
@@ -1820,10 +1844,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                 <span class="bfv-pick-mark<?php echo $mark === '' ? ' is-plain' : ''; ?>"><?php echo esc_html($mark); ?></span>
                                 <div>
                                     <div class="bfv-pick-name">
-                                        <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female'])); ?>
+                                        <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female']), 'lg'); ?>
                                     </div>
                                     <div class="bfv-pick-meta">
-                                        <span><?php echo esc_html((string) ($pick['waku'] ?? '')); ?>号艇</span>
                                         <?php if (!empty($pick['grade'])) : ?>
                                             <?php echo boat_forecast_viewer_render_grade($pick['grade']); ?>
                                         <?php endif; ?>
@@ -1888,7 +1911,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                 <tr>
                                     <td>
                                         <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
-                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?>
+                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm'); ?>
                                     </td>
                                     <td>今期 <?php echo esc_html((string) ($global['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($global['adopted_pct'] ?? '-')); ?></td>
                                     <td>今期 <?php echo esc_html((string) ($local['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($local['adopted_pct'] ?? '-')); ?></td>
@@ -1926,7 +1949,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     $global = isset($row['waku_stats']['global']) && is_array($row['waku_stats']['global']) ? $row['waku_stats']['global'] : [];
                                 ?>
                                 <tr>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?></td>
+                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm'); ?></td>
                                     <td><?php echo esc_html((string) $picked['label']); ?></td>
                                     <td><?php echo esc_html((string) ($stats['1st_pct'] ?? '---')); ?><?php echo boat_forecast_viewer_render_meter($stats['1st_pct'] ?? 0, 100, 'rank1'); ?></td>
                                     <td><?php echo esc_html((string) ($stats['2nd_pct'] ?? '---')); ?><?php echo boat_forecast_viewer_render_meter($stats['2nd_pct'] ?? 0, 100, 'rank2'); ?></td>
@@ -1961,7 +1984,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     $breakdown = isset($row['breakdown']) && is_array($row['breakdown']) ? $row['breakdown'] : [];
                                 ?>
                                 <tr>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female'])); ?></td>
+                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm'); ?></td>
                                     <td><?php echo boat_forecast_viewer_render_grade($row['grade'] ?? ''); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($row['score'] ?? '', 2)); ?><?php echo boat_forecast_viewer_render_meter($row['score'] ?? 0, 1.0, 'score'); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($breakdown['global_win_rate'] ?? '-', 2)); ?></td>
