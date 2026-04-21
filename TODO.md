@@ -20,6 +20,8 @@
 
 | P | タスク | ゴール | 備考 |
 |---|---|---|---|
+| 🔥 **P0** | [#6 daily-morning-v2 朝バッチ失敗検証](#6-daily-morning-v2-朝バッチ失敗検証) | 原因特定・復旧 | 2026-04-21 08:00 実行で exit 1、ログ 295byte でスタートアップのみ |
+| 🔥 **P0** | [#7 WP同期 403 検証](#7-wp-sync-403-検証) | トークン/URL 確認・復旧 | 2026-04-21 の run-pending で `HTTP 403 Forbidden` が **68 回** 発生 |
 | ✅ **P1** | [#1 セオリーパターン発動記録](#1-セオリーパターン発動ヒット率の-verify-記録) | ~~verify にパターンフラグ追加~~ | **v5.19 実装完了（2026-04-17）** |
 | **P1** | [#2 v5.16 新指標チューニング](#2-v516-新指標の-verify-蓄積チューニング) | EV閾値 / パターンconf / 本命配分の最適化 | #1と並行で蓄積 → 1〜2週後に調整 |
 | **P2** | [#3 series_score 効果検証](#3-series_score-今節成績スコアの効果検証) | verify で既存指標と独立に効いているか可視化 | v5.2 で既に組込済 |
@@ -162,6 +164,37 @@ verify に `series_stats` 走数帯別集計を実装して計測:
 
 - 展示取得失敗時のログ肥大化対策（失敗ログの行数制限 or ローテーション）
 - predictor 非ゼロ終了時のリカバリ（再試行 or 通知）
+
+---
+
+## 6. daily-morning-v2 朝バッチ失敗検証
+
+**検知**: 2026-04-21 08:00 実行で `launchctl list` の exit code = 1、`boat-daily-morning-v2-20260421-080003.log` は 295 byte でスタートアップ行のみ（`=== [boat-daily-morning-v2] 開始 ===` / `claude:` / `skill:` / `pwd:`）。Claude Code 本体が起動直後に落ちた疑い。
+
+**やること**:
+1. `launchctl list com.claude-code.task.boat-daily-morning-v2` で詳細 / StandardErrorPath 確認
+2. 手動で `~/Agent/scripts/claude-code-cron/boat-daily-morning-v2.sh`（または plist の ProgramArguments）を実行し、エラーを再現
+3. `~/.local/bin/claude --version` / パーミッション / TCC 設定（Full Disk Access 等）を確認
+4. 過去 7 日ぶんの morning ログを比較し、いつから異常か切り分け（4/18, 4/19, 4/20 は 605B〜1.6KB で正常サイズ）
+5. 復旧したら `/sync` は不要（launchd 側の問題）、動作確認のため 1 回手動実行
+
+**影響**: 毎朝 8:00 の予測生成・WP 投稿が止まっている可能性。急ぎで見る。
+
+---
+
+## 7. WP sync 403 検証
+
+**検知**: 2026-04-21 の `boat-run-pending-20260421.log` に `[WARN] WordPress 同期失敗: HTTP Error 403: Forbidden` が **68 回** 記録されている。run-pending 自体は稼働中（33MB ログ更新あり、exit 0）だが WP への送信が全部弾かれている状態。
+
+**やること**:
+1. `.env` の `WP_SYNC_TOKEN` が失効していないか確認（1Password「boat / WordPress sync」と突き合わせ）
+2. `wordpress/forecast-sync.php` の 403 返却条件（トークン比較・IP 制限 / リファラ / Nonce）を確認
+3. heteml 側 WAF / ModSecurity のログ確認（管理画面の Web Protection）
+4. 手動で `curl -X POST $WP_SYNC_URL -H "X-Token: $WP_SYNC_TOKEN" -d ...` して 200 を確認
+5. `publish_wordpress.py` の送信ヘッダ / Content-Type が変わっていないか直近コミットで確認
+6. 復旧後は未送信分のリペア（`run_pending.py --force` 相当 or 手動トリガ）
+
+**影響**: 公開ブログ `https://ask11.jp/web/boat/` が最新の予想を反映していない可能性。
 
 ---
 
