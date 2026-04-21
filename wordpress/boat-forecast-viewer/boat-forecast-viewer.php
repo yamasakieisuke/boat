@@ -1974,7 +1974,7 @@ function boat_forecast_viewer_render_archive($query) {
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
-        /* ===== Phase 2: archive (grid view) ===== */
+        /* ===== Phase 5: archive (grid view, row-list cards) ===== */
         body {
             margin: 0;
             background: var(--bfv-bg);
@@ -1987,139 +1987,204 @@ function boat_forecast_viewer_render_archive($query) {
         a { color: inherit; }
 
         .bfva-shell {
-            width: min(1120px, calc(100% - 28px));
+            width: min(1120px, calc(100% - 24px));
             margin: 0 auto;
-            padding: 28px 0 72px;
+            padding: 20px 0 72px;
         }
 
+        /* ===== HERO (compact, single line) ===== */
         .bfva-hero {
             background: var(--bfv-surface);
             color: var(--bfv-ink);
             border: 1px solid var(--bfv-line);
             border-radius: var(--bfv-radius-md);
-            padding: 20px 24px;
+            padding: 14px 18px;
             box-shadow: var(--bfv-shadow-xs);
             display: flex;
             align-items: baseline;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 14px;
         }
         .bfva-hero h1 {
             margin: 0;
-            font-size: clamp(22px, 3.6vw, 30px);
-            letter-spacing: 0.04em;
+            font-size: clamp(18px, 2.8vw, 22px);
+            letter-spacing: 0.02em;
             font-feature-settings: "palt";
         }
         .bfva-hero p {
             display: block;
             margin: 0;
             color: var(--bfv-muted);
-            font-size: 13px;
+            font-size: 12px;
+            font-family: var(--bfv-font-mono);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfva-hero-count {
+            margin-left: auto;
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            color: var(--bfv-ink-sub);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
 
+        /* ===== GRID ===== */
         .bfva-grid {
             display: grid;
-            gap: 12px;
+            gap: 10px;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            margin-top: 18px;
         }
 
+        /* ===== CARD ===== */
         .bfva-card {
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-line);
             border-radius: var(--bfv-radius-md);
-            padding: 16px 16px 14px;
+            padding: 0;
+            overflow: hidden;
             box-shadow: var(--bfv-shadow-xs);
             transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
             display: flex;
             flex-direction: column;
-            gap: 10px;
         }
         .bfva-card:hover {
             transform: translateY(-1px);
             box-shadow: var(--bfv-shadow-md);
             border-color: var(--bfv-line-strong);
         }
+
+        /* card header */
         .bfva-card-head {
+            padding: 12px 14px 10px;
+            border-bottom: 1px solid var(--bfv-line);
             display: flex;
             align-items: baseline;
             justify-content: space-between;
             gap: 10px;
             margin-bottom: 0;
         }
+        .bfva-card-head-left {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            min-width: 0;
+        }
         .bfva-card h2 {
             margin: 0;
-            font-size: 22px;
-            letter-spacing: 0.02em;
-            font-feature-settings: "palt";
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+        }
+        .bfva-card-slug {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
         }
         .bfva-card-link {
             color: var(--bfv-ink);
             text-decoration: none;
-            font-weight: 700;
         }
         .bfva-card-link:hover { color: var(--bfv-accent); }
+        .bfva-card-date {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-ink-sub);
+            white-space: nowrap;
+        }
 
+        /* card meta row */
         .bfva-card-meta {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--bfv-line);
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px 10px;
-            font-size: 12px;
+            gap: 14px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
             color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
         .bfva-card-meta strong {
             color: var(--bfv-ink);
             font-weight: 600;
-        }
-        .bfva-card-date {
-            font-family: var(--bfv-font-mono);
-            font-size: 12px;
-            color: var(--bfv-ink-sub);
+            font-size: 13px;
+            margin-right: 4px;
+            text-transform: none;
         }
 
+        /* history row list (replaces the chip row) */
         .bfva-card-list {
             display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 2px;
+            flex-direction: column;
         }
-        .bfva-card-chip {
-            display: inline-flex;
+        .bfva-card-row {
+            display: grid;
+            grid-template-columns: 10px 1fr auto;
+            gap: 10px;
             align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-radius: 999px;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
-            font-family: var(--bfv-font-mono);
-            font-size: 11px;
+            padding: 8px 14px;
             color: var(--bfv-ink-sub);
             text-decoration: none;
-            white-space: nowrap;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            border-bottom: 1px solid rgba(26,25,21,0.04);
         }
-        .bfva-card-chip:hover {
-            background: var(--bfv-accent-soft);
-            border-color: var(--bfv-accent);
-            color: var(--bfv-accent);
+        .bfva-card-row:last-child { border-bottom: 0; }
+        .bfva-card-row:hover {
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink);
         }
-        .bfva-card-chip.has-review::after {
-            content: "●";
+        .bfva-card-row-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 1px;
+            background: var(--bfv-line-strong);
+        }
+        .bfva-card-row.has-review .bfva-card-row-dot {
+            background: var(--bfv-accent);
+        }
+        .bfva-card-row-date {
+            color: inherit;
+        }
+        .bfva-card-row-tag {
+            font-size: 9px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfva-card-row.has-review .bfva-card-row-tag {
             color: var(--bfv-accent);
-            font-size: 8px;
         }
 
-        .bfva-card-cta {
+        /* card footer (cta) */
+        .bfva-card-foot {
             margin-top: auto;
-            align-self: flex-end;
-            font-size: 12px;
-            font-weight: 700;
+            padding: 8px 14px;
+            background: var(--bfv-surface-sub);
+            border-top: 1px solid var(--bfv-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bfva-card-foot-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfva-card-cta {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 600;
             color: var(--bfv-accent);
             text-decoration: none;
+            letter-spacing: 0.04em;
         }
         .bfva-card-cta::after { content: " →"; }
 
-        /* ===== venue-specific list view (Phase 2未改修、維持) ===== */
+        /* ===== venue-specific list view (Phase 5範囲外、維持) ===== */
         .bfva-meta { color: var(--bfv-ink-sub); font-size: 14px; display: grid; gap: 6px; }
         .bfva-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
         .bfva-badge { background: var(--bfv-surface-sub); padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid var(--bfv-line); }
@@ -2158,9 +2223,9 @@ function boat_forecast_viewer_render_archive($query) {
             .bfva-row { grid-template-columns: 1fr; }
         }
         @media (max-width: 640px) {
-            .bfva-shell { width: calc(100% - 16px); padding-top: 16px; }
-            .bfva-hero { padding: 16px 18px; }
-            .bfva-grid { grid-template-columns: 1fr; gap: 10px; }
+            .bfva-shell { width: calc(100% - 16px); padding-top: 14px; }
+            .bfva-hero { padding: 12px 14px; }
+            .bfva-grid { grid-template-columns: 1fr; gap: 8px; }
         }
 
         /* ===== グローバルナビ (archive) ===== */
@@ -2195,13 +2260,18 @@ function boat_forecast_viewer_render_archive($query) {
 <body>
 <div class="bfva-shell">
     <?php boat_forecast_viewer_render_nav('archive'); ?>
-    <section class="bfva-hero">
-        <?php if ($venue_slug) : ?>
+    <?php if ($venue_slug) : ?>
+        <header class="bfva-hero">
             <h1><?php echo esc_html($venue_name); ?></h1>
-        <?php else : ?>
+            <p>Forecast Archive</p>
+        </header>
+    <?php else : ?>
+        <header class="bfva-hero">
             <h1>会場一覧</h1>
-        <?php endif; ?>
-    </section>
+            <p>Forecast Archive</p>
+            <span class="bfva-hero-count"><?php echo count($venues); ?> venues</span>
+        </header>
+    <?php endif; ?>
     <?php if ($venue_slug) : ?>
         <nav class="bfva-crumbs">
             <a href="<?php echo esc_url(get_post_type_archive_link('forecast_day') ?: home_url('/race/')); ?>">会場一覧</a>
@@ -2237,37 +2307,44 @@ function boat_forecast_viewer_render_archive($query) {
             <?php endforeach; ?>
         </section>
     <?php else : ?>
-        <section class="bfva-grid">
-            <?php foreach ($venues as $venue) :
-                $venue_link = home_url('/race/' . $venue['slug'] . '/');
-                $items = isset($venue['items']) && is_array($venue['items']) ? $venue['items'] : [];
-            ?>
-                <article class="bfva-card">
-                    <div class="bfva-card-head">
-                        <h2><a class="bfva-card-link" href="<?php echo esc_url($venue_link); ?>"><?php echo esc_html((string) $venue['name']); ?></a></h2>
-                        <span class="bfva-card-date"><?php echo esc_html((string) $venue['latest_date']); ?></span>
+        <div class="bfva-grid">
+        <?php foreach ($venues as $venue):
+            $latest_link = !empty($venue['latest_link']) ? $venue['latest_link'] : home_url('/race/' . $venue['slug'] . '/');
+            $items = isset($venue['items']) && is_array($venue['items']) ? $venue['items'] : [];
+        ?>
+            <article class="bfva-card">
+                <div class="bfva-card-head">
+                    <div class="bfva-card-head-left">
+                        <h2><a class="bfva-card-link" href="<?php echo esc_url($latest_link); ?>"><?php echo esc_html($venue['name']); ?></a></h2>
+                        <span class="bfva-card-slug">/<?php echo esc_html($venue['slug']); ?></span>
                     </div>
-                    <div class="bfva-card-meta">
-                        <span>予想 <strong><?php echo (int) $venue['count']; ?></strong></span>
-                        <span>振り返り <strong><?php echo (int) $venue['review_count']; ?></strong></span>
-                    </div>
-                    <?php if (!empty($items)) : ?>
-                        <div class="bfva-card-list">
-                            <?php foreach ($items as $item) :
-                                $chip_href = !empty($item['has_review']) ? ($item['link'] . '#review') : $item['link'];
-                                $chip_class = 'bfva-card-chip' . (!empty($item['has_review']) ? ' has-review' : '');
-                                $chip_title = !empty($item['has_review']) ? '振り返りあり' : '予想あり';
-                            ?>
-                                <a class="<?php echo esc_attr($chip_class); ?>"
-                                   href="<?php echo esc_url($chip_href); ?>"
-                                   title="<?php echo esc_attr($chip_title); ?>"><?php echo esc_html((string) $item['date']); ?></a>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-                    <a class="bfva-card-cta" href="<?php echo esc_url($venue_link); ?>">すべて見る</a>
-                </article>
-            <?php endforeach; ?>
-        </section>
+                    <span class="bfva-card-date"><?php echo esc_html($venue['latest_date']); ?></span>
+                </div>
+
+                <div class="bfva-card-meta">
+                    <span><strong><?php echo (int) $venue['count']; ?></strong>予想</span>
+                    <span><strong><?php echo (int) $venue['review_count']; ?></strong>振り返り</span>
+                </div>
+
+                <div class="bfva-card-list">
+                    <?php foreach ($items as $item): ?>
+                        <a class="bfva-card-row<?php echo !empty($item['has_review']) ? ' has-review' : ''; ?>"
+                           href="<?php echo esc_url(!empty($item['has_review']) ? ($item['link'] . '#review') : $item['link']); ?>"
+                           title="<?php echo esc_attr((string) ($item['title'] ?? '')); ?>">
+                            <span class="bfva-card-row-dot" aria-hidden="true"></span>
+                            <span class="bfva-card-row-date"><?php echo esc_html((string) $item['date']); ?></span>
+                            <span class="bfva-card-row-tag"><?php echo !empty($item['has_review']) ? '振返済' : '予想のみ'; ?></span>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="bfva-card-foot">
+                    <span class="bfva-card-foot-meta"><?php echo (int) $venue['count']; ?>R記録 · <?php echo (int) $venue['review_count']; ?>R振返済</span>
+                    <a class="bfva-card-cta" href="<?php echo esc_url($latest_link); ?>">詳細</a>
+                </div>
+            </article>
+        <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 </div>
 </body>
