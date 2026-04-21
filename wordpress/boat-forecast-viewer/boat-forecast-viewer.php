@@ -204,13 +204,11 @@ function boat_forecast_viewer_load_payload($post_id) {
 }
 
 function boat_forecast_viewer_render_badge($active, $label) {
-    $class = $active ? 'is-on' : 'is-off';
-    $text = $active ? '反映済み' : '未反映';
+    $class = $active ? 'bfv-badge is-on' : 'bfv-badge';
     return sprintf(
-        '<span class="bfv-badge %s">%s: %s</span>',
+        '<span class="%s">%s</span>',
         esc_attr($class),
-        esc_html($label),
-        esc_html($text)
+        esc_html($label)
     );
 }
 
@@ -444,13 +442,14 @@ function boat_forecast_viewer_render_single($payload, $post) {
             padding: 24px 0 56px;
             overflow-x: visible;
         }
+        /* ===== Phase 10: single hero & side info ===== */
         .bfv-hero {
+            padding: 20px 24px 22px;
+            border-radius: var(--bfv-radius-lg);
             background: var(--bfv-surface);
-            color: var(--bfv-ink);
-            border: 1px solid var(--bfv-line);
-            border-radius: var(--bfv-radius-md);
-            padding: 18px 22px;
-            box-shadow: var(--bfv-shadow-xs);
+            border: 1px solid var(--bfv-border);
+            display: grid;
+            gap: 10px;
             position: relative;
             overflow: hidden;
         }
@@ -462,106 +461,162 @@ function boat_forecast_viewer_render_single($payload, $post) {
             height: 220px;
             border-radius: 999px;
             background: var(--bfv-accent-soft);
-            opacity: .6;
+            opacity: .5;
+            pointer-events: none;
         }
         .bfv-kicker {
             display: inline-block;
-            font-size: 12px;
-            letter-spacing: .08em;
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            color: var(--bfv-accent);
+            font-weight: 600;
+            padding: 0;
+            background: transparent;
+            border: 0;
             text-transform: uppercase;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: var(--bfv-surface-sub);
-            color: var(--bfv-ink-sub);
-            border: 1px solid var(--bfv-line);
         }
         .bfv-title {
-            margin: 10px 0 6px;
-            font-size: clamp(24px, 4.4vw, 34px);
-            line-height: 1.3;
-            letter-spacing: 0.04em;
-            font-feature-settings: "palt";
+            margin: 0;
+            font-size: clamp(24px, 3.2vw, 34px);
+            font-weight: 800;
+            line-height: 1.15;
             color: var(--bfv-ink);
+            letter-spacing: 0.02em;
+            font-feature-settings: "palt";
+        }
+        .bfv-title span {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 0.6em;
+            color: var(--bfv-ink-dim);
+            font-weight: 600;
         }
         .bfv-sub {
-            color: var(--bfv-ink-sub);
-            font-size: 14px;
-            line-height: 1.7;
-            max-width: 760px;
+            margin: 0;
+            font-size: 13px;
+            color: var(--bfv-ink-dim);
+            max-width: 60ch;
+            line-height: 1.6;
         }
         .bfv-meta {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 18px;
+            gap: 6px 10px;
+            align-items: center;
         }
         .bfv-jump {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 13px;
-            font-weight: 700;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
-            color: var(--bfv-ink);
+            margin-left: auto;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--bfv-accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 120ms ease;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+        }
+        .bfv-jump:hover {
+            border-bottom-color: var(--bfv-accent);
+            background: transparent;
             text-decoration: none;
         }
-        .bfv-jump:hover { background: var(--bfv-accent-soft); border-color: var(--bfv-accent); color: var(--bfv-accent); text-decoration: none; }
         .bfv-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
+            gap: 5px;
+            padding: 3px 10px;
             border-radius: 999px;
-            font-size: 13px;
-            font-weight: 700;
-            background: var(--bfv-surface-sub);
-            border: 1px solid var(--bfv-line);
-            color: var(--bfv-ink-sub);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--bfv-ink-dim);
+            border: 1px solid var(--bfv-border);
+            background: var(--bfv-surface-2);
         }
-        .bfv-badge.is-on { background: var(--bfv-good-soft); color: var(--bfv-good); border-color: rgba(30,123,101,.25); }
-        .bfv-badge.is-off { background: var(--bfv-surface-sub); color: var(--bfv-muted); }
+        .bfv-badge.is-on {
+            color: var(--bfv-ok);
+            border-color: transparent;
+            background: var(--bfv-ok-soft);
+        }
+        .bfv-badge.is-on::before {
+            content: "●";
+            font-size: 8px;
+            line-height: 1;
+        }
         .bfv-note {
             margin-top: 14px;
-            color: var(--bfv-ink-sub);
-            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-warn-soft);
+            color: var(--bfv-warn);
+            font-size: 12.5px;
+            line-height: 1.5;
         }
         .bfv-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
-            gap: 18px;
-            margin-top: 18px;
+            grid-template-columns: minmax(0, 1fr) 320px;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        @media (max-width: 960px) {
+            .bfv-grid { grid-template-columns: 1fr; }
         }
         .bfv-grid > * { min-width: 0; }
         .bfv-panel {
-            background: var(--panel);
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
+            padding: 18px 20px;
+            border-radius: var(--bfv-radius-lg);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border);
+            display: grid;
+            gap: 12px;
             width: 100%;
             max-width: 100%;
         }
         .bfv-panel-head {
             display: flex;
-            align-items: center;
+            align-items: baseline;
             justify-content: space-between;
             gap: 12px;
-            padding: 18px 20px 14px;
-            border-bottom: 1px solid var(--line);
+            padding: 0;
+            border-bottom: 0;
         }
         .bfv-panel-head h2 {
-            margin: 0;
-            font-size: 18px;
-            letter-spacing: 0.04em;
+            margin: 0 0 2px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--bfv-ink);
+            letter-spacing: 0.02em;
             font-feature-settings: "palt";
         }
         .bfv-panel-head p {
             margin: 0;
+            font-size: 12px;
+            color: var(--bfv-ink-dim);
+        }
+        .bfv-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        .bfv-info-card {
+            padding: 10px 12px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-surface-2);
+            display: grid;
+            gap: 3px;
+        }
+        .bfv-info-card strong {
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            color: var(--bfv-ink-dim);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .bfv-info-card span {
             font-size: 13px;
-            color: var(--muted);
+            color: var(--bfv-ink);
+            font-variant-numeric: tabular-nums;
+            word-break: break-all;
         }
         /* ===== Phase 8: 12R summary table ===== */
         .bfv-table-wrap {
@@ -694,33 +749,6 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-size: 14px;
         }
         .bfv-legend dt { color: var(--muted); }
-        .bfv-info-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 10px;
-        }
-        .bfv-info-card {
-            padding: 12px 14px;
-            border-radius: 12px;
-            background: var(--bg);
-            border: 1px solid var(--line);
-        }
-        .bfv-info-card strong {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 11px;
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            color: var(--muted);
-        }
-        .bfv-info-card span {
-            display: block;
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--ink);
-            overflow-wrap: anywhere;
-            word-break: break-word;
-        }
         .bfv-races {
             display: grid;
             gap: 14px;
