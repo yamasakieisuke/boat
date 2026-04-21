@@ -563,39 +563,60 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-size: 13px;
             color: var(--muted);
         }
+        /* ===== Phase 8: 12R summary table ===== */
         .bfv-table-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
+            border-radius: var(--bfv-radius-md);
+            border: 1px solid var(--bfv-border);
+            background: var(--bfv-surface);
         }
         .bfv-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 13px;
         }
-        .bfv-table th,
-        .bfv-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid var(--line);
-            text-align: left;
-            vertical-align: top;
-            font-size: 14px;
-        }
+        .bfv-table thead { background: var(--bfv-surface-2); }
         .bfv-table th {
-            font-size: 12px;
-            letter-spacing: .06em;
-            text-transform: uppercase;
-            color: var(--muted);
-            background: var(--bfv-surface-sub);
+            text-align: left;
+            padding: 10px 12px;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: var(--bfv-ink-dim);
+            font-weight: 600;
+            border-bottom: 1px solid var(--bfv-border);
             white-space: nowrap;
         }
+        .bfv-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--bfv-border-soft);
+            vertical-align: top;
+        }
+        .bfv-table tr:last-child td { border-bottom: none; }
+        .bfv-table tr:hover td { background: var(--bfv-surface-2); }
+
+        /* R column as pill button */
         .bfv-race-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 32px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-accent-soft);
             color: var(--bfv-accent);
             font-weight: 700;
+            font-size: 14px;
             text-decoration: none;
+            transition: background 120ms ease, color 120ms ease;
         }
         .bfv-race-link:hover {
-            text-decoration: underline;
+            background: var(--bfv-accent);
+            color: var(--bfv-surface);
+            text-decoration: none;
         }
-        .bfv-table tr:last-child td { border-bottom: 0; }
+
+        /* bet text inside summary table */
         .bfv-bet {
             font-weight: 800;
             font-family: SFMono-Regular, Consolas, Menlo, Courier, monospace;
@@ -603,14 +624,46 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-bet-list { display: grid; gap: 6px; }
         .bfv-table-bets {
-            display: grid;
-            gap: 4px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 8px;
             min-width: 88px;
         }
         .bfv-table-bets .bfv-bet {
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--bfv-ink);
+            background: transparent;
+            padding: 0;
             line-height: 1.25;
         }
+        .bfv-table-bets .bfv-odds {
+            font-size: 11px;
+            color: var(--bfv-ink-dim);
+            margin-left: 2px;
+        }
+
+        /* confidence dot (Phase 8d) */
+        .bfv-table td[data-conf] {
+            position: relative;
+            padding-right: 24px;
+            font-variant-numeric: tabular-nums;
+            font-weight: 600;
+        }
+        .bfv-table td[data-conf]::after {
+            content: "";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--bfv-ink-dim);
+        }
+        .bfv-table td[data-conf="high"]::after { background: var(--bfv-ok); }
+        .bfv-table td[data-conf="mid"]::after  { background: var(--bfv-accent); }
+        .bfv-table td[data-conf="low"]::after  { background: var(--bfv-warn); }
         /* confidence text color (for summary table td etc.) */
         .is-conf-high { color: var(--bfv-ok); }
         .is-conf-mid { color: var(--bfv-accent); }
@@ -620,14 +673,13 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-pill.is-conf-mid  { color: var(--bfv-accent); background: var(--bfv-accent-soft); }
         .bfv-pill.is-conf-low  { color: var(--bfv-warn); background: var(--bfv-warn-soft); }
         .bfv-rough {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 8px;
+            display: inline-block;
+            padding: 2px 8px;
             border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--warn);
-            background: var(--warn-soft);
+            background: var(--bfv-warn-soft);
+            color: var(--bfv-warn);
+            font-size: 11px;
+            font-weight: 600;
         }
         .bfv-legend {
             display: grid;
@@ -1368,7 +1420,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
                                     <?php endforeach; ?>
                                 </div>
                             </td>
-                            <td class="<?php echo esc_attr(boat_forecast_viewer_conf_class((string) ($race['confidence_label'] ?? 'low'))); ?>">
+                            <td class="<?php echo esc_attr(boat_forecast_viewer_conf_class((string) ($race['confidence_label'] ?? 'low'))); ?>" data-conf="<?php echo esc_attr((string) ($race['confidence_label'] ?? 'low')); ?>">
                                 <?php echo esc_html((string) ($race['confidence'] ?? '')); ?>%
                             </td>
                             <td>
