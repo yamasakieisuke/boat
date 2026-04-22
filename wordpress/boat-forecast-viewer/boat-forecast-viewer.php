@@ -680,17 +680,6 @@ function boat_forecast_viewer_render_single($payload, $post) {
             position: relative;
             overflow: hidden;
         }
-        .bfv-hero::after {
-            content: "";
-            position: absolute;
-            inset: auto -60px -60px auto;
-            width: 220px;
-            height: 220px;
-            border-radius: 999px;
-            background: var(--bfv-accent-soft);
-            opacity: .5;
-            pointer-events: none;
-        }
         .bfv-kicker {
             display: inline-block;
             font-size: 11px;
@@ -845,7 +834,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-variant-numeric: tabular-nums;
             word-break: break-all;
         }
-        /* ===== Phase 14: 12R flash list + カオ予想 TOP panel ===== */
+        /* ===== Phase 14: 12R flash list + 本命 TOP TOP panel ===== */
         .bfv-flash {
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-border);
@@ -1004,7 +993,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             .bfv-flash-odds { grid-column: 4 / 5; grid-row: 2; font-size: 11px; }
         }
 
-        /* ===== カオ予想 TOP panel ===== */
+        /* ===== 本命 TOP TOP panel ===== */
         .bfv-pick-top {
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-border);
@@ -1030,17 +1019,30 @@ function boat_forecast_viewer_render_single($payload, $post) {
             color: var(--bfv-muted);
         }
         .bfv-pick-race {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
             font-family: var(--bfv-font-mono);
-            font-weight: 600;
-            font-size: 15px;
             color: var(--bfv-accent);
             text-decoration: none;
+            min-width: 0;
         }
-        .bfv-pick-race span {
+        .bfv-pick-rno {
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            line-height: 1;
+        }
+        .bfv-pick-type {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--bfv-ink);
+            letter-spacing: 0.02em;
+        }
+        .bfv-pick-time {
             color: var(--bfv-muted);
             font-weight: 400;
             font-size: 11px;
-            margin-left: 6px;
         }
         .bfv-pick-body { display: grid; gap: 0; }
         .bfv-pick-group {
@@ -2205,7 +2207,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
     </section>
 
     <?php
-    // Phase 14: 12R flash list data prep + top-confidence race for カオ予想 panel.
+    // Phase 14: 12R flash list data prep + top-confidence race for 本命 TOP panel.
     $top_race = null;
     foreach ($races as $__r) {
         $c = is_numeric($__r['confidence'] ?? null) ? (float) $__r['confidence'] : 0.0;
@@ -2254,7 +2256,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         </span>
                         <span class="bfv-flash-odds">
                             <?php if ($main_odds !== null) : ?>×<?php echo esc_html(number_format($main_odds, 1)); ?><?php else : ?>—<?php endif; ?>
-                            <?php if (!empty($race['is_rough'])) : ?><span class="bfv-flash-tag">ROUGH</span><?php endif; ?>
+                            <?php if (!empty($race['is_rough'])) : ?><span class="bfv-flash-tag">荒れ</span><?php endif; ?>
                         </span>
                     </a>
                 </li>
@@ -2264,10 +2266,16 @@ boat_forecast_viewer_render_nav('single', $single_section);
 
         <aside class="bfv-pick-top">
             <div class="bfv-pick-head">
-                <span class="bfv-pick-label">カオ予想 · Top</span>
                 <?php if ($top_race && !empty($top_race['race_no'])) : ?>
-                    <a class="bfv-pick-race" href="#race-<?php echo esc_attr((string) $top_race['race_no']); ?>"><?php echo esc_html((string) $top_race['race_no']); ?>R<span><?php echo esc_html((string) ($top_race['start_time'] ?? '')); ?></span></a>
+                    <a class="bfv-pick-race" href="#race-<?php echo esc_attr((string) $top_race['race_no']); ?>">
+                        <span class="bfv-pick-rno"><?php echo esc_html((string) $top_race['race_no']); ?>R</span>
+                        <?php if (!empty($top_race['race_type'])) : ?>
+                            <span class="bfv-pick-type"><?php echo esc_html((string) $top_race['race_type']); ?></span>
+                        <?php endif; ?>
+                        <span class="bfv-pick-time"><?php echo esc_html((string) ($top_race['start_time'] ?? '')); ?></span>
+                    </a>
                 <?php endif; ?>
+                <span class="bfv-pick-label">本命 · Top</span>
             </div>
             <?php if ($top_race) :
                 $pick_groups = [
@@ -2296,7 +2304,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                 </div>
                 <div class="bfv-pick-foot">
                     <span class="bfv-pick-conf is-conf-<?php echo esc_attr($top_conf_l); ?>">信頼度 <?php echo esc_html((string) $top_conf_v); ?>%</span>
-                    <?php if (!empty($top_race['is_rough'])) : ?><span class="bfv-flash-tag">ROUGH</span><?php endif; ?>
+                    <?php if (!empty($top_race['is_rough'])) : ?><span class="bfv-flash-tag">荒れ</span><?php endif; ?>
                 </div>
             <?php else : ?>
                 <div class="bfv-pick-empty">予想データ準備中</div>
@@ -2320,7 +2328,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                     <div class="bfv-race-hero-right">
                         <span class="bfv-race-conf is-conf-<?php echo esc_attr($r_conf_l); ?>">信頼 <?php echo esc_html((string) $r_conf_v); ?>%</span>
                         <?php if (!empty($race['is_rough'])) : ?>
-                            <span class="bfv-race-rough">Rough</span>
+                            <span class="bfv-race-rough">荒れ</span>
                         <?php endif; ?>
                     </div>
                 </header>
