@@ -1336,24 +1336,30 @@ function boat_forecast_viewer_render_single($payload, $post) {
             text-transform: uppercase;
             margin: 0;
         }
-        .bfv-betbox .bfv-bet { font-size: 16px; }
+        .bfv-betbox .bfv-bet { font-size: 17px; }
         .bfv-bet {
-            display: inline-flex;
-            align-items: baseline;
-            gap: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
             font-family: var(--bfv-font-mono);
             font-weight: 500;
             letter-spacing: 0.04em;
             color: var(--bfv-ink);
             font-variant-numeric: tabular-nums;
+            line-height: 1.15;
         }
         .bfv-odds {
             font-size: 11px;
             color: var(--bfv-muted);
             font-weight: 400;
-            margin-left: 4px;
             letter-spacing: 0.02em;
         }
+        /* keep legacy inline table bets inline */
+        .bfv-table-bets .bfv-bet { flex-direction: row; align-items: baseline; gap: 4px; }
+        .bfv-table-bets .bfv-odds { margin-left: 4px; }
+
+        /* 種別ごとの左アクセント */
         .bfv-betbox.is-main {
             background: var(--bfv-accent-soft);
             border-color: transparent;
@@ -1361,6 +1367,24 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-betbox.is-main strong { color: var(--bfv-accent); }
         .bfv-betbox.is-main .bfv-bet { color: var(--bfv-ink); }
+        .bfv-betbox.is-sub {
+            border-left: 3px solid var(--bfv-ink-sub);
+        }
+        .bfv-betbox.is-sub strong { color: var(--bfv-ink-sub); }
+        .bfv-betbox.is-long {
+            border-left: 3px solid var(--bfv-warn);
+            background: var(--bfv-warn-soft);
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+        }
+        .bfv-betbox.is-long strong { color: var(--bfv-warn); }
+        .bfv-betbox.is-cover {
+            background: var(--bfv-surface-sub);
+            border-color: var(--bfv-border-soft);
+        }
+        .bfv-betbox.is-cover strong { color: var(--bfv-muted); }
+        .bfv-betbox.is-cover .bfv-bet { color: var(--bfv-ink-sub); font-size: 15px; }
         .bfv-comment {
             padding: 10px 12px;
             background: var(--bfv-surface-2);
@@ -1878,57 +1902,123 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-exhibition-order { margin-top: 8px; font-size: 12px; color: var(--bfv-ink-dim); }
 
         /* 予算別買い目 */
-        .bfv-budget-section { display: grid; gap: 10px; margin-top: 12px; }
+        /* ===== Phase 19: 予算別買い目（warm palette + mono tabular） ===== */
+        .bfv-budget-section { display: grid; gap: 8px; margin-top: 14px; }
         .bfv-budget-section h4 {
-            margin: 0;
-            font-size: 12px;
-            letter-spacing: 0.08em;
-            color: var(--bfv-accent);
-            font-weight: 600;
+            margin: 0 0 2px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--bfv-muted);
+            font-weight: 500;
+            text-transform: uppercase;
         }
         .bfv-budget-box {
             padding: 12px 14px;
-            border-radius: var(--bfv-radius-md);
+            border-radius: var(--bfv-radius-sm);
             background: var(--bfv-surface);
-            border: 1px solid var(--bfv-border-soft);
+            border: 1px solid var(--bfv-border);
+            display: grid;
+            gap: 8px;
         }
         .bfv-budget-head {
             display: flex;
             flex-wrap: wrap;
             align-items: baseline;
             gap: 6px 10px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
             color: var(--bfv-ink);
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .bfv-budget-amount {
+            font-family: var(--bfv-font-mono);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--bfv-ink);
+            letter-spacing: -0.01em;
+            font-variant-numeric: tabular-nums;
+        }
+        .bfv-budget-amount small {
+            font-size: 0.65em;
+            color: var(--bfv-muted);
+            font-weight: 400;
+            margin-left: 2px;
+        }
+        .bfv-budget-strategy {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--bfv-ink-sub);
         }
         .bfv-budget-status {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
             padding: 2px 8px;
             border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
-        .bfv-budget-ok { color: var(--bfv-ok); background: var(--bfv-ok-soft); }
+        .bfv-budget-status::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        .bfv-budget-ok { color: var(--bfv-good); background: var(--bfv-good-soft); }
         .bfv-budget-ng { color: var(--bfv-warn); background: var(--bfv-warn-soft); }
-        .bfv-budget-note { font-size: 12px; color: var(--bfv-ink-dim); }
+        .bfv-budget-note {
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.02em;
+        }
+        .bfv-budget-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 14px;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            color: var(--bfv-ink-sub);
+        }
+        .bfv-budget-metric-label {
+            color: var(--bfv-muted);
+            font-size: 9.5px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-right: 4px;
+        }
         .bfv-budget-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12.5px;
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
         }
         .bfv-budget-table th,
         .bfv-budget-table td {
-            padding: 6px 8px;
+            padding: 7px 8px;
             border-bottom: 1px solid var(--bfv-border-soft);
             text-align: left;
             font-variant-numeric: tabular-nums;
+            letter-spacing: 0.02em;
         }
         .bfv-budget-table th {
-            background: var(--bfv-surface-2);
-            font-size: 11px;
-            color: var(--bfv-ink-dim);
-            font-weight: 600;
+            background: transparent;
+            font-size: 9.5px;
+            color: var(--bfv-muted);
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            border-bottom-color: var(--bfv-border);
+        }
+        .bfv-budget-table td {
+            color: var(--bfv-ink);
+        }
+        .bfv-budget-table td:nth-child(n+3) {
+            color: var(--bfv-ink);
         }
         .bfv-budget-table tr:last-child td { border-bottom: none; }
         /* v5.18: review 追加カード行 */
@@ -2414,7 +2504,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <?php endforeach; ?>
                         </div>
                     </section>
-                    <section class="bfv-betbox">
+                    <section class="bfv-betbox is-sub">
                         <strong>対抗</strong>
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['sub_bets']) && is_array($race['sub_bets']) ? $race['sub_bets'] : [['combo' => ($race['sub_bet'] ?? '')]]) as $bet) : ?>
@@ -2424,7 +2514,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <?php endforeach; ?>
                         </div>
                     </section>
-                    <section class="bfv-betbox">
+                    <section class="bfv-betbox is-long">
                         <strong>穴</strong>
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['longshot_bets']) && is_array($race['longshot_bets']) ? $race['longshot_bets'] : [['combo' => ($race['longshot_bet'] ?? '')]]) as $bet) : ?>
@@ -2434,7 +2524,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <?php endforeach; ?>
                         </div>
                     </section>
-                    <section class="bfv-betbox">
+                    <section class="bfv-betbox is-cover">
                         <strong>押さえ</strong>
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['cover_bets']) && is_array($race['cover_bets']) ? $race['cover_bets'] : [['combo' => ($race['cover_bet'] ?? '')]]) as $bet) : ?>
@@ -2465,31 +2555,37 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
-                <?php /* v5.18: 予算別買い目セクション */ ?>
+                <?php /* Phase 19: 予算別買い目セクション */ ?>
                 <?php if (!empty($race['budget_plans']) && is_array($race['budget_plans'])) : ?>
                     <div class="bfv-budget-section">
-                        <h4 style="font-size:14px;color:var(--accent);margin:0 0 6px;">予算別買い目</h4>
-                        <?php foreach ($race['budget_plans'] as $plan) : ?>
+                        <h4>Budget · 予算別買い目</h4>
+                        <?php foreach ($race['budget_plans'] as $plan) :
+                            $trig_ok = !empty($plan['no_trigarami']);
+                            $min_profit = (int) ($plan['min_profit'] ?? 0);
+                            $exp_profit = (int) ($plan['expected_profit'] ?? 0);
+                        ?>
                             <div class="bfv-budget-box">
                                 <div class="bfv-budget-head">
-                                    予算 <?php echo esc_html(number_format((int) ($plan['budget'] ?? 0))); ?>円
-                                    / <?php echo esc_html((string) ($plan['strategy_name'] ?? '配分案')); ?>
-                                    <?php $trig_ok = !empty($plan['no_trigarami']); ?>
-                                    <span class="bfv-budget-status <?php echo $trig_ok ? 'bfv-budget-ok' : 'bfv-budget-ng'; ?>"><?php echo $trig_ok ? 'トリガミ回避' : 'トリガミ回避不可'; ?></span>
-                                    <span class="bfv-budget-note">最悪収支 <?php echo esc_html(number_format((int) ($plan['min_profit'] ?? 0))); ?>円 / 期待収支 <?php echo esc_html(number_format((int) ($plan['expected_profit'] ?? 0))); ?>円</span>
+                                    <span class="bfv-budget-amount"><?php echo esc_html(number_format((int) ($plan['budget'] ?? 0))); ?><small>円</small></span>
+                                    <span class="bfv-budget-strategy"><?php echo esc_html((string) ($plan['strategy_name'] ?? '配分案')); ?></span>
+                                    <span class="bfv-budget-status <?php echo $trig_ok ? 'bfv-budget-ok' : 'bfv-budget-ng'; ?>"><?php echo $trig_ok ? 'トリガミ回避' : '回避不可'; ?></span>
+                                </div>
+                                <div class="bfv-budget-metrics">
+                                    <span><span class="bfv-budget-metric-label">Worst</span><?php echo esc_html(number_format($min_profit)); ?>円</span>
+                                    <span><span class="bfv-budget-metric-label">Expected</span><?php echo esc_html(number_format($exp_profit)); ?>円</span>
                                 </div>
                                 <?php if (!empty($plan['strategy_description'])) : ?>
-                                    <div class="bfv-budget-note" style="margin-bottom:6px;"><?php echo esc_html((string) $plan['strategy_description']); ?></div>
+                                    <div class="bfv-budget-note"><?php echo esc_html((string) $plan['strategy_description']); ?></div>
                                 <?php endif; ?>
                                 <?php if (!empty($plan['rows']) && is_array($plan['rows'])) : ?>
                                     <table class="bfv-budget-table">
-                                        <tr><th>種別</th><th>買い目</th><th>配分</th><th>オッズ</th><th>的中時収支</th></tr>
+                                        <tr><th>種別</th><th>買い目</th><th>配分</th><th>オッズ</th><th>的中収支</th></tr>
                                         <?php foreach ($plan['rows'] as $brow) : ?>
                                             <tr>
                                                 <td><?php echo esc_html((string) ($brow['label'] ?? '')); ?></td>
                                                 <td><?php echo esc_html((string) ($brow['combo'] ?? '')); ?></td>
                                                 <td><?php echo esc_html(number_format((int) ($brow['stake'] ?? 0))); ?>円</td>
-                                                <td><?php echo esc_html(number_format((float) ($brow['odds'] ?? 0), 1)); ?>倍</td>
+                                                <td>×<?php echo esc_html(number_format((float) ($brow['odds'] ?? 0), 1)); ?></td>
                                                 <td><?php echo esc_html(number_format((int) ($brow['profit_if_hit'] ?? 0))); ?>円</td>
                                             </tr>
                                         <?php endforeach; ?>
