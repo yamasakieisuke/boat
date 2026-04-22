@@ -1310,43 +1310,57 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-size: 12px;
             font-weight: 700;
         }
+        /* ===== Phase 18: bet boxes (warm, mono-forward) ===== */
         .bfv-bets {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+            margin: 12px 0;
         }
         .bfv-betbox {
-            padding: 12px 14px;
-            border-radius: var(--bfv-radius-md);
+            padding: 10px 12px;
+            border-radius: var(--bfv-radius-sm);
             border: 1px solid var(--bfv-border);
-            background: var(--bfv-surface-2);
+            background: var(--bfv-surface);
+            display: grid;
+            gap: 8px;
+            min-width: 0;
         }
-        .bfv-betbox main, .bfv-betbox strong { display: block; }
         .bfv-betbox strong {
-            font-size: 11px;
-            color: var(--bfv-ink-dim);
-            margin-bottom: 6px;
-            letter-spacing: .08em;
+            display: block;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--bfv-muted);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin: 0;
         }
-        .bfv-betbox .bfv-bet { font-size: 20px; }
+        .bfv-betbox .bfv-bet { font-size: 16px; }
         .bfv-bet {
             display: inline-flex;
             align-items: baseline;
             gap: 4px;
+            font-family: var(--bfv-font-mono);
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--bfv-ink);
             font-variant-numeric: tabular-nums;
-            font-weight: 600;
         }
         .bfv-odds {
             font-size: 11px;
-            color: var(--bfv-ink-dim);
-            font-weight: 500;
+            color: var(--bfv-muted);
+            font-weight: 400;
             margin-left: 4px;
+            letter-spacing: 0.02em;
         }
         .bfv-betbox.is-main {
             background: var(--bfv-accent-soft);
-            border-color: var(--bfv-accent);
+            border-color: transparent;
+            border-left: 3px solid var(--bfv-accent);
         }
         .bfv-betbox.is-main strong { color: var(--bfv-accent); }
+        .bfv-betbox.is-main .bfv-bet { color: var(--bfv-ink); }
         .bfv-comment {
             padding: 10px 12px;
             background: var(--bfv-surface-2);
@@ -2395,7 +2409,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['main_bets']) && is_array($race['main_bets']) ? $race['main_bets'] : [['combo' => ($race['main_bet'] ?? '')]]) as $bet) : ?>
                                 <?php if (!empty($bet['combo'])) : ?>
-                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
+                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds">×<?php echo esc_html(number_format((float) $bet['odds'], 1)); ?></span><?php endif; ?></span>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
@@ -2405,7 +2419,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['sub_bets']) && is_array($race['sub_bets']) ? $race['sub_bets'] : [['combo' => ($race['sub_bet'] ?? '')]]) as $bet) : ?>
                                 <?php if (!empty($bet['combo'])) : ?>
-                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
+                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds">×<?php echo esc_html(number_format((float) $bet['odds'], 1)); ?></span><?php endif; ?></span>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
@@ -2415,7 +2429,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['longshot_bets']) && is_array($race['longshot_bets']) ? $race['longshot_bets'] : [['combo' => ($race['longshot_bet'] ?? '')]]) as $bet) : ?>
                                 <?php if (!empty($bet['combo'])) : ?>
-                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
+                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds">×<?php echo esc_html(number_format((float) $bet['odds'], 1)); ?></span><?php endif; ?></span>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
@@ -2425,7 +2439,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <div class="bfv-bet-list">
                             <?php foreach ((isset($race['cover_bets']) && is_array($race['cover_bets']) ? $race['cover_bets'] : [['combo' => ($race['cover_bet'] ?? '')]]) as $bet) : ?>
                                 <?php if (!empty($bet['combo'])) : ?>
-                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
+                                    <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds">×<?php echo esc_html(number_format((float) $bet['odds'], 1)); ?></span><?php endif; ?></span>
                                 <?php endif; ?>
                             <?php endforeach; ?>
                         </div>
