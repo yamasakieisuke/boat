@@ -3452,40 +3452,92 @@ function boat_forecast_viewer_render_archive($query) {
         }
         .bfva-card-cta::after { content: " →"; }
 
-        /* ===== venue-specific list view (Phase 5範囲外、維持) ===== */
-        .bfva-meta { color: var(--bfv-ink-sub); font-size: 14px; display: grid; gap: 6px; }
-        .bfva-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-        .bfva-badge { background: var(--bfv-surface-sub); padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; border: 1px solid var(--bfv-line); }
-        .bfva-badge.is-review { background: var(--bfv-ink); color: #fff; border-color: var(--bfv-ink); }
+        /* ===== Phase 22: venue-specific list view (warm + mono-forward) ===== */
+        .bfva-meta {
+            color: var(--bfv-ink-sub);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 14px;
+            letter-spacing: 0.02em;
+        }
+        .bfva-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+        .bfva-badge {
+            background: var(--bfv-surface-sub);
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--bfv-ink-sub);
+            border: 1px solid var(--bfv-border);
+        }
+        .bfva-badge.is-review {
+            background: var(--bfv-accent-soft);
+            color: var(--bfv-accent);
+            border-color: transparent;
+        }
         .bfva-crumbs {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin: 0 0 14px;
+            gap: 8px;
+            margin: 0 0 12px;
+            font-family: var(--bfv-font-mono);
             color: var(--bfv-muted);
-            font-size: 14px;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
         .bfva-crumbs a { color: inherit; text-decoration: none; }
-        .bfva-crumbs a:hover { text-decoration: underline; }
+        .bfva-crumbs a:hover { color: var(--bfv-accent); text-decoration: none; }
         .bfva-list {
             display: grid;
-            gap: 12px;
-            margin-top: 18px;
+            gap: 8px;
+            margin-top: 14px;
         }
         .bfva-row {
             display: grid;
-            gap: 12px;
-            grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
-            padding: 16px 18px;
+            gap: 10px;
+            grid-template-columns: minmax(0, 1.2fr) minmax(200px, .8fr);
+            padding: 12px 14px;
             background: var(--bfv-surface);
-            border: 1px solid var(--bfv-line);
-            border-radius: var(--bfv-radius-md);
+            border: 1px solid var(--bfv-border);
+            border-radius: var(--bfv-radius-sm);
             box-shadow: var(--bfv-shadow-xs);
+            transition: border-color .15s, box-shadow .15s;
         }
-        .bfva-row h2 { margin: 0 0 8px; font-size: 22px; }
-        .bfva-side { display: grid; gap: 8px; align-content: start; }
-        .bfva-side a { color: var(--bfv-ink); text-decoration: none; font-weight: 700; }
+        .bfva-row:hover {
+            border-color: var(--bfv-line-strong);
+            box-shadow: var(--bfv-shadow-sm);
+        }
+        .bfva-row h2 {
+            margin: 0 0 6px;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        .bfva-row h2 a { color: var(--bfv-ink); text-decoration: none; }
+        .bfva-row h2 a:hover { color: var(--bfv-accent); }
+        .bfva-side {
+            display: grid;
+            gap: 6px;
+            align-content: start;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .bfva-side a {
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color .15s;
+        }
         .bfva-side a:hover { color: var(--bfv-accent); }
+        .bfva-side a::after { content: " →"; color: var(--bfv-muted); }
 
         @media (max-width: 720px) {
             .bfva-row { grid-template-columns: 1fr; }
@@ -3751,14 +3803,14 @@ function boat_forecast_viewer_render_review() {
             padding: 20px 0 72px;
         }
 
-        /* ==== HERO ==== */
+        /* ==== Phase 22: HERO (radius tighten + padding trim) ==== */
         .bfrv-hero {
             background: var(--bfv-hero-ink);
             color: #fff;
-            border-radius: var(--bfv-radius-md);
-            padding: 24px 26px 22px;
+            border-radius: var(--bfv-radius-sm);
+            padding: 18px 20px 16px;
             box-shadow: var(--bfv-shadow-sm);
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
         .bfrv-kicker {
             display: inline-flex;
@@ -3795,8 +3847,8 @@ function boat_forecast_viewer_render_review() {
         .bfrv-stat {
             background: rgba(255,255,255,.06);
             border: 1px solid rgba(255,255,255,.10);
-            border-radius: var(--bfv-radius-md);
-            padding: 12px 14px;
+            border-radius: var(--bfv-radius-sm);
+            padding: 10px 12px;
             text-align: left;
             min-width: 0;
         }
@@ -3912,12 +3964,12 @@ function boat_forecast_viewer_render_review() {
         .bfrv-row {
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-line);
-            border-radius: var(--bfv-radius-md);
-            padding: 14px 16px;
+            border-radius: var(--bfv-radius-sm);
+            padding: 12px 14px;
             box-shadow: var(--bfv-shadow-xs);
             display: grid;
             grid-template-columns: minmax(0, 1fr) auto;
-            gap: 14px;
+            gap: 12px;
             align-items: center;
             transition: border-color .15s, box-shadow .15s;
         }
@@ -4003,7 +4055,7 @@ function boat_forecast_viewer_render_review() {
             font-size: 14px;
             background: var(--bfv-surface);
             border: 1px dashed var(--bfv-line-strong);
-            border-radius: var(--bfv-radius-md);
+            border-radius: var(--bfv-radius-sm);
         }
 
         @media (max-width: 640px) {
