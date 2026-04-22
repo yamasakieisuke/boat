@@ -367,6 +367,98 @@ function boat_forecast_viewer_common_root_css() {
     @media (prefers-reduced-motion: no-preference) {
         html { scroll-behavior: smooth; }
     }
+
+    /* ===== Phase 12: mobile shell (top brand bar + bottom tab bar) ===== */
+    .bfv-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--bfv-ink);
+        color: #fff;
+        border-bottom: 1px solid var(--bfv-line-strong);
+        font-family: var(--bfv-font-mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        min-height: 44px;
+    }
+    .bfv-topbar a { color: inherit; text-decoration: none; }
+    .bfv-topbar-menu,
+    .bfv-topbar-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        font-size: 16px;
+        line-height: 1;
+        opacity: 0.85;
+        transition: background .15s, opacity .15s;
+    }
+    .bfv-topbar-menu:hover,
+    .bfv-topbar-action:hover { background: rgba(255,255,255,.08); opacity: 1; }
+    .bfv-topbar-action { margin-left: auto; }
+    .bfv-topbar-brand {
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        text-transform: lowercase;
+        font-family: var(--bfv-font-sans);
+    }
+    .bfv-topbar-sep { opacity: 0.35; font-weight: 400; }
+    .bfv-topbar-section {
+        color: rgba(255,255,255,.72);
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .bfv-tabbar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40;
+        display: none;
+        grid-template-columns: repeat(4, 1fr);
+        background: rgba(255,255,255,.96);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid var(--bfv-line-strong);
+        padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+    }
+    .bfv-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        padding: 4px 2px;
+        font-family: var(--bfv-font-mono);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        color: var(--bfv-muted);
+        text-decoration: none;
+        transition: color .15s;
+    }
+    .bfv-tab-icon { font-size: 18px; line-height: 1; }
+    .bfv-tab-label { font-size: 10px; font-weight: 500; }
+    .bfv-tab:hover { color: var(--bfv-ink); }
+    .bfv-tab.is-active { color: var(--bfv-accent); }
+
+    @media (max-width: 768px) {
+        .bfv-tabbar { display: grid; }
+        body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+        .bfv-gnav { display: none; }
+    }
 CSS;
 }
 
@@ -382,14 +474,45 @@ function boat_forecast_viewer_font_links() {
 HTML;
 }
 
-function boat_forecast_viewer_render_nav($active = '') {
-    $archive_url = esc_url(get_post_type_archive_link('forecast_day') ?: home_url('/race/'));
-    $review_url  = esc_url(home_url('/review/'));
-    $a_archive   = $active === 'archive' ? ' bfv-gnav-active' : '';
-    $a_review    = $active === 'review'  ? ' bfv-gnav-active' : '';
-    echo '<nav class="bfv-gnav">';
-    echo '<a class="bfv-gnav-link' . $a_archive . '" href="' . $archive_url . '">🏁 予想一覧</a>';
-    echo '<a class="bfv-gnav-link' . $a_review  . '" href="' . $review_url  . '">📊 振り返り</a>';
+function boat_forecast_viewer_render_nav($active = '', $section_code = '') {
+    $archive_base = get_post_type_archive_link('forecast_day') ?: home_url('/race/');
+    $archive_url  = esc_url($archive_base);
+    $review_url   = esc_url(home_url('/review/'));
+    $curated_url  = esc_url(add_query_arg('curated', '1', $archive_base));
+    $search_url   = esc_url(add_query_arg('search', '1', $archive_base));
+
+    $tabs = [
+        ['key' => 'archive', 'label' => '予想', 'icon' => '🏁', 'href' => $archive_url],
+        ['key' => 'single',  'label' => '一覧', 'icon' => '📋', 'href' => $archive_url],
+        ['key' => 'curated', 'label' => '厳選', 'icon' => '⭐', 'href' => $curated_url],
+        ['key' => 'search',  'label' => '検索', 'icon' => '🔍', 'href' => $search_url],
+    ];
+
+    $section_code = (string) $section_code;
+    if ($section_code === '') {
+        if ($active === 'archive')      $section_code = 'FORECAST.INDEX';
+        elseif ($active === 'single')   $section_code = 'RACE';
+        elseif ($active === 'review')   $section_code = 'REVIEW';
+    }
+
+    echo '<header class="bfv-topbar">';
+    echo   '<a class="bfv-topbar-menu" href="' . $archive_url . '" aria-label="メニュー">☰</a>';
+    echo   '<a class="bfv-topbar-brand" href="' . $archive_url . '">boat</a>';
+    if ($section_code !== '') {
+        echo '<span class="bfv-topbar-sep">·</span>';
+        echo '<span class="bfv-topbar-section">' . esc_html($section_code) . '</span>';
+    }
+    echo   '<a class="bfv-topbar-action" href="' . $review_url . '" aria-label="振り返り">📊</a>';
+    echo '</header>';
+
+    echo '<nav class="bfv-tabbar" role="navigation" aria-label="メインナビゲーション">';
+    foreach ($tabs as $tab) {
+        $is_active = ($active === $tab['key']) ? ' is-active' : '';
+        echo '<a class="bfv-tab' . $is_active . '" href="' . $tab['href'] . '">';
+        echo   '<span class="bfv-tab-icon" aria-hidden="true">' . $tab['icon'] . '</span>';
+        echo   '<span class="bfv-tab-label">' . esc_html($tab['label']) . '</span>';
+        echo '</a>';
+    }
     echo '</nav>';
 }
 
@@ -1487,8 +1610,14 @@ function boat_forecast_viewer_render_single($payload, $post) {
     </style>
 </head>
 <body>
+<?php
+$single_venue_slug = get_post_meta($post->ID, 'venue_slug', true);
+$single_section = 'RACE';
+if ($single_venue_slug) { $single_section .= '.' . strtoupper($single_venue_slug); }
+if ($date) { $single_section .= ' / ' . $date; }
+boat_forecast_viewer_render_nav('single', $single_section);
+?>
 <div class="bfv-shell">
-    <?php boat_forecast_viewer_render_nav(); ?>
     <section class="bfv-hero">
         <span class="bfv-kicker">ボートレース予想</span>
         <h1 class="bfv-title"><?php echo esc_html($venue); ?> <span><?php echo esc_html($date); ?></span></h1>
@@ -2484,8 +2613,11 @@ function boat_forecast_viewer_render_archive($query) {
     </style>
 </head>
 <body>
+<?php
+$archive_section = $venue_slug ? 'VENUE.' . strtoupper($venue_slug) : 'FORECAST.INDEX';
+boat_forecast_viewer_render_nav('archive', $archive_section);
+?>
 <div class="bfva-shell">
-    <?php boat_forecast_viewer_render_nav('archive'); ?>
     <?php if ($venue_slug) : ?>
         <header class="bfva-hero">
             <h1><?php echo esc_html($venue_name); ?></h1>
@@ -2919,8 +3051,8 @@ function boat_forecast_viewer_render_review() {
     </style>
 </head>
 <body>
+<?php boat_forecast_viewer_render_nav('review', 'REVIEW'); ?>
 <div class="bfrv-shell">
-    <?php boat_forecast_viewer_render_nav('review'); ?>
     <section class="bfrv-hero">
         <span class="bfrv-kicker">Review · 振り返り</span>
         <h1>振り返り一覧</h1>
