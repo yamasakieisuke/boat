@@ -1,0 +1,16 @@
+# /web/boat/api/.htaccess
+# forecast-sync.php 受信用トークン環境変数
+# この .htaccess は GitHub Actions (deploy-wp.yml) により
+# wordpress/** push 時に /web/boat/api/ へ自動FTPSデプロイされる
+#
+# ローカル .env と Cowork タスク環境変数の WP_SYNC_TOKEN を
+# ここと同値に揃えること（publish_wordpress.py が X-Boat-Token ヘッダで送信）
+
+<Files "forecast-sync.php">
+    SetEnv BOAT_SYNC_TOKEN "dslGr00chvVut1fzLEEOnyoBnjAU"
+</Files>
+
+# forecast-sync.php 以外への直接アクセスは拒否（念のため）
+<FilesMatch "\.(env|ini|log|bak|sql)$">
+    Require all denied
+</FilesMatch>
