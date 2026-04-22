@@ -125,11 +125,25 @@ function boat_forecast_viewer_collect_archive_items() {
             $venues[$venue_slug]['latest_date'] = $race_date;
             $venues[$venue_slug]['latest_link'] = get_permalink($post);
         }
+        // Phase 13: per-item hit rates from review_summary for KPI aggregation.
+        $hit_1st = null;
+        $hit_any = null;
+        if (!empty($payload['review_summary']) && is_array($payload['review_summary'])) {
+            $rs = $payload['review_summary'];
+            if (isset($rs['hit_1st_pct']) && is_numeric($rs['hit_1st_pct'])) {
+                $hit_1st = (float) $rs['hit_1st_pct'];
+            }
+            if (isset($rs['hit_bet_any_pct']) && is_numeric($rs['hit_bet_any_pct'])) {
+                $hit_any = (float) $rs['hit_bet_any_pct'];
+            }
+        }
         $venues[$venue_slug]['items'][] = [
             'title' => get_the_title($post),
             'link' => get_permalink($post),
             'date' => $race_date,
             'has_review' => !empty($payload['review_summary']),
+            'hit_1st' => $hit_1st,
+            'hit_any' => $hit_any,
         ];
     }
 
@@ -137,6 +151,18 @@ function boat_forecast_viewer_collect_archive_items() {
         usort($venue['items'], function ($a, $b) {
             return strcmp((string) $b['date'], (string) $a['date']);
         });
+        // Phase 13: compute per-venue KPI averages across all reviewed items.
+        $h1 = [];
+        $ha = [];
+        foreach ($venue['items'] as $it) {
+            if ($it['hit_1st'] !== null) $h1[] = $it['hit_1st'];
+            if ($it['hit_any'] !== null) $ha[] = $it['hit_any'];
+        }
+        $venue['hit_1st_avg'] = $h1 ? array_sum($h1) / count($h1) : null;
+        $venue['hit_any_avg'] = $ha ? array_sum($ha) / count($ha) : null;
+        // Sparkline: last 8 reviewed items in chronological order (old -> new).
+        $venue['sparkline'] = array_slice(array_reverse($h1), -8);
+        $venue['all_items'] = $venue['items'];
         $venue['items'] = array_slice($venue['items'], 0, 4);
         $venues[$slug] = $venue;
     }
@@ -146,6 +172,79 @@ function boat_forecast_viewer_collect_archive_items() {
     });
 
     return $venues;
+}
+
+/**
+ * Phase 13: compute global archive KPI for the last N days.
+ * @param array $venues output of boat_forecast_viewer_collect_archive_items()
+ * @param int $window_days
+ * @return array ['hit_rate', 'sparkline' (chronological), 'race_days', 'window_days']
+ */
+function boat_forecast_viewer_compute_global_kpi($venues, $window_days = 30) {
+    $cutoff = date('Y-m-d', strtotime('-' . max(1, (int) $window_days) . ' days'));
+    $flat = [];
+    foreach ($venues as $venue) {
+        $pool = isset($venue['all_items']) ? $venue['all_items'] : (isset($venue['items']) ? $venue['items'] : []);
+        foreach ($pool as $it) {
+            if (!isset($it['hit_1st']) || $it['hit_1st'] === null) continue;
+            if ((string) $it['date'] < $cutoff) continue;
+            $flat[] = $it;
+        }
+    }
+    usort($flat, function ($a, $b) { return strcmp((string) $a['date'], (string) $b['date']); });
+    $nums = [];
+    foreach ($flat as $it) $nums[] = (float) $it['hit_1st'];
+    return [
+        'window_days' => (int) $window_days,
+        'hit_rate'    => $nums ? array_sum($nums) / count($nums) : null,
+        'sparkline'   => $nums,
+        'race_days'   => count($nums),
+    ];
+}
+
+/**
+ * Phase 13: tiny inline SVG sparkline polyline.
+ */
+function boat_forecast_viewer_render_sparkline($values, $width = 80, $height = 24, $stroke = 'currentColor') {
+    $nums = [];
+    foreach ((array) $values as $v) {
+        if (is_numeric($v)) $nums[] = (float) $v;
+    }
+    $w = (int) $width;
+    $h = (int) $height;
+    if (count($nums) === 0) {
+        return sprintf('<svg class="bfv-spark" width="%d" height="%d" aria-hidden="true"></svg>', $w, $h);
+    }
+    $min = min($nums);
+    $max = max($nums);
+    if ($max == $min) { $max = $min + 1.0; }
+    $pad = 2;
+    $n = count($nums);
+    $pts = [];
+    foreach ($nums as $i => $v) {
+        $x = ($n === 1) ? ($w / 2) : ($pad + ($i / ($n - 1)) * ($w - 2 * $pad));
+        $y = $h - $pad - (($v - $min) / ($max - $min)) * ($h - 2 * $pad);
+        $pts[] = sprintf('%.1f,%.1f', $x, $y);
+    }
+    return sprintf(
+        '<svg class="bfv-spark" width="%d" height="%d" viewBox="0 0 %d %d" aria-hidden="true" preserveAspectRatio="none">'
+        . '<polyline points="%s" fill="none" stroke="%s" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>'
+        . '</svg>',
+        $w, $h, $w, $h, esc_attr(implode(' ', $pts)), esc_attr($stroke)
+    );
+}
+
+/**
+ * Phase 13: classify a venue row against a chip filter (all / curated / today).
+ */
+function boat_forecast_viewer_match_filter($venue, $filter, $today_ymd) {
+    if ($filter === 'curated') {
+        return isset($venue['hit_1st_avg']) && $venue['hit_1st_avg'] !== null && $venue['hit_1st_avg'] >= 50.0;
+    }
+    if ($filter === 'today') {
+        return isset($venue['latest_date']) && (string) $venue['latest_date'] === (string) $today_ymd;
+    }
+    return true;
 }
 
 function boat_forecast_viewer_grade_class($grade) {
@@ -2344,10 +2443,10 @@ function boat_forecast_viewer_render_archive($query) {
         .bfva-shell {
             width: min(1120px, calc(100% - 24px));
             margin: 0 auto;
-            padding: 20px 0 72px;
+            padding: 14px 0 72px;
         }
 
-        /* ===== HERO (compact, single line) ===== */
+        /* ===== Phase 13: HERO (global HIT RATE KPI + sparkline) ===== */
         .bfva-hero {
             background: var(--bfv-surface);
             color: var(--bfv-ink);
@@ -2355,34 +2454,90 @@ function boat_forecast_viewer_render_archive($query) {
             border-radius: var(--bfv-radius-md);
             padding: 14px 18px;
             box-shadow: var(--bfv-shadow-xs);
-            display: flex;
-            align-items: baseline;
-            gap: 14px;
-            margin-bottom: 14px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 10px;
         }
-        .bfva-hero h1 {
-            margin: 0;
-            font-size: clamp(18px, 2.8vw, 22px);
-            letter-spacing: 0.02em;
-            font-feature-settings: "palt";
-        }
-        .bfva-hero p {
-            display: block;
-            margin: 0;
+        .bfva-hero-kpi { display: grid; gap: 4px; min-width: 0; }
+        .bfva-hero-label {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
             color: var(--bfv-muted);
-            font-size: 12px;
-            font-family: var(--bfv-font-mono);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
         }
-        .bfva-hero-count {
-            margin-left: auto;
+        .bfva-hero-value {
             font-family: var(--bfv-font-mono);
-            font-size: 12px;
+            font-size: clamp(34px, 6vw, 46px);
+            font-weight: 500;
+            line-height: 1;
+            color: var(--bfv-ink);
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+        .bfva-hero-value small {
+            font-size: 0.42em;
+            color: var(--bfv-muted);
+            font-weight: 400;
+            letter-spacing: 0.04em;
+        }
+        .bfva-hero-value.is-null { color: var(--bfv-muted); }
+        .bfva-hero-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
             color: var(--bfv-ink-sub);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
+        .bfva-hero-spark {
+            color: var(--bfv-accent);
+            width: 140px;
+            height: 40px;
+            display: block;
+        }
+
+        /* ===== Phase 13: CHIPS (filter strip) ===== */
+        .bfva-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 0 0 12px;
+        }
+        .bfva-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border: 1px solid var(--bfv-line);
+            border-radius: 999px;
+            background: var(--bfv-surface);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: background .15s, color .15s, border-color .15s;
+        }
+        .bfva-chip span {
+            font-size: 10px;
+            color: var(--bfv-muted);
+            font-weight: 500;
+        }
+        .bfva-chip:hover {
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink);
+        }
+        .bfva-chip.is-active {
+            background: var(--bfv-ink);
+            color: #fff;
+            border-color: var(--bfv-ink);
+        }
+        .bfva-chip.is-active span { color: rgba(255,255,255,.64); }
 
         /* ===== GRID ===== */
         .bfva-grid {
@@ -2467,6 +2622,59 @@ function boat_forecast_viewer_render_archive($query) {
             margin-right: 4px;
             text-transform: none;
         }
+
+        /* Phase 13: card KPI block (HIT / BOX averages + mini sparkline) */
+        .bfva-card-kpi {
+            padding: 12px 14px 10px;
+            border-bottom: 1px solid var(--bfv-line);
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            align-items: center;
+            gap: 16px;
+        }
+        .bfva-kpi-col { display: grid; gap: 2px; }
+        .bfva-kpi-num {
+            font-family: var(--bfv-font-mono);
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.01em;
+            color: var(--bfv-ink);
+            display: inline-flex;
+            align-items: baseline;
+            gap: 2px;
+        }
+        .bfva-kpi-num small {
+            font-size: 0.5em;
+            color: var(--bfv-muted);
+            font-weight: 400;
+        }
+        .bfva-kpi-num.is-null { color: var(--bfv-muted); }
+        .bfva-kpi-sub {
+            font-family: var(--bfv-font-mono);
+            font-size: 9.5px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .bfva-kpi-col.is-primary .bfva-kpi-num { color: var(--bfv-accent); }
+        .bfva-card-spark {
+            color: var(--bfv-accent);
+            width: 100%;
+            height: 28px;
+            justify-self: stretch;
+            display: block;
+        }
+
+        /* Phase 13: row with hit rate on right */
+        .bfva-card-row-hit {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--bfv-ink);
+        }
+        .bfva-card-row.has-review .bfva-card-row-hit { color: var(--bfv-accent); }
+        .bfva-card-row:not(.has-review) .bfva-card-row-hit { color: var(--bfv-muted); }
 
         /* history row list (replaces the chip row) */
         .bfva-card-list {
@@ -2623,12 +2831,38 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
             <h1><?php echo esc_html($venue_name); ?></h1>
             <p>Forecast Archive</p>
         </header>
-    <?php else : ?>
+    <?php else :
+        // Phase 13: 30-day HIT RATE KPI + sparkline
+        $global_kpi = boat_forecast_viewer_compute_global_kpi($venues, 30);
+        $today_ymd = current_time('Y-m-d');
+        $filter_key = isset($_GET['filter']) ? (string) $_GET['filter'] : 'all';
+        if (!in_array($filter_key, ['all', 'curated', 'today'], true)) { $filter_key = 'all'; }
+        $total_venues = count($venues);
+        $count_curated = 0;
+        $count_today = 0;
+        foreach ($venues as $_v) {
+            if (boat_forecast_viewer_match_filter($_v, 'curated', $today_ymd)) $count_curated++;
+            if (boat_forecast_viewer_match_filter($_v, 'today', $today_ymd)) $count_today++;
+        }
+        $archive_base = get_post_type_archive_link('forecast_day') ?: home_url('/race/');
+    ?>
         <header class="bfva-hero">
-            <h1>会場一覧</h1>
-            <p>Forecast Archive</p>
-            <span class="bfva-hero-count"><?php echo count($venues); ?> venues</span>
+            <div class="bfva-hero-kpi">
+                <span class="bfva-hero-label">Last 30d · Hit Rate</span>
+                <?php if ($global_kpi['hit_rate'] !== null) : ?>
+                    <span class="bfva-hero-value"><?php echo esc_html(number_format($global_kpi['hit_rate'], 1)); ?><small>%</small></span>
+                <?php else : ?>
+                    <span class="bfva-hero-value is-null">—</span>
+                <?php endif; ?>
+                <span class="bfva-hero-meta"><?php echo (int) $global_kpi['race_days']; ?>R verified · <?php echo $total_venues; ?> venues</span>
+            </div>
+            <?php echo boat_forecast_viewer_render_sparkline($global_kpi['sparkline'], 140, 40); ?>
         </header>
+        <div class="bfva-chips">
+            <a class="bfva-chip<?php echo $filter_key === 'all' ? ' is-active' : ''; ?>" href="<?php echo esc_url($archive_base); ?>">All <span><?php echo $total_venues; ?></span></a>
+            <a class="bfva-chip<?php echo $filter_key === 'curated' ? ' is-active' : ''; ?>" href="<?php echo esc_url(add_query_arg('filter', 'curated', $archive_base)); ?>">厳選済 <span><?php echo $count_curated; ?></span></a>
+            <a class="bfva-chip<?php echo $filter_key === 'today' ? ' is-active' : ''; ?>" href="<?php echo esc_url(add_query_arg('filter', 'today', $archive_base)); ?>">本日 <span><?php echo $count_today; ?></span></a>
+        </div>
     <?php endif; ?>
     <?php if ($venue_slug) : ?>
         <nav class="bfva-crumbs">
@@ -2667,8 +2901,12 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
     <?php else : ?>
         <div class="bfva-grid">
         <?php foreach ($venues as $venue):
+            if (!boat_forecast_viewer_match_filter($venue, $filter_key, $today_ymd)) continue;
             $latest_link = !empty($venue['latest_link']) ? $venue['latest_link'] : home_url('/race/' . $venue['slug'] . '/');
             $items = isset($venue['items']) && is_array($venue['items']) ? $venue['items'] : [];
+            $hit_1st_avg = isset($venue['hit_1st_avg']) ? $venue['hit_1st_avg'] : null;
+            $hit_any_avg = isset($venue['hit_any_avg']) ? $venue['hit_any_avg'] : null;
+            $spark_values = isset($venue['sparkline']) ? $venue['sparkline'] : [];
         ?>
             <article class="bfva-card">
                 <div class="bfva-card-head">
@@ -2679,19 +2917,38 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
                     <span class="bfva-card-date"><?php echo esc_html($venue['latest_date']); ?></span>
                 </div>
 
-                <div class="bfva-card-meta">
-                    <span><strong><?php echo (int) $venue['count']; ?></strong>予想</span>
-                    <span><strong><?php echo (int) $venue['review_count']; ?></strong>振り返り</span>
+                <div class="bfva-card-kpi">
+                    <div class="bfva-kpi-col is-primary">
+                        <?php if ($hit_1st_avg !== null) : ?>
+                            <span class="bfva-kpi-num"><?php echo esc_html(number_format($hit_1st_avg, 1)); ?><small>%</small></span>
+                        <?php else : ?>
+                            <span class="bfva-kpi-num is-null">—</span>
+                        <?php endif; ?>
+                        <span class="bfva-kpi-sub">1着 HIT</span>
+                    </div>
+                    <div class="bfva-kpi-col">
+                        <?php if ($hit_any_avg !== null) : ?>
+                            <span class="bfva-kpi-num"><?php echo esc_html(number_format($hit_any_avg, 1)); ?><small>%</small></span>
+                        <?php else : ?>
+                            <span class="bfva-kpi-num is-null">—</span>
+                        <?php endif; ?>
+                        <span class="bfva-kpi-sub">買目 BOX</span>
+                    </div>
+                    <?php echo boat_forecast_viewer_render_sparkline($spark_values, 120, 28); ?>
                 </div>
 
                 <div class="bfva-card-list">
-                    <?php foreach ($items as $item): ?>
+                    <?php foreach ($items as $item):
+                        $row_hit = ($item['hit_1st'] !== null)
+                            ? number_format($item['hit_1st'], 1) . '%'
+                            : (!empty($item['has_review']) ? '振返済' : '予想のみ');
+                    ?>
                         <a class="bfva-card-row<?php echo !empty($item['has_review']) ? ' has-review' : ''; ?>"
                            href="<?php echo esc_url(!empty($item['has_review']) ? ($item['link'] . '#review') : $item['link']); ?>"
                            title="<?php echo esc_attr((string) ($item['title'] ?? '')); ?>">
                             <span class="bfva-card-row-dot" aria-hidden="true"></span>
                             <span class="bfva-card-row-date"><?php echo esc_html((string) $item['date']); ?></span>
-                            <span class="bfva-card-row-tag"><?php echo !empty($item['has_review']) ? '振返済' : '予想のみ'; ?></span>
+                            <span class="bfva-card-row-hit"><?php echo esc_html($row_hit); ?></span>
                         </a>
                     <?php endforeach; ?>
                 </div>
