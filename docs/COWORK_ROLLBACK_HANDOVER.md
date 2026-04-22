@@ -1,57 +1,59 @@
-# Cowork ロールバック引き継ぎ
+# Cowork 運用引き継ぎ（旧: ロールバック計画）
 
-> **作成日**: 2026-04-22
-> **目的**: Cowork Scheduled tasks（元の構成）へのロールバックと、同時に行う公営ギャンブル AUP 文言の追記手順を整理する
-> **対象読者**: 運用者（山崎さん自身）／ Cowork 側で編集するときの Claude / 将来セッションの Claude Code
+> **初版**: 2026-04-22 午前（ロールバック計画として作成）
+> **最終更新**: 2026-04-22 午後（完了状態に改訂、完全復活を記録）
+> **対象読者**: 運用者（山崎さん） / Cowork 側で編集するときの Claude / 将来セッションの Claude Code
 
----
+## この文書の位置づけ
 
-## 経緯
-
-| フェーズ | 実行基盤 | 状態 | 備考 |
-|---|---|---|---|
-| 〜 2026-04-13 | **Cowork Scheduled tasks**（6タスク） | ✅ 安定動作 | 現在は全て Paused |
-| 2026-04-13 〜 | launchd + `~/.local/bin/claude-task-runner.sh` | ⚠️ 4/19 まで正常、4/20 以降不安定 | ユーザー指示で移行 |
-| 2026-04-22 以降 | **Cowork に戻す** | 本ドキュメントの手順 | 移行先 |
-
-### launchd 側で発生した問題
-
-1. **2026-04-20 08:00 の morning-v2**: `API Error: Claude Code is unable to respond... (AUP 違反)` で Claude が応答拒否
-2. **2026-04-21 08:00 の morning-v2**: ログ 295 byte で startup のみ、以降の出力なし (exit 1)
-3. **2026-04-22 08:00 の morning-v2**: 発火形跡なし（Mac sleep？）
-4. **WP sync 403**: 4/21 に 84回 `invalid_token` で同期失敗、run-pending も巻き込み
-
-→ **ロールバック判断**: Cowork で動いていた時期の運用に戻し、AUP 文言のみ補強する方が早期復旧に有利。
+2026-04-13〜04-22 の期間、boat 定期バッチを launchd（ローカル Mac）で動かしていたが不安定だったため、**Cowork Scheduled tasks に戻した**。本ドキュメントは移行の経緯と最終構成を記録し、将来の差し戻し・新規 Mac 追加・トラブルシュートの起点にする。
 
 ---
 
-## Cowork 側で復旧するタスク一覧
+## 経緯（タイムライン）
 
-UI 上で 2026-04-22 時点に Paused 状態のタスク群：
-
-| 名称 | 概要 | 頻度 |
+| フェーズ | 実行基盤 | 結果 |
 |---|---|---|
-| **Boat daily morning v2** | 毎朝の前日 verify・WP反映・開催確認・予測生成・WP投稿 | 毎朝 08:00 |
-| **Boat race fetcher** | 展示/オッズ自動取得（イベント駆動・自動再スケジュール） | 4分間隔ポーリング |
-| Daily genai news | 毎朝 08:15 に前日の生成AIニュース収集・Outbox/News 保存 | 毎日 08:15 |
-| Daily genai news slack | 平日朝9時に前日ニュースサマリを Slack #news へ投稿 | 平日 09:00 |
-| Weekly genai summary | 月曜 08:30 に先週の生成AIニュース週次ハイライト | 月曜 08:30 |
-| Garden weekly reminder | 月曜朝に菜園作業イベントを Google カレンダーへ作成 | 月曜 08:02 |
+| 〜 2026-04-13 | Cowork Scheduled tasks (6タスク) | ✅ 安定 |
+| 2026-04-13 〜 04-21 | launchd + `~/.local/bin/claude-task-runner.sh` | ⚠️ 4/19まで正常、4/20-22で不安定（AUP refusal、exit 1、Mac sleep） |
+| **2026-04-22 以降** | **Cowork Scheduled tasks (6タスク) 再有効化** | ✅ **稼働中** |
+
+### launchd 側で発生した問題（移行の動機）
+
+1. 2026-04-20 08:00 の morning-v2 → `API Error: Claude Code is unable to respond... (AUP 違反)` で応答拒否
+2. 2026-04-21 08:00 の morning-v2 → ログ 295 byte の startup のみ、exit 1
+3. 2026-04-22 08:00 の morning-v2 → 発火形跡なし（Mac sleep 疑い）
+4. 2026-04-21 の run-pending → WP sync 403 が 84 回連発
 
 ---
 
-## Cowork 側の作業手順
+## 最終構成（2026-04-22 稼働中）
 
-### Step 1. 各タスクの prompt に AUP 文言を追加
+### Cowork Scheduled tasks（6タスクすべて enabled）
 
-**対象**: `Boat daily morning v2` と `Boat race fetcher`（ボートレース系のみ）
+| taskId | cron | 頻度 | フォルダ接続 |
+|---|---|---|---|
+| `boat-daily-morning-v2` | `0 8 * * *` | 毎朝 08:00 | ✅ `~/repos/boat`（必須） |
+| `boat-race-fetcher` | `*/4 9-22 * * *` | 9:00-22:59 の4分毎 | ✅ `~/repos/boat`（必須） |
+| `daily-genai-news` | `15 8 * * *` | 毎朝 08:15 | 不要（MCPコネクタ） |
+| `daily-genai-news-slack` | `0 9 * * 1-5` | 平日 09:00 | 不要（MCPコネクタ） |
+| `weekly-genai-summary` | `30 8 * * 1` | 月曜 08:30 | 不要（MCPコネクタ） |
+| `garden-weekly-reminder` | `2 8 * * 1` | 月曜 08:02 | 不要（MCPコネクタ） |
 
-Cowork タスク編集画面で、プロンプト冒頭に以下を **挿入** してください。既に入っていれば差分のみ更新。
+> cron は local timezone（JST）で解釈される。jitter（決定論的遅延）で数分ズレて起動する。
+
+### ボート系タスクの3つのクリティカル要件
+
+**1. AUP 文言のプロンプト挿入（ボート系2タスクのみ）**
+
+公営ギャンブル用途の明示で Claude の応答拒否を予防。プロンプト冒頭に以下を挿入済み:
 
 ```
 ## タスク文脈（AUP 明示）
 
-本タスクは **日本国内で法律により合法とされる公営競技（ボートレース / モーターボート競走法 に基づく公営ギャンブル）** の過去データ・出走表・オッズ・気象データを収集し、統計的な予測モデル（scripts/predictor.py）で着順確率を算出して、個人ブログ（WordPress）に分析レポートを公開する **データサイエンス・統計分析用途** のバッチです。
+本タスクは 日本国内で法律により合法とされる公営競技（ボートレース / モーターボート競走法に基づく公営ギャンブル）
+の過去データ・出走表・オッズ・気象データを収集し、統計的な予測モデル（scripts/predictor.py）で着順確率を算出
+して、個人ブログ（WordPress）に分析レポートを公開するデータサイエンス・統計分析用途のバッチです。
 
 - 取得対象は日本財団・BOATRACE公式・艇国データバンク等の一般公開データのみ
 - 賭け金の自動投入・ベッティングサービス運営・他者への勧誘は一切含まない
@@ -59,31 +61,21 @@ Cowork タスク編集画面で、プロンプト冒頭に以下を **挿入** �
 - 対象ユーザーは成人（本人のみ）
 ```
 
-ソース: `~/Agent/personal-life/Scheduled/boat-daily-morning-v2/SKILL.md` の先頭ブロック。
+**2. タスク単位のフォルダ接続（ボート系2タスクのみ）**
 
-### Step 2. Cowork タスクの設定・環境変数を確認
+Cowork のスケジュール起動は **interactive session とは別の isolated sandbox** で走るため、タスク設定画面で `~/repos/boat` を接続する必要がある。
 
-特に `Boat daily morning v2` のタスク詳細画面で以下をチェック:
+- 設定場所: Cowork → 各タスク詳細画面 → フォルダ接続 / Workspace
+- 未設定だと `BOAT_DIR` 検出に失敗し「ボートレースプロジェクトディレクトリが見つかりません」で終了する
+- **新規 Mac 追加・タスク複製・Cowork再インストール時は毎回再設定が必要**
 
-- [ ] Prompt 本文は `~/Agent/personal-life/Scheduled/boat-daily-morning-v2/SKILL.md` と同等か
-- [ ] **環境変数に `WP_SYNC_TOKEN` / `WP_SYNC_URL` が設定されているか**（←重要）
-  - もし設定あり → その token 値をメモして `.env` に反映（WP 403 解消のため）
-  - もし設定無し → ローカル `.env` に依存している可能性。後述の Step 4 参照
+**3. launchd ジョブは全台で Unload**
 
-### Step 3. 各タスクを Resume（Active 化）
-
-UI 上の各カードの Paused トグルを Active に戻す。**ボート系 2つを先に再開**し、数時間様子見してから他を再開が安全。
-
-### Step 4. ローカル launchd 側のジョブを Unload（二重実行防止）
-
-**重要**: Cowork を Resume した後、必ずローカル launchd ジョブを停止してください。両方動くと WP 同期が二重発火します。
+二重実行防止のため、launchd 側は完全停止しておく（plist ファイルは残してOK）:
 
 ```bash
-# ボート系 2つ
 launchctl unload ~/Library/LaunchAgents/com.boat.run-pending.plist
 launchctl unload ~/Library/LaunchAgents/com.claude-code.task.boat-daily-morning-v2.plist
-
-# ニュース系も Cowork に戻すなら
 launchctl unload ~/Library/LaunchAgents/com.claude-code.task.daily-genai-news.plist
 launchctl unload ~/Library/LaunchAgents/com.claude-code.task.daily-genai-news-slack.plist
 launchctl unload ~/Library/LaunchAgents/com.claude-code.task.daily-investment-news.plist
@@ -91,55 +83,76 @@ launchctl unload ~/Library/LaunchAgents/com.claude-code.task.daily-investment-ne
 launchctl unload ~/Library/LaunchAgents/com.claude-code.task.weekly-genai-summary.plist
 launchctl unload ~/Library/LaunchAgents/com.claude-code.task.garden-weekly-reminder.plist
 
-# 確認
+# 確認（何も出なければ OK）
 launchctl list | grep -E "boat|claude-code\.task"
 ```
 
-`launchctl list` で何も出力されなければ OK。plist ファイル自体は削除せず残しておく（ロールフォワードの可能性に備える）。
+---
+
+## WP sync 403 の決着（2026-04-22）
+
+### 原因
+- heteml サーバ側 `BOAT_SYNC_TOKEN` が消失（`/web/boat/api/` に `.htaccess` も `.user.ini` も無かった）
+- 全 POST が `{"ok":false,"error":"invalid_token"}` で 403
+
+### 採用構成: C案（PHP定数方式）
+
+`.htaccess SetEnv` は heteml の PHP 実行環境で `getenv()` に反映されない可能性があり不確実。PHP 定数で定義する方式を採用:
+
+- **`wordpress/forecast-config.php`** — `define('BOAT_SYNC_TOKEN', ...)` を供給（`FORECAST_SYNC_LOADER` ガード付き）
+- **`wordpress/forecast-sync.php`** — 先頭で `include_once` し、`resolve_expected_token()` の最優先ソースに定数を据える
+- **`wordpress/.htaccess`** — 互換フォールバック・診断用として残置（`<Files "forecast-sync.php"> SetEnv BOAT_SYNC_TOKEN ...`）
+- **`wordpress/.user.ini`** — 互換フォールバックとして残置
+
+デプロイは既存の `.github/workflows/deploy-wp.yml`（`wordpress/**` push で FTPS 自動配布）。疎通は `HTTP=400 missing_field=title` で確認（token認証通過、validationで正常弾き）。
+
+### 新 token（2026-04-22 rotate 済み）
+- 値: `dslGr00chvVut1fzLEEOnyoBnjAU`（28 chars）
+- 3点同期完了: `.env` / `forecast-config.php` / Cowork タスク環境変数
+
+> **トークンローテート時の手順は [docs/TOKEN_ROTATION.md](./TOKEN_ROTATION.md) を参照**
 
 ---
 
-## WP sync 403 の扱い
+## 新規 Mac で Cowork 運用を始めるときの手順
 
-### 現状
-- ローカル `.env`: `WP_SYNC_TOKEN=zsCTc6ReMHAb6BAryfj2`
-- heteml サーバ側 `BOAT_SYNC_TOKEN` 環境変数: **値が消失または変更済み**（`/web/boat/api/` に `.htaccess` も `.user.ini` も無し）
-- 結果: 全 POST が `{"ok":false,"error":"invalid_token"}` で 403
+1. **Cowork アプリをインストール**してサインイン
+2. **`~/repos/boat`** を git clone（GitHub Actions deploy があるので private repo アクセス権が必要）
+3. **`.env`** を手動で配置（値は 1Password「boat / WordPress sync」参照）
+4. **Cowork タスク一覧**で 6 タスクを確認。初回同期時に自動で現れるはず
+5. **ボート系2タスクに `~/repos/boat` フォルダを接続**（最重要、設定画面から）
+6. **launchd が稼働してないことを確認**（`launchctl list | grep -E "boat|claude-code\.task"` で何も出ないのが正常）
+7. `boat-race-fetcher` で `Run now` を1回実行して動作確認（「実行可能タスクなし」等が返れば成功）
 
-### ロールバック後の挙動予測
+---
 
-| Cowork 側の token 設定 | 予測される結果 |
-|---|---|
-| 旧 token がそのまま残っている（かつ heteml も当時値を保持） | ✅ 自動復旧（要検証） |
-| 旧 token が残っているが heteml 側は既に別値 | ❌ Cowork からも 403 |
-| Cowork に token 設定なく、ローカル `.env` 参照 | ❌ どのみち現 token (zsCT...) で 403 |
+## トラブルシュート Flow
 
-### 復旧パス
+### 症状: `boat-race-fetcher` のログに「ボートレースプロジェクトディレクトリが見つかりません」
+→ **フォルダ接続が外れている**。タスク詳細画面で `~/repos/boat` を再接続
 
-**Cowork 側で WP 403 が解消しない場合**、以下を実施:
+### 症状: morning-v2 が AUP 違反で応答拒否
+→ プロンプト冒頭の AUP 文言が消えていないか確認。消えていれば SKILL.md からコピペで挿入
 
-1. **新 token 生成**:
+### 症状: WP sync が 403 invalid_token
+→ 3点同期ズレ。[docs/TOKEN_ROTATION.md](./TOKEN_ROTATION.md) の手順で再同期、または `curl -X POST $WP_SYNC_URL -H "X-Boat-Token: $WP_SYNC_TOKEN" -d '{"ping":"test"}'` で疎通確認
+
+### 症状: Cowork スケジュールが全く起動しない
+→ Cowork アプリ自体が起動しているか、ネットワーク接続、サインイン状態を確認
+
+---
+
+## ロールフォワード（launchd に戻したい場合）
+
+1. Cowork 各タスクを **Pause**（UIトグル or `update_scheduled_task enabled=false`）
+2. launchd plist を load し直し:
    ```bash
-   openssl rand -base64 24 | tr -d '/+=' | head -c 28
+   launchctl load ~/Library/LaunchAgents/com.claude-code.task.boat-daily-morning-v2.plist
+   launchctl load ~/Library/LaunchAgents/com.boat.run-pending.plist
+   # 他も同様
    ```
-
-2. **heteml の `/web/boat/api/.htaccess` を新規作成**（FileZilla で upload）:
-   ```apache
-   SetEnv BOAT_SYNC_TOKEN "<生成した token>"
-   ```
-
-3. **以下 3 箇所を同じ token に揃える**:
-   - ローカル `~/repos/boat/.env` の `WP_SYNC_TOKEN`
-   - Cowork タスクの環境変数（もし使用していれば）
-   - heteml `/web/boat/api/.htaccess`
-
-4. **疎通確認**:
-   ```bash
-   curl -X POST "https://ask11.jp/web/boat/api/forecast-sync.php" \
-     -H "X-Boat-Token: <新token>" \
-     -d '{"ping":"test"}'
-   ```
-   403 以外が返れば成功。
+3. SKILL.md 側に Cowork prompt で加えた修正を反映
+4. AUP refusal 対策の追加検討
 
 ---
 
@@ -147,38 +160,29 @@ launchctl list | grep -E "boat|claude-code\.task"
 
 | 項目 | 場所 |
 |---|---|
-| 現行 SKILL.md（Cowork 移行元） | `~/Agent/personal-life/Scheduled/boat-daily-morning-v2/SKILL.md` |
-| run-pending ラッパー | `~/Agent/scripts/claude-code-cron/boat_run_pending.sh` |
-| launchd plist | `~/Library/LaunchAgents/com.claude-code.task.*.plist` / `com.boat.*.plist` |
+| SKILL.md（boat-daily-morning-v2） | `~/Agent/personal-life/Scheduled/boat-daily-morning-v2/SKILL.md` |
+| SKILL.md（boat-race-fetcher の元） | `~/Agent/personal-life/Scheduled/boat-run-pending/SKILL.md` |
+| launchd plist（停止中） | `~/Library/LaunchAgents/com.claude-code.task.*.plist` / `com.boat.*.plist` |
+| 純bash cron ラッパー（使っていない） | `~/Agent/scripts/claude-code-cron/boat_run_pending.sh` |
 | WP 受信口（heteml deployed） | `/web/boat/api/forecast-sync.php` |
 | WP 受信口（source） | `~/repos/boat/wordpress/forecast-sync.php` |
+| WP token定数（source） | `~/repos/boat/wordpress/forecast-config.php` |
 | 送信スクリプト | `~/repos/boat/scripts/publish_wordpress.py` |
 | `.env`（gitignore） | `~/repos/boat/.env` |
-| GitHub Actions deploy | `.github/workflows/deploy-wp.yml` （`wordpress/**` push で自動デプロイ） |
+| GitHub Actions deploy | `.github/workflows/deploy-wp.yml`（`wordpress/**` push で自動FTPS） |
+| トークンローテ手順 | `docs/TOKEN_ROTATION.md` |
 
 ---
 
-## 想定される注意点・リスク
+## 2026-04-22 に完了した作業ログ（サマリ）
 
-1. **Cowork 側の prompt が古い可能性**: 4/13 の移行以降、改修は SKILL.md 側のみに入れてきたため、Cowork のプロンプトは旧仕様のまま。`~/Agent/personal-life/Scheduled/boat-daily-morning-v2/SKILL.md` の最新版で上書きするのが安全。
-
-2. **iCloud 同期タイムラグ**: SKILL.md は iCloud 経由で両 Mac で共有しているが、Cowork の prompt は別基盤で手動更新が必要。差分管理が煩雑化する可能性。
-
-3. **二重実行**: launchd unload を忘れると WP に 2倍のリクエストが飛び、記事の重複更新・token ロック等の副作用リスク。必ず unload → Cowork Resume の順で。
-
-4. **AUP refusal の根本対策**: 公営ギャンブル文言を入れても Claude が拒否するケースが残る場合、Cowork では model 指定や system prompt レベルでの調整が Claude Code CLI より柔軟。UI 上で出る各タスクの設定を活用する。
-
-5. **ログ場所の違い**: launchd 時代は `~/Library/Logs/claude-tasks/*.log`。Cowork に戻すと Cowork UI 内のログに戻る。障害時の参照場所を混同しないこと。
-
----
-
-## ロールフォワード（もう一度 launchd に戻したくなったら）
-
-1. Cowork 各タスクを Pause
-2. launchd plist を load し直し:
-   ```bash
-   launchctl load ~/Library/LaunchAgents/com.claude-code.task.boat-daily-morning-v2.plist
-   # 他も同様
-   ```
-3. SKILL.md 側に Cowork prompt 側で加えた修正を反映（差分管理）
-4. AUP refusal 対策の追加検討
+- [x] Cowork Scheduled tasks 6件を `Paused` → cron付き `enabled`
+- [x] ボート系2タスクに AUP 文言挿入
+- [x] ボート系2タスクに `~/repos/boat` フォルダ接続
+- [x] launchd 8ジョブ を `launchctl unload`
+- [x] WP sync 403 → C案（PHP定数）で決着
+- [x] 新 token 生成 `dslGr00chvVut1fzLEEOnyoBnjAU` に rotate、3点同期
+- [x] 本日 4/22 × 8 会場の予測 HTML 生成 & WP 投稿（新規 post_id 160-167）
+- [x] 4/21 verify 振り返り × 8 会場 再送信（WP 上書き更新）
+- [x] 192 件の pending_tasks を登録、以降は boat-race-fetcher が4分毎に消化
+- [x] TODO.md の P0 #6 / #7 を解決済みにマーク（別途更新）

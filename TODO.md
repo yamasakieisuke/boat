@@ -2,7 +2,7 @@
 
 プロジェクト全体の残タスクを集約する。個別の細かいタスクは `data/venues/venue_site_tasks.json` 等に構造化されているので、本ファイルは「何をゴールにしているか」をトップダウンで記す。
 
-*最終更新: 2026-04-17*
+*最終更新: 2026-04-22*
 
 **v5.19 進捗**: #1（セオリーパターン発動記録）実装完了。次回の予測実行から pred.json に `triggered_patterns` / `applied_patterns` が記録され、verify でパターン別ヒット率が表示される。
 
@@ -14,19 +14,21 @@
 - 要FTPアップ: `wordpress/boat-forecast-viewer/boat-forecast-viewer.php`
 - 次: 1週間データ蓄積して pre-v5.20 と比較検証、会場特性データの predictor 組込み（v5.21 候補）
 
+**運用基盤切り戻し（2026-04-22）**: launchd → Cowork Scheduled tasks に完全移行。6タスク全てが cron 有効化済み、ボート系2タスクには AUP 文言挿入＋`~/repos/boat` フォルダ接続を実施。詳細は `docs/COWORK_ROLLBACK_HANDOVER.md` 。
+
 ---
 
 ## 優先度サマリ
 
 | P | タスク | ゴール | 備考 |
 |---|---|---|---|
-| 🔥 **P0** | [#6 daily-morning-v2 朝バッチ失敗検証](#6-daily-morning-v2-朝バッチ失敗検証) | 原因特定・復旧 | 2026-04-21 08:00 実行で exit 1、ログ 295byte でスタートアップのみ |
-| 🔥 **P0** | [#7 WP同期 403 検証](#7-wp-sync-403-検証) | トークン/URL 確認・復旧 | 2026-04-21 の run-pending で `HTTP 403 Forbidden` が **68 回** 発生 |
+| ✅ **P0** | [#6 daily-morning-v2 朝バッチ失敗検証](#6-daily-morning-v2-朝バッチ失敗検証) | ~~原因特定・復旧~~ | **解決済み（2026-04-22）**: Cowork Scheduled tasks に移行、launchd は unload 済み |
+| ✅ **P0** | [#7 WP同期 403 検証](#7-wp-sync-403-検証) | ~~トークン/URL 確認・復旧~~ | **解決済み（2026-04-22）**: C案（PHP定数方式）採用、新token rotate 完了 |
 | ✅ **P1** | [#1 セオリーパターン発動記録](#1-セオリーパターン発動ヒット率の-verify-記録) | ~~verify にパターンフラグ追加~~ | **v5.19 実装完了（2026-04-17）** |
 | **P1** | [#2 v5.16 新指標チューニング](#2-v516-新指標の-verify-蓄積チューニング) | EV閾値 / パターンconf / 本命配分の最適化 | #1と並行で蓄積 → 1〜2週後に調整 |
 | **P2** | [#3 series_score 効果検証](#3-series_score-今節成績スコアの効果検証) | verify で既存指標と独立に効いているか可視化 | v5.2 で既に組込済 |
 | **P4** | [#4 コメント未対応会場（ピンポイント）](#4-コメント未対応会場の個別取得ロジック実装) | morning 出現頻度TOP3のみ対応 | 全10会場は沼。絞る方針に変更 |
-| **P5** | [#5 boat_run_pending.sh エラーハンドリング](#5-boat_run_pendingsh-のエラーハンドリング) | ログ肥大化対策 / 再試行 | 運用は回っているので後回し |
+| **P5** | [#5 boat_run_pending.sh エラーハンドリング](#5-boat_run_pendingsh-のエラーハンドリング) | ログ肥大化対策 / 再試行 | Cowork 運用になり launchd 側 wrapper は未使用 |
 
 ---
 
@@ -167,34 +169,34 @@ verify に `series_stats` 走数帯別集計を実装して計測:
 
 ---
 
-## 6. daily-morning-v2 朝バッチ失敗検証
+## 6. daily-morning-v2 朝バッチ失敗検証 ✅ 解決済み（2026-04-22）
 
-**検知**: 2026-04-21 08:00 実行で `launchctl list` の exit code = 1、`boat-daily-morning-v2-20260421-080003.log` は 295 byte でスタートアップ行のみ（`=== [boat-daily-morning-v2] 開始 ===` / `claude:` / `skill:` / `pwd:`）。Claude Code 本体が起動直後に落ちた疑い。
+**経緯**: 2026-04-21 08:00 実行で launchd 側 exit 1。ログ 295 byte でスタートアップのみ記録、Claude Code 本体が起動直後に落ちた症状。
 
-**やること**:
-1. `launchctl list com.claude-code.task.boat-daily-morning-v2` で詳細 / StandardErrorPath 確認
-2. 手動で `~/Agent/scripts/claude-code-cron/boat-daily-morning-v2.sh`（または plist の ProgramArguments）を実行し、エラーを再現
-3. `~/.local/bin/claude --version` / パーミッション / TCC 設定（Full Disk Access 等）を確認
-4. 過去 7 日ぶんの morning ログを比較し、いつから異常か切り分け（4/18, 4/19, 4/20 は 605B〜1.6KB で正常サイズ）
-5. 復旧したら `/sync` は不要（launchd 側の問題）、動作確認のため 1 回手動実行
+**決着**: launchd での運用をやめ、Cowork Scheduled tasks に切り戻し。同時に AUP refusal 対策（プロンプト冒頭に公営ギャンブル用途明示）を実施。
 
-**影響**: 毎朝 8:00 の予測生成・WP 投稿が止まっている可能性。急ぎで見る。
+- `boat-daily-morning-v2`（cron: `0 8 * * *`）に AUP 文言挿入＋`~/repos/boat` フォルダ接続完了
+- launchd 側は `launchctl unload` で停止、plist ファイルはロールフォワード用に残置
+- 2026-04-22 の手動実行で STEP 0-6 全工程の動作確認済み（8会場分の予測HTML生成、WP投稿、pending登録）
+
+詳細は `docs/COWORK_ROLLBACK_HANDOVER.md` の「最終構成」セクション参照。
 
 ---
 
-## 7. WP sync 403 検証
+## 7. WP sync 403 検証 ✅ 解決済み（2026-04-22）
 
-**検知**: 2026-04-21 の `boat-run-pending-20260421.log` に `[WARN] WordPress 同期失敗: HTTP Error 403: Forbidden` が **68 回** 記録されている。run-pending 自体は稼働中（33MB ログ更新あり、exit 0）だが WP への送信が全部弾かれている状態。
+**経緯**: 2026-04-21 の run-pending ログに 403 が 68 回（最終的に 84 回）記録。heteml 側 `BOAT_SYNC_TOKEN` 環境変数が消失していた（`/web/boat/api/` に `.htaccess` も `.user.ini` も無し）。
 
-**やること**:
-1. `.env` の `WP_SYNC_TOKEN` が失効していないか確認（1Password「boat / WordPress sync」と突き合わせ）
-2. `wordpress/forecast-sync.php` の 403 返却条件（トークン比較・IP 制限 / リファラ / Nonce）を確認
-3. heteml 側 WAF / ModSecurity のログ確認（管理画面の Web Protection）
-4. 手動で `curl -X POST $WP_SYNC_URL -H "X-Token: $WP_SYNC_TOKEN" -d ...` して 200 を確認
-5. `publish_wordpress.py` の送信ヘッダ / Content-Type が変わっていないか直近コミットで確認
-6. 復旧後は未送信分のリペア（`run_pending.py --force` 相当 or 手動トリガ）
+**決着**: **C案（PHP定数方式）**を採用。
 
-**影響**: 公開ブログ `https://ask11.jp/web/boat/` が最新の予想を反映していない可能性。
+- `wordpress/forecast-config.php` で `define('BOAT_SYNC_TOKEN', ...)` を供給（`FORECAST_SYNC_LOADER` ガード付き）
+- `wordpress/forecast-sync.php` の `resolve_expected_token()` で最優先ソースに定数を据える多段フォールバック構成
+- `wordpress/.htaccess` / `wordpress/.user.ini` は互換フォールバック・診断用に残置
+- 新 token を `openssl rand` で生成（28 chars）、3点同期完了（`.env` / `forecast-config.php` / Cowork タスク環境変数）
+- 疎通確認: `curl -X POST $WP_SYNC_URL ... '{"ping":"test"}'` で `HTTP=400 missing_field=title` を確認（token認証通過、validationで正常弾き）
+- 本日 4/22 × 8 会場は `action=created`、4/21 verify 振り返り × 8 会場は `action=updated` で WP 反映済み
+
+今後のローテ手順は `docs/TOKEN_ROTATION.md` に整備。
 
 ---
 

@@ -21,22 +21,29 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 | 蓄積データ | `~/repos/boat/data/` | racecard/player/tide等、**gitignore済** |
 | 出力HTML | `~/repos/boat/output/` | 会場別、**gitignore済** |
 | ペンディング | `~/repos/boat/data/pending_tasks.json` | 展示/オッズ取得予定 |
-| 実行ログ | `~/Library/Logs/claude-tasks/boat-run-pending-YYYYMMDD.log` | |
+| 実行ログ | Cowork UI 各タスクのセッション履歴 | 旧 launchd 時代のログは `~/Library/Logs/claude-tasks/` に残存 |
 
-## スケジュール実行（launchd）
+## スケジュール実行（Cowork Scheduled tasks）
 
-**重要: launchd ジョブは1台のMacでのみ有効化すること**（両方で動くとWP再送信が二重になる）。
+**2026-04-22 以降は Cowork 側で定期実行。** launchd は全ジョブ `launchctl unload` で停止済み（plist ファイルは残置）。
 
-| plist | 頻度 | 現在有効なMac |
-|---|---|---|
-| `com.boat.run-pending.plist` | 4分毎 | 会社Mac |
-| `com.claude-code.task.boat-daily-morning-v2.plist` | 毎朝8:00 | 会社Mac |
+| taskId | cron | 頻度 | フォルダ接続 |
+|---|---|---|---|
+| `boat-daily-morning-v2` | `0 8 * * *` | 毎朝 08:00 | ✅ `~/repos/boat` 必須 |
+| `boat-race-fetcher` | `*/4 9-22 * * *` | 9-22時の4分毎 | ✅ `~/repos/boat` 必須 |
 
-場所: `~/Library/LaunchAgents/`（iCloud非同期、各Mac独立管理）
-定義SKILL: `~/Agent/personal-life/Scheduled/boat-*/SKILL.md`（iCloud同期）
-ラッパー: `~/Agent/scripts/claude-code-cron/boat_run_pending.sh`（iCloud同期）
+### Cowork 運用の重要ポイント
 
-自宅Mac側でジョブを走らせたい場合は、**先に会社Macのジョブを `launchctl unload` で停止** すること。
+1. **タスク単位でフォルダ接続**が必要。Cowork のスケジュール起動は interactive session とは別の isolated sandbox で走るため、各タスク詳細画面で `~/repos/boat` を明示接続する。未接続だと `BOAT_DIR` 検出失敗で即終了
+2. **AUP 文言の挿入**: プロンプト冒頭に公営ギャンブル用途明示を残しておく（Claude の応答拒否予防）
+3. **launchd 二重起動禁止**: `launchctl list | grep -E "boat|claude-code\.task"` で何も出ないのが正常
+4. 端末非依存のため、どの Mac で Cowork を起動していても実行される（逆に新規 Mac でも上記フォルダ接続は個別に必要）
+
+### 関連ファイル
+
+- 定義 SKILL（Cowork プロンプトの原本）: `~/Agent/personal-life/Scheduled/boat-*/SKILL.md`（iCloud 同期）
+- launchd plist（停止中・ロールフォワード用）: `~/Library/LaunchAgents/com.claude-code.task.*.plist` / `com.boat.*.plist`
+- 運用引き継ぎ: [docs/COWORK_ROLLBACK_HANDOVER.md](docs/COWORK_ROLLBACK_HANDOVER.md)
 
 ## 作業開始時/終了時の運用
 
@@ -53,9 +60,12 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 
 ## 関連文書
 
+- `docs/COWORK_ROLLBACK_HANDOVER.md` — **Cowork運用引き継ぎ（2026-04-22 移行記録・現行構成）**
+- `docs/TOKEN_ROTATION.md` — **WP sync token ローテート手順（3点同期）**
 - `docs/OTHER_MAC_SETUP.md` — 別Macでの初回セットアップ手順
 - `docs/CLAUDE_COWORK_HANDOVER.md` — Claude 他モデルとの協業時の引き継ぎ
 - `docs/RESULTS_ACQUISITION.md` — 結果データ取得の仕組み
 - `docs/wordpress_handover.md` — WP 側プラグインの引き継ぎ
 - `docs/version_history.md` — v5.20 までの変更履歴
+- `docs/WP_AUTO_DEPLOY.md` — `wordpress/**` push での GitHub Actions 自動FTPSデプロイ
 - `docs/claude-design-assets/README.md` — Claude Design 連携素材と投入手順
