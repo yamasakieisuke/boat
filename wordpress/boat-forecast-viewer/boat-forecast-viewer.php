@@ -669,95 +669,114 @@ function boat_forecast_viewer_render_single($payload, $post) {
             padding: 24px 0 56px;
             overflow-x: visible;
         }
-        /* ===== Phase 10: single hero & side info ===== */
+        /* ===== Phase 17: single hero (warm, data-centric, mobile-first) ===== */
         .bfv-hero {
-            padding: 20px 24px 22px;
-            border-radius: var(--bfv-radius-lg);
+            padding: 14px 16px;
+            border-radius: var(--bfv-radius-md);
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-border);
             display: grid;
             gap: 10px;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 10px;
         }
-        .bfv-kicker {
-            display: inline-block;
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            color: var(--bfv-accent);
-            font-weight: 600;
-            padding: 0;
-            background: transparent;
-            border: 0;
-            text-transform: uppercase;
+        .bfv-hero-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-        .bfv-title {
+        .bfv-hero-title {
             margin: 0;
-            font-size: clamp(24px, 3.2vw, 34px);
-            font-weight: 800;
-            line-height: 1.15;
-            color: var(--bfv-ink);
+            display: grid;
+            gap: 4px;
+            min-width: 0;
+        }
+        .bfv-hero-venue {
+            font-size: clamp(20px, 4.5vw, 26px);
+            font-weight: 700;
+            line-height: 1.1;
             letter-spacing: 0.02em;
+            color: var(--bfv-ink);
             font-feature-settings: "palt";
         }
-        .bfv-title span {
-            display: inline-block;
-            margin-left: 10px;
-            font-size: 0.6em;
-            color: var(--bfv-ink-dim);
-            font-weight: 600;
+        .bfv-hero-date {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--bfv-muted);
+            letter-spacing: 0.08em;
         }
-        .bfv-sub {
-            margin: 0;
-            font-size: 13px;
-            color: var(--bfv-ink-dim);
-            max-width: 60ch;
-            line-height: 1.6;
-        }
-        .bfv-meta {
+        .bfv-hero-status {
             display: flex;
+            gap: 6px;
             flex-wrap: wrap;
-            gap: 6px 10px;
-            align-items: center;
         }
-        .bfv-jump {
-            margin-left: auto;
+        .bfv-hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-top: 10px;
+            border-top: 1px solid var(--bfv-border-soft);
+            flex-wrap: wrap;
+        }
+        .bfv-hero-stat {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 5px;
+            min-width: 0;
+            font-family: var(--bfv-font-mono);
+        }
+        .bfv-hero-stat-label {
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+        }
+        .bfv-hero-stat-value {
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 500;
+            color: var(--bfv-ink);
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+        .bfv-hero-jump {
+            margin-left: auto;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
             color: var(--bfv-accent);
             text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 120ms ease;
-            padding: 0;
-            background: transparent;
-            border-radius: 0;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
         }
-        .bfv-jump:hover {
-            border-bottom-color: var(--bfv-accent);
-            background: transparent;
-            text-decoration: none;
-        }
+        .bfv-hero-jump:hover { color: var(--bfv-ink); text-decoration: none; }
+
         .bfv-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
             padding: 3px 10px;
             border-radius: 999px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--bfv-ink-dim);
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--bfv-muted);
             border: 1px solid var(--bfv-border);
-            background: var(--bfv-surface-2);
+            background: var(--bfv-surface-sub);
         }
         .bfv-badge.is-on {
-            color: var(--bfv-ok);
+            color: var(--bfv-good);
             border-color: transparent;
-            background: var(--bfv-ok-soft);
+            background: var(--bfv-good-soft);
         }
         .bfv-badge.is-on::before {
-            content: "●";
-            font-size: 8px;
-            line-height: 1;
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--bfv-good);
         }
         .bfv-note {
             margin-top: 14px;
@@ -2050,9 +2069,8 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         @media (max-width: 640px) {
             .bfv-shell { width: min(100% - 16px, 100%); padding-top: 12px; }
-            .bfv-hero { border-radius: var(--bfv-radius-md); padding: 20px; }
-            .bfv-title { font-size: clamp(24px, 9vw, 32px); }
-            .bfv-sub { font-size: 13px; line-height: 1.65; }
+            .bfv-hero { padding: 12px 14px; }
+            .bfv-hero-meta { gap: 10px; padding-top: 8px; }
             .bfv-panel, .bfv-card { border-radius: var(--bfv-radius-md); }
             .bfv-review { padding: 14px; border-radius: var(--bfv-radius-md); }
             .bfv-bets { grid-template-columns: 1fr; }
@@ -2190,15 +2208,36 @@ boat_forecast_viewer_render_nav('single', $single_section);
 ?>
 <div class="bfv-shell">
     <section class="bfv-hero">
-        <span class="bfv-kicker">ボートレース予想</span>
-        <h1 class="bfv-title"><?php echo esc_html($venue); ?> <span><?php echo esc_html($date); ?></span></h1>
-        <p class="bfv-sub">開催日ごとの予想ページです。展示・オッズの反映状況に応じて、同じURLのまま内容を更新します。</p>
-        <div class="bfv-meta">
-            <?php echo boat_forecast_viewer_render_badge($has_exhibition, '展示'); ?>
-            <?php echo boat_forecast_viewer_render_badge($has_odds, 'オッズ'); ?>
-            <span class="bfv-badge"><?php echo esc_html('最終更新: ' . $updated); ?></span>
+        <div class="bfv-hero-head">
+            <h1 class="bfv-hero-title">
+                <span class="bfv-hero-venue"><?php echo esc_html($venue); ?></span>
+                <span class="bfv-hero-date"><?php echo esc_html($date); ?></span>
+            </h1>
+            <div class="bfv-hero-status">
+                <?php echo boat_forecast_viewer_render_badge($has_exhibition, '展示'); ?>
+                <?php echo boat_forecast_viewer_render_badge($has_odds, 'オッズ'); ?>
+            </div>
+        </div>
+        <div class="bfv-hero-meta">
+            <?php $publish_stage = (string) get_post_meta($post->ID, 'publish_stage', true); ?>
+            <?php if ($publish_stage !== '') : ?>
+                <span class="bfv-hero-stat">
+                    <span class="bfv-hero-stat-label">Stage</span>
+                    <span class="bfv-hero-stat-value"><?php echo esc_html($publish_stage); ?></span>
+                </span>
+            <?php endif; ?>
+            <span class="bfv-hero-stat">
+                <span class="bfv-hero-stat-label">Races</span>
+                <span class="bfv-hero-stat-value"><?php echo esc_html((string) count($races)); ?>R</span>
+            </span>
+            <?php if ($updated !== '') : ?>
+                <span class="bfv-hero-stat">
+                    <span class="bfv-hero-stat-label">Updated</span>
+                    <span class="bfv-hero-stat-value"><?php echo esc_html($updated); ?></span>
+                </span>
+            <?php endif; ?>
             <?php if (!empty($payload['review_summary'])) : ?>
-                <a class="bfv-jump" href="#review">振り返りへ</a>
+                <a class="bfv-hero-jump" href="#review">振り返り ↓</a>
             <?php endif; ?>
         </div>
         <?php if ($status_note) : ?>
