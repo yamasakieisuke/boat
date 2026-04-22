@@ -655,7 +655,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         * { box-sizing: border-box; }
         body {
             margin: 0;
-            color: var(--ink);
+            color: var(--bfv-ink);
             background: var(--bfv-bg);
             font-family: var(--bfv-font-sans);
             line-height: 1.5;
@@ -1385,62 +1385,70 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-betbox.is-cover strong { color: var(--bfv-muted); }
         .bfv-betbox.is-cover .bfv-bet { color: var(--bfv-ink-sub); font-size: 15px; }
+        /* ===== Phase 20: comment / reason / picks ===== */
         .bfv-comment {
             padding: 10px 12px;
-            background: var(--bfv-surface-2);
+            background: var(--bfv-surface-sub);
             border-left: 3px solid var(--bfv-accent);
-            border-radius: var(--bfv-radius-md);
-            font-size: 13px;
+            border-radius: var(--bfv-radius-sm);
+            font-size: 12.5px;
+            line-height: 1.55;
             color: var(--bfv-ink);
+            margin: 10px 0 0;
         }
         .bfv-reason-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 8px;
+            gap: 6px;
+            margin-top: 10px;
         }
         @media (max-width: 640px) {
             .bfv-reason-grid { grid-template-columns: 1fr; }
         }
         .bfv-reason {
             padding: 10px 12px;
-            border-radius: var(--bfv-radius-md);
-            background: var(--bfv-surface-2);
-            font-size: 12.5px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border);
+            font-size: 12px;
             line-height: 1.55;
             color: var(--bfv-ink);
         }
         .bfv-reason strong {
             display: block;
-            font-size: 11px;
-            color: var(--bfv-ink-dim);
-            margin-bottom: 3px;
-            letter-spacing: .05em;
+            font-family: var(--bfv-font-mono);
+            font-size: 9.5px;
+            color: var(--bfv-muted);
+            margin-bottom: 4px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 500;
         }
         .bfv-picks {
             margin-top: 14px;
             display: grid;
-            gap: 10px;
+            gap: 6px;
         }
         .bfv-pick {
             display: grid;
-            grid-template-columns: 28px minmax(0, 1fr) auto;
+            grid-template-columns: 24px minmax(0, 1fr) auto;
             gap: 10px;
             align-items: center;
-            padding: 12px 14px;
-            border-radius: var(--bfv-radius-md);
-            background: var(--panel);
-            border: 1px solid var(--line);
+            padding: 10px 12px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border);
         }
         .bfv-pick-mark {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 28px;
-            min-width: 28px;
+            width: 24px;
+            min-width: 24px;
             background: transparent;
             color: var(--bfv-accent);
-            font-weight: 800;
-            font-size: 28px;
+            font-weight: 600;
+            font-size: 22px;
             line-height: 1;
         }
         .bfv-pick-mark.is-plain {
@@ -1480,30 +1488,34 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-waku-name-cell.is-md .bfv-waku-name { font-size: 14px; }
         .bfv-waku-name-cell.is-lg .bfv-waku-name { font-size: 16px; }
         .bfv-pick-name {
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 1.3;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.25;
+            color: var(--bfv-ink);
         }
         .bfv-female {
-            color: #d72662;
-            font-weight: 800;
-            margin-right: 4px;
+            color: var(--bfv-accent);
+            font-weight: 700;
+            margin-right: 3px;
         }
         .bfv-pick-meta {
-            color: var(--muted);
-            font-size: 13px;
+            color: var(--bfv-muted);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 3px;
+            letter-spacing: 0.02em;
         }
-        .bfv-grade { font-weight: 800; }
-        .bfv-grade.grade-a1, .bfv-grade.grade-a2 { color: #c62828; }
-        .bfv-grade.grade-b { color: #1565c0; }
+        .bfv-grade { font-weight: 600; font-size: 10.5px; }
+        .bfv-grade.grade-a1, .bfv-grade.grade-a2 { color: var(--bfv-accent); }
+        .bfv-grade.grade-b { color: var(--bfv-ink-sub); }
         .bfv-pick-note {
-            color: var(--muted);
-            font-size: 13px;
-            margin-top: 6px;
+            color: var(--bfv-ink-sub);
+            font-size: 12px;
+            margin-top: 5px;
+            line-height: 1.45;
         }
         .bfv-score {
             text-align: right;
@@ -2026,58 +2038,66 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-review-info { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 13px; color: rgba(255,255,255,.7); }
         .bfv-review-upsets { margin-top: 6px; font-size: 12px; color: rgba(255,255,255,.6); }
         .bfv-review-upsets li { margin-top: 2px; }
+        /* ===== Phase 21: 実データテーブル（warm + mono tabular） ===== */
         .bfv-detail-block {
-            margin-top: 4px;
-            padding: 14px 16px;
-            border-radius: var(--bfv-radius-md);
-            background: var(--bfv-surface-2);
-            border: 1px solid var(--bfv-border-soft);
+            margin-top: 10px;
+            padding: 12px 14px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-border);
         }
         .bfv-detail-block h4 {
-            margin: 0 0 10px;
-            font-size: 12px;
-            letter-spacing: 0.08em;
-            color: var(--bfv-ink-dim);
-            font-weight: 600;
+            margin: 0 0 8px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--bfv-muted);
+            font-weight: 500;
+            text-transform: uppercase;
         }
         .bfv-detail-wrap {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             border-radius: var(--bfv-radius-sm);
-            border: 1px solid var(--bfv-border-soft);
+            border: 1px solid var(--bfv-border);
             background: var(--bfv-surface);
         }
         .bfv-detail-table {
             width: 100%;
             border-collapse: collapse;
             min-width: 820px;
-            font-size: 12.5px;
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
         }
         .bfv-detail-table th {
-            background: var(--bfv-surface-2);
+            background: var(--bfv-surface-sub);
             text-align: left;
-            padding: 8px 10px;
-            font-size: 11px;
-            color: var(--bfv-ink-dim);
-            font-weight: 600;
-            border-bottom: 1px solid var(--bfv-border-soft);
+            padding: 7px 10px;
+            font-size: 9.5px;
+            color: var(--bfv-muted);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--bfv-border);
             white-space: nowrap;
         }
         .bfv-detail-table td {
-            padding: 8px 10px;
+            padding: 7px 10px;
             border-bottom: 1px solid var(--bfv-border-soft);
             font-variant-numeric: tabular-nums;
             vertical-align: top;
             max-width: 140px;
+            color: var(--bfv-ink);
+            letter-spacing: 0.02em;
         }
         .bfv-detail-table tr:last-child td { border-bottom: none; }
-        .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; }
+        .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); }
         .bfv-rank-cell {
-            font-weight: 800;
+            font-weight: 600;
             white-space: nowrap;
         }
         .bfv-dim {
-            color: var(--muted);
+            color: var(--bfv-muted);
         }
         .bfv-meter {
             display: inline-flex;
