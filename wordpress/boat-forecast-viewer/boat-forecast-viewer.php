@@ -446,9 +446,9 @@ function boat_forecast_viewer_common_root_css() {
         --bfv-warn:        #b22323;
         --bfv-warn-soft:   #fdf3f3;
         --bfv-hero-ink:    #1a1915;      /* hero dark bg (warm near-black) */
-        --bfv-radius-sm:   8px;
-        --bfv-radius-md:   12px;
-        --bfv-radius-lg:   16px;
+        --bfv-radius-sm:   6px;
+        --bfv-radius-md:   8px;
+        --bfv-radius-lg:   12px;
         --bfv-shadow-xs:   0 1px 0 rgba(26,25,21,0.04);
         --bfv-shadow-sm:   0 1px 2px rgba(26,25,21,0.06), 0 1px 1px rgba(26,25,21,0.04);
         --bfv-shadow-md:   0 4px 12px rgba(26,25,21,0.06), 0 1px 2px rgba(26,25,21,0.04);
