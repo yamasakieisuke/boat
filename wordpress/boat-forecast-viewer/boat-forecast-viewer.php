@@ -1448,10 +1448,132 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-score {
             text-align: right;
-            font-family: SFMono-Regular, Consolas, Menlo, Courier, monospace;
-            color: var(--accent);
-            font-weight: 800;
+            font-family: var(--bfv-font-mono);
+            color: var(--bfv-accent);
+            font-weight: 500;
+            font-size: 26px;
+            letter-spacing: -0.01em;
+            line-height: 1;
             white-space: nowrap;
+        }
+        .bfv-score small {
+            display: block;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+            margin-bottom: 3px;
+        }
+
+        /* ===== Phase 15: race card hero + weather strip ===== */
+        .bfv-race-hero {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .bfv-race-hero-left {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            min-width: 0;
+        }
+        .bfv-race-num {
+            font-family: var(--bfv-font-mono);
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 1;
+            color: var(--bfv-ink);
+            letter-spacing: -0.01em;
+        }
+        .bfv-race-sep {
+            color: var(--bfv-muted);
+            font-weight: 300;
+            margin: 0 -2px;
+        }
+        .bfv-race-time {
+            font-family: var(--bfv-font-mono);
+            font-size: 14px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.04em;
+        }
+        .bfv-race-hero-right {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            justify-content: flex-end;
+        }
+        .bfv-race-conf {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--bfv-border);
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink-sub);
+            text-transform: uppercase;
+        }
+        .bfv-race-conf.is-conf-high { background: var(--bfv-good-soft); color: var(--bfv-good); border-color: transparent; }
+        .bfv-race-conf.is-conf-mid  { background: var(--bfv-accent-soft); color: var(--bfv-accent); border-color: transparent; }
+        .bfv-race-conf.is-conf-low  { background: var(--bfv-surface-sub); color: var(--bfv-muted); }
+        .bfv-race-rough {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 3px 7px;
+            border-radius: 3px;
+            background: var(--bfv-warn-soft);
+            color: var(--bfv-warn);
+            font-weight: 600;
+        }
+
+        .bfv-weather {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            margin: 0 0 12px;
+            background: var(--bfv-border);
+            border-radius: var(--bfv-radius-sm);
+            overflow: hidden;
+        }
+        .bfv-weather-cell {
+            display: grid;
+            gap: 3px;
+            padding: 8px 10px;
+            background: var(--bfv-surface);
+            min-width: 0;
+        }
+        .bfv-weather-label {
+            font-family: var(--bfv-font-mono);
+            font-size: 9px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+        }
+        .bfv-weather-value {
+            font-family: var(--bfv-font-mono);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--bfv-ink);
+            letter-spacing: 0.02em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .bfv-weather-value.is-null { color: var(--bfv-muted); }
+
+        @media (max-width: 480px) {
+            .bfv-race-num { font-size: 24px; }
+            .bfv-race-time { font-size: 12px; }
+            .bfv-weather-value { font-size: 12px; }
+            .bfv-weather-cell { padding: 6px 8px; }
+            .bfv-score { font-size: 22px; }
         }
         .bfv-foot {
             margin-top: 18px;
@@ -2096,30 +2218,41 @@ boat_forecast_viewer_render_nav('single', $single_section);
     </section>
 
     <section class="bfv-races">
-        <?php foreach ($races as $race) : ?>
-            <article class="bfv-card" id="race-<?php echo esc_attr((string) ($race['race_no'] ?? '')); ?>">
-                <div class="bfv-card-head">
-                    <div>
-                        <h3><?php echo esc_html((string) ($race['race_no'] ?? '')); ?>R</h3>
-                    <div class="bfv-card-sub">
-                        <span><?php echo esc_html((string) ($race['start_time'] ?? '')); ?></span>
-                        <?php if (!empty($race['race_type'])) : ?>
-                            <span><?php echo esc_html((string) $race['race_type']); ?></span>
-                        <?php endif; ?>
-                        <?php if (!empty($race['tide_status'])) : ?>
-                            <span><?php echo esc_html((string) $race['tide_status']); ?></span>
+        <?php foreach ($races as $race) :
+            $r_conf_v = is_numeric($race['confidence'] ?? null) ? (int) round((float) $race['confidence']) : 0;
+            $r_conf_l = (string) ($race['confidence_label'] ?? 'low');
+            $r_rno = (string) ($race['race_no'] ?? '');
+        ?>
+            <article class="bfv-card" id="race-<?php echo esc_attr($r_rno); ?>">
+                <header class="bfv-race-hero">
+                    <div class="bfv-race-hero-left">
+                        <span class="bfv-race-num"><?php echo esc_html($r_rno); ?>R</span>
+                        <span class="bfv-race-sep">·</span>
+                        <span class="bfv-race-time"><?php echo esc_html((string) ($race['start_time'] ?? '')); ?></span>
+                    </div>
+                    <div class="bfv-race-hero-right">
+                        <span class="bfv-race-conf is-conf-<?php echo esc_attr($r_conf_l); ?>">信頼 <?php echo esc_html((string) $r_conf_v); ?>%</span>
+                        <?php if (!empty($race['is_rough'])) : ?>
+                            <span class="bfv-race-rough">Rough</span>
                         <?php endif; ?>
                     </div>
-                </div>
-                    <div class="bfv-card-sub">
-                        <span class="bfv-pill <?php echo esc_attr(boat_forecast_viewer_conf_class((string) ($race['confidence_label'] ?? 'low'))); ?>">
-                            信頼度 <?php echo esc_html((string) ($race['confidence'] ?? '')); ?>%
-                        </span>
-                        <?php if (!empty($race['is_rough'])) : ?>
-                            <span class="bfv-pill" style="color: var(--warn); background: var(--warn-soft);">荒れ注意</span>
-                        <?php endif; ?>
-                        <span class="bfv-pill"><?php echo !empty($race['has_exhibition']) ? '展示反映' : '展示未反映'; ?></span>
-                        <span class="bfv-pill"><?php echo !empty($race['has_odds']) ? 'オッズ反映' : 'オッズ未反映'; ?></span>
+                </header>
+                <div class="bfv-weather" aria-label="環境情報">
+                    <div class="bfv-weather-cell">
+                        <span class="bfv-weather-label">Stage</span>
+                        <span class="bfv-weather-value<?php echo empty($race['race_type']) ? ' is-null' : ''; ?>"><?php echo esc_html(!empty($race['race_type']) ? (string) $race['race_type'] : '—'); ?></span>
+                    </div>
+                    <div class="bfv-weather-cell">
+                        <span class="bfv-weather-label">Tide</span>
+                        <span class="bfv-weather-value<?php echo empty($race['tide_status']) ? ' is-null' : ''; ?>"><?php echo esc_html(!empty($race['tide_status']) ? (string) $race['tide_status'] : '—'); ?></span>
+                    </div>
+                    <div class="bfv-weather-cell">
+                        <span class="bfv-weather-label">Wind</span>
+                        <span class="bfv-weather-value is-null">—</span>
+                    </div>
+                    <div class="bfv-weather-cell">
+                        <span class="bfv-weather-label">Temp</span>
+                        <span class="bfv-weather-value is-null">—</span>
                     </div>
                 </div>
                 <div class="bfv-bets">
@@ -2352,7 +2485,13 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                         <div class="bfv-pick-note"><?php echo esc_html((string) $pick['comment_text']); ?></div>
                                     <?php endif; ?>
                                 </div>
-                                <div class="bfv-score">score <?php echo esc_html(boat_forecast_viewer_format_decimal($pick['score'] ?? '', 2)); ?></div>
+                                <div class="bfv-score">
+                                    <small>Score</small>
+                                    <?php
+                                        $__score_raw = isset($pick['score']) && is_numeric($pick['score']) ? (float) $pick['score'] : null;
+                                        echo $__score_raw !== null ? esc_html(number_format($__score_raw * 100, 1)) : '—';
+                                    ?>
+                                </div>
                             </section>
                         <?php endforeach; ?>
                     </div>
