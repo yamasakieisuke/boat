@@ -13,10 +13,27 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, ['ok' => false, 'error' => 'method_not_allowed']);
 }
 
-$expectedToken = getenv('BOAT_SYNC_TOKEN') ?: '';
+// BOAT_SYNC_TOKEN は .htaccess SetEnv で注入される想定。
+// heteml の PHP 実行環境によっては getenv() で読めないため、
+// $_SERVER / $_ENV / apache_getenv() の複数ソースを順にフォールバック参照する。
+function resolve_expected_token(): string {
+    $sources = [
+        getenv('BOAT_SYNC_TOKEN') ?: '',
+        $_SERVER['BOAT_SYNC_TOKEN'] ?? '',
+        $_ENV['BOAT_SYNC_TOKEN'] ?? '',
+        function_exists('apache_getenv') ? (apache_getenv('BOAT_SYNC_TOKEN') ?: '') : '',
+        getenv('REDIRECT_BOAT_SYNC_TOKEN') ?: '',
+        $_SERVER['REDIRECT_BOAT_SYNC_TOKEN'] ?? '',
+    ];
+    foreach ($sources as $t) {
+        if (is_string($t) && $t !== '') return $t;
+    }
+    return '';
+}
+$expectedToken = resolve_expected_token();
 $requestToken = $_SERVER['HTTP_X_BOAT_TOKEN'] ?? '';
 if ($expectedToken === '' || !hash_equals($expectedToken, $requestToken)) {
-    respond(403, ['ok' => false, 'error' => 'invalid_token']);
+    respond(403, ['ok' => false, 'error' => 'invalid_token', 'expected_set' => $expectedToken !== '']);
 }
 
 $raw = file_get_contents('php://input');
