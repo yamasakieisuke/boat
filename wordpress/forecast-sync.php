@@ -13,10 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     respond(405, ['ok' => false, 'error' => 'method_not_allowed']);
 }
 
-// BOAT_SYNC_TOKEN は .htaccess SetEnv で注入される想定。
-// heteml の PHP 実行環境によっては getenv() で読めないため、
-// $_SERVER / $_ENV / apache_getenv() の複数ソースを順にフォールバック参照する。
+// BOAT_SYNC_TOKEN は forecast-config.php の define() で供給される。
+// heteml の PHP-CGI では .htaccess SetEnv / .user.ini env[] が反映されないため、
+// PHP 定数方式を正とし、env 系はフォールバックとして残す。
+define('FORECAST_SYNC_LOADER', true);
+@include_once __DIR__ . '/forecast-config.php';
+
 function resolve_expected_token(): string {
+    if (defined('BOAT_SYNC_TOKEN') && BOAT_SYNC_TOKEN !== '') {
+        return BOAT_SYNC_TOKEN;
+    }
     $sources = [
         getenv('BOAT_SYNC_TOKEN') ?: '',
         $_SERVER['BOAT_SYNC_TOKEN'] ?? '',
