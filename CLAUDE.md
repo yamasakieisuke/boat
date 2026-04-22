@@ -61,8 +61,9 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 ## 関連文書
 
 - `docs/COWORK_ROLLBACK_HANDOVER.md` — **Cowork運用引き継ぎ（2026-04-22 移行記録・現行構成）**
+- `docs/COWORK_DEVICE_MIGRATION.md` — **別端末への Cowork Scheduled tasks 移行手順**
 - `docs/TOKEN_ROTATION.md` — **WP sync token ローテート手順（3点同期）**
-- `docs/OTHER_MAC_SETUP.md` — 別Macでの初回セットアップ手順
+- `docs/OTHER_MAC_SETUP.md` — 別Macでのリポジトリ初回セットアップ手順
 - `docs/CLAUDE_COWORK_HANDOVER.md` — Claude 他モデルとの協業時の引き継ぎ
 - `docs/RESULTS_ACQUISITION.md` — 結果データ取得の仕組み
 - `docs/wordpress_handover.md` — WP 側プラグインの引き継ぎ

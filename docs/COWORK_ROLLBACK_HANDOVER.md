@@ -114,15 +114,19 @@ launchctl list | grep -E "boat|claude-code\.task"
 
 ---
 
-## 新規 Mac で Cowork 運用を始めるときの手順
+## 新規 Mac / 別端末への移行
 
-1. **Cowork アプリをインストール**してサインイン
-2. **`~/repos/boat`** を git clone（GitHub Actions deploy があるので private repo アクセス権が必要）
-3. **`.env`** を手動で配置（値は 1Password「boat / WordPress sync」参照）
-4. **Cowork タスク一覧**で 6 タスクを確認。初回同期時に自動で現れるはず
-5. **ボート系2タスクに `~/repos/boat` フォルダを接続**（最重要、設定画面から）
-6. **launchd が稼働してないことを確認**（`launchctl list | grep -E "boat|claude-code\.task"` で何も出ないのが正常）
-7. `boat-race-fetcher` で `Run now` を1回実行して動作確認（「実行可能タスクなし」等が返れば成功）
+Scheduled tasks は **端末ローカル保存のため同一アカウントでも自動同期されない**。新 Mac または別端末に Cowork 運用を移す際の詳細手順は:
+
+**→ `docs/COWORK_DEVICE_MIGRATION.md` を参照**
+
+同文書に含まれる内容:
+- 旧端末の棚卸し & 停止手順
+- 新端末の基盤準備（Cowork install, repo clone, .env 配置, MCP 再認証）
+- 6 タスクの再作成（cron, AUP 文言, フォルダ接続）
+- 検証フロー（fetcher の消化確認, WP 疎通, 翌朝の morning-v2）
+- 旧端末のクリーンアップ
+- チェックリスト & よくある落とし穴
 
 ---
 
