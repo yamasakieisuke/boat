@@ -845,6 +845,267 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-variant-numeric: tabular-nums;
             word-break: break-all;
         }
+        /* ===== Phase 14: 12R flash list + カオ予想 TOP panel ===== */
+        .bfv-flash {
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border);
+            border-radius: var(--bfv-radius-md);
+            overflow: hidden;
+        }
+        .bfv-flash-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--bfv-border);
+        }
+        .bfv-flash-head h2 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .bfv-flash-sub {
+            margin: 2px 0 0;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfv-flash-toggles { display: flex; gap: 6px; flex-shrink: 0; }
+        .bfv-flash-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 9px;
+            border: 1px solid var(--bfv-border);
+            border-radius: 999px;
+            background: var(--bfv-surface);
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            color: var(--bfv-muted);
+            text-transform: uppercase;
+        }
+        .bfv-flash-toggle::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--bfv-line-strong);
+        }
+        .bfv-flash-toggle.is-on {
+            background: var(--bfv-ink);
+            color: #fff;
+            border-color: var(--bfv-ink);
+        }
+        .bfv-flash-toggle.is-on::before { background: var(--bfv-good); }
+
+        .bfv-flash-list { list-style: none; margin: 0; padding: 0; }
+        .bfv-flash-row { border-bottom: 1px solid var(--bfv-border-soft); }
+        .bfv-flash-row:last-child { border-bottom: 0; }
+        .bfv-flash-link {
+            display: grid;
+            grid-template-columns: 46px 42px minmax(70px, 1fr) minmax(90px, 1.1fr) 60px;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--bfv-ink);
+            text-decoration: none;
+            transition: background .15s;
+        }
+        .bfv-flash-link:hover { background: var(--bfv-surface-sub); }
+        .bfv-flash-r {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 38px;
+            height: 28px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-accent-soft);
+            color: var(--bfv-accent);
+            font-family: var(--bfv-font-mono);
+            font-weight: 600;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+        }
+        .bfv-flash-time {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.02em;
+        }
+        .bfv-flash-combo {
+            font-family: var(--bfv-font-mono);
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.05em;
+            color: var(--bfv-ink);
+        }
+        .bfv-flash-conf { display: flex; align-items: center; gap: 6px; min-width: 0; }
+        .bfv-flash-bar {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--bfv-surface-sub);
+            overflow: hidden;
+            min-width: 40px;
+        }
+        .bfv-flash-bar > span {
+            display: block;
+            height: 100%;
+            background: var(--bfv-accent);
+            border-radius: 3px;
+        }
+        .bfv-flash-conf.is-conf-high .bfv-flash-bar > span { background: var(--bfv-good); }
+        .bfv-flash-conf.is-conf-low .bfv-flash-bar > span { background: var(--bfv-muted); }
+        .bfv-flash-pct {
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
+            font-weight: 500;
+            color: var(--bfv-ink-sub);
+            min-width: 28px;
+            text-align: right;
+        }
+        .bfv-flash-odds {
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            color: var(--bfv-ink);
+            text-align: right;
+            letter-spacing: 0.02em;
+        }
+        .bfv-flash-tag {
+            display: inline-block;
+            font-family: var(--bfv-font-mono);
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 5px;
+            border-radius: 3px;
+            background: var(--bfv-warn-soft);
+            color: var(--bfv-warn);
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .bfv-flash-head h2 { font-size: 13px; }
+            .bfv-flash-link {
+                grid-template-columns: 42px 38px 1fr auto;
+                grid-template-rows: auto auto;
+                gap: 4px 8px;
+                padding: 10px 12px;
+            }
+            .bfv-flash-r { min-width: 34px; height: 26px; font-size: 11px; grid-row: 1 / 3; }
+            .bfv-flash-time { grid-row: 1 / 3; font-size: 10px; align-self: center; }
+            .bfv-flash-combo { grid-column: 3 / 5; grid-row: 1; font-size: 14px; }
+            .bfv-flash-conf { grid-column: 3 / 4; grid-row: 2; }
+            .bfv-flash-odds { grid-column: 4 / 5; grid-row: 2; font-size: 11px; }
+        }
+
+        /* ===== カオ予想 TOP panel ===== */
+        .bfv-pick-top {
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border);
+            border-radius: var(--bfv-radius-md);
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+            align-self: start;
+        }
+        .bfv-pick-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--bfv-border-soft);
+        }
+        .bfv-pick-label {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+        }
+        .bfv-pick-race {
+            font-family: var(--bfv-font-mono);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--bfv-accent);
+            text-decoration: none;
+        }
+        .bfv-pick-race span {
+            color: var(--bfv-muted);
+            font-weight: 400;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+        .bfv-pick-body { display: grid; gap: 0; }
+        .bfv-pick-group {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 0;
+            border-top: 1px dashed var(--bfv-border-soft);
+        }
+        .bfv-pick-group:first-child { border-top: 0; padding-top: 4px; }
+        .bfv-pick-kind {
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: var(--bfv-ink-sub);
+            text-transform: uppercase;
+        }
+        .bfv-pick-group.is-main .bfv-pick-kind { color: var(--bfv-accent); }
+        .bfv-pick-group.is-sub .bfv-pick-kind { color: var(--bfv-ink); }
+        .bfv-pick-group.is-long .bfv-pick-kind { color: var(--bfv-muted); }
+        .bfv-pick-bets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 10px;
+            min-width: 0;
+        }
+        .bfv-pick-bet {
+            font-family: var(--bfv-font-mono);
+            font-weight: 500;
+            font-size: 13px;
+            color: var(--bfv-ink);
+            letter-spacing: 0.03em;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+        .bfv-pick-bet small {
+            color: var(--bfv-muted);
+            font-size: 0.78em;
+            font-weight: 400;
+        }
+        .bfv-pick-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--bfv-border-soft);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+        }
+        .bfv-pick-conf { color: var(--bfv-ink-sub); }
+        .bfv-pick-conf.is-conf-high { color: var(--bfv-good); font-weight: 600; }
+        .bfv-pick-conf.is-conf-low { color: var(--bfv-muted); }
+        .bfv-pick-empty {
+            text-align: center;
+            color: var(--bfv-muted);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            padding: 20px 0;
+        }
+
         /* ===== Phase 8: 12R summary table ===== */
         .bfv-table-wrap {
             overflow-x: auto;
@@ -1734,101 +1995,103 @@ boat_forecast_viewer_render_nav('single', $single_section);
         <?php endif; ?>
     </section>
 
+    <?php
+    // Phase 14: 12R flash list data prep + top-confidence race for カオ予想 panel.
+    $top_race = null;
+    foreach ($races as $__r) {
+        $c = is_numeric($__r['confidence'] ?? null) ? (float) $__r['confidence'] : 0.0;
+        $tc = $top_race && is_numeric($top_race['confidence'] ?? null) ? (float) $top_race['confidence'] : -1.0;
+        if ($c > $tc) $top_race = $__r;
+    }
+    ?>
     <section class="bfv-grid">
-        <div class="bfv-panel" id="bfv-summary">
-            <div class="bfv-panel-head">
+        <div class="bfv-flash" id="bfv-summary">
+            <div class="bfv-flash-head">
                 <div>
                     <h2>12R 早見表</h2>
-                    <p>PCは一覧比較向け、スマホは本線中心の簡略表示です。詳しくは各レースカードで確認できます。</p>
+                    <p class="bfv-flash-sub"><?php echo count($races); ?> races · tap to detail</p>
+                </div>
+                <div class="bfv-flash-toggles">
+                    <span class="bfv-flash-toggle<?php echo $has_exhibition ? ' is-on' : ''; ?>">展示</span>
+                    <span class="bfv-flash-toggle<?php echo $has_odds ? ' is-on' : ''; ?>">オッズ</span>
                 </div>
             </div>
-            <div class="bfv-table-wrap">
-                <table class="bfv-table">
-                    <thead>
-                        <tr>
-                            <th>R</th>
-                            <th>発走</th>
-                            <th>本線</th>
-                            <th>対抗</th>
-                            <th>穴</th>
-                            <th>信頼</th>
-                            <th>備考</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($races as $race) : ?>
-                        <tr>
-                            <td><a class="bfv-race-link" href="#race-<?php echo esc_attr((string) ($race['race_no'] ?? '')); ?>"><?php echo esc_html((string) ($race['race_no'] ?? '')); ?>R</a></td>
-                            <td><?php echo esc_html((string) ($race['start_time'] ?? '')); ?></td>
-                            <td>
-                                <div class="bfv-table-bets">
-                                    <?php foreach ((isset($race['main_bets']) && is_array($race['main_bets']) ? $race['main_bets'] : [['combo' => ($race['main_bet'] ?? '')]]) as $bet) : ?>
-                                        <?php if (!empty($bet['combo'])) : ?>
-                                            <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="bfv-table-bets">
-                                    <?php foreach ((isset($race['sub_bets']) && is_array($race['sub_bets']) ? $race['sub_bets'] : [['combo' => ($race['sub_bet'] ?? '')]]) as $bet) : ?>
-                                        <?php if (!empty($bet['combo'])) : ?>
-                                            <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="bfv-table-bets">
-                                    <?php foreach ((isset($race['longshot_bets']) && is_array($race['longshot_bets']) ? $race['longshot_bets'] : [['combo' => ($race['longshot_bet'] ?? '')]]) as $bet) : ?>
-                                        <?php if (!empty($bet['combo'])) : ?>
-                                            <span class="bfv-bet"><?php echo esc_html((string) $bet['combo']); ?><?php if (!empty($bet['odds'])) : ?><span class="bfv-odds"><?php echo esc_html(number_format((float) $bet['odds'], 1)); ?>倍</span><?php endif; ?></span>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </div>
-                            </td>
-                            <td class="<?php echo esc_attr(boat_forecast_viewer_conf_class((string) ($race['confidence_label'] ?? 'low'))); ?>" data-conf="<?php echo esc_attr((string) ($race['confidence_label'] ?? 'low')); ?>">
-                                <?php echo esc_html((string) ($race['confidence'] ?? '')); ?>%
-                            </td>
-                            <td>
-                                <?php if (!empty($race['is_rough'])) : ?>
-                                    <span class="bfv-rough">荒れ注意</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+            <ol class="bfv-flash-list">
+                <?php foreach ($races as $race):
+                    $rn = (string) ($race['race_no'] ?? '');
+                    $main_combo = '';
+                    $main_odds = null;
+                    $main_bets = (isset($race['main_bets']) && is_array($race['main_bets']))
+                        ? $race['main_bets']
+                        : (!empty($race['main_bet']) ? [['combo' => $race['main_bet']]] : []);
+                    foreach ($main_bets as $b) {
+                        if (!empty($b['combo'])) {
+                            $main_combo = (string) $b['combo'];
+                            if (isset($b['odds']) && is_numeric($b['odds'])) $main_odds = (float) $b['odds'];
+                            break;
+                        }
+                    }
+                    $conf_v = is_numeric($race['confidence'] ?? null) ? (int) round((float) $race['confidence']) : 0;
+                    $conf_l = (string) ($race['confidence_label'] ?? 'low');
+                ?>
+                <li class="bfv-flash-row">
+                    <a class="bfv-flash-link" href="#race-<?php echo esc_attr($rn); ?>">
+                        <span class="bfv-flash-r"><?php echo esc_html($rn); ?>R</span>
+                        <span class="bfv-flash-time"><?php echo esc_html((string) ($race['start_time'] ?? '')); ?></span>
+                        <span class="bfv-flash-combo"><?php echo esc_html($main_combo !== '' ? $main_combo : '—'); ?></span>
+                        <span class="bfv-flash-conf is-conf-<?php echo esc_attr($conf_l); ?>">
+                            <span class="bfv-flash-bar"><span style="width:<?php echo esc_attr((string) max(0, min(100, $conf_v))); ?>%"></span></span>
+                            <span class="bfv-flash-pct"><?php echo $conf_v > 0 ? esc_html((string) $conf_v) . '%' : '—'; ?></span>
+                        </span>
+                        <span class="bfv-flash-odds">
+                            <?php if ($main_odds !== null) : ?>×<?php echo esc_html(number_format($main_odds, 1)); ?><?php else : ?>—<?php endif; ?>
+                            <?php if (!empty($race['is_rough'])) : ?><span class="bfv-flash-tag">ROUGH</span><?php endif; ?>
+                        </span>
+                    </a>
+                </li>
+                <?php endforeach; ?>
+            </ol>
         </div>
 
-        <aside class="bfv-panel">
-            <div class="bfv-panel-head">
-                <div>
-                    <h2>ページ情報</h2>
-                    <p>公開状態の要点</p>
-                </div>
+        <aside class="bfv-pick-top">
+            <div class="bfv-pick-head">
+                <span class="bfv-pick-label">カオ予想 · Top</span>
+                <?php if ($top_race && !empty($top_race['race_no'])) : ?>
+                    <a class="bfv-pick-race" href="#race-<?php echo esc_attr((string) $top_race['race_no']); ?>"><?php echo esc_html((string) $top_race['race_no']); ?>R<span><?php echo esc_html((string) ($top_race['start_time'] ?? '')); ?></span></a>
+                <?php endif; ?>
             </div>
-            <div class="bfv-legend">
-                <div class="bfv-info-grid">
-                    <div class="bfv-info-card">
-                        <strong>更新段階</strong>
-                        <span><?php echo esc_html((string) get_post_meta($post->ID, 'publish_stage', true)); ?></span>
-                    </div>
-                    <div class="bfv-info-card">
-                        <strong>会場コード</strong>
-                        <span><?php echo esc_html((string) get_post_meta($post->ID, 'venue_code', true)); ?></span>
-                    </div>
-                    <div class="bfv-info-card">
-                        <strong>表示件数</strong>
-                        <span><?php echo esc_html((string) count($races)); ?>R</span>
-                    </div>
-                    <div class="bfv-info-card">
-                        <strong>スラッグ</strong>
-                        <span><?php echo esc_html($post->post_name); ?></span>
-                    </div>
+            <?php if ($top_race) :
+                $pick_groups = [
+                    ['label' => '本番', 'class' => 'is-main', 'bets' => (isset($top_race['main_bets']) && is_array($top_race['main_bets'])) ? $top_race['main_bets'] : (!empty($top_race['main_bet']) ? [['combo' => $top_race['main_bet']]] : [])],
+                    ['label' => '対抗', 'class' => 'is-sub',  'bets' => (isset($top_race['sub_bets']) && is_array($top_race['sub_bets']))   ? $top_race['sub_bets']  : (!empty($top_race['sub_bet'])  ? [['combo' => $top_race['sub_bet']]]  : [])],
+                    ['label' => '穴',   'class' => 'is-long', 'bets' => (isset($top_race['longshot_bets']) && is_array($top_race['longshot_bets'])) ? $top_race['longshot_bets'] : (!empty($top_race['longshot_bet']) ? [['combo' => $top_race['longshot_bet']]] : [])],
+                ];
+                $top_conf_l = (string) ($top_race['confidence_label'] ?? 'low');
+                $top_conf_v = is_numeric($top_race['confidence'] ?? null) ? (int) round((float) $top_race['confidence']) : 0;
+            ?>
+                <div class="bfv-pick-body">
+                    <?php foreach ($pick_groups as $g):
+                        $has_any = false;
+                        foreach ($g['bets'] as $__b) { if (!empty($__b['combo'])) { $has_any = true; break; } }
+                        if (!$has_any) continue;
+                    ?>
+                        <div class="bfv-pick-group <?php echo esc_attr($g['class']); ?>">
+                            <span class="bfv-pick-kind"><?php echo esc_html($g['label']); ?></span>
+                            <div class="bfv-pick-bets">
+                                <?php foreach ($g['bets'] as $b): if (empty($b['combo'])) continue; ?>
+                                    <span class="bfv-pick-bet"><?php echo esc_html((string) $b['combo']); ?><?php if (!empty($b['odds']) && is_numeric($b['odds'])): ?><small>×<?php echo esc_html(number_format((float) $b['odds'], 1)); ?></small><?php endif; ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-            </div>
+                <div class="bfv-pick-foot">
+                    <span class="bfv-pick-conf is-conf-<?php echo esc_attr($top_conf_l); ?>">信頼度 <?php echo esc_html((string) $top_conf_v); ?>%</span>
+                    <?php if (!empty($top_race['is_rough'])) : ?><span class="bfv-flash-tag">ROUGH</span><?php endif; ?>
+                </div>
+            <?php else : ?>
+                <div class="bfv-pick-empty">予想データ準備中</div>
+            <?php endif; ?>
         </aside>
     </section>
 
