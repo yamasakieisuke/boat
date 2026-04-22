@@ -1642,8 +1642,95 @@ function boat_forecast_viewer_render_single($payload, $post) {
             margin-bottom: 6px;
         }
         .bfv-review-value {
-            font-size: 22px;
-            font-weight: 800;
+            font-family: var(--bfv-font-mono);
+            font-size: 26px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            line-height: 1;
+        }
+
+        /* ===== Phase 16: 12R Timeline (verdict pills + legend) ===== */
+        .bfv-timeline {
+            margin-top: 14px;
+            padding: 14px 14px 12px;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: var(--bfv-radius-md);
+        }
+        .bfv-timeline-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .bfv-timeline-head h4 {
+            margin: 0;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.7);
+        }
+        .bfv-timeline-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+            font-family: var(--bfv-font-mono);
+            font-size: 9.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.7);
+        }
+        .bfv-timeline-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .bfv-legend-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            background: rgba(255,255,255,.25);
+        }
+        .bfv-legend-dot.is-hit   { background: #59c39a; }
+        .bfv-legend-dot.is-order { background: #f0c14a; }
+        .bfv-legend-dot.is-box   { background: #d99060; }
+        .bfv-legend-dot.is-miss  { background: rgba(255,255,255,.18); }
+
+        .bfv-timeline-row {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 4px;
+        }
+        .bfv-timeline-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+            aspect-ratio: 1 / 1;
+            border-radius: 4px;
+            background: rgba(255,255,255,.08);
+            color: rgba(255,255,255,.55);
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-decoration: none;
+            transition: transform .15s, background .15s;
+        }
+        .bfv-timeline-pill:hover { transform: scale(1.06); }
+        .bfv-timeline-pill.is-hit   { background: #59c39a; color: #06291f; }
+        .bfv-timeline-pill.is-order { background: #f0c14a; color: #3a2a05; }
+        .bfv-timeline-pill.is-box   { background: #d99060; color: #2c1707; }
+        .bfv-timeline-pill.is-miss  { background: rgba(255,255,255,.06); color: rgba(255,255,255,.35); }
+
+        @media (max-width: 480px) {
+            .bfv-timeline-row { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+            .bfv-timeline-pill { font-size: 11px; }
         }
         .bfv-review-link {
             display: inline-flex;
@@ -2678,6 +2765,45 @@ boat_forecast_viewer_render_nav('single', $single_section);
                     <?php endif; ?>
                 </div>
             </div>
+            <?php
+            // Phase 16: 12R Timeline — classify each race row by verdict text in the last cell.
+            $timeline_rows = (!empty($review['race_table']['rows']) && is_array($review['race_table']['rows'])) ? $review['race_table']['rows'] : [];
+            if (!empty($timeline_rows)) :
+                $verdict_class = function ($txt) {
+                    $s = (string) $txt;
+                    if (strpos($s, '3連単一致') !== false) return 'is-order';
+                    if (strpos($s, '3連複') !== false)   return 'is-box';
+                    if (strpos($s, '買い目的中') !== false || strpos($s, '的中') !== false && strpos($s, '不') === false) return 'is-hit';
+                    if (strpos($s, '不的中') !== false) return 'is-miss';
+                    return 'is-miss';
+                };
+            ?>
+            <div class="bfv-timeline">
+                <div class="bfv-timeline-head">
+                    <h4>12R · Timeline</h4>
+                    <div class="bfv-timeline-legend">
+                        <span><span class="bfv-legend-dot is-hit"></span>HIT</span>
+                        <span><span class="bfv-legend-dot is-order"></span>ORDER</span>
+                        <span><span class="bfv-legend-dot is-box"></span>BOX</span>
+                        <span><span class="bfv-legend-dot is-miss"></span>MISS</span>
+                    </div>
+                </div>
+                <div class="bfv-timeline-row">
+                    <?php foreach ($timeline_rows as $tr_row):
+                        $cells = is_array($tr_row) ? array_values($tr_row) : [];
+                        if (empty($cells)) continue;
+                        $rno = (string) ($cells[0] ?? '');
+                        $verdict_txt = (string) end($cells);
+                        $cls = $verdict_class($verdict_txt);
+                    ?>
+                        <span class="bfv-timeline-pill <?php echo esc_attr($cls); ?>" title="<?php echo esc_attr($rno . ': ' . $verdict_txt); ?>">
+                            <?php echo esc_html(preg_replace('/\D/', '', $rno) ?: $rno); ?>
+                        </span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
             <?php /* v5.18: 追加指標カード (R1+R2) */ ?>
             <?php
                 $has_extra_cards = isset($review['hit_3fuku_pct']) || isset($review['hit_3tan_pct']) || isset($review['hit_2tan_pct']) || isset($review['hit_2fuku_pct']);
