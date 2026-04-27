@@ -1,0 +1,147 @@
+{
+  "reg_no": "5359",
+  "name": "佐藤 世那",
+  "name_kana": "サトウ セナ",
+  "grade": "B1",
+  "branch": "東京",
+  "prefecture": "宮城",
+  "win_rate": 2.58,
+  "championship_count": 0,
+  "ability_index": 39,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "1": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 5,
+        "1st_pct": 40.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 20.0,
+        "5th_pct": 40.0,
+        "6th_pct": 0.0,
+        "top2_pct": 40.0,
+        "top3_pct": 40.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 5,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 6
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 11,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 6
+        }
+      ],
+      "race_name": "準優勝戦　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,98 @@
+{
+  "reg_no": "5020",
+  "name": "宮村 勇哉",
+  "name_kana": "ミヤムラ ユウヤ",
+  "grade": "B1",
+  "branch": "三重",
+  "prefecture": "三重",
+  "win_rate": 4.66,
+  "championship_count": 0,
+  "ability_index": 47,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 0.0,
+        "6th_pct": 66.7,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "12",
+      "venue_name": "住之江",
+      "race_no": 11,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選特別Ａ戦　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

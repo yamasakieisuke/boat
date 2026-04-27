@@ -1,0 +1,125 @@
+{
+  "reg_no": "4700",
+  "name": "金子 和之",
+  "name_kana": "カネコ カズユキ",
+  "grade": "A2",
+  "branch": "埼玉",
+  "prefecture": "新潟",
+  "win_rate": 6.08,
+  "championship_count": 0,
+  "ability_index": 53,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 33.3,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 66.7,
+        "top2_pct": 33.3,
+        "top3_pct": 33.3
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 7,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 5
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 12,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 5
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,120 @@
+{
+  "reg_no": "4511",
+  "name": "中岡 健人",
+  "name_kana": "ナカオカ ケント",
+  "grade": "B1",
+  "branch": "香川",
+  "prefecture": "高知",
+  "win_rate": 4.22,
+  "championship_count": 0,
+  "ability_index": 46,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 4,
+        "1st_pct": 25.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 25.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 25.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 3,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 7,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

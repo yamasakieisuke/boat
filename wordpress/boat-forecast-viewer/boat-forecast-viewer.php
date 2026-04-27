@@ -61,6 +61,8 @@ function boat_forecast_viewer_add_rewrite_rules() {
     add_rewrite_rule('^review/?$', 'index.php?bfv_review=1', 'top');
     add_rewrite_rule('^accuracy/?$', 'index.php?bfv_accuracy=1', 'top');
     add_rewrite_rule('^accuracy/([0-9]{4}-W[0-9]{2})/?$', 'index.php?bfv_accuracy=1&bfv_week=$matches[1]', 'top');
+    add_rewrite_rule('^player/?$', 'index.php?bfv_player=1', 'top');
+    add_rewrite_rule('^player/([0-9]{4,5})/?$', 'index.php?bfv_player=1&bfv_reg_no=$matches[1]', 'top');
 }
 add_action('init', 'boat_forecast_viewer_add_rewrite_rules');
 
@@ -69,6 +71,8 @@ function boat_forecast_viewer_query_vars($vars) {
     $vars[] = 'bfv_review';
     $vars[] = 'bfv_accuracy';
     $vars[] = 'bfv_week';
+    $vars[] = 'bfv_player';
+    $vars[] = 'bfv_reg_no';
     return $vars;
 }
 add_filter('query_vars', 'boat_forecast_viewer_query_vars');
@@ -283,14 +287,15 @@ function boat_forecast_viewer_waku_colors($waku) {
     return isset($map[$waku]) ? $map[$waku] : ['#eef3ff', '#222222', '#c8d4f0'];
 }
 
-function boat_forecast_viewer_render_waku_name($waku, $name, $is_female, $size = 'md') {
+function boat_forecast_viewer_render_waku_name($waku, $name, $is_female, $size = 'md', $reg_no = '') {
     list($bg, $fg, $border) = boat_forecast_viewer_waku_colors($waku);
     $female = !empty($is_female) ? '<span class="bfv-female">♥</span>' : '';
     $size = in_array($size, ['sm', 'md', 'lg'], true) ? $size : 'md';
     // 氏名の空白を半角1個に正規化（全角スペース・連続 → " "、前後トリム）
     $name = preg_replace('/[\x{3000}\s]+/u', ' ', (string) $name);
     $name = trim($name);
-    return sprintf(
+    $reg_no = preg_replace('/\D/', '', (string) $reg_no);
+    $cell = sprintf(
         '<span class="bfv-waku-name-cell is-%s"><span class="bfv-waku-chip" style="background:%s;color:%s;border-color:%s;">%s</span><span class="bfv-waku-name">%s%s</span></span>',
         esc_attr($size),
         esc_attr($bg),
@@ -300,6 +305,12 @@ function boat_forecast_viewer_render_waku_name($waku, $name, $is_female, $size =
         $female,
         esc_html($name)
     );
+    // Phase 24: reg_no が判明していれば選手別ページへリンク
+    if ($reg_no !== '' && $name !== '') {
+        $url = esc_url(home_url('/player/' . $reg_no . '/'));
+        return '<a class="bfv-waku-name-link" href="' . $url . '">' . $cell . '</a>';
+    }
+    return $cell;
 }
 
 function boat_forecast_viewer_load_payload($post_id) {
@@ -680,16 +691,16 @@ function boat_forecast_viewer_render_nav($active = '', $section_code = '') {
     $archive_url  = esc_url($archive_base);
     $review_url   = esc_url(home_url('/review/'));
     $accuracy_url = esc_url(home_url('/accuracy/'));
+    $player_url   = esc_url(home_url('/player/'));
     $curated_url  = esc_url(add_query_arg('filter', 'curated', $archive_base));
     $today_url    = esc_url(add_query_arg('filter', 'today', $archive_base));
-    $search_url   = esc_url(add_query_arg('search', '1', $archive_base));
 
     $tabs = [
         ['key' => 'archive',  'label' => '予想',   'icon' => '🏁', 'href' => $archive_url],
         ['key' => 'today',    'label' => '一覧',   'icon' => '📋', 'href' => $today_url],
         ['key' => 'review',   'label' => '結果',   'icon' => '📊', 'href' => $review_url],
         ['key' => 'accuracy', 'label' => '精度',   'icon' => '📈', 'href' => $accuracy_url],
-        ['key' => 'search',   'label' => '検索',   'icon' => '🔍', 'href' => $search_url],
+        ['key' => 'player',   'label' => '選手',   'icon' => '👤', 'href' => $player_url],
     ];
 
     $section_code = (string) $section_code;
@@ -698,17 +709,18 @@ function boat_forecast_viewer_render_nav($active = '', $section_code = '') {
         elseif ($active === 'single')    $section_code = 'RACE';
         elseif ($active === 'review')    $section_code = 'REVIEW';
         elseif ($active === 'accuracy')  $section_code = 'ACCURACY';
+        elseif ($active === 'player')    $section_code = 'PLAYER';
     }
 
     // ── Drawer 用データ ────────────────────────────────────────────
     $venue_map = boat_forecast_viewer_venue_map();  // [slug => 日本語名]
     $drawer_main = [
-        ['key' => 'archive',  'label' => '予想（会場一覧）', 'icon' => '🏁', 'href' => $archive_url],
-        ['key' => 'today',    'label' => '本日のレース',     'icon' => '📋', 'href' => $today_url],
-        ['key' => 'curated',  'label' => '厳選予想',         'icon' => '⭐', 'href' => $curated_url],
-        ['key' => 'review',   'label' => '結果振り返り',     'icon' => '📊', 'href' => $review_url],
-        ['key' => 'accuracy', 'label' => '精度ダッシュボード','icon' => '📈', 'href' => $accuracy_url],
-        ['key' => 'search',   'label' => '検索',             'icon' => '🔍', 'href' => $search_url],
+        ['key' => 'archive',  'label' => '予想（会場一覧）',   'icon' => '🏁', 'href' => $archive_url],
+        ['key' => 'today',    'label' => '本日のレース',       'icon' => '📋', 'href' => $today_url],
+        ['key' => 'curated',  'label' => '厳選予想',           'icon' => '⭐', 'href' => $curated_url],
+        ['key' => 'review',   'label' => '結果振り返り',       'icon' => '📊', 'href' => $review_url],
+        ['key' => 'accuracy', 'label' => '精度ダッシュボード', 'icon' => '📈', 'href' => $accuracy_url],
+        ['key' => 'player',   'label' => '選手一覧（本日）',   'icon' => '👤', 'href' => $player_url],
     ];
 
     // ── Drawer + Topbar 出力 ───────────────────────────────────────
@@ -1631,7 +1643,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             align-items: center;
             justify-content: center;
             border: 1px solid #ccc;
-            border-radius: 999px;
+            border-radius: var(--bfv-radius-sm);  /* Phase 24: ◯ → ■ (rounded square) */
             font-weight: 700;
             line-height: 1;
             flex: 0 0 auto;
@@ -1639,9 +1651,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
             box-sizing: border-box;
         }
         /* size variants */
-        .bfv-waku-name-cell.is-sm .bfv-waku-chip { width: 16px; height: 16px; font-size: 10px; }
-        .bfv-waku-name-cell.is-md .bfv-waku-chip { width: 20px; height: 20px; font-size: 12px; }
-        .bfv-waku-name-cell.is-lg .bfv-waku-chip { width: 24px; height: 24px; font-size: 13px; }
+        .bfv-waku-name-cell.is-sm .bfv-waku-chip { width: 18px; height: 18px; font-size: 11px; }
+        .bfv-waku-name-cell.is-md .bfv-waku-chip { width: 22px; height: 22px; font-size: 13px; }
+        .bfv-waku-name-cell.is-lg .bfv-waku-chip { width: 26px; height: 26px; font-size: 14px; }
         .bfv-waku-name {
             font-weight: 700;
             white-space: nowrap;
@@ -1652,6 +1664,13 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-waku-name-cell.is-sm .bfv-waku-name { font-size: 12px; }
         .bfv-waku-name-cell.is-md .bfv-waku-name { font-size: 14px; }
         .bfv-waku-name-cell.is-lg .bfv-waku-name { font-size: 16px; }
+        .bfv-waku-name-link {
+            display: inline-flex;
+            text-decoration: none;
+            color: inherit;
+            transition: color .15s;
+        }
+        .bfv-waku-name-link:hover .bfv-waku-name { color: var(--bfv-accent); text-decoration: underline; }
         .bfv-pick-name {
             font-size: 15px;
             font-weight: 600;
@@ -2813,7 +2832,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                             $keywords = isset($cp['comment_matched_keywords']) && is_array($cp['comment_matched_keywords']) ? $cp['comment_matched_keywords'] : [];
                                         ?>
                                         <tr>
-                                            <td><?php echo boat_forecast_viewer_render_waku_name($cp['waku'] ?? '', $cp['name'] ?? '', !empty($cp['is_female']), 'sm'); ?></td>
+                                            <td><?php echo boat_forecast_viewer_render_waku_name($cp['waku'] ?? '', $cp['name'] ?? '', !empty($cp['is_female']), 'sm', $cp['reg_no'] ?? ''); ?></td>
                                             <td class="<?php echo esc_attr($cmt_cls); ?>"><?php echo esc_html($cmt_mark); ?></td>
                                             <td>
                                                 <?php if (!empty($cp['comment_text'])) : ?>
@@ -2862,7 +2881,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                         $entry_warn = ($entry !== '' && $waku_str !== '' && $entry !== $waku_str) ? ' ⚠' : '';
                                     ?>
                                     <tr>
-                                        <td><?php echo boat_forecast_viewer_render_waku_name($exrow['waku'] ?? '', $exrow['name'] ?? '', false, 'sm'); ?></td>
+                                        <td><?php echo boat_forecast_viewer_render_waku_name($exrow['waku'] ?? '', $exrow['name'] ?? '', false, 'sm', $exrow['reg_no'] ?? ''); ?></td>
                                         <td><strong><?php echo esc_html((string) ($exrow['time'] ?? '')); ?></strong></td>
                                         <td><?php echo esc_html((string) ($exrow['tilt'] ?? '')); ?></td>
                                         <td><?php echo esc_html($entry . $entry_warn); ?></td>
@@ -2897,7 +2916,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                 <span class="bfv-pick-mark<?php echo $mark === '' ? ' is-plain' : ''; ?>"><?php echo esc_html($mark); ?></span>
                                 <div>
                                     <div class="bfv-pick-name">
-                                        <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female']), 'lg'); ?>
+                                        <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female']), 'lg', $pick['reg_no'] ?? ''); ?>
                                     </div>
                                     <div class="bfv-pick-meta">
                                         <?php if (!empty($pick['grade'])) : ?>
@@ -2970,7 +2989,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                 <tr>
                                     <td>
                                         <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
-                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm'); ?>
+                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm', $row['reg_no'] ?? ''); ?>
                                     </td>
                                     <td>今期 <?php echo esc_html((string) ($global['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($global['adopted_pct'] ?? '-')); ?></td>
                                     <td>今期 <?php echo esc_html((string) ($local['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($local['adopted_pct'] ?? '-')); ?></td>
@@ -3008,7 +3027,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                     $global = isset($row['waku_stats']['global']) && is_array($row['waku_stats']['global']) ? $row['waku_stats']['global'] : [];
                                 ?>
                                 <tr>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm'); ?></td>
+                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm', $row['reg_no'] ?? ''); ?></td>
                                     <td><?php echo esc_html((string) $picked['label']); ?></td>
                                     <td><?php echo esc_html((string) ($stats['1st_pct'] ?? '---')); ?><?php echo boat_forecast_viewer_render_meter($stats['1st_pct'] ?? 0, 100, 'rank1'); ?></td>
                                     <td><?php echo esc_html((string) ($stats['2nd_pct'] ?? '---')); ?><?php echo boat_forecast_viewer_render_meter($stats['2nd_pct'] ?? 0, 100, 'rank2'); ?></td>
@@ -3043,7 +3062,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                     $breakdown = isset($row['breakdown']) && is_array($row['breakdown']) ? $row['breakdown'] : [];
                                 ?>
                                 <tr>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm'); ?></td>
+                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm', $row['reg_no'] ?? ''); ?></td>
                                     <td><?php echo boat_forecast_viewer_render_grade($row['grade'] ?? ''); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($row['score'] ?? '', 2)); ?><?php echo boat_forecast_viewer_render_meter($row['score'] ?? 0, 1.0, 'score'); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($breakdown['global_win_rate'] ?? '-', 2)); ?></td>
@@ -4838,6 +4857,548 @@ function boat_forecast_viewer_render_accuracy() {
 <?php
 }
 
+function boat_forecast_viewer_load_player_data($reg_no = '') {
+    $dir = BOAT_FORECAST_VIEWER_DIR . '/data/players';
+    $reg_no = preg_replace('/\D/', '', (string) $reg_no);
+    $index = null;
+    $idx_path = $dir . '/index.json';
+    if (file_exists($idx_path)) {
+        $raw = file_get_contents($idx_path);
+        $i = json_decode($raw, true);
+        if (is_array($i)) {
+            $index = $i;
+        }
+    }
+    $player = null;
+    if ($reg_no !== '') {
+        $p = $dir . '/' . $reg_no . '.json';
+        if (file_exists($p)) {
+            $raw = file_get_contents($p);
+            $d = json_decode($raw, true);
+            if (is_array($d)) {
+                $player = $d;
+            }
+        }
+    }
+    return ['index' => $index, 'player' => $player, 'reg_no' => $reg_no];
+}
+
+function boat_forecast_viewer_render_player() {
+    $req_reg_no = (string) get_query_var('bfv_reg_no');
+    $bundle = boat_forecast_viewer_load_player_data($req_reg_no);
+    $idx    = $bundle['index'];
+    $p      = $bundle['player'];
+    $reg_no = $bundle['reg_no'];
+    $is_top = ($reg_no === '');
+    $section_code = $is_top ? 'PLAYER.INDEX' : ('PLAYER.' . $reg_no);
+    ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><?php echo $is_top ? '選手一覧' : ('選手 — ' . esc_html($p['name'] ?? $reg_no)); ?> — ボートレース予想</title>
+<?php echo boat_forecast_viewer_font_links(); ?>
+    <style>
+<?php echo boat_forecast_viewer_common_root_css(); ?>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--bfv-bg);
+            color: var(--bfv-ink);
+            font-family: var(--bfv-font-sans);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; }
+        .bfp-shell {
+            width: min(1120px, calc(100% - 24px));
+            margin: 0 auto;
+            padding: 20px 0 72px;
+        }
+        .bfp-empty {
+            margin: 32px 0;
+            padding: 28px 22px;
+            background: var(--bfv-surface);
+            border: 1px dashed var(--bfv-line-strong);
+            border-radius: var(--bfv-radius-sm);
+            color: var(--bfv-ink-sub);
+            text-align: center;
+            font-size: 14px;
+        }
+        .bfp-hero {
+            background: var(--bfv-hero-ink);
+            color: #fff;
+            border-radius: var(--bfv-radius-sm);
+            padding: 18px 20px;
+            box-shadow: var(--bfv-shadow-sm);
+            margin-bottom: 14px;
+        }
+        .bfp-hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.10);
+            color: rgba(255,255,255,.82);
+        }
+        .bfp-hero-name {
+            margin: 10px 0 4px;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .bfp-hero-name .bfp-reg-no {
+            font-family: var(--bfv-font-mono);
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,.55);
+        }
+        .bfp-hero-name .bfp-female {
+            font-size: 16px;
+            color: #ff8caa;
+        }
+        .bfp-hero-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 11.5px;
+            color: rgba(255,255,255,.72);
+            letter-spacing: 0.04em;
+            margin-bottom: 8px;
+        }
+        .bfp-hero-grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .bfp-kpi { display: flex; flex-direction: column; gap: 2px; }
+        .bfp-kpi-label {
+            font-family: var(--bfv-font-mono);
+            font-size: 9.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.62);
+        }
+        .bfp-kpi-value {
+            font-family: var(--bfv-font-mono);
+            font-size: 22px;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.05;
+        }
+        @media (max-width: 480px) {
+            .bfp-hero-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .bfp-section {
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--bfv-shadow-xs);
+        }
+        .bfp-section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .bfp-section-title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .bfp-section-note {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .bfp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+        }
+        .bfp-table th, .bfp-table td {
+            padding: 6px 8px;
+            text-align: right;
+            border-bottom: 1px solid var(--bfv-line);
+        }
+        .bfp-table th {
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+            border-bottom: 1px solid var(--bfv-line-strong);
+            white-space: nowrap;
+        }
+        .bfp-table th:first-child,
+        .bfp-table td:first-child { text-align: left; }
+        .bfp-table tr:last-child td { border-bottom: none; }
+        .bfp-table tbody tr:hover { background: var(--bfv-surface-sub); }
+        .bfp-table .bfp-row-all {
+            background: var(--bfv-surface-sub);
+            font-weight: 600;
+        }
+        .bfp-waku-cell {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: var(--bfv-radius-sm);
+            font-family: var(--bfv-font-mono);
+            font-weight: 700;
+            font-size: 12px;
+            color: #fff;
+            background: var(--bfv-ink-sub);
+        }
+        .bfp-waku-cell.is-w1 { background: #ffffff; color: #222; border: 1px solid #ccc; }
+        .bfp-waku-cell.is-w2 { background: #1a1915; color: #fff; }
+        .bfp-waku-cell.is-w3 { background: #c0392b; color: #fff; }
+        .bfp-waku-cell.is-w4 { background: #2e6fd6; color: #fff; }
+        .bfp-waku-cell.is-w5 { background: #f0d44c; color: #222; }
+        .bfp-waku-cell.is-w6 { background: #4aa35c; color: #fff; }
+
+        .bfp-upcoming-list { display: grid; gap: 8px; }
+        .bfp-upcoming-row {
+            display: grid;
+            grid-template-columns: auto auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            padding: 10px 12px;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-sm);
+            text-decoration: none;
+            color: inherit;
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+            transition: border-color .15s;
+        }
+        .bfp-upcoming-row:hover { border-color: var(--bfv-accent); }
+        .bfp-upcoming-venue {
+            font-family: var(--bfv-font-sans);
+            font-weight: 700;
+            color: var(--bfv-ink);
+        }
+        .bfp-upcoming-rno { color: var(--bfv-accent); font-weight: 700; }
+        .bfp-series {
+            display: inline-flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .bfp-series-pair {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 2px 6px;
+            background: var(--bfv-bg);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-sm);
+            font-size: 10.5px;
+            color: var(--bfv-ink-sub);
+        }
+
+        .bfp-year-nav {
+            display: flex; gap: 4px; flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .bfp-year-nav a {
+            padding: 4px 10px;
+            border-radius: var(--bfv-radius-sm);
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            transition: border-color .15s, color .15s;
+        }
+        .bfp-year-nav a:hover { color: var(--bfv-accent); border-color: var(--bfv-accent); }
+
+        .bfp-index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 6px;
+        }
+        .bfp-index-card {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4px;
+            align-items: center;
+            padding: 8px 10px;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-sm);
+            text-decoration: none;
+            color: inherit;
+            transition: border-color .15s;
+        }
+        .bfp-index-card:hover { border-color: var(--bfv-accent); }
+        .bfp-index-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .bfp-index-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+        }
+        .bfp-index-grade {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 6px;
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-sm);
+            color: var(--bfv-ink-sub);
+        }
+        .bfp-index-grade.is-A1 { color: var(--bfv-accent); border-color: var(--bfv-accent); }
+        .bfp-index-grade.is-A2 { color: var(--bfv-good); border-color: var(--bfv-good); }
+    </style>
+</head>
+<body>
+<?php boat_forecast_viewer_render_nav('player', $section_code); ?>
+<div class="bfp-shell">
+
+<?php if ($is_top) :
+    $players = ($idx && !empty($idx['today_players'])) ? $idx['today_players'] : [];
+?>
+    <section class="bfp-hero">
+        <span class="bfp-hero-kicker">👤 PLAYER · <?php echo esc_html($idx['date'] ?? date('Y-m-d')); ?></span>
+        <h1 class="bfp-hero-name">本日出走の選手</h1>
+        <p class="bfp-hero-meta">
+            <?php echo (int) ($idx['today_count'] ?? 0); ?> 名 ・ 五十音順
+        </p>
+    </section>
+    <?php if (!$players) : ?>
+        <section class="bfp-empty">
+            本日の出走データがまだ揃っていません。<br>
+            朝バッチ（09時前後）の取得後に表示されます。
+        </section>
+    <?php else : ?>
+        <section class="bfp-section">
+            <div class="bfp-section-head">
+                <h2 class="bfp-section-title">出走選手一覧</h2>
+                <span class="bfp-section-note">タップで詳細</span>
+            </div>
+            <div class="bfp-index-grid">
+            <?php foreach ($players as $row) :
+                $url = esc_url(home_url('/player/' . preg_replace('/\D/', '', $row['reg_no']) . '/'));
+                $grade = (string) ($row['grade'] ?? '');
+                $grade_cls = ($grade === 'A1' || $grade === 'A2') ? ' is-' . $grade : '';
+            ?>
+                <a class="bfp-index-card" href="<?php echo $url; ?>">
+                    <div>
+                        <div class="bfp-index-name"><?php echo esc_html($row['name'] ?? ''); ?></div>
+                        <div class="bfp-index-meta">
+                            <?php echo esc_html($row['branch'] ?? ''); ?>
+                            ・<?php echo esc_html(implode('/', $row['venues'] ?? [])); ?>
+                            ・<?php echo (int) ($row['races_today'] ?? 0); ?>R
+                        </div>
+                    </div>
+                    <span class="bfp-index-grade<?php echo $grade_cls; ?>"><?php echo esc_html($grade); ?></span>
+                </a>
+            <?php endforeach; ?>
+            </div>
+        </section>
+    <?php endif; ?>
+
+<?php elseif (!$p) : ?>
+    <section class="bfp-empty">
+        選手データが見つかりません（reg_no = <?php echo esc_html($reg_no); ?>）。<br>
+        本日出走予定の選手のみページが生成されています。
+    </section>
+    <a href="<?php echo esc_url(home_url('/player/')); ?>" style="font-family: var(--bfv-font-mono); font-size: 12px; color: var(--bfv-accent);">← 選手一覧へ戻る</a>
+
+<?php else :
+    $is_female = ($p['gender'] === 'F');
+    $upcoming = isset($p['upcoming_today']) && is_array($p['upcoming_today']) ? $p['upcoming_today'] : [];
+    $yearly = isset($p['yearly_waku_stats']) && is_array($p['yearly_waku_stats']) ? $p['yearly_waku_stats'] : [];
+    krsort($yearly); // 新しい年から
+?>
+    <section class="bfp-hero">
+        <span class="bfp-hero-kicker">👤 PLAYER · <?php echo esc_html($reg_no); ?></span>
+        <h1 class="bfp-hero-name">
+            <?php echo esc_html($p['name'] ?? $reg_no); ?>
+            <?php if ($is_female) : ?><span class="bfp-female">♥</span><?php endif; ?>
+            <span class="bfp-reg-no"><?php echo esc_html($p['name_kana'] ?? ''); ?></span>
+        </h1>
+        <p class="bfp-hero-meta">
+            <?php
+                $meta_parts = [];
+                if (!empty($p['grade']))      $meta_parts[] = esc_html($p['grade']);
+                if (!empty($p['branch']))     $meta_parts[] = '支部 ' . esc_html($p['branch']);
+                if (!empty($p['prefecture'])) $meta_parts[] = '出身 ' . esc_html($p['prefecture']);
+                echo implode(' ・ ', $meta_parts);
+            ?>
+        </p>
+        <div class="bfp-hero-grid">
+            <div class="bfp-kpi">
+                <span class="bfp-kpi-label">勝率 (全国)</span>
+                <span class="bfp-kpi-value"><?php echo isset($p['win_rate']) ? esc_html($p['win_rate']) : '—'; ?></span>
+            </div>
+            <div class="bfp-kpi">
+                <span class="bfp-kpi-label">能力指数</span>
+                <span class="bfp-kpi-value"><?php echo isset($p['ability_index']) ? esc_html($p['ability_index']) : '—'; ?></span>
+            </div>
+            <div class="bfp-kpi">
+                <span class="bfp-kpi-label">優勝回数</span>
+                <span class="bfp-kpi-value"><?php echo isset($p['championship_count']) ? esc_html($p['championship_count']) : '—'; ?></span>
+            </div>
+            <div class="bfp-kpi">
+                <span class="bfp-kpi-label">本日</span>
+                <span class="bfp-kpi-value"><?php echo count($upcoming); ?>R</span>
+            </div>
+        </div>
+    </section>
+
+    <?php if ($upcoming) : ?>
+    <section class="bfp-section">
+        <div class="bfp-section-head">
+            <h2 class="bfp-section-title">本日の出走予定</h2>
+            <span class="bfp-section-note">今節成績付き</span>
+        </div>
+        <div class="bfp-upcoming-list">
+        <?php foreach ($upcoming as $u) :
+            $w = (int) ($u['waku'] ?? 0);
+            $jcd = (string) ($u['jcd'] ?? '');
+            $rno = (int) ($u['race_no'] ?? 0);
+            $venue = (string) ($u['venue_name'] ?? '');
+            $races = isset($u['series_races']) && is_array($u['series_races']) ? $u['series_races'] : [];
+        ?>
+            <div class="bfp-upcoming-row">
+                <span class="bfp-waku-cell is-w<?php echo $w; ?>"><?php echo $w; ?></span>
+                <span class="bfp-upcoming-venue"><?php echo esc_html($venue); ?></span>
+                <span class="bfp-series">
+                    <?php if ($races) : ?>
+                        <?php foreach ($races as $sr) :
+                            if (!is_array($sr)) continue;
+                            $c = isset($sr['course']) ? (string) $sr['course'] : '?';
+                            $rk = isset($sr['rank']) ? (string) $sr['rank'] : '?';
+                        ?>
+                            <span class="bfp-series-pair"><?php echo esc_html($c); ?>→<?php echo esc_html($rk); ?></span>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <span style="color: var(--bfv-muted); font-size: 10px;">初日／実績なし</span>
+                    <?php endif; ?>
+                </span>
+                <span class="bfp-upcoming-rno"><?php echo $rno; ?>R</span>
+            </div>
+        <?php endforeach; ?>
+        </div>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($yearly) : ?>
+    <section class="bfp-section">
+        <div class="bfp-section-head">
+            <h2 class="bfp-section-title">年度別 枠別成績</h2>
+            <span class="bfp-section-note">2025-03 以降の集計</span>
+        </div>
+        <?php foreach ($yearly as $year => $waku_stats) :
+            // "all" を末尾に
+            ksort($waku_stats);
+            $waku_keys = array_filter(array_keys($waku_stats), function ($k) { return $k !== 'all'; });
+            sort($waku_keys);
+            $all = isset($waku_stats['all']) ? $waku_stats['all'] : null;
+        ?>
+            <h3 style="margin: 14px 0 8px; font-size: 13px; font-family: var(--bfv-font-mono); letter-spacing: 0.06em; color: var(--bfv-ink-sub);">
+                <?php echo esc_html($year); ?> 年
+                <?php if ($all) : ?>
+                    <span style="font-size: 11px; color: var(--bfv-muted);">
+                        ・ <?php echo (int) $all['races']; ?>走 ・ 1着率 <?php echo esc_html($all['1st_pct']); ?>%
+                    </span>
+                <?php endif; ?>
+            </h3>
+            <table class="bfp-table">
+                <thead>
+                    <tr>
+                        <th>枠</th>
+                        <th>走</th>
+                        <th>1着%</th>
+                        <th>2着%</th>
+                        <th>3着%</th>
+                        <th>4着%</th>
+                        <th>5着%</th>
+                        <th>6着%</th>
+                        <th>2連%</th>
+                        <th>3連%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($waku_keys as $w) :
+                    $d = $waku_stats[$w];
+                ?>
+                    <tr>
+                        <td>
+                            <span class="bfp-waku-cell is-w<?php echo (int) $w; ?>"><?php echo esc_html($w); ?></span>
+                        </td>
+                        <td><?php echo (int) ($d['races'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['1st_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['2nd_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['3rd_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['4th_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['5th_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['6th_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['top2_pct'] ?? 0); ?></td>
+                        <td><?php echo esc_html($d['top3_pct'] ?? 0); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                <?php if ($all) : ?>
+                    <tr class="bfp-row-all">
+                        <td>合計</td>
+                        <td><?php echo (int) $all['races']; ?></td>
+                        <td><?php echo esc_html($all['1st_pct']); ?></td>
+                        <td><?php echo esc_html($all['2nd_pct']); ?></td>
+                        <td><?php echo esc_html($all['3rd_pct']); ?></td>
+                        <td><?php echo esc_html($all['4th_pct']); ?></td>
+                        <td><?php echo esc_html($all['5th_pct']); ?></td>
+                        <td><?php echo esc_html($all['6th_pct']); ?></td>
+                        <td><?php echo esc_html($all['top2_pct']); ?></td>
+                        <td><?php echo esc_html($all['top3_pct']); ?></td>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        <?php endforeach; ?>
+    </section>
+    <?php else : ?>
+        <section class="bfp-empty">
+            この選手の過去成績データがありません（results_csv 範囲外）。
+        </section>
+    <?php endif; ?>
+
+    <p style="margin-top: 18px; text-align: center;">
+        <a href="<?php echo esc_url(home_url('/player/')); ?>" style="font-family: var(--bfv-font-mono); font-size: 12px; color: var(--bfv-accent); text-decoration: none;">← 選手一覧へ戻る</a>
+    </p>
+<?php endif; ?>
+
+</div>
+</body>
+</html>
+<?php
+}
+
 function boat_forecast_viewer_template_include($template) {
     if (is_singular('forecast_day')) {
         return BOAT_FORECAST_VIEWER_DIR . '/single-forecast-day.php';
@@ -4850,6 +5411,9 @@ function boat_forecast_viewer_template_include($template) {
     }
     if (get_query_var('bfv_accuracy')) {
         return BOAT_FORECAST_VIEWER_DIR . '/accuracy-forecast.php';
+    }
+    if (get_query_var('bfv_player')) {
+        return BOAT_FORECAST_VIEWER_DIR . '/player-forecast.php';
     }
     return $template;
 }

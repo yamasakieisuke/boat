@@ -1,0 +1,130 @@
+{
+  "reg_no": "4489",
+  "name": "岩川 仁士",
+  "name_kana": "イワカワ ヒトシ",
+  "grade": "B1",
+  "branch": "大阪",
+  "prefecture": "大阪",
+  "win_rate": 5.05,
+  "championship_count": 0,
+  "ability_index": 48,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "1": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "6": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 4,
+        "1st_pct": 50.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 50.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 3,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 2,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 3
+        }
+      ],
+      "race_name": "３ライズ戦　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 7,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 2,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 3
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

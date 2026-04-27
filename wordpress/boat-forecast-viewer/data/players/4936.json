@@ -1,0 +1,103 @@
+{
+  "reg_no": "4936",
+  "name": "戸敷 晃美",
+  "name_kana": "トジキ アキミ",
+  "grade": "A2",
+  "branch": "福岡",
+  "prefecture": "宮崎",
+  "win_rate": 5.48,
+  "championship_count": 1,
+  "ability_index": 49,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 3,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 2
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 11,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 2
+        }
+      ],
+      "race_name": "準優勝戦　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

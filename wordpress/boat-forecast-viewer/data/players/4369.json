@@ -1,0 +1,152 @@
+{
+  "reg_no": "4369",
+  "name": "丹下 将",
+  "name_kana": "タンゲ タモツ",
+  "grade": "A2",
+  "branch": "愛知",
+  "prefecture": "愛知",
+  "win_rate": 5.91,
+  "championship_count": 0,
+  "ability_index": 51,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "1": {
+        "races": 2,
+        "1st_pct": 50.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 16.7,
+        "2nd_pct": 16.7,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 33.3,
+        "6th_pct": 0.0,
+        "top2_pct": 33.3,
+        "top3_pct": 33.3
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 5,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 2
+        }
+      ],
+      "race_name": "",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 10,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 2
+        }
+      ],
+      "race_name": "準優勝戦　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

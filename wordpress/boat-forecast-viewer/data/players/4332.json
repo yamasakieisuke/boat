@@ -1,0 +1,120 @@
+{
+  "reg_no": "4332",
+  "name": "村上 彰一",
+  "name_kana": "ムラカミ ショウイチ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 4.21,
+  "championship_count": 0,
+  "ability_index": 46,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 0.0,
+        "2nd_pct": 16.7,
+        "3rd_pct": 16.7,
+        "4th_pct": 33.3,
+        "5th_pct": 16.7,
+        "6th_pct": 16.7,
+        "top2_pct": 16.7,
+        "top3_pct": 33.3
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 6,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 6,
+          "rank": 3
+        },
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 6
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

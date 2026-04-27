@@ -1,0 +1,142 @@
+{
+  "reg_no": "3722",
+  "name": "西村 秀樹",
+  "name_kana": "ニシムラ ヒデキ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 3.81,
+  "championship_count": 0,
+  "ability_index": 45,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 0.0,
+        "2nd_pct": 12.5,
+        "3rd_pct": 25.0,
+        "4th_pct": 25.0,
+        "5th_pct": 25.0,
+        "6th_pct": 12.5,
+        "top2_pct": 12.5,
+        "top3_pct": 37.5
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 1,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 5,
+          "rank": 3
+        }
+      ],
+      "race_name": "サンライズＶ戦\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 7,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 5,
+          "rank": 3
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

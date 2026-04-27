@@ -1,0 +1,155 @@
+{
+  "reg_no": "5122",
+  "name": "相馬 翔",
+  "name_kana": "ソウマ ショウ",
+  "grade": "B2",
+  "branch": "埼玉",
+  "prefecture": "埼玉",
+  "win_rate": 4.16,
+  "championship_count": 0,
+  "ability_index": 46,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 33.3,
+        "4th_pct": 33.3,
+        "5th_pct": 0.0,
+        "6th_pct": 33.3,
+        "top2_pct": 0.0,
+        "top3_pct": 33.3
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 7,
+        "1st_pct": 28.6,
+        "2nd_pct": 0.0,
+        "3rd_pct": 14.3,
+        "4th_pct": 14.3,
+        "5th_pct": 28.6,
+        "6th_pct": 14.3,
+        "top2_pct": 28.6,
+        "top3_pct": 42.9
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 4,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "",
+      "grade": "B2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 10,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "準優勝戦　　　\n\t\t1800m",
+      "grade": "B2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

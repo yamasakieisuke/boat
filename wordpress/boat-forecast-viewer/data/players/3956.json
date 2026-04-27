@@ -1,0 +1,158 @@
+{
+  "reg_no": "3956",
+  "name": "横澤 剛治",
+  "name_kana": "ヨコザワ コウジ",
+  "grade": "A1",
+  "branch": "静岡",
+  "prefecture": "静岡",
+  "win_rate": 6.36,
+  "championship_count": 0,
+  "ability_index": 53,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 50.0
+      },
+      "1": {
+        "races": 2,
+        "1st_pct": 50.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 12.5,
+        "2nd_pct": 25.0,
+        "3rd_pct": 25.0,
+        "4th_pct": 25.0,
+        "5th_pct": 12.5,
+        "6th_pct": 0.0,
+        "top2_pct": 37.5,
+        "top3_pct": 62.5
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 4,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 6
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "A1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 9,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 6
+        }
+      ],
+      "race_name": "準優勝戦　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

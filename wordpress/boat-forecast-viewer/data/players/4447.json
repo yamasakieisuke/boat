@@ -1,0 +1,122 @@
+{
+  "reg_no": "4447",
+  "name": "深川 麻奈美",
+  "name_kana": "フカガワ マナミ",
+  "grade": "A1",
+  "branch": "福岡",
+  "prefecture": "熊本",
+  "win_rate": 6.67,
+  "championship_count": 1,
+  "ability_index": 56,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "12",
+      "venue_name": "住之江",
+      "race_no": 5,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 4,
+          "rank": 4
+        }
+      ],
+      "race_name": "",
+      "grade": "A1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "12",
+      "venue_name": "住之江",
+      "race_no": 12,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 4,
+          "rank": 4
+        }
+      ],
+      "race_name": "一般特別戦　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

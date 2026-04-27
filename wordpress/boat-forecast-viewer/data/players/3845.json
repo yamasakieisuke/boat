@@ -1,0 +1,157 @@
+{
+  "reg_no": "3845",
+  "name": "中谷 朋子",
+  "name_kana": "ナカタニ トモコ",
+  "grade": "B1",
+  "branch": "兵庫",
+  "prefecture": "兵庫",
+  "win_rate": 5.31,
+  "championship_count": 0,
+  "ability_index": 51,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 66.7,
+        "3rd_pct": 33.3,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 66.7,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "20",
+      "venue_name": "若松",
+      "race_no": 3,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 3
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "20",
+      "venue_name": "若松",
+      "race_no": 10,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 3
+        }
+      ],
+      "race_name": "選抜戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

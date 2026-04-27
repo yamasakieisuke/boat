@@ -1,0 +1,109 @@
+{
+  "reg_no": "4241",
+  "name": "大串 重幸",
+  "name_kana": "オオグシ シゲユキ",
+  "grade": "A2",
+  "branch": "長崎",
+  "prefecture": "長崎",
+  "win_rate": 5.5,
+  "championship_count": 0,
+  "ability_index": 51,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "1": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 4,
+        "1st_pct": 50.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 3,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 4,
+          "rank": 4
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 10,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 4,
+          "rank": 4
+        }
+      ],
+      "race_name": "予選特賞　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

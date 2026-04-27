@@ -1,0 +1,157 @@
+{
+  "reg_no": "4243",
+  "name": "西村 歩",
+  "name_kana": "ニシムラ アユミ",
+  "grade": "A2",
+  "branch": "大阪",
+  "prefecture": "大阪",
+  "win_rate": 5.75,
+  "championship_count": 1,
+  "ability_index": 51,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 4,
+        "1st_pct": 25.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 25.0,
+        "6th_pct": 0.0,
+        "top2_pct": 25.0,
+        "top3_pct": 25.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "20",
+      "venue_name": "若松",
+      "race_no": 4,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 2
+        },
+        {
+          "course": 3,
+          "rank": 5
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "20",
+      "venue_name": "若松",
+      "race_no": 11,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 2
+        },
+        {
+          "course": 3,
+          "rank": 5
+        }
+      ],
+      "race_name": "選抜戦　　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

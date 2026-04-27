@@ -1,0 +1,131 @@
+{
+  "reg_no": "4010",
+  "name": "越智 照浩",
+  "name_kana": "オチ アキヒロ",
+  "grade": "B1",
+  "branch": "香川",
+  "prefecture": "愛媛",
+  "win_rate": 3.7,
+  "championship_count": 0,
+  "ability_index": 45,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 66.7,
+        "4th_pct": 0.0,
+        "5th_pct": 33.3,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 66.7
+      },
+      "4": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 66.7,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 66.7,
+        "6th_pct": 33.3,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 12,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 25.0,
+        "4th_pct": 16.7,
+        "5th_pct": 50.0,
+        "6th_pct": 8.3,
+        "top2_pct": 0.0,
+        "top3_pct": 25.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "12",
+      "venue_name": "住之江",
+      "race_no": 5,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 4,
+          "rank": 5
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

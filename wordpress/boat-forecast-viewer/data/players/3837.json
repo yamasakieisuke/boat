@@ -1,0 +1,98 @@
+{
+  "reg_no": "3837",
+  "name": "秋山 広一",
+  "name_kana": "アキヤマ ヒロカズ",
+  "grade": "A2",
+  "branch": "香川",
+  "prefecture": "香川",
+  "win_rate": 6.03,
+  "championship_count": 0,
+  "ability_index": 52,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 2,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 3,
+          "rank": 3
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 7,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 3,
+          "rank": 3
+        }
+      ],
+      "race_name": "",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

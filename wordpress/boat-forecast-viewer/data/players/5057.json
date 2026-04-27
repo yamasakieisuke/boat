@@ -1,0 +1,93 @@
+{
+  "reg_no": "5057",
+  "name": "上田 紗奈",
+  "name_kana": "ウエダ サナ",
+  "grade": "B1",
+  "branch": "大阪",
+  "prefecture": "大阪",
+  "win_rate": 4.97,
+  "championship_count": 0,
+  "ability_index": 49,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "5": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 0.0,
+        "2nd_pct": 33.3,
+        "3rd_pct": 0.0,
+        "4th_pct": 16.7,
+        "5th_pct": 16.7,
+        "6th_pct": 33.3,
+        "top2_pct": 33.3,
+        "top3_pct": 33.3
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 4,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 5
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

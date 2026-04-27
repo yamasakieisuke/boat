@@ -1,0 +1,120 @@
+{
+  "reg_no": "4691",
+  "name": "水原 慎",
+  "name_kana": "ミズハラ シン",
+  "grade": "B1",
+  "branch": "徳島",
+  "prefecture": "徳島",
+  "win_rate": 4.86,
+  "championship_count": 0,
+  "ability_index": 48,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 50.0
+      },
+      "4": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 33.3,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 33.3,
+        "6th_pct": 33.3,
+        "top2_pct": 33.3,
+        "top3_pct": 33.3
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 9,
+        "1st_pct": 0.0,
+        "2nd_pct": 11.1,
+        "3rd_pct": 11.1,
+        "4th_pct": 22.2,
+        "5th_pct": 33.3,
+        "6th_pct": 22.2,
+        "top2_pct": 11.1,
+        "top3_pct": 22.2
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 6,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 2
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

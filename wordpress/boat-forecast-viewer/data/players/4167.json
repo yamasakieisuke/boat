@@ -1,0 +1,109 @@
+{
+  "reg_no": "4167",
+  "name": "片岡 秀樹",
+  "name_kana": "カタオカ ヒデキ",
+  "grade": "B1",
+  "branch": "徳島",
+  "prefecture": "徳島",
+  "win_rate": 4.19,
+  "championship_count": 0,
+  "ability_index": 46,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 5,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 40.0,
+        "5th_pct": 40.0,
+        "6th_pct": 20.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 9,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 44.4,
+        "6th_pct": 22.2,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 8,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 3
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 5,
+          "rank": 1
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,99 @@
+{
+  "reg_no": "4845",
+  "name": "前田 紗希",
+  "name_kana": "マエダ サキ",
+  "grade": "A1",
+  "branch": "埼玉",
+  "prefecture": "埼玉",
+  "win_rate": 6.79,
+  "championship_count": 0,
+  "ability_index": 55,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "1": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 3,
+        "1st_pct": 66.7,
+        "2nd_pct": 0.0,
+        "3rd_pct": 33.3,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 66.7,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "20",
+      "venue_name": "若松",
+      "race_no": 12,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "優勝戦　　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

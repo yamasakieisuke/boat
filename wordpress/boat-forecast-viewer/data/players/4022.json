@@ -1,0 +1,87 @@
+{
+  "reg_no": "4022",
+  "name": "待鳥 雄紀",
+  "name_kana": "マチドリ ユウキ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 4.69,
+  "championship_count": 0,
+  "ability_index": 48,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "1": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 2,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 4
+        }
+      ],
+      "race_name": "サンライズＷ戦\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 7,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 4
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

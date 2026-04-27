@@ -1,0 +1,60 @@
+{
+  "reg_no": "5090",
+  "name": "生方 靖亜",
+  "name_kana": "ウブカタ セイア",
+  "grade": "B1",
+  "branch": "群馬",
+  "prefecture": "群馬",
+  "win_rate": 5.21,
+  "championship_count": 0,
+  "ability_index": 49,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 8,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 3
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

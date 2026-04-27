@@ -1,0 +1,120 @@
+{
+  "reg_no": "3828",
+  "name": "明石 正之",
+  "name_kana": "アカシ マサユキ",
+  "grade": "B1",
+  "branch": "兵庫",
+  "prefecture": "兵庫",
+  "win_rate": 4.96,
+  "championship_count": 0,
+  "ability_index": 49,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 33.3,
+        "3rd_pct": 0.0,
+        "4th_pct": 66.7,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 33.3,
+        "top3_pct": 33.3
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 7,
+        "1st_pct": 0.0,
+        "2nd_pct": 28.6,
+        "3rd_pct": 0.0,
+        "4th_pct": 71.4,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 28.6,
+        "top3_pct": 28.6
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 3,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 11,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 5
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "予選特選　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

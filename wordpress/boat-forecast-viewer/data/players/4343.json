@@ -1,0 +1,155 @@
+{
+  "reg_no": "4343",
+  "name": "村岡 賢",
+  "name_kana": "ムラオカ ケン",
+  "grade": "B1",
+  "branch": "広島",
+  "prefecture": "広島",
+  "win_rate": 3.63,
+  "championship_count": 0,
+  "ability_index": 45,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 33.3,
+        "4th_pct": 66.7,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 33.3
+      },
+      "1": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 37.5,
+        "2nd_pct": 25.0,
+        "3rd_pct": 12.5,
+        "4th_pct": 25.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 62.5,
+        "top3_pct": 75.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 2,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 5,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 5
+        }
+      ],
+      "race_name": "モー２ング戦　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 9,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 5,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 5
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

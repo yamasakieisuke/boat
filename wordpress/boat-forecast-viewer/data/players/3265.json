@@ -1,0 +1,71 @@
+{
+  "reg_no": "3265",
+  "name": "今村 暢孝",
+  "name_kana": "イマムラ ノブタカ",
+  "grade": "A1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 6.33,
+  "championship_count": 0,
+  "ability_index": 52,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 2,
+        "1st_pct": 50.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 8,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

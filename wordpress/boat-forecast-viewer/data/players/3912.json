@@ -1,0 +1,93 @@
+{
+  "reg_no": "3912",
+  "name": "川原 正明",
+  "name_kana": "カワラ マサアキ",
+  "grade": "A2",
+  "branch": "福井",
+  "prefecture": "石川",
+  "win_rate": 5.76,
+  "championship_count": 0,
+  "ability_index": 50,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 3,
+        "1st_pct": 66.7,
+        "2nd_pct": 0.0,
+        "3rd_pct": 33.3,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 66.7,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 33.3,
+        "2nd_pct": 0.0,
+        "3rd_pct": 16.7,
+        "4th_pct": 16.7,
+        "5th_pct": 33.3,
+        "6th_pct": 0.0,
+        "top2_pct": 33.3,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 5,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 12,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選特選　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,71 @@
+{
+  "reg_no": "4232",
+  "name": "笠 雅雄",
+  "name_kana": "リュウ マサオ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 3.35,
+  "championship_count": 0,
+  "ability_index": 42,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "5": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 5,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 11,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選特選　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,75 @@
+{
+  "reg_no": "4917",
+  "name": "岩橋 裕馬",
+  "name_kana": "イワハシ ユウマ",
+  "grade": "B1",
+  "branch": "兵庫",
+  "prefecture": "大阪",
+  "win_rate": 4.51,
+  "championship_count": 0,
+  "ability_index": 47,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 6,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 1
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 3,
+          "rank": 2
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

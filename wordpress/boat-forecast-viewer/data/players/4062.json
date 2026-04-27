@@ -1,0 +1,131 @@
+{
+  "reg_no": "4062",
+  "name": "後藤 陽介",
+  "name_kana": "ゴトウ ヨウスケ",
+  "grade": "B1",
+  "branch": "愛知",
+  "prefecture": "愛知",
+  "win_rate": 3.91,
+  "championship_count": 0,
+  "ability_index": 44,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 50.0
+      },
+      "5": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 66.7,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 10,
+        "1st_pct": 10.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 10.0,
+        "4th_pct": 10.0,
+        "5th_pct": 40.0,
+        "6th_pct": 30.0,
+        "top2_pct": 10.0,
+        "top3_pct": 20.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 1,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 3
+        }
+      ],
+      "race_name": "朝１戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

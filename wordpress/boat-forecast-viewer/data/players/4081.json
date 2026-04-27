@@ -1,0 +1,103 @@
+{
+  "reg_no": "4081",
+  "name": "樋口 範政",
+  "name_kana": "ヒグチ ノリマサ",
+  "grade": "B1",
+  "branch": "愛知",
+  "prefecture": "愛知",
+  "win_rate": 3.88,
+  "championship_count": 0,
+  "ability_index": 44,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 2,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 2
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 7,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 2
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,109 @@
+{
+  "reg_no": "4861",
+  "name": "田中 宏樹",
+  "name_kana": "タナカ ヒロキ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "宮崎",
+  "win_rate": 4.92,
+  "championship_count": 0,
+  "ability_index": 48,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 4,
+        "1st_pct": 0.0,
+        "2nd_pct": 25.0,
+        "3rd_pct": 25.0,
+        "4th_pct": 25.0,
+        "5th_pct": 25.0,
+        "6th_pct": 0.0,
+        "top2_pct": 25.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 7,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 3
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 11,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 3
+        }
+      ],
+      "race_name": "予選特選　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

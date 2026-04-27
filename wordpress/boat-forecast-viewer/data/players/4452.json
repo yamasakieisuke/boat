@@ -1,0 +1,142 @@
+{
+  "reg_no": "4452",
+  "name": "松尾 祭",
+  "name_kana": "マツオ マツリ",
+  "grade": "A2",
+  "branch": "香川",
+  "prefecture": "愛媛",
+  "win_rate": 5.65,
+  "championship_count": 0,
+  "ability_index": 52,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "1": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 25.0,
+        "2nd_pct": 25.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 12.5,
+        "5th_pct": 12.5,
+        "6th_pct": 25.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 6,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 2
+        }
+      ],
+      "race_name": "",
+      "grade": "A2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 10,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 2
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,86 @@
+{
+  "reg_no": "5407",
+  "name": "中岡 駿",
+  "name_kana": "ナカオカ シュン",
+  "grade": "B2",
+  "branch": "香川",
+  "prefecture": "香川",
+  "win_rate": 1.58,
+  "championship_count": 0,
+  "ability_index": 34,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 66.7,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 33.3,
+        "top2_pct": 0.0,
+        "top3_pct": 66.7
+      },
+      "5": {
+        "races": 4,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 75.0,
+        "6th_pct": 25.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 25.0,
+        "4th_pct": 0.0,
+        "5th_pct": 37.5,
+        "6th_pct": 37.5,
+        "top2_pct": 0.0,
+        "top3_pct": 25.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 6,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 4
+        }
+      ],
+      "race_name": "",
+      "grade": "B2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

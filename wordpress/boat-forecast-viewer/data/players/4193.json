@@ -1,0 +1,97 @@
+{
+  "reg_no": "4193",
+  "name": "郷原 章平",
+  "name_kana": "ゴウハラ ショウヘイ",
+  "grade": "A1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 6.38,
+  "championship_count": 1,
+  "ability_index": 52,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 33.3,
+        "2nd_pct": 0.0,
+        "3rd_pct": 33.3,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 33.3,
+        "top2_pct": 33.3,
+        "top3_pct": 66.7
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 11,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 6,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選特選　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

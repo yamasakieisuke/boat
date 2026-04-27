@@ -1,0 +1,87 @@
+{
+  "reg_no": "3566",
+  "name": "川添 英正",
+  "name_kana": "カワゾエ ヒデマサ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 4.87,
+  "championship_count": 0,
+  "ability_index": 49,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 4,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "サンライズＹ戦\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 9,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 4,
+          "rank": 4
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

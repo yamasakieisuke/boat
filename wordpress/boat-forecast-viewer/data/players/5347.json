@@ -1,0 +1,101 @@
+{
+  "reg_no": "5347",
+  "name": "井澤 聖奈",
+  "name_kana": "イサワ セナ",
+  "grade": "B2",
+  "branch": "愛知",
+  "prefecture": "長野",
+  "win_rate": 1.56,
+  "championship_count": 0,
+  "ability_index": 34,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 0.0,
+        "6th_pct": 66.7,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 5,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 60.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 40.0,
+        "top2_pct": 0.0,
+        "top3_pct": 60.0
+      },
+      "4": {
+        "races": 5,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 40.0,
+        "5th_pct": 60.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 13,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 23.1,
+        "4th_pct": 23.1,
+        "5th_pct": 23.1,
+        "6th_pct": 30.8,
+        "top2_pct": 0.0,
+        "top3_pct": 23.1
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 3,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 7,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 6,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

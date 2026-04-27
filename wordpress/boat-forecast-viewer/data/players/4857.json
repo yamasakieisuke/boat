@@ -1,0 +1,123 @@
+{
+  "reg_no": "4857",
+  "name": "加藤 翔馬",
+  "name_kana": "カトウ ショウマ",
+  "grade": "A1",
+  "branch": "兵庫",
+  "prefecture": "兵庫",
+  "win_rate": 6.39,
+  "championship_count": 0,
+  "ability_index": 54,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 2,
+        "1st_pct": 50.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 100.0
+      },
+      "6": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 50.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "2": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "1": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 12.5,
+        "2nd_pct": 25.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 12.5,
+        "top2_pct": 37.5,
+        "top3_pct": 87.5
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 3,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "24",
+      "venue_name": "大村",
+      "race_no": 9,
+      "waku": 6,
+      "series_races": [
+        {
+          "course": 4,
+          "rank": 3
+        },
+        {
+          "course": 1,
+          "rank": 1
+        }
+      ],
+      "race_name": "予選特賞　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

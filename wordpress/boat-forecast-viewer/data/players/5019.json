@@ -1,0 +1,110 @@
+{
+  "reg_no": "5019",
+  "name": "柴田 百恵",
+  "name_kana": "シバタ モモエ",
+  "grade": "A2",
+  "branch": "静岡",
+  "prefecture": "静岡",
+  "win_rate": 5.69,
+  "championship_count": 0,
+  "ability_index": 51,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 33.3,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 66.7,
+        "top2_pct": 33.3,
+        "top3_pct": 33.3
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 0.0,
+        "2nd_pct": 16.7,
+        "3rd_pct": 16.7,
+        "4th_pct": 0.0,
+        "5th_pct": 33.3,
+        "6th_pct": 33.3,
+        "top2_pct": 16.7,
+        "top3_pct": 33.3
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "20",
+      "venue_name": "若松",
+      "race_no": 8,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 2,
+          "rank": 6
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 2,
+          "rank": 3
+        },
+        {
+          "course": 3,
+          "rank": 3
+        },
+        {
+          "course": 2,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        },
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 5
+        }
+      ],
+      "race_name": "",
+      "grade": "A2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

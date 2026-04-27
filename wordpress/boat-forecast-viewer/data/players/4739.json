@@ -1,0 +1,112 @@
+{
+  "reg_no": "4739",
+  "name": "中村 晃朋",
+  "name_kana": "ナカムラ アキトモ",
+  "grade": "A1",
+  "branch": "香川",
+  "prefecture": "香川",
+  "win_rate": 6.81,
+  "championship_count": 1,
+  "ability_index": 61,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 50.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 100.0
+      },
+      "1": {
+        "races": 2,
+        "1st_pct": 100.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 25.0,
+        "2nd_pct": 12.5,
+        "3rd_pct": 12.5,
+        "4th_pct": 25.0,
+        "5th_pct": 0.0,
+        "6th_pct": 25.0,
+        "top2_pct": 37.5,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "15",
+      "venue_name": "丸亀",
+      "race_no": 9,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 1,
+          "rank": 6
+        },
+        {
+          "course": 5,
+          "rank": 2
+        },
+        {
+          "course": 2,
+          "rank": 4
+        },
+        {
+          "course": 5,
+          "rank": 1
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

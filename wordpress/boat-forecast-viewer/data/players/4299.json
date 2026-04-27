@@ -1,0 +1,97 @@
+{
+  "reg_no": "4299",
+  "name": "中島 浩哉",
+  "name_kana": "ナカシマ ヒロヤ",
+  "grade": "B1",
+  "branch": "長崎",
+  "prefecture": "長崎",
+  "win_rate": 4.6,
+  "championship_count": 0,
+  "ability_index": 47,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "6": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 100.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "5": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 100.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 6,
+        "1st_pct": 0.0,
+        "2nd_pct": 16.7,
+        "3rd_pct": 33.3,
+        "4th_pct": 16.7,
+        "5th_pct": 16.7,
+        "6th_pct": 16.7,
+        "top2_pct": 16.7,
+        "top3_pct": 50.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 7,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 4,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

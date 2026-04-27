@@ -1,0 +1,68 @@
+{
+  "reg_no": "4288",
+  "name": "永田 啓二",
+  "name_kana": "ナガタ ケイジ",
+  "grade": "A1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 6.66,
+  "championship_count": 1,
+  "ability_index": 54,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "21",
+      "venue_name": "芦屋",
+      "race_no": 9,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 1
+        },
+        {
+          "course": 1,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "A1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

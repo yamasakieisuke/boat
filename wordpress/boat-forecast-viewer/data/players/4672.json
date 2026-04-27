@@ -1,0 +1,120 @@
+{
+  "reg_no": "4672",
+  "name": "守屋 大地",
+  "name_kana": "モリヤ ダイチ",
+  "grade": "B1",
+  "branch": "岡山",
+  "prefecture": "岡山",
+  "win_rate": 4.71,
+  "championship_count": 0,
+  "ability_index": 48,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "2": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 33.3,
+        "4th_pct": 66.7,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 33.3
+      },
+      "1": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 8,
+        "1st_pct": 0.0,
+        "2nd_pct": 25.0,
+        "3rd_pct": 12.5,
+        "4th_pct": 62.5,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 25.0,
+        "top3_pct": 37.5
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "12",
+      "venue_name": "住之江",
+      "race_no": 5,
+      "waku": 2,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 2
+        },
+        {
+          "course": 6,
+          "rank": 5
+        },
+        {
+          "course": 4,
+          "rank": 5
+        },
+        {
+          "course": 3,
+          "rank": 1
+        },
+        {
+          "course": 3,
+          "rank": 4
+        },
+        {
+          "course": 4,
+          "rank": 4
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

@@ -1,0 +1,124 @@
+{
+  "reg_no": "3662",
+  "name": "大庭 元明",
+  "name_kana": "オオバ モトアキ",
+  "grade": "B1",
+  "branch": "福岡",
+  "prefecture": "福岡",
+  "win_rate": 5.12,
+  "championship_count": 0,
+  "ability_index": 48,
+  "gender": "M",
+  "yearly_waku_stats": {
+    "2026": {
+      "5": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 100.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 100.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 0.0,
+        "6th_pct": 66.7,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "4": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "3": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "all": {
+        "races": 9,
+        "1st_pct": 0.0,
+        "2nd_pct": 22.2,
+        "3rd_pct": 0.0,
+        "4th_pct": 22.2,
+        "5th_pct": 11.1,
+        "6th_pct": 44.4,
+        "top2_pct": 22.2,
+        "top3_pct": 22.2
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "23",
+      "venue_name": "唐津",
+      "race_no": 8,
+      "waku": 1,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 3,
+          "rank": 2
+        },
+        {
+          "course": 5,
+          "rank": 5
+        },
+        {
+          "course": 5,
+          "rank": 4
+        },
+        {
+          "course": 6,
+          "rank": 4
+        },
+        {
+          "course": 2,
+          "rank": 1
+        }
+      ],
+      "race_name": "",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

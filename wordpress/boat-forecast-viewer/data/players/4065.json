@@ -1,0 +1,114 @@
+{
+  "reg_no": "4065",
+  "name": "金田 幸子",
+  "name_kana": "カナダ ユキコ",
+  "grade": "B1",
+  "branch": "岡山",
+  "prefecture": "岡山",
+  "win_rate": 5.55,
+  "championship_count": 0,
+  "ability_index": 52,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "4": {
+        "races": 2,
+        "1st_pct": 0.0,
+        "2nd_pct": 50.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 50.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 50.0,
+        "top3_pct": 50.0
+      },
+      "2": {
+        "races": 1,
+        "1st_pct": 0.0,
+        "2nd_pct": 100.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 100.0,
+        "top3_pct": 100.0
+      },
+      "all": {
+        "races": 3,
+        "1st_pct": 0.0,
+        "2nd_pct": 66.7,
+        "3rd_pct": 0.0,
+        "4th_pct": 33.3,
+        "5th_pct": 0.0,
+        "6th_pct": 0.0,
+        "top2_pct": 66.7,
+        "top3_pct": 66.7
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 6,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    },
+    {
+      "date": "20260427",
+      "jcd": "07",
+      "venue_name": "蒲郡",
+      "race_no": 12,
+      "waku": 3,
+      "series_races": [
+        {
+          "course": 5,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 2
+        },
+        {
+          "course": 1,
+          "rank": 3
+        },
+        {
+          "course": 6,
+          "rank": 1
+        },
+        {
+          "course": 2,
+          "rank": 2
+        }
+      ],
+      "race_name": "一般戦　　　　\n\t\t1800m",
+      "grade": "B1"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}

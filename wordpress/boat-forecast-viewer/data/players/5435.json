@@ -1,0 +1,90 @@
+{
+  "reg_no": "5435",
+  "name": "中西 月輝",
+  "name_kana": "ナカニシ ルナ",
+  "grade": "B2",
+  "branch": "広島",
+  "prefecture": "山口",
+  "win_rate": 0.0,
+  "championship_count": 0,
+  "ability_index": null,
+  "gender": "F",
+  "yearly_waku_stats": {
+    "2026": {
+      "5": {
+        "races": 4,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 0.0,
+        "5th_pct": 50.0,
+        "6th_pct": 50.0,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "6": {
+        "races": 7,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 28.6,
+        "5th_pct": 42.9,
+        "6th_pct": 28.6,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      },
+      "all": {
+        "races": 11,
+        "1st_pct": 0.0,
+        "2nd_pct": 0.0,
+        "3rd_pct": 0.0,
+        "4th_pct": 18.2,
+        "5th_pct": 45.5,
+        "6th_pct": 36.4,
+        "top2_pct": 0.0,
+        "top3_pct": 0.0
+      }
+    }
+  },
+  "upcoming_today": [
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 4,
+      "waku": 5,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選　　　　　\n\t\t1800m",
+      "grade": "B2"
+    },
+    {
+      "date": "20260427",
+      "jcd": "13",
+      "venue_name": "尼崎",
+      "race_no": 9,
+      "waku": 4,
+      "series_races": [
+        {
+          "course": 6,
+          "rank": 6
+        },
+        {
+          "course": 4,
+          "rank": 6
+        }
+      ],
+      "race_name": "予選特賞　　　\n\t\t1800m",
+      "grade": "B2"
+    }
+  ],
+  "generated_at": "2026-04-27T16:50:51"
+}
