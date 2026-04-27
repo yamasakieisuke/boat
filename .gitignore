@@ -10,6 +10,10 @@ inbox/
 logs/
 *.log
 
+# Exception: WP plugin bundle accuracy mirror (deployed to heteml via Actions)
+!wordpress/boat-forecast-viewer/data/
+!wordpress/boat-forecast-viewer/data/**
+
 # Python
 __pycache__/
 *.pyc

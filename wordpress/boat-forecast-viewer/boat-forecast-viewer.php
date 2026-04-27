@@ -59,12 +59,16 @@ function boat_forecast_viewer_add_rewrite_rules() {
     $venue_pattern = implode('|', array_keys(boat_forecast_viewer_venue_map()));
     add_rewrite_rule('^race/(' . $venue_pattern . ')/?$', 'index.php?post_type=forecast_day&bfv_venue=$matches[1]', 'top');
     add_rewrite_rule('^review/?$', 'index.php?bfv_review=1', 'top');
+    add_rewrite_rule('^accuracy/?$', 'index.php?bfv_accuracy=1', 'top');
+    add_rewrite_rule('^accuracy/([0-9]{4}-W[0-9]{2})/?$', 'index.php?bfv_accuracy=1&bfv_week=$matches[1]', 'top');
 }
 add_action('init', 'boat_forecast_viewer_add_rewrite_rules');
 
 function boat_forecast_viewer_query_vars($vars) {
     $vars[] = 'bfv_venue';
     $vars[] = 'bfv_review';
+    $vars[] = 'bfv_accuracy';
+    $vars[] = 'bfv_week';
     return $vars;
 }
 add_filter('query_vars', 'boat_forecast_viewer_query_vars');
@@ -527,7 +531,7 @@ function boat_forecast_viewer_common_root_css() {
         bottom: 0;
         z-index: 40;
         display: none;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         background: rgba(255,255,255,.96);
         -webkit-backdrop-filter: blur(8px);
         backdrop-filter: blur(8px);
@@ -558,6 +562,104 @@ function boat_forecast_viewer_common_root_css() {
         body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
         .bfv-gnav { display: none; }
     }
+
+    /* ==== Drawer (CSS-only checkbox toggle) ================================ */
+    .bfv-drawer-toggle { position: absolute; opacity: 0; pointer-events: none; }
+    .bfv-topbar-menu { cursor: pointer; user-select: none; -webkit-user-select: none; }
+    .bfv-drawer-overlay {
+        position: fixed; inset: 0; z-index: 60;
+        background: rgba(20, 19, 18, 0);
+        opacity: 0; pointer-events: none;
+        transition: background .2s, opacity .2s;
+    }
+    .bfv-drawer-panel {
+        position: fixed;
+        top: 0; bottom: 0; left: 0;
+        width: min(320px, 86vw);
+        z-index: 61;
+        background: var(--bfv-bg);
+        color: var(--bfv-ink);
+        border-right: 1px solid var(--bfv-line-strong);
+        box-shadow: 4px 0 24px rgba(20,19,18,.10);
+        transform: translateX(-105%);
+        transition: transform .22s ease-out;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-family: var(--bfv-font-sans);
+    }
+    .bfv-drawer-toggle:checked ~ .bfv-drawer-overlay {
+        background: rgba(20,19,18,.42);
+        opacity: 1; pointer-events: auto;
+    }
+    .bfv-drawer-toggle:checked ~ .bfv-drawer-panel { transform: translateX(0); }
+    .bfv-drawer-head {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--bfv-line);
+        font-family: var(--bfv-font-mono);
+        font-size: 12px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--bfv-ink-sub);
+    }
+    .bfv-drawer-close {
+        font-size: 20px; line-height: 1; cursor: pointer;
+        padding: 4px 8px;
+        border-radius: var(--bfv-radius-sm);
+        color: var(--bfv-ink);
+    }
+    .bfv-drawer-close:hover { background: var(--bfv-surface-sub); }
+    .bfv-drawer-section { padding: 14px 16px; border-bottom: 1px solid var(--bfv-line); }
+    .bfv-drawer-section:last-child { border-bottom: none; }
+    .bfv-drawer-label {
+        font-family: var(--bfv-font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--bfv-muted);
+        margin: 0 0 8px;
+    }
+    .bfv-drawer-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+    .bfv-drawer-link {
+        display: flex; align-items: center; gap: 10px;
+        padding: 9px 10px;
+        border-radius: var(--bfv-radius-sm);
+        color: var(--bfv-ink);
+        text-decoration: none;
+        font-size: 14px;
+        transition: background .15s, color .15s;
+    }
+    .bfv-drawer-link:hover { background: var(--bfv-surface-sub); color: var(--bfv-accent); }
+    .bfv-drawer-link.is-active { color: var(--bfv-accent); background: var(--bfv-surface-sub); }
+    .bfv-drawer-link-ico { width: 20px; text-align: center; font-size: 15px; }
+    .bfv-drawer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+    }
+    .bfv-drawer-grid a {
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 8px 4px;
+        border-radius: var(--bfv-radius-sm);
+        background: var(--bfv-surface);
+        border: 1px solid var(--bfv-line);
+        color: var(--bfv-ink-sub);
+        text-decoration: none;
+        font-size: 12px;
+        transition: background .15s, color .15s, border-color .15s;
+    }
+    .bfv-drawer-grid a:hover {
+        background: var(--bfv-bg);
+        border-color: var(--bfv-accent);
+        color: var(--bfv-accent);
+    }
+    .bfv-drawer-info {
+        font-family: var(--bfv-font-mono);
+        font-size: 10px;
+        color: var(--bfv-muted);
+        line-height: 1.65;
+        letter-spacing: 0.04em;
+    }
 CSS;
 }
 
@@ -577,36 +679,99 @@ function boat_forecast_viewer_render_nav($active = '', $section_code = '') {
     $archive_base = get_post_type_archive_link('forecast_day') ?: home_url('/race/');
     $archive_url  = esc_url($archive_base);
     $review_url   = esc_url(home_url('/review/'));
-    $curated_url  = esc_url(add_query_arg('curated', '1', $archive_base));
+    $accuracy_url = esc_url(home_url('/accuracy/'));
+    $curated_url  = esc_url(add_query_arg('filter', 'curated', $archive_base));
+    $today_url    = esc_url(add_query_arg('filter', 'today', $archive_base));
     $search_url   = esc_url(add_query_arg('search', '1', $archive_base));
 
     $tabs = [
-        ['key' => 'archive', 'label' => '予想', 'icon' => '🏁', 'href' => $archive_url],
-        ['key' => 'single',  'label' => '一覧', 'icon' => '📋', 'href' => $archive_url],
-        ['key' => 'curated', 'label' => '厳選', 'icon' => '⭐', 'href' => $curated_url],
-        ['key' => 'search',  'label' => '検索', 'icon' => '🔍', 'href' => $search_url],
+        ['key' => 'archive',  'label' => '予想',   'icon' => '🏁', 'href' => $archive_url],
+        ['key' => 'today',    'label' => '一覧',   'icon' => '📋', 'href' => $today_url],
+        ['key' => 'review',   'label' => '結果',   'icon' => '📊', 'href' => $review_url],
+        ['key' => 'accuracy', 'label' => '精度',   'icon' => '📈', 'href' => $accuracy_url],
+        ['key' => 'search',   'label' => '検索',   'icon' => '🔍', 'href' => $search_url],
     ];
 
     $section_code = (string) $section_code;
     if ($section_code === '') {
-        if ($active === 'archive')      $section_code = 'FORECAST.INDEX';
-        elseif ($active === 'single')   $section_code = 'RACE';
-        elseif ($active === 'review')   $section_code = 'REVIEW';
+        if ($active === 'archive')       $section_code = 'FORECAST.INDEX';
+        elseif ($active === 'single')    $section_code = 'RACE';
+        elseif ($active === 'review')    $section_code = 'REVIEW';
+        elseif ($active === 'accuracy')  $section_code = 'ACCURACY';
     }
 
+    // ── Drawer 用データ ────────────────────────────────────────────
+    $venue_map = boat_forecast_viewer_venue_map();  // [slug => 日本語名]
+    $drawer_main = [
+        ['key' => 'archive',  'label' => '予想（会場一覧）', 'icon' => '🏁', 'href' => $archive_url],
+        ['key' => 'today',    'label' => '本日のレース',     'icon' => '📋', 'href' => $today_url],
+        ['key' => 'curated',  'label' => '厳選予想',         'icon' => '⭐', 'href' => $curated_url],
+        ['key' => 'review',   'label' => '結果振り返り',     'icon' => '📊', 'href' => $review_url],
+        ['key' => 'accuracy', 'label' => '精度ダッシュボード','icon' => '📈', 'href' => $accuracy_url],
+        ['key' => 'search',   'label' => '検索',             'icon' => '🔍', 'href' => $search_url],
+    ];
+
+    // ── Drawer + Topbar 出力 ───────────────────────────────────────
+    echo '<input type="checkbox" id="bfv-drawer-toggle" class="bfv-drawer-toggle" aria-hidden="true">';
+
     echo '<header class="bfv-topbar">';
-    echo   '<a class="bfv-topbar-menu" href="' . $archive_url . '" aria-label="メニュー">☰</a>';
+    echo   '<label for="bfv-drawer-toggle" class="bfv-topbar-menu" role="button" tabindex="0" aria-label="メニューを開く" aria-controls="bfv-drawer-panel">☰</label>';
     echo   '<a class="bfv-topbar-brand" href="' . $archive_url . '">boat</a>';
     if ($section_code !== '') {
         echo '<span class="bfv-topbar-sep">·</span>';
         echo '<span class="bfv-topbar-section">' . esc_html($section_code) . '</span>';
     }
-    echo   '<a class="bfv-topbar-action" href="' . $review_url . '" aria-label="振り返り">📊</a>';
+    echo   '<a class="bfv-topbar-action" href="' . $accuracy_url . '" aria-label="精度">📈</a>';
     echo '</header>';
 
+    // overlay (label でも close できる)
+    echo '<label for="bfv-drawer-toggle" class="bfv-drawer-overlay" aria-hidden="true"></label>';
+
+    // drawer 本体
+    echo '<aside id="bfv-drawer-panel" class="bfv-drawer-panel" role="dialog" aria-label="メインメニュー">';
+    echo   '<div class="bfv-drawer-head">';
+    echo     '<span>boat / メニュー</span>';
+    echo     '<label for="bfv-drawer-toggle" class="bfv-drawer-close" role="button" aria-label="メニューを閉じる">×</label>';
+    echo   '</div>';
+
+    echo   '<div class="bfv-drawer-section">';
+    echo     '<p class="bfv-drawer-label">主要ナビ</p>';
+    echo     '<ul class="bfv-drawer-list">';
+    foreach ($drawer_main as $item) {
+        $cls = ($active === $item['key']) ? ' is-active' : '';
+        echo '<li><a class="bfv-drawer-link' . $cls . '" href="' . $item['href'] . '">';
+        echo   '<span class="bfv-drawer-link-ico" aria-hidden="true">' . $item['icon'] . '</span>';
+        echo   '<span>' . esc_html($item['label']) . '</span>';
+        echo '</a></li>';
+    }
+    echo     '</ul>';
+    echo   '</div>';
+
+    if (!empty($venue_map)) {
+        echo '<div class="bfv-drawer-section">';
+        echo   '<p class="bfv-drawer-label">会場ジャンプ</p>';
+        echo   '<div class="bfv-drawer-grid">';
+        foreach ($venue_map as $slug => $jp) {
+            $vurl = esc_url(home_url('/race/' . $slug . '/'));
+            echo '<a href="' . $vurl . '">' . esc_html($jp) . '</a>';
+        }
+        echo   '</div>';
+        echo '</div>';
+    }
+
+    echo   '<div class="bfv-drawer-section">';
+    echo     '<p class="bfv-drawer-label">情報</p>';
+    echo     '<p class="bfv-drawer-info">boat forecast viewer<br>warm palette / IBM Plex<br>v5.20</p>';
+    echo   '</div>';
+
+    echo '</aside>';
+
+    // ── tabbar (モバイル底部固定) ────────────────────────────────────
+    // single ページは tabbar 上では「予想」(archive) として強調する
+    $active_for_tab = ($active === 'single') ? 'archive' : $active;
     echo '<nav class="bfv-tabbar" role="navigation" aria-label="メインナビゲーション">';
     foreach ($tabs as $tab) {
-        $is_active = ($active === $tab['key']) ? ' is-active' : '';
+        $is_active = ($active_for_tab === $tab['key']) ? ' is-active' : '';
         echo '<a class="bfv-tab' . $is_active . '" href="' . $tab['href'] . '">';
         echo   '<span class="bfv-tab-icon" aria-hidden="true">' . $tab['icon'] . '</span>';
         echo   '<span class="bfv-tab-label">' . esc_html($tab['label']) . '</span>';
@@ -4200,6 +4365,479 @@ function boat_forecast_viewer_render_review() {
 <?php
 }
 
+function boat_forecast_viewer_load_accuracy_data($week_key = '') {
+    $dir = BOAT_FORECAST_VIEWER_DIR . '/data/accuracy';
+    $idx_path = $dir . '/index.json';
+    $index = null;
+    if (file_exists($idx_path)) {
+        $raw = file_get_contents($idx_path);
+        $idx = json_decode($raw, true);
+        if (is_array($idx)) {
+            $index = $idx;
+        }
+    }
+    $week_key = (string) $week_key;
+    if ($week_key === '' && $index && !empty($index['weeks'])) {
+        $week_key = (string) $index['weeks'][0]['week'];
+    }
+    $week_data = null;
+    if ($week_key !== '') {
+        $wpath = $dir . '/' . preg_replace('/[^A-Za-z0-9\-]/', '', $week_key) . '.json';
+        if (file_exists($wpath)) {
+            $raw = file_get_contents($wpath);
+            $d = json_decode($raw, true);
+            if (is_array($d)) {
+                $week_data = $d;
+            }
+        }
+    }
+    return ['index' => $index, 'week' => $week_data];
+}
+
+function boat_forecast_viewer_render_accuracy() {
+    $req_week = (string) get_query_var('bfv_week');
+    $bundle = boat_forecast_viewer_load_accuracy_data($req_week);
+    $idx = $bundle['index'];
+    $w   = $bundle['week'];
+    $section_code = $w ? ('ACCURACY.' . strtoupper(str_replace('-', '.', $w['week']))) : 'ACCURACY';
+    ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>精度ダッシュボード — ボートレース予想</title>
+<?php echo boat_forecast_viewer_font_links(); ?>
+    <style>
+<?php echo boat_forecast_viewer_common_root_css(); ?>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--bfv-bg);
+            color: var(--bfv-ink);
+            font-family: var(--bfv-font-sans);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; }
+        .bfac-shell {
+            width: min(1120px, calc(100% - 24px));
+            margin: 0 auto;
+            padding: 20px 0 72px;
+        }
+        .bfac-empty {
+            margin: 32px 0;
+            padding: 28px 22px;
+            background: var(--bfv-surface);
+            border: 1px dashed var(--bfv-line-strong);
+            border-radius: var(--bfv-radius-sm);
+            color: var(--bfv-ink-sub);
+            text-align: center;
+            font-size: 14px;
+        }
+        .bfac-hero {
+            background: var(--bfv-hero-ink);
+            color: #fff;
+            border-radius: var(--bfv-radius-sm);
+            padding: 18px 20px 18px;
+            box-shadow: var(--bfv-shadow-sm);
+            margin-bottom: 14px;
+        }
+        .bfac-hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.10);
+            color: rgba(255,255,255,.82);
+        }
+        .bfac-hero-title {
+            margin: 10px 0 4px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+        .bfac-hero-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            color: rgba(255,255,255,.72);
+            letter-spacing: 0.04em;
+        }
+        .bfac-hero-grid {
+            margin-top: 14px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .bfac-kpi {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .bfac-kpi-label {
+            font-family: var(--bfv-font-mono);
+            font-size: 9.5px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.62);
+        }
+        .bfac-kpi-value {
+            font-family: var(--bfv-font-mono);
+            font-size: 26px;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+            color: #fff;
+            line-height: 1.05;
+        }
+        .bfac-kpi-sub {
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
+            color: rgba(255,255,255,.58);
+            font-variant-numeric: tabular-nums;
+        }
+        .bfac-kpi-delta {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .bfac-kpi-delta.is-up   { color: #59c39a; }
+        .bfac-kpi-delta.is-down { color: #f08a8a; }
+        .bfac-kpi-delta.is-flat { color: rgba(255,255,255,.45); }
+
+        @media (max-width: 640px) {
+            .bfac-hero-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .bfac-section {
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-sm);
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            box-shadow: var(--bfv-shadow-xs);
+        }
+        .bfac-section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        .bfac-section-title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: var(--bfv-ink);
+        }
+        .bfac-section-note {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.04em;
+        }
+
+        .bfac-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--bfv-font-mono);
+            font-size: 12px;
+            font-variant-numeric: tabular-nums;
+        }
+        .bfac-table th, .bfac-table td {
+            padding: 6px 8px;
+            text-align: right;
+            border-bottom: 1px solid var(--bfv-line);
+        }
+        .bfac-table th {
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+            border-bottom: 1px solid var(--bfv-line-strong);
+            text-align: right;
+            white-space: nowrap;
+        }
+        .bfac-table th:first-child,
+        .bfac-table td:first-child { text-align: left; }
+        .bfac-table td.bfac-name {
+            font-family: var(--bfv-font-sans);
+            font-weight: 500;
+            color: var(--bfv-ink);
+        }
+        .bfac-table tr:last-child td { border-bottom: none; }
+        .bfac-table tbody tr:hover { background: var(--bfv-surface-sub); }
+        .bfac-rank {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink-sub);
+            font-size: 10.5px;
+            font-weight: 600;
+        }
+        .bfac-rank.is-top { background: var(--bfv-good-soft); color: var(--bfv-good); }
+
+        .bfac-week-list {
+            display: grid; gap: 4px;
+        }
+        .bfac-week-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto auto;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 10px;
+            border-radius: var(--bfv-radius-sm);
+            text-decoration: none;
+            color: inherit;
+            background: var(--bfv-surface-sub);
+            border: 1px solid var(--bfv-line);
+            font-family: var(--bfv-font-mono);
+            font-size: 11.5px;
+            font-variant-numeric: tabular-nums;
+            transition: border-color .15s;
+        }
+        .bfac-week-row:hover { border-color: var(--bfv-accent); }
+        .bfac-week-row.is-current { border-color: var(--bfv-accent); background: var(--bfv-bg); }
+        .bfac-week-row > b { font-family: var(--bfv-font-mono); font-weight: 700; letter-spacing: 0.04em; }
+        .bfac-week-row span { color: var(--bfv-muted); }
+        @media (max-width: 480px) {
+            .bfac-week-row { grid-template-columns: 1fr auto auto; font-size: 10.5px; }
+            .bfac-week-row .bfac-week-3tan { display: none; }
+        }
+    </style>
+</head>
+<body>
+<?php boat_forecast_viewer_render_nav('accuracy', $section_code); ?>
+<div class="bfac-shell">
+
+<?php if (!$w) : ?>
+    <section class="bfac-empty">
+        まだ精度レポートが生成されていません。<br>
+        <code style="font-family: var(--bfv-font-mono); font-size: 12px; color: var(--bfv-accent);">python3 scripts/verify.py --report weekly</code>
+        を実行すると、本ページにデータが反映されます。
+    </section>
+<?php else :
+    $o = isset($w['overall']) ? $w['overall'] : [];
+    $diff = isset($w['diff_prev_week']) ? $w['diff_prev_week'] : [];
+    $delta_class = function ($v) {
+        if ($v === null) return 'is-flat';
+        if ($v > 0) return 'is-up';
+        if ($v < 0) return 'is-down';
+        return 'is-flat';
+    };
+    $delta_str = function ($v) {
+        if ($v === null) return '—';
+        $sign = ($v > 0) ? '+' : '';
+        return $sign . $v;
+    };
+    $kpis = [
+        ['label' => '買い目的中率',   'k' => 'hit_bet_any_pct',  'n' => 'hit_bet_any'],
+        ['label' => '1着的中率',     'k' => 'hit_1st_pct',      'n' => 'hit_1st'],
+        ['label' => '3連単的中率',   'k' => 'hit_3tan_pct',     'n' => 'hit_3tan'],
+        ['label' => '本命的中率',     'k' => 'hit_honmei_pct',   'n' => 'hit_honmei'],
+    ];
+?>
+    <section class="bfac-hero">
+        <span class="bfac-hero-kicker">📈 ACCURACY · <?php echo esc_html($w['week']); ?></span>
+        <h1 class="bfac-hero-title">週次精度レポート</h1>
+        <p class="bfac-hero-meta">
+            <?php echo esc_html($w['date_from']); ?> 〜 <?php echo esc_html($w['date_to']); ?>
+            ・ 総レース <?php echo (int) ($o['total_races'] ?? 0); ?>R
+            ・ 対象会場 <?php echo (int) ($o['venues_with_data'] ?? 0); ?>
+        </p>
+        <div class="bfac-hero-grid">
+        <?php foreach ($kpis as $k):
+            $val = isset($o[$k['k']]) ? $o[$k['k']] : 0;
+            $hit = isset($o[$k['n']]) ? $o[$k['n']] : 0;
+            $tot = (int) ($o['total_races'] ?? 0);
+            $d   = isset($diff[$k['k']]) ? $diff[$k['k']] : null;
+        ?>
+            <div class="bfac-kpi">
+                <span class="bfac-kpi-label"><?php echo esc_html($k['label']); ?></span>
+                <span class="bfac-kpi-value"><?php echo esc_html($val); ?>%</span>
+                <span class="bfac-kpi-sub"><?php echo (int) $hit; ?>/<?php echo (int) $tot; ?></span>
+                <span class="bfac-kpi-delta <?php echo $delta_class($d); ?>">
+                    前週比 <?php echo esc_html($delta_str($d)); ?>
+                </span>
+            </div>
+        <?php endforeach; ?>
+        </div>
+    </section>
+
+    <?php if (!empty($w['by_venue'])): ?>
+    <section class="bfac-section">
+        <div class="bfac-section-head">
+            <h2 class="bfac-section-title">会場別ランキング</h2>
+            <span class="bfac-section-note">買い目的中率順</span>
+        </div>
+        <table class="bfac-table">
+            <thead>
+                <tr>
+                    <th>順</th>
+                    <th>会場</th>
+                    <th>R数</th>
+                    <th>1着%</th>
+                    <th>買い目%</th>
+                    <th>3連単%</th>
+                    <th>平均着順</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($w['by_venue'] as $i => $v):
+                $rank = $i + 1;
+                $cls = $rank <= 3 ? ' is-top' : '';
+            ?>
+                <tr>
+                    <td><span class="bfac-rank<?php echo $cls; ?>"><?php echo $rank; ?></span></td>
+                    <td class="bfac-name"><?php echo esc_html($v['name']); ?></td>
+                    <td><?php echo (int) $v['n']; ?></td>
+                    <td><?php echo esc_html($v['hit_1st_pct']); ?>%</td>
+                    <td><?php echo esc_html($v['hit_bet_any_pct']); ?>%</td>
+                    <td><?php echo esc_html($v['hit_3tan_pct']); ?>%</td>
+                    <td><?php echo esc_html($v['avg_rank']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+    <?php endif; ?>
+
+    <?php if (!empty($w['by_pattern'])): ?>
+    <section class="bfac-section">
+        <div class="bfac-section-head">
+            <h2 class="bfac-section-title">セオリーパターン別</h2>
+            <span class="bfac-section-note">発動 vs 採用 / 的中率</span>
+        </div>
+        <table class="bfac-table">
+            <thead>
+                <tr>
+                    <th>パターン</th>
+                    <th>発動R</th>
+                    <th>発動的中%</th>
+                    <th>採用R</th>
+                    <th>採用的中%</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($w['by_pattern'] as $name => $p): ?>
+                <tr>
+                    <td class="bfac-name"><?php echo esc_html($name); ?></td>
+                    <td><?php echo (int) ($p['triggered'] ?? 0); ?></td>
+                    <td><?php echo esc_html($p['triggered_hit_pct'] ?? 0); ?>%</td>
+                    <td><?php echo (int) ($p['applied'] ?? 0); ?></td>
+                    <td><?php echo esc_html($p['applied_hit_pct'] ?? 0); ?>%</td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+    <?php endif; ?>
+
+    <?php if (!empty($w['by_series_band'])): ?>
+    <section class="bfac-section">
+        <div class="bfac-section-head">
+            <h2 class="bfac-section-title">シリーズ走数帯別</h2>
+            <span class="bfac-section-note">本命的中率 (今節走数別)</span>
+        </div>
+        <table class="bfac-table">
+            <thead>
+                <tr>
+                    <th>走数帯</th>
+                    <th>n</th>
+                    <th>本命的中%</th>
+                    <th>平均着順</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach (['0走','1-3走','4-6走','7走+'] as $band):
+                if (empty($w['by_series_band'][$band])) continue;
+                $d = $w['by_series_band'][$band];
+            ?>
+                <tr>
+                    <td class="bfac-name"><?php echo esc_html($band); ?></td>
+                    <td><?php echo (int) ($d['n'] ?? 0); ?></td>
+                    <td><?php echo esc_html($d['honmei_hit_pct'] ?? 0); ?>%</td>
+                    <td><?php echo esc_html($d['avg_rk'] ?? '—'); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+    <?php endif; ?>
+
+    <?php if (!empty($w['by_version'])): ?>
+    <section class="bfac-section">
+        <div class="bfac-section-head">
+            <h2 class="bfac-section-title">バージョン別</h2>
+            <span class="bfac-section-note">version 別の指標推移</span>
+        </div>
+        <table class="bfac-table">
+            <thead>
+                <tr>
+                    <th>version</th>
+                    <th>n</th>
+                    <th>本命1着%</th>
+                    <th>買い目%</th>
+                    <th>3連複%</th>
+                    <th>本命%</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($w['by_version'] as $ver => $d): ?>
+                <tr>
+                    <td class="bfac-name"><?php echo esc_html($ver); ?></td>
+                    <td><?php echo (int) ($d['n'] ?? 0); ?></td>
+                    <td><?php echo esc_html($d['hit_1st_pct'] ?? 0); ?>%</td>
+                    <td><?php echo esc_html($d['hit_bet_any_pct'] ?? 0); ?>%</td>
+                    <td><?php echo esc_html($d['hit_3fuku_pct'] ?? 0); ?>%</td>
+                    <td><?php echo esc_html($d['hit_honmei_pct'] ?? 0); ?>%</td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </section>
+    <?php endif; ?>
+<?php endif; ?>
+
+<?php if ($idx && !empty($idx['weeks']) && count($idx['weeks']) > 0): ?>
+    <section class="bfac-section">
+        <div class="bfac-section-head">
+            <h2 class="bfac-section-title">過去の週次レポート</h2>
+            <span class="bfac-section-note">最新 <?php echo count($idx['weeks']); ?> 週</span>
+        </div>
+        <div class="bfac-week-list">
+        <?php foreach ($idx['weeks'] as $row):
+            $is_current = $w && (string) $row['week'] === (string) $w['week'];
+            $url = esc_url(home_url('/accuracy/' . $row['week'] . '/'));
+        ?>
+            <a class="bfac-week-row<?php echo $is_current ? ' is-current' : ''; ?>" href="<?php echo $url; ?>">
+                <b><?php echo esc_html($row['week']); ?></b>
+                <span><?php echo (int) ($row['total_races'] ?? 0); ?>R</span>
+                <span>買目 <?php echo esc_html($row['hit_bet_any_pct'] ?? 0); ?>%</span>
+                <span>1着 <?php echo esc_html($row['hit_1st_pct'] ?? 0); ?>%</span>
+                <span class="bfac-week-3tan">3単 <?php echo esc_html($row['hit_3tan_pct'] ?? 0); ?>%</span>
+            </a>
+        <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>
+
+</div>
+</body>
+</html>
+<?php
+}
+
 function boat_forecast_viewer_template_include($template) {
     if (is_singular('forecast_day')) {
         return BOAT_FORECAST_VIEWER_DIR . '/single-forecast-day.php';
@@ -4209,6 +4847,9 @@ function boat_forecast_viewer_template_include($template) {
     }
     if (get_query_var('bfv_review')) {
         return BOAT_FORECAST_VIEWER_DIR . '/review-forecast.php';
+    }
+    if (get_query_var('bfv_accuracy')) {
+        return BOAT_FORECAST_VIEWER_DIR . '/accuracy-forecast.php';
     }
     return $template;
 }

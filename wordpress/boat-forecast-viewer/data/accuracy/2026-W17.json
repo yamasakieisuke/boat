@@ -1,0 +1,271 @@
+{
+  "week": "2026-W17",
+  "date_from": "20260420",
+  "date_to": "20260426",
+  "generated_at": "2026-04-27T08:57:42",
+  "overall": {
+    "total_races": 660,
+    "venues_with_data": 13,
+    "hit_1st": 343,
+    "hit_3tan": 43,
+    "hit_3fuku": 149,
+    "hit_2tan": 124,
+    "hit_2fuku": 192,
+    "hit_bet_any": 251,
+    "hit_bet1": 42,
+    "hit_bet2": 32,
+    "hit_bet3": 22,
+    "hit_honmei": 122,
+    "hit_others": 84,
+    "hit_taikou": 21,
+    "hit_oshi": 52,
+    "hit_ana": 11,
+    "hit_1st_pct": 52.0,
+    "hit_3tan_pct": 6.5,
+    "hit_3fuku_pct": 22.6,
+    "hit_2tan_pct": 18.8,
+    "hit_2fuku_pct": 29.1,
+    "hit_bet_any_pct": 38.0,
+    "hit_bet1_pct": 6.4,
+    "hit_bet2_pct": 4.8,
+    "hit_bet3_pct": 3.3,
+    "hit_honmei_pct": 18.5,
+    "hit_others_pct": 12.7,
+    "hit_taikou_pct": 3.2,
+    "hit_oshi_pct": 7.9,
+    "hit_ana_pct": 1.7,
+    "avg_rank": 3.36
+  },
+  "by_venue": [
+    {
+      "jcd": "16",
+      "name": "児島",
+      "n": 12,
+      "hit_1st_pct": 58.3,
+      "hit_bet_any_pct": 50.0,
+      "hit_3tan_pct": 0.0,
+      "hit_3fuku_pct": 16.7,
+      "hit_honmei_pct": 25.0,
+      "avg_rank": 2.17
+    },
+    {
+      "jcd": "21",
+      "name": "芦屋",
+      "n": 48,
+      "hit_1st_pct": 64.6,
+      "hit_bet_any_pct": 47.9,
+      "hit_3tan_pct": 6.2,
+      "hit_3fuku_pct": 20.8,
+      "hit_honmei_pct": 25.0,
+      "avg_rank": 3.67
+    },
+    {
+      "jcd": "22",
+      "name": "福岡",
+      "n": 72,
+      "hit_1st_pct": 70.8,
+      "hit_bet_any_pct": 47.2,
+      "hit_3tan_pct": 6.9,
+      "hit_3fuku_pct": 26.4,
+      "hit_honmei_pct": 26.4,
+      "avg_rank": 1.67
+    },
+    {
+      "jcd": "24",
+      "name": "大村",
+      "n": 60,
+      "hit_1st_pct": 60.0,
+      "hit_bet_any_pct": 45.0,
+      "hit_3tan_pct": 8.3,
+      "hit_3fuku_pct": 20.0,
+      "hit_honmei_pct": 23.3,
+      "avg_rank": 4.93
+    },
+    {
+      "jcd": "07",
+      "name": "蒲郡",
+      "n": 60,
+      "hit_1st_pct": 45.0,
+      "hit_bet_any_pct": 40.0,
+      "hit_3tan_pct": 8.3,
+      "hit_3fuku_pct": 25.0,
+      "hit_honmei_pct": 16.7,
+      "avg_rank": 2.12
+    },
+    {
+      "jcd": "13",
+      "name": "尼崎",
+      "n": 36,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 38.9,
+      "hit_3tan_pct": 5.6,
+      "hit_3fuku_pct": 19.4,
+      "hit_honmei_pct": 19.4,
+      "avg_rank": 2.0
+    },
+    {
+      "jcd": "01",
+      "name": "桐生",
+      "n": 60,
+      "hit_1st_pct": 51.7,
+      "hit_bet_any_pct": 38.3,
+      "hit_3tan_pct": 5.0,
+      "hit_3fuku_pct": 21.7,
+      "hit_honmei_pct": 30.0,
+      "avg_rank": 2.0
+    },
+    {
+      "jcd": "12",
+      "name": "住之江",
+      "n": 48,
+      "hit_1st_pct": 43.8,
+      "hit_bet_any_pct": 37.5,
+      "hit_3tan_pct": 6.2,
+      "hit_3fuku_pct": 27.1,
+      "hit_honmei_pct": 10.4,
+      "avg_rank": 4.48
+    },
+    {
+      "jcd": "23",
+      "name": "唐津",
+      "n": 60,
+      "hit_1st_pct": 43.3,
+      "hit_bet_any_pct": 35.0,
+      "hit_3tan_pct": 15.0,
+      "hit_3fuku_pct": 30.0,
+      "hit_honmei_pct": 11.7,
+      "avg_rank": 3.77
+    },
+    {
+      "jcd": "11",
+      "name": "びわこ",
+      "n": 12,
+      "hit_1st_pct": 58.3,
+      "hit_bet_any_pct": 33.3,
+      "hit_3tan_pct": 8.3,
+      "hit_3fuku_pct": 8.3,
+      "hit_honmei_pct": 16.7,
+      "avg_rank": 18.08
+    },
+    {
+      "jcd": "20",
+      "name": "若松",
+      "n": 60,
+      "hit_1st_pct": 46.7,
+      "hit_bet_any_pct": 31.7,
+      "hit_3tan_pct": 6.7,
+      "hit_3fuku_pct": 30.0,
+      "hit_honmei_pct": 13.3,
+      "avg_rank": 2.32
+    },
+    {
+      "jcd": "15",
+      "name": "丸亀",
+      "n": 60,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 30.0,
+      "hit_3tan_pct": 1.7,
+      "hit_3fuku_pct": 20.0,
+      "hit_honmei_pct": 16.7,
+      "avg_rank": 3.7
+    },
+    {
+      "jcd": "17",
+      "name": "宮島",
+      "n": 72,
+      "hit_1st_pct": 41.7,
+      "hit_bet_any_pct": 27.8,
+      "hit_3tan_pct": 2.8,
+      "hit_3fuku_pct": 12.5,
+      "hit_honmei_pct": 9.7,
+      "avg_rank": 3.64
+    }
+  ],
+  "by_pattern": {
+    "2差し": {
+      "triggered": 311,
+      "triggered_hit": 120,
+      "applied": 238,
+      "applied_hit": 101,
+      "triggered_hit_pct": 38.6,
+      "applied_hit_pct": 42.4
+    },
+    "3カド": {
+      "triggered": 185,
+      "triggered_hit": 62,
+      "applied": 95,
+      "applied_hit": 30,
+      "triggered_hit_pct": 33.5,
+      "applied_hit_pct": 31.6
+    },
+    "4カドまくり": {
+      "triggered": 133,
+      "triggered_hit": 50,
+      "applied": 83,
+      "applied_hit": 31,
+      "triggered_hit_pct": 37.6,
+      "applied_hit_pct": 37.3
+    },
+    "外差し": {
+      "triggered": 17,
+      "triggered_hit": 6,
+      "applied": 15,
+      "applied_hit": 5,
+      "triggered_hit_pct": 35.3,
+      "applied_hit_pct": 33.3
+    }
+  },
+  "by_series_band": {
+    "0走(初日)": {
+      "n": 117,
+      "honmei_hit": 21,
+      "top2_rt_sum": 0.0,
+      "avg_rk_sum": 0.0,
+      "honmei_hit_pct": 17.9,
+      "avg_top2_rt": 0.0,
+      "avg_rk": 0.0
+    },
+    "1-3走": {
+      "n": 198,
+      "honmei_hit": 36,
+      "top2_rt_sum": 51.83333333333333,
+      "avg_rk_sum": 767.6666666666666,
+      "honmei_hit_pct": 18.2,
+      "avg_top2_rt": 0.26,
+      "avg_rk": 3.88
+    },
+    "4-6走": {
+      "n": 225,
+      "honmei_hit": 43,
+      "top2_rt_sum": 67.89999999999999,
+      "avg_rk_sum": 804.3833333333333,
+      "honmei_hit_pct": 19.1,
+      "avg_top2_rt": 0.3,
+      "avg_rk": 3.58
+    },
+    "7走+": {
+      "n": 120,
+      "honmei_hit": 22,
+      "top2_rt_sum": 43.28373015873016,
+      "avg_rk_sum": 401.8472222222222,
+      "honmei_hit_pct": 18.3,
+      "avg_top2_rt": 0.36,
+      "avg_rk": 3.35
+    }
+  },
+  "by_version": {
+    "v5.20": {
+      "n": 660,
+      "total": 660,
+      "hit_1st": 42,
+      "hit_1st_pct": 6.4,
+      "hit_bet_any": 251,
+      "hit_bet_any_pct": 38.0,
+      "hit_3fuku": 149,
+      "hit_3fuku_pct": 22.6,
+      "hit_honmei": 122,
+      "hit_honmei_pct": 18.5
+    }
+  },
+  "diff_prev_week": {}
+}

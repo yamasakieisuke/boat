@@ -22,6 +22,9 @@ from __future__ import annotations
 
 import json
 import csv
+import re
+import io
+import contextlib
 import datetime
 import argparse
 from pathlib import Path
@@ -38,6 +41,8 @@ VERIFY_DIR       = DATA_OUTPUT_DIR / "verify"              # output/data/verify/
 VERIFY_HIST_FILE = LOG_DIR  / "verify_history.json"        # JSON蓄積ログ
 VERIFY_MD_FILE   = DATA_OUTPUT_DIR / "verify_log.md"       # サマリ目視用MD（output/data/に移動）
 VERIFY_HTML_FILE = DATA_OUTPUT_DIR / "verify_log.html"     # サマリHTML
+ACCURACY_DIR     = DATA_OUTPUT_DIR / "accuracy"            # 週次精度レポート格納
+WP_ACCURACY_DIR  = BASE_DIR / "wordpress" / "boat-forecast-viewer" / "data" / "accuracy"  # WP配布用ミラー
 
 VENUE_NAMES = {
     "01":"桐生","02":"戸田","03":"江戸川","04":"平和島","05":"多摩川",
@@ -1199,6 +1204,352 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     return summary
 
 
+# =============================================================================
+# 週次精度レポート（全24会場集計）
+# =============================================================================
+
+def _parse_iso_week(s: str) -> tuple[int, int]:
+    """'2026-W17' / '2026W17' → (year, week)"""
+    m = re.match(r"^(\d{4})-?W(\d{1,2})$", s.strip())
+    if not m:
+        raise ValueError(f"Invalid ISO week format: {s} (expected: YYYY-Www)")
+    return int(m.group(1)), int(m.group(2))
+
+
+def _iso_week_key(year: int, week: int) -> str:
+    return f"{year}-W{week:02d}"
+
+
+def _iso_week_dates(year: int, week: int) -> tuple[datetime.date, datetime.date]:
+    monday = datetime.date.fromisocalendar(year, week, 1)
+    sunday = datetime.date.fromisocalendar(year, week, 7)
+    return monday, sunday
+
+
+def _prev_iso_week(year: int, week: int) -> tuple[int, int]:
+    monday = datetime.date.fromisocalendar(year, week, 1)
+    prev_monday = monday - datetime.timedelta(days=7)
+    py, pw, _ = prev_monday.isocalendar()
+    return py, pw
+
+
+def _aggregate_pattern_stats(summaries: list[dict]) -> dict:
+    out: dict[str, dict] = {}
+    for s in summaries:
+        for name, ps in (s.get("pattern_stats") or {}).items():
+            d = out.setdefault(name, {"triggered": 0, "triggered_hit": 0,
+                                      "applied": 0, "applied_hit": 0})
+            for k in ("triggered", "triggered_hit", "applied", "applied_hit"):
+                d[k] += ps.get(k, 0) or 0
+    for d in out.values():
+        d["triggered_hit_pct"] = (round(d["triggered_hit"] / d["triggered"] * 100, 1)
+                                  if d["triggered"] else 0.0)
+        d["applied_hit_pct"] = (round(d["applied_hit"] / d["applied"] * 100, 1)
+                                if d["applied"] else 0.0)
+    return out
+
+
+def _aggregate_series_stats(summaries: list[dict]) -> dict:
+    out: dict[str, dict] = {}
+    for s in summaries:
+        for band, ss in (s.get("series_stats") or {}).items():
+            d = out.setdefault(band, {"n": 0, "honmei_hit": 0,
+                                      "top2_rt_sum": 0.0, "avg_rk_sum": 0.0})
+            d["n"] += ss.get("n", 0) or 0
+            d["honmei_hit"] += ss.get("honmei_hit", 0) or 0
+            d["top2_rt_sum"] += ss.get("top2_rt_sum", 0.0) or 0.0
+            d["avg_rk_sum"] += ss.get("avg_rk_sum", 0.0) or 0.0
+    for d in out.values():
+        n = d["n"]
+        d["honmei_hit_pct"] = round(d["honmei_hit"] / n * 100, 1) if n else 0.0
+        d["avg_top2_rt"] = round(d["top2_rt_sum"] / n, 2) if n else None
+        d["avg_rk"] = round(d["avg_rk_sum"] / n, 2) if n else None
+    return out
+
+
+def _aggregate_version_stats(summaries: list[dict]) -> dict:
+    """version_stats の各 venue summary の実体キー: total, hit_1st, hit_3fuku, hit_bet_any, hit_honmei
+    (注: ここでの hit_1st は本命の1着的中=hit_bet1 ベースで、純粋な1着的中とは別)
+    """
+    raw: dict[str, dict] = defaultdict(lambda: defaultdict(int))
+    for s in summaries:
+        for ver, vs in (s.get("version_stats") or {}).items():
+            for k, v in vs.items():
+                raw[ver][k] += v or 0
+    out: dict[str, dict] = {}
+    metric_keys = ("hit_1st", "hit_bet_any", "hit_3fuku", "hit_honmei")
+    for ver, d in raw.items():
+        n = d.get("total", 0)
+        rec = {"n": n, "total": n}
+        for k in metric_keys:
+            rec[k] = d.get(k, 0)
+            rec[f"{k}_pct"] = round(d.get(k, 0) / n * 100, 1) if n else 0.0
+        out[ver] = rec
+    return out
+
+
+def _save_accuracy_files(week_key: str, accuracy: dict) -> None:
+    ACCURACY_DIR.mkdir(parents=True, exist_ok=True)
+    json_path = ACCURACY_DIR / f"{week_key}.json"
+    json_text = json.dumps(accuracy, ensure_ascii=False, indent=2)
+    json_path.write_text(json_text, encoding="utf-8")
+    md_path = ACCURACY_DIR / f"{week_key}.md"
+    md_path.write_text(_render_accuracy_md(accuracy), encoding="utf-8")
+    print(f"  💾 週次レポート保存: {json_path}")
+    print(f"  💾 週次レポート保存: {md_path}")
+    # WordPress プラグインへもミラー (GitHub Actions が heteml に自動デプロイ)
+    WP_ACCURACY_DIR.mkdir(parents=True, exist_ok=True)
+    (WP_ACCURACY_DIR / f"{week_key}.json").write_text(json_text, encoding="utf-8")
+    print(f"  💾 WPミラー保存: {WP_ACCURACY_DIR / (week_key + '.json')}")
+
+
+def _update_accuracy_index() -> None:
+    ACCURACY_DIR.mkdir(parents=True, exist_ok=True)
+    weeks: list[dict] = []
+    for p in sorted(ACCURACY_DIR.glob("*.json")):
+        if p.name == "index.json":
+            continue
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        o = d.get("overall", {})
+        weeks.append({
+            "week": d.get("week"),
+            "date_from": d.get("date_from"),
+            "date_to": d.get("date_to"),
+            "total_races": o.get("total_races"),
+            "hit_1st_pct": o.get("hit_1st_pct"),
+            "hit_bet_any_pct": o.get("hit_bet_any_pct"),
+            "hit_3tan_pct": o.get("hit_3tan_pct"),
+        })
+    weeks.sort(key=lambda w: w.get("week") or "", reverse=True)
+    idx = {
+        "updated_at": datetime.datetime.now().isoformat(timespec="seconds"),
+        "weeks": weeks,
+    }
+    idx_text = json.dumps(idx, ensure_ascii=False, indent=2)
+    (ACCURACY_DIR / "index.json").write_text(idx_text, encoding="utf-8")
+    WP_ACCURACY_DIR.mkdir(parents=True, exist_ok=True)
+    (WP_ACCURACY_DIR / "index.json").write_text(idx_text, encoding="utf-8")
+
+
+def _render_accuracy_md(a: dict) -> str:
+    o = a["overall"]
+    n = o.get("total_races", 0)
+    lines = [
+        f"# 週次精度レポート {a['week']}",
+        "",
+        f"期間: **{a['date_from']} 〜 {a['date_to']}**　／　生成: {a['generated_at']}",
+        "",
+        "## 全体サマリ",
+        "",
+        f"- 総レース数: **{n}R**　／　対象会場: {o.get('venues_with_data', 0)}",
+        f"- 1着的中率:    **{o.get('hit_1st_pct', 0)}%**　({o.get('hit_1st', 0)}/{n})",
+        f"- 買い目的中率: **{o.get('hit_bet_any_pct', 0)}%**　({o.get('hit_bet_any', 0)}/{n})",
+        f"- 3連単的中率:  **{o.get('hit_3tan_pct', 0)}%**　({o.get('hit_3tan', 0)}/{n})",
+        f"- 3連複的中率:  {o.get('hit_3fuku_pct', 0)}%　({o.get('hit_3fuku', 0)}/{n})",
+        f"- 本命的中率:   {o.get('hit_honmei_pct', 0)}%　／　対抗: {o.get('hit_taikou_pct', 0)}%　／　穴: {o.get('hit_ana_pct', 0)}%　／　押さえ: {o.get('hit_oshi_pct', 0)}%",
+    ]
+    diff = a.get("diff_prev_week") or {}
+    if diff:
+        parts = []
+        for k, v in diff.items():
+            sign = "+" if v > 0 else ""
+            parts.append(f"{k} {sign}{v}")
+        lines += ["", f"**前週比**: {' / '.join(parts)}"]
+
+    if a.get("by_venue"):
+        lines += ["",
+                  "## 会場別ランキング (買い目的中率順)",
+                  "",
+                  "| 順 | 会場 | R数 | 1着% | 買い目% | 3連単% | 平均着順 |",
+                  "|---|---|---:|---:|---:|---:|---:|"]
+        for i, v in enumerate(a["by_venue"], 1):
+            lines.append(
+                f"| {i} | {v['name']} | {v['n']} | {v['hit_1st_pct']}% | "
+                f"{v['hit_bet_any_pct']}% | {v['hit_3tan_pct']}% | {v['avg_rank']} |"
+            )
+
+    if a.get("by_pattern"):
+        lines += ["", "## セオリーパターン別",
+                  "",
+                  "| パターン | 発動R | 発動的中% | 採用R | 採用的中% |",
+                  "|---|---:|---:|---:|---:|"]
+        for name, p in a["by_pattern"].items():
+            lines.append(
+                f"| {name} | {p['triggered']} | {p['triggered_hit_pct']}% | "
+                f"{p['applied']} | {p['applied_hit_pct']}% |"
+            )
+
+    if a.get("by_series_band"):
+        lines += ["", "## シリーズ走数帯別 (本命的中率)",
+                  "",
+                  "| 走数帯 | n | 本命的中% | 平均着順 |",
+                  "|---|---:|---:|---:|"]
+        for band in ("0走", "1-3走", "4-6走", "7走+"):
+            d = a["by_series_band"].get(band)
+            if not d:
+                continue
+            lines.append(
+                f"| {band} | {d['n']} | {d.get('honmei_hit_pct', 0)}% | "
+                f"{d.get('avg_rk', '-')} |"
+            )
+
+    if a.get("by_version"):
+        lines += ["", "## バージョン別",
+                  "",
+                  "| version | n | 本命1着% | 買い目% | 3連複% | 本命% |",
+                  "|---|---:|---:|---:|---:|---:|"]
+        for ver, d in sorted(a["by_version"].items()):
+            lines.append(
+                f"| {ver} | {d['n']} | {d.get('hit_1st_pct', 0)}% | "
+                f"{d.get('hit_bet_any_pct', 0)}% | {d.get('hit_3fuku_pct', 0)}% | "
+                f"{d.get('hit_honmei_pct', 0)}% |"
+            )
+
+    return "\n".join(lines) + "\n"
+
+
+def _print_weekly_summary(a: dict) -> None:
+    o = a["overall"]
+    n = o.get("total_races", 0)
+    print(f"\n{'='*72}")
+    print(f"  📈 週次精度レポート  {a['week']}  {a['date_from']}〜{a['date_to']}")
+    print(f"{'='*72}")
+    print(f"  対象: {n}R　／　会場: {o.get('venues_with_data', 0)}")
+    print(f"  1着:    {o.get('hit_1st_pct', 0)}%  ({o.get('hit_1st', 0)}/{n})")
+    print(f"  買い目: {o.get('hit_bet_any_pct', 0)}%  ({o.get('hit_bet_any', 0)}/{n})")
+    print(f"  3連単:  {o.get('hit_3tan_pct', 0)}%  ({o.get('hit_3tan', 0)}/{n})")
+    print(f"  本命:   {o.get('hit_honmei_pct', 0)}%　対抗:{o.get('hit_taikou_pct', 0)}%　穴:{o.get('hit_ana_pct', 0)}%　押:{o.get('hit_oshi_pct', 0)}%")
+    if a.get("diff_prev_week"):
+        diffs = ", ".join(f"{k}={('+' if v>0 else '')}{v}" for k, v in a["diff_prev_week"].items())
+        print(f"  前週比: {diffs}")
+    if a.get("by_venue"):
+        print(f"\n  会場 TOP5 (買い目%):")
+        for v in a["by_venue"][:5]:
+            print(f"    {v['name']:>5}  R={v['n']:>3}  買目={v['hit_bet_any_pct']:>5}%  1着={v['hit_1st_pct']:>5}%")
+
+
+def run_weekly_report(week_iso: str | None = None,
+                      refresh: bool = True,
+                      save: bool = True,
+                      quiet: bool = True) -> dict | None:
+    """全24会場の週次精度レポートを生成。
+
+    refresh=True (default): 各会場 run_verification を再実行して verify_history を更新
+    quiet=True (default):   各会場 run_verification の冗長 stdout を抑制
+    """
+    if week_iso:
+        year, week = _parse_iso_week(week_iso)
+    else:
+        today = datetime.date.today()
+        year, week, _ = today.isocalendar()
+
+    monday, sunday = _iso_week_dates(year, week)
+    today = datetime.date.today()
+    date_to_d = min(sunday, today)
+    df = monday.strftime("%Y%m%d")
+    dt = date_to_d.strftime("%Y%m%d")
+    week_key = _iso_week_key(year, week)
+
+    print(f"\n[週次レポート開始] {week_key}  {df}〜{dt}  refresh={refresh}")
+
+    summaries: list[dict] = []
+    for jcd in sorted(VENUE_NAMES.keys()):
+        if refresh:
+            if quiet:
+                buf = io.StringIO()
+                with contextlib.redirect_stdout(buf):
+                    s = run_verification(jcd, df, dt, verbose=False, save=True)
+            else:
+                s = run_verification(jcd, df, dt, verbose=False, save=True)
+        else:
+            history = load_verify_history()
+            s = next((r for r in reversed(history)
+                      if r.get("jcd") == jcd
+                      and r.get("date_from") == df
+                      and r.get("date_to") == dt), None)
+        if s and s.get("total_races", 0) > 0:
+            summaries.append(s)
+            print(f"  ✓ {VENUE_NAMES.get(jcd, jcd)}({jcd}): {s['total_races']}R / 買目={s.get('hit_bet_any_pct', 0)}%")
+        else:
+            print(f"  ・{VENUE_NAMES.get(jcd, jcd)}({jcd}): データなし")
+
+    if not summaries:
+        print("\n  ⚠ 対象データなし。週次レポートを生成しませんでした。")
+        return None
+
+    total = sum(s["total_races"] for s in summaries)
+    sum_keys = ("hit_1st", "hit_3tan", "hit_3fuku", "hit_2tan", "hit_2fuku",
+                "hit_bet_any", "hit_bet1", "hit_bet2", "hit_bet3",
+                "hit_honmei", "hit_others", "hit_taikou", "hit_oshi", "hit_ana")
+    overall = {
+        "total_races": total,
+        "venues_with_data": len(summaries),
+        **{k: sum(s.get(k, 0) for s in summaries) for k in sum_keys},
+    }
+    if total:
+        for k in sum_keys:
+            overall[f"{k}_pct"] = round(overall[k] / total * 100, 1)
+        rank_total = sum((s.get("avg_rank", 0.0) or 0.0) * s["total_races"]
+                         for s in summaries)
+        overall["avg_rank"] = round(rank_total / total, 2)
+
+    by_venue = sorted([
+        {
+            "jcd": s["jcd"],
+            "name": VENUE_NAMES.get(s["jcd"], s["jcd"]),
+            "n": s["total_races"],
+            "hit_1st_pct": s.get("hit_1st_pct", 0.0),
+            "hit_bet_any_pct": s.get("hit_bet_any_pct", 0.0),
+            "hit_3tan_pct": s.get("hit_3tan_pct", 0.0),
+            "hit_3fuku_pct": s.get("hit_3fuku_pct", 0.0),
+            "hit_honmei_pct": s.get("hit_honmei_pct", 0.0),
+            "avg_rank": s.get("avg_rank", 0.0),
+        }
+        for s in summaries
+    ], key=lambda v: -v["hit_bet_any_pct"])
+
+    by_pattern = _aggregate_pattern_stats(summaries)
+    by_series_band = _aggregate_series_stats(summaries)
+    by_version = _aggregate_version_stats(summaries)
+
+    diff_prev_week: dict = {}
+    py, pw = _prev_iso_week(year, week)
+    prev_path = ACCURACY_DIR / f"{_iso_week_key(py, pw)}.json"
+    if prev_path.exists():
+        try:
+            prev = json.loads(prev_path.read_text(encoding="utf-8"))
+            po = prev.get("overall", {})
+            for k in ("hit_1st_pct", "hit_bet_any_pct", "hit_3tan_pct",
+                      "hit_honmei_pct"):
+                if k in overall and k in po:
+                    diff_prev_week[k] = round(overall[k] - po[k], 1)
+        except Exception:
+            pass
+
+    accuracy = {
+        "week": week_key,
+        "date_from": df,
+        "date_to": dt,
+        "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
+        "overall": overall,
+        "by_venue": by_venue,
+        "by_pattern": by_pattern,
+        "by_series_band": by_series_band,
+        "by_version": by_version,
+        "diff_prev_week": diff_prev_week,
+    }
+
+    if save:
+        _save_accuracy_files(week_key, accuracy)
+        _update_accuracy_index()
+
+    _print_weekly_summary(accuracy)
+    return accuracy
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="予測精度検証スクリプト")
     parser.add_argument("--jcd",     default="22",
@@ -1213,7 +1564,18 @@ if __name__ == "__main__":
                         help="レース単位の詳細を表示")
     parser.add_argument("--no-save", action="store_true",
                         help="結果をverify_history.jsonに保存しない")
+    parser.add_argument("--report", choices=["weekly"],
+                        help="集計モード (weekly = 全24会場の週次精度レポート生成)")
+    parser.add_argument("--week",
+                        help="ISO週指定 例: 2026-W17 (省略時は現在の週)")
+    parser.add_argument("--no-refresh", action="store_true",
+                        help="--report 時に各会場の verify を再実行しない (履歴のみ集計)")
     args = parser.parse_args()
 
-    run_verification(args.jcd, args.date_from, args.date_to,
-                     verbose=args.verbose, save=not args.no_save)
+    if args.report == "weekly":
+        run_weekly_report(week_iso=args.week,
+                          refresh=not args.no_refresh,
+                          save=not args.no_save)
+    else:
+        run_verification(args.jcd, args.date_from, args.date_to,
+                         verbose=args.verbose, save=not args.no_save)
