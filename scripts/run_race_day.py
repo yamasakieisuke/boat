@@ -133,6 +133,14 @@ def fetch_exhibition_and_predict(jcd: str, date: str, race_no: int):
         "--jcd", jcd, "--date", date, "--race", str(race_no)
     ], f"展示データ取得 R{race_no}")
 
+    # 福岡オリジナル展示（一周/まわり足/直線、jcd=22のみ）。失敗してもwarnのみで続行
+    if jcd == "22":
+        run([
+            "python3", SCRIPTS/"scraper.py",
+            "--mode", "original_exhibition",
+            "--jcd", jcd, "--date", date, "--race", str(race_no)
+        ], f"福岡オリジナル展示取得 R{race_no}")
+
     # オッズ取得
     run([
         "python3", SCRIPTS/"scraper.py",

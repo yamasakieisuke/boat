@@ -558,6 +558,55 @@ def _build_exhibition_section(pred: dict) -> dict:
     }
 
 
+def _build_original_exhibition_section(jcd: str, date: str, race_no: int, racecard: dict) -> dict:
+    """
+    福岡公式オリジナル展示（一周/まわり足/直線）セクションを構築。
+    jcd != '22' は空dictを返す。
+    """
+    if jcd != "22":
+        return {}
+    path = DATA_DIR / "raw" / date / f"22_R{race_no:02d}_original_exhibition.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+    waku_to_racer: dict[int, dict] = {}
+    for r in racecard.get("racers", []) or []:
+        try:
+            waku_to_racer[int(r.get("waku", 0))] = r
+        except (TypeError, ValueError):
+            continue
+
+    rows = []
+    for row in data.get("rows", []) or []:
+        waku = row.get("waku")
+        if not isinstance(waku, int):
+            continue
+        racer = waku_to_racer.get(waku, {})
+        rows.append({
+            "waku":           waku,
+            "name":           racer.get("name", ""),
+            "reg_no":         str(racer.get("reg_no", "") or ""),
+            "is_female":      is_female_reg(str(racer.get("reg_no", "") or "")),
+            "lap_time":       row.get("lap_time"),
+            "turn_time":      row.get("turn_time"),
+            "straight_time":  row.get("straight_time"),
+            "lap_rank":       row.get("lap_rank"),
+            "turn_rank":      row.get("turn_rank"),
+            "straight_rank":  row.get("straight_rank"),
+            "evaluation":     row.get("evaluation"),
+        })
+    if not rows:
+        return {}
+    return {
+        "rows":   rows,
+        "source": data.get("source", ""),
+    }
+
+
 def build_review_summary(jcd: str, date: str) -> dict:
     venue_name = load_config()["venues"][jcd]
     detail = load_verify_detail_lines(venue_name, date)
@@ -648,6 +697,9 @@ def build_race_payload(jcd: str, date: str, race_no: int, start_times: dict[str,
     # v5.18: 展示実データ用の構造体を構築
     exhibition_section = _build_exhibition_section(pred)
 
+    # v5.21: 福岡オリジナル展示（一周/まわり足/直線）セクション
+    original_exhibition_section = _build_original_exhibition_section(jcd, date, race_no, racecard)
+
     # v5.18: 予算別買い目をログから読み取り
     budget_plans = pred.get("budget_plans", []) or []
 
@@ -680,6 +732,7 @@ def build_race_payload(jcd: str, date: str, race_no: int, start_times: dict[str,
         "has_odds": has_odds,
         # v5.18: WP連携拡張
         "exhibition_section": exhibition_section,
+        "original_exhibition_section": original_exhibition_section,
         "budget_plans": budget_plans,
     }
 

@@ -656,6 +656,119 @@ def scrape_exhibition(jcd: str, date: str, race_no: int) -> dict | None:
 
 
 # ──────────────────────────────────────────
+# 3-2. オリジナル展示（福岡公式 boatrace-fukuoka.com）
+# ──────────────────────────────────────────
+FUKUOKA_ORIGINAL_TENJI_URL = (
+    "https://www.boatrace-fukuoka.com/modules/yosou/tenji_info.php"
+    "?day={date}&race={race_no}&if=1&nowmode=1"
+)
+
+
+def _parse_float_or_none(text: str):
+    s = (text or "").strip()
+    if not s or s in {"-", "--", "-.--", "--.-", "--.--"}:
+        return None
+    try:
+        return float(s)
+    except (TypeError, ValueError):
+        return None
+
+
+def scrape_fukuoka_original_exhibition(date: str, race_no: int) -> dict | None:
+    """
+    福岡公式（boatrace-fukuoka.com）のオリジナル展示タイムを取得。
+    取得項目: 一周(lap_time) / まわり足(turn_time) / 直線(straight_time) / 評価(evaluation)
+    rank_1 / rank_2 のCSSクラスで上位艇を識別する。
+
+    保存: data/raw/{date}/22_R{nn}_original_exhibition.json
+    福岡(jcd=22)専用。SPAなのでURL構造が他会場と異なる。
+    """
+    url = FUKUOKA_ORIGINAL_TENJI_URL.format(date=date, race_no=race_no)
+    try:
+        res = requests.get(url, headers=HEADERS, timeout=10)
+        res.raise_for_status()
+        html = res.text
+    except Exception as e:
+        print(f"[WARN] 福岡オリジナル展示 fetch失敗: R{race_no} {e}")
+        return None
+
+    soup = BeautifulSoup(html, "html.parser")
+    table = soup.find("table")
+    if not table:
+        return None
+
+    rows: list[dict] = []
+    for tr in table.find_all("tr"):
+        td_waku = tr.select_one("td.col1")
+        if not td_waku:
+            continue
+        waku_text = td_waku.get_text(strip=True)
+        if not waku_text.isdigit():
+            continue
+        waku = int(waku_text)
+        if not (1 <= waku <= 6):
+            continue
+
+        td_lap = tr.select_one("td.col7")
+        td_turn = tr.select_one("td.col8")
+        td_straight = tr.select_one("td.col9")
+
+        def _rank_of(td):
+            if td is None:
+                return None
+            cls = td.get("class") or []
+            if "rank_1" in cls:
+                return 1
+            if "rank_2" in cls:
+                return 2
+            return None
+
+        td_eval = tr.select_one("td.col10")
+        eval_text = td_eval.get_text(strip=True) if td_eval else ""
+
+        rows.append({
+            "waku":          waku,
+            "weight":        _parse_float_or_none(
+                tr.select_one("td.col3").get_text(strip=True) if tr.select_one("td.col3") else ""),
+            "tilt":          _parse_float_or_none(
+                tr.select_one("td.col5").get_text(strip=True) if tr.select_one("td.col5") else ""),
+            "exhibition_time": _parse_float_or_none(
+                tr.select_one("td.col6").get_text(strip=True) if tr.select_one("td.col6") else ""),
+            "lap_time":      _parse_float_or_none(td_lap.get_text(strip=True) if td_lap else ""),
+            "turn_time":     _parse_float_or_none(td_turn.get_text(strip=True) if td_turn else ""),
+            "straight_time": _parse_float_or_none(td_straight.get_text(strip=True) if td_straight else ""),
+            "lap_rank":      _rank_of(td_lap),
+            "turn_rank":     _rank_of(td_turn),
+            "straight_rank": _rank_of(td_straight),
+            "evaluation":    int(eval_text) if eval_text.isdigit() else None,
+        })
+
+    if not rows:
+        return None
+
+    has_any_time = any(r["lap_time"] is not None for r in rows)
+    result = {
+        "venue_code": "22",
+        "date":       date,
+        "race_no":    race_no,
+        "source":     "boatrace-fukuoka.com",
+        "rows":       rows,
+    }
+
+    if not has_any_time:
+        # 開催日でない／未掲載 → ファイルは作らずNone
+        return None
+
+    save_dir = DATA_DIR / "raw" / date
+    save_dir.mkdir(parents=True, exist_ok=True)
+    out_path = save_dir / f"22_R{race_no:02d}_original_exhibition.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, ensure_ascii=False, indent=2)
+    print(f"[OK] 福岡オリジナル展示保存: R{race_no} → {out_path.name}")
+    return result
+
+
+# ──────────────────────────────────────────
 # 4. 気象データの取得
 # ──────────────────────────────────────────
 def scrape_weather(jcd: str, date: str, race_no: int) -> dict | None:
@@ -2562,7 +2675,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="ボートレース データスクレイパー")
     parser.add_argument("--mode",  default="day",
-                        choices=["day","racecard","odds","exhibition","weather","comments","players"],
+                        choices=["day","racecard","odds","exhibition","original_exhibition","weather","comments","players"],
                         help="取得モード (デフォルト: day=1日分まとめて)")
     parser.add_argument("--jcd",   default="22", help="会場コード (例: 22=福岡)")
     parser.add_argument("--date",  default=today, help="開催日 YYYYMMDD")
@@ -2613,6 +2726,17 @@ if __name__ == "__main__":
             _run_parallel_race_jobs(
                 [(r, lambda r=r: scrape_exhibition(args.jcd, args.date, r)) for r in range(1, 13)],
                 label=f"展示 {args.jcd} {args.date}"
+            )
+
+    elif args.mode == "original_exhibition":
+        if args.jcd != "22":
+            print(f"[SKIP] original_exhibition は福岡(jcd=22)のみ対応 (指定: {args.jcd})")
+        elif args.race:
+            scrape_fukuoka_original_exhibition(args.date, args.race)
+        else:
+            _run_parallel_race_jobs(
+                [(r, lambda r=r: scrape_fukuoka_original_exhibition(args.date, r)) for r in range(1, 13)],
+                label=f"福岡オリジナル展示 {args.date}"
             )
 
     elif args.mode == "weather":

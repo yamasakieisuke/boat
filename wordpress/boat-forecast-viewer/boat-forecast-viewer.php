@@ -2095,6 +2095,11 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-detail-table .ex-best { color: var(--bfv-accent); font-weight: 700; }
         .bfv-detail-table .ex-good { color: var(--bfv-ok); font-weight: 600; }
         .bfv-detail-table .ex-slow { color: var(--bfv-warn); font-weight: 600; }
+        /* v5.21: 福岡オリジナル展示の上位ハイライト */
+        .bfv-orig-tenji td.is-rank1 { background: rgba(255, 184, 0, 0.18); color: var(--bfv-accent); font-weight: 700; }
+        .bfv-orig-tenji td.is-rank2 { background: rgba(255, 184, 0, 0.08); font-weight: 600; }
+        .bfv-orig-tenji .bfv-rank-mark { color: var(--bfv-accent); margin-left: 2px; font-size: 0.85em; }
+        .bfv-source-note { font-size: 0.78em; color: var(--bfv-muted); margin-top: 4px; text-align: right; }
         .bfv-exhibition-order { margin-top: 8px; font-size: 12px; color: var(--bfv-ink-dim); }
 
         /* 予算別買い目 */
@@ -2904,6 +2909,51 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                     <?php echo esc_html($co_course); ?><?php if ($co_foul) echo '<span style="color:#c62828">[F]</span>'; ?><?php if ($co_st) echo '(' . esc_html($co_st) . ')'; ?>
                                 <?php endforeach; ?>
                             </div>
+                        <?php endif; ?>
+                    </section>
+                <?php endif; ?>
+
+                <?php /* v5.21: 福岡オリジナル展示（一周/まわり足/直線） */ ?>
+                <?php if (!empty($race['original_exhibition_section']['rows']) && is_array($race['original_exhibition_section']['rows'])) : ?>
+                    <section class="bfv-detail-block">
+                        <h4>オリジナル展示（一周・まわり足・直線）</h4>
+                        <div class="bfv-detail-wrap">
+                            <table class="bfv-detail-table sticky-name-table bfv-orig-tenji">
+                                <tr>
+                                    <th>艇</th>
+                                    <th>一周</th>
+                                    <th>まわり足</th>
+                                    <th>直線</th>
+                                    <th>評価</th>
+                                </tr>
+                                <?php foreach ($race['original_exhibition_section']['rows'] as $orow) : ?>
+                                    <?php
+                                        $lap_rank = $orow['lap_rank'] ?? null;
+                                        $turn_rank = $orow['turn_rank'] ?? null;
+                                        $straight_rank = $orow['straight_rank'] ?? null;
+                                        $cell_cls = function ($rank) {
+                                            if ($rank === 1) return 'is-rank1';
+                                            if ($rank === 2) return 'is-rank2';
+                                            return '';
+                                        };
+                                        $fmt = function ($v) {
+                                            if ($v === null || $v === '') return '-';
+                                            return esc_html(number_format((float) $v, 2));
+                                        };
+                                        $eval_v = $orow['evaluation'] ?? null;
+                                    ?>
+                                    <tr>
+                                        <td><?php echo boat_forecast_viewer_render_waku_name($orow['waku'] ?? '', $orow['name'] ?? '', !empty($orow['is_female']), 'sm', $orow['reg_no'] ?? ''); ?></td>
+                                        <td class="<?php echo esc_attr($cell_cls($lap_rank)); ?>"><?php echo $fmt($orow['lap_time'] ?? null); ?><?php if ($lap_rank === 1) echo '<span class="bfv-rank-mark">★</span>'; ?></td>
+                                        <td class="<?php echo esc_attr($cell_cls($turn_rank)); ?>"><?php echo $fmt($orow['turn_time'] ?? null); ?><?php if ($turn_rank === 1) echo '<span class="bfv-rank-mark">★</span>'; ?></td>
+                                        <td class="<?php echo esc_attr($cell_cls($straight_rank)); ?>"><?php echo $fmt($orow['straight_time'] ?? null); ?><?php if ($straight_rank === 1) echo '<span class="bfv-rank-mark">★</span>'; ?></td>
+                                        <td><?php echo $eval_v !== null ? esc_html((string) $eval_v) : '-'; ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </table>
+                        </div>
+                        <?php if (!empty($race['original_exhibition_section']['source'])) : ?>
+                            <div class="bfv-source-note">出典: <?php echo esc_html($race['original_exhibition_section']['source']); ?></div>
                         <?php endif; ?>
                     </section>
                 <?php endif; ?>
