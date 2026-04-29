@@ -188,6 +188,13 @@ def run_exhibition_task(task: dict) -> str:
                     scrape_pitreport(jcd, date, race_no)
                 except Exception as pe:
                     print(f"  [WARN] pitreport取得失敗（続行）: {pe}")
+            # 福岡(jcd=22)はオリジナル展示（一周/まわり足/直線）も同時取得（v5.21）
+            if jcd == "22":
+                try:
+                    from scraper import scrape_fukuoka_original_exhibition
+                    scrape_fukuoka_original_exhibition(date, race_no)
+                except Exception as oe:
+                    print(f"  [WARN] 福岡オリジナル展示取得失敗（続行）: {oe}")
             return "done"
         return "not_yet"
     except Exception as e:
