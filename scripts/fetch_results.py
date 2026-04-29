@@ -23,7 +23,7 @@ from __future__ import annotations
   python fetch_results.py --date 20250304    # 1日だけ
 """
 
-import re, csv, time, argparse, datetime, requests, lhafile
+import re, csv, time, json, argparse, datetime, requests, lhafile
 from pathlib import Path
 from io import BytesIO
 
@@ -49,6 +49,10 @@ CSV_HEADER = [
     "won2","won2_pay","won2_pop",
     "trio","trio_pay","trio_pop",
     "pair","pair_pay","pair_pop",
+    # v5.21: 福岡オリジナル展示（一周/まわり足/直線）。福岡以外は空、過去レースも空
+    "lap_time","turn_time","straight_time",
+    "lap_rank","turn_rank","straight_rank",
+    "exhibition_eval",
 ]
 
 # ── 正規表現 ──────────────────────────────────────────
@@ -257,6 +261,56 @@ def parse_text(text: str, date_str: str) -> list[dict]:
     return records
 
 
+# ── 福岡オリジナル展示の join（v5.21） ────────────────
+def _attach_fukuoka_original_exhibition(records: list[dict], date_str: str) -> None:
+    """
+    福岡(venue_name=='福岡')のレコードに対し、scrape済の
+    data/raw/{date}/22_R{nn}_original_exhibition.json から
+    lap_time / turn_time / straight_time / lap_rank / turn_rank /
+    straight_rank / exhibition_eval を join する（in-place 更新）。
+    JSON が無いレース・福岡以外のレコードは空欄のまま。
+    """
+    raw_dir = BASE_DIR / "data" / "raw" / date_str
+    if not raw_dir.exists():
+        return
+
+    # レース番号→{waku: row} の lookup を作る
+    cache: dict[int, dict[int, dict]] = {}
+    for r in records:
+        if r.get("venue_name") != "福岡":
+            continue
+        try:
+            race_no = int(r.get("race_no", 0))
+            waku    = int(r.get("waku", 0))
+        except (TypeError, ValueError):
+            continue
+        if race_no not in cache:
+            json_path = raw_dir / f"22_R{race_no:02d}_original_exhibition.json"
+            if not json_path.exists():
+                cache[race_no] = {}
+                continue
+            try:
+                data = json.loads(json_path.read_text(encoding="utf-8"))
+            except Exception:
+                cache[race_no] = {}
+                continue
+            cache[race_no] = {
+                int(row.get("waku", 0)): row
+                for row in data.get("rows", []) or []
+                if isinstance(row.get("waku"), int)
+            }
+        row = cache[race_no].get(waku)
+        if not row:
+            continue
+        r["lap_time"]        = row.get("lap_time", "") if row.get("lap_time") is not None else ""
+        r["turn_time"]       = row.get("turn_time", "") if row.get("turn_time") is not None else ""
+        r["straight_time"]   = row.get("straight_time", "") if row.get("straight_time") is not None else ""
+        r["lap_rank"]        = row.get("lap_rank", "") if row.get("lap_rank") is not None else ""
+        r["turn_rank"]       = row.get("turn_rank", "") if row.get("turn_rank") is not None else ""
+        r["straight_rank"]   = row.get("straight_rank", "") if row.get("straight_rank") is not None else ""
+        r["exhibition_eval"] = row.get("evaluation", "") if row.get("evaluation") is not None else ""
+
+
 # ── CSV 書き出し ──────────────────────────────────────
 def write_csv(records: list[dict], path: Path, append=True):
     mode   = "a" if (append and path.exists()) else "w"
@@ -300,6 +354,8 @@ def process_day(date_str: str) -> list[dict]:
                 print(f"[INFO] 公式結果未公開 {date_str} {jcd}")
     if records:
         records.sort(key=lambda r: (r.get("venue_name", ""), int(r.get("race_no", 0) or 0), int(r.get("rank", 99) or 99)))
+        # v5.21: 福岡レコードにオリジナル展示（一周/まわり足/直線）を join
+        _attach_fukuoka_original_exhibition(records, date_str)
         write_csv(records, CSV_DIR / f"{date_str}.csv", append=False)
     return records
 
