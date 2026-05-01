@@ -353,11 +353,16 @@ def run_verify_task(task: dict) -> str:
 
 # ── メインループ ──────────────────────────────────────────────────
 
-def run_all(dry_run: bool = False):
+def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
     tasks   = load_tasks()
+    if jcd_filter:
+        tasks = [t for t in tasks if t.get("jcd") in jcd_filter]
     if not tasks:
         if not QUIET:
-            print("積み残しタスクなし。")
+            if jcd_filter:
+                print(f"指定会場({','.join(jcd_filter)})に積み残しタスクなし。")
+            else:
+                print("積み残しタスクなし。")
         return
 
     # --quiet 時は「今すぐ実行可能な exhibition/odds タスクが0件」なら静かに抜ける（cron ポーリング用）
@@ -600,6 +605,7 @@ if __name__ == "__main__":
     parser.add_argument("--list",  action="store_true", help="タスク一覧を表示")
     parser.add_argument("--run",   action="store_true", help="全タスクを実行（デフォルト）")
     parser.add_argument("--quiet", action="store_true", help="積み残し 0件 or 実行可能タスクなし のとき標準出力を抑制（cron ポーリング用）")
+    parser.add_argument("--jcd", action="append", metavar="JCD", help="指定会場のみ実行（例: --jcd 22 --jcd 23）。複数指定可。未指定は全会場")
     parser.add_argument("--add-exhibition", nargs="+", metavar="JCD DATE [HH:MM]",
                         help="展示タスクを登録（発走15分前に自動取得）: --add-exhibition 19 20260316 [R1発走HH:MM]")
     parser.add_argument("--add-odds",      nargs="+", metavar="JCD DATE [HH:MM]",
@@ -637,4 +643,4 @@ if __name__ == "__main__":
             print(f"{'─'*60}")
     else:
         globals()["QUIET"] = bool(args.quiet)
-        run_all()
+        run_all(jcd_filter=args.jcd)
