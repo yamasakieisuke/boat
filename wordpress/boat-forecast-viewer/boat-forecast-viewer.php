@@ -296,7 +296,7 @@ function boat_forecast_viewer_render_waku_name($waku, $name, $is_female, $size =
     $name = trim($name);
     $reg_no = preg_replace('/\D/', '', (string) $reg_no);
     $cell = sprintf(
-        '<span class="bfv-waku-name-cell is-%s"><span class="bfv-waku-chip" style="background:%s;color:%s;border-color:%s;">%s</span><span class="bfv-waku-name">%s%s</span></span>',
+        '<span class="bfv-waku-name-cell is-%s"><span class="bfv-waku-band" style="background:%s;color:%s;border-color:%s;"><span class="bfv-waku-band-num">%s</span></span><span class="bfv-waku-name">%s%s</span></span>',
         esc_attr($size),
         esc_attr($bg),
         esc_attr($fg),
@@ -1620,49 +1620,69 @@ function boat_forecast_viewer_render_single($payload, $post) {
             width: 24px;
             min-width: 24px;
             background: transparent;
-            color: var(--bfv-accent);
-            font-weight: 600;
+            color: var(--bfv-ink);
+            font-weight: 800;
             font-size: 22px;
             line-height: 1;
         }
         .bfv-pick-mark.is-plain {
             color: transparent;
         }
+        /* Phase 12-b: 縦帯セル（旧 chip 円→band 縦帯）*/
         .bfv-waku-name-cell {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: nowrap;
+            display: inline-grid;
+            grid-template-columns: 28px minmax(0, 1fr);
+            align-items: stretch;
+            border-radius: var(--bfv-radius-sm);
+            border: 1px solid var(--bfv-line);
+            background: var(--bfv-surface);
+            overflow: hidden;
+            min-height: 36px;
+            vertical-align: middle;
+            font-feature-settings: "palt";
             min-width: 0;
-        }
-        .bfv-waku-chip {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #ccc;
-            border-radius: var(--bfv-radius-sm);  /* Phase 24: ◯ → ■ (rounded square) */
-            font-weight: 700;
-            line-height: 1;
-            flex: 0 0 auto;
-            font-variant-numeric: tabular-nums;
             box-sizing: border-box;
         }
-        /* size variants */
-        .bfv-waku-name-cell.is-sm .bfv-waku-chip { width: 18px; height: 18px; font-size: 11px; }
-        .bfv-waku-name-cell.is-md .bfv-waku-chip { width: 22px; height: 22px; font-size: 13px; }
-        .bfv-waku-name-cell.is-lg .bfv-waku-chip { width: 26px; height: 26px; font-size: 14px; }
-        .bfv-waku-name {
+        .bfv-waku-band {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid rgba(0,0,0,.08);
+            font-family: var(--bfv-font-mono);
             font-weight: 700;
+            line-height: 1;
+            letter-spacing: 0;
+        }
+        .bfv-waku-band-num {
+            display: inline-block;
+            font-variant-numeric: tabular-nums;
+        }
+        .bfv-waku-name {
+            display: flex;
+            align-items: center;
+            padding: 4px 10px;
+            font-weight: 600;
+            color: var(--bfv-ink);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1.35;
             min-width: 0;
         }
-        .bfv-waku-name-cell.is-sm .bfv-waku-name { font-size: 12px; }
-        .bfv-waku-name-cell.is-md .bfv-waku-name { font-size: 14px; }
-        .bfv-waku-name-cell.is-lg .bfv-waku-name { font-size: 16px; }
+        /* size variants */
+        .bfv-waku-name-cell.is-sm { min-height: 28px; grid-template-columns: 22px minmax(0, 1fr); }
+        .bfv-waku-name-cell.is-sm .bfv-waku-band { font-size: 11px; }
+        .bfv-waku-name-cell.is-sm .bfv-waku-name { font-size: 12px; padding: 2px 8px; }
+        .bfv-waku-name-cell.is-md { min-height: 36px; grid-template-columns: 28px minmax(0, 1fr); }
+        .bfv-waku-name-cell.is-md .bfv-waku-band { font-size: 13px; }
+        .bfv-waku-name-cell.is-md .bfv-waku-name { font-size: 13px; padding: 4px 10px; }
+        .bfv-waku-name-cell.is-lg { min-height: 42px; grid-template-columns: 32px minmax(0, 1fr); }
+        .bfv-waku-name-cell.is-lg .bfv-waku-band { font-size: 15px; }
+        .bfv-waku-name-cell.is-lg .bfv-waku-name { font-size: 15px; padding: 6px 12px; }
+        /* 旧チップが残っていれば無効化 */
+        .bfv-waku-chip { display: none !important; }
         .bfv-waku-name-link {
-            display: inline-flex;
+            display: inline-grid;
             text-decoration: none;
             color: inherit;
             transition: color .15s;
@@ -2280,7 +2300,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
             letter-spacing: 0.02em;
         }
         .bfv-detail-table tr:last-child td { border-bottom: none; }
-        .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); }
+        .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); min-height: 32px; grid-template-columns: 24px minmax(0, 1fr); }
+        .bfv-detail-table .bfv-waku-band { font-size: 12px; }
+        .bfv-detail-table .bfv-waku-name { font-size: 12px; padding: 2px 8px; }
         .bfv-rank-cell {
             font-weight: 600;
             white-space: nowrap;
@@ -2348,9 +2370,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             line-height: 1;
             vertical-align: middle;
         }
-        /* waku-name-cell を inline-flex + flex-wrap にして、chip を1行目・
-           name を flex-basis: 100% で強制2行目へ。
-           Phase 11 で global に nowrap + ellipsis が付くので明示的に上書き */
+        /* sticky 1列目: band を1行目・名前を2行目へ強制折返し（Phase 12-b: chip→band 対応） */
         .sticky-name-table td:nth-child(1) .bfv-waku-name-cell,
         .sticky-score-table td:nth-child(1) .bfv-waku-name-cell {
             display: inline-flex;
@@ -2360,21 +2380,33 @@ function boat_forecast_viewer_render_single($payload, $post) {
             row-gap: 2px;
             vertical-align: middle;
             max-width: 100%;
+            border: 0;
+            background: transparent;
+            overflow: visible;
+            min-height: auto;
         }
-        .sticky-name-table td:nth-child(1) .bfv-waku-chip,
-        .sticky-score-table td:nth-child(1) .bfv-waku-chip {
+        .sticky-name-table td:nth-child(1) .bfv-waku-band,
+        .sticky-score-table td:nth-child(1) .bfv-waku-band {
             flex: 0 0 auto;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: var(--bfv-radius-sm);
+            padding: 1px 6px;
+            font-size: 11px;
         }
         .sticky-name-table td:nth-child(1) .bfv-waku-name,
         .sticky-score-table td:nth-child(1) .bfv-waku-name {
             flex: 0 0 100%;
             display: block;
+            padding: 0;
             white-space: normal;
             overflow: visible;
             text-overflow: clip;
             word-break: keep-all;
             overflow-wrap: anywhere;
             font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+            line-height: inherit;
         }
         @media (max-width: 960px) {
             .bfv-grid { grid-template-columns: 1fr; }
