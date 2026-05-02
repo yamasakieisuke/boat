@@ -1631,38 +1631,48 @@ function boat_forecast_viewer_render_single($payload, $post) {
             display: grid;
             gap: 6px;
         }
+        /* Phase 12-d: pick も「順/艇/選手名」 同等の縦帯構造へ統一 */
         .bfv-pick {
             display: grid;
-            grid-template-columns: 24px minmax(140px, max-content) minmax(0, 1fr) auto;
-            gap: 10px;
+            grid-template-columns: 36px 36px minmax(0, 1fr) auto;
             align-items: stretch;
-            padding: 10px 12px;
+            padding: 0;
             border-radius: var(--bfv-radius-sm);
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-border);
+            overflow: hidden;
+            min-height: 56px;
         }
-        .bfv-pick > .bfv-pick-mark,
-        .bfv-pick > .bfv-score,
-        .bfv-pick > .bfv-pick-detail { align-self: center; }
-        .bfv-pick > .bfv-waku-name-cell,
-        .bfv-pick > .bfv-waku-name-link { align-self: stretch; height: 100%; }
-        .bfv-pick > .bfv-waku-name-link .bfv-waku-name-cell { height: 100%; }
-        .bfv-pick-detail { display: grid; gap: 4px; min-width: 0; }
         .bfv-pick-mark {
-            display: inline-flex;
+            display: flex;
             align-items: center;
             justify-content: center;
-            width: 24px;
-            min-width: 24px;
-            background: transparent;
             color: var(--bfv-ink);
             font-weight: 800;
             font-size: 22px;
             line-height: 1;
+            border-right: 1px solid rgba(0, 0, 0, .06);
         }
-        .bfv-pick-mark.is-plain {
-            color: transparent;
+        .bfv-pick-mark.is-plain { color: transparent; }
+        .bfv-pick-band {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--bfv-font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1;
+            border-right: 1px solid rgba(0, 0, 0, .08);
         }
+        .bfv-pick-info {
+            padding: 10px 14px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            min-width: 0;
+        }
+        .bfv-pick > .bfv-score { align-self: center; padding: 0 16px; }
         /* Phase 12-b: 縦帯セル（旧 chip 円→band 縦帯）*/
         .bfv-waku-name-cell {
             display: inline-grid;
@@ -2329,7 +2339,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             padding: 7px 10px;
             border-bottom: 1px solid var(--bfv-border-soft);
             font-variant-numeric: tabular-nums;
-            vertical-align: top;
+            vertical-align: middle;
             max-width: 140px;
             color: var(--bfv-ink);
             letter-spacing: 0.02em;
@@ -2338,9 +2348,11 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); min-height: 32px; grid-template-columns: 24px minmax(0, 1fr); }
         .bfv-detail-table .bfv-waku-band { font-size: 12px; }
         .bfv-detail-table .bfv-waku-name { font-size: 12px; padding: 2px 8px; }
-        /* Phase 12-c: 「順 / 艇 / 選手名」3 td 構造（artist-table 系） */
+        /* Phase 12-c: 「順 / 艇 / 選手名」3 td 構造（detail-table 系） */
         .bfv-rank-td {
-            width: 32px;
+            width: 36px;
+            min-width: 36px;
+            max-width: 36px;
             text-align: center;
             padding: 4px 4px;
             white-space: nowrap;
@@ -2354,8 +2366,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
             margin-right: 0;
         }
         .bfv-band-td {
-            width: 28px;
-            min-width: 28px;
+            width: 36px;
+            min-width: 36px;
+            max-width: 36px;
             text-align: center;
             padding: 0 6px;
             font-family: var(--bfv-font-mono);
@@ -2370,8 +2383,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-name-td {
             padding: 4px 10px;
             font-weight: 600;
-            max-width: 140px;
+            width: 110px;
             min-width: 90px;
+            max-width: 140px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -2381,6 +2395,38 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-name-td .bfv-waku-name-link { color: inherit; text-decoration: none; }
         .bfv-name-td .bfv-waku-name-link:hover { color: var(--bfv-accent); text-decoration: underline; }
         .bfv-name-td .bfv-female { color: var(--bfv-accent); margin-right: 3px; }
+        /* Phase 12-d: 横スクロール時の sticky（左固定）— 艇/選手名 を固定。実データのみ「順」も固定 */
+        .sticky-name-table .bfv-band-td,
+        .sticky-name-table .bfv-name-td {
+            position: sticky;
+            z-index: 3;
+        }
+        .sticky-name-table .bfv-name-td { background: var(--bfv-surface); }
+        .sticky-name-table .bfv-band-td { left: 0; }
+        .sticky-name-table .bfv-name-td { left: 36px; }
+        .sticky-name-table.has-rank .bfv-rank-td {
+            position: sticky;
+            left: 0;
+            z-index: 3;
+            background: var(--bfv-surface);
+        }
+        .sticky-name-table.has-rank .bfv-band-td { left: 36px; }
+        .sticky-name-table.has-rank .bfv-name-td { left: 72px; }
+        /* th 側 sticky */
+        .sticky-name-table th:nth-child(1),
+        .sticky-name-table th:nth-child(2) {
+            position: sticky;
+            z-index: 5;
+            background: var(--bfv-surface-sub);
+        }
+        .sticky-name-table th:nth-child(1) { left: 0; }
+        .sticky-name-table th:nth-child(2) { left: 36px; }
+        .sticky-name-table.has-rank th:nth-child(3) {
+            position: sticky;
+            left: 72px;
+            z-index: 5;
+            background: var(--bfv-surface-sub);
+        }
         .bfv-rank-cell {
             font-weight: 600;
             white-space: nowrap;
@@ -3007,10 +3053,23 @@ boat_forecast_viewer_render_nav('single', $single_section);
                     <div class="bfv-picks">
                         <?php foreach ($race['top_picks'] as $pick) : ?>
                             <?php $mark = (string) ($pick['mark'] ?? ''); ?>
+                            <?php
+                                list($pk_bg, $pk_fg, $pk_border) = boat_forecast_viewer_waku_colors($pick['waku'] ?? '');
+                                $pk_female = !empty($pick['is_female']) ? '<span class="bfv-female">♥</span>' : '';
+                                $pk_name = trim(preg_replace('/[\x{3000}\s]+/u', ' ', (string)($pick['name'] ?? '')));
+                                $pk_reg = preg_replace('/\D/', '', (string)($pick['reg_no'] ?? ''));
+                            ?>
                             <section class="bfv-pick">
                                 <span class="bfv-pick-mark<?php echo $mark === '' ? ' is-plain' : ''; ?>"><?php echo esc_html($mark); ?></span>
-                                <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female']), 'lg', $pick['reg_no'] ?? ''); ?>
-                                <div class="bfv-pick-detail">
+                                <div class="bfv-pick-band" style="background:<?php echo esc_attr($pk_bg); ?>;color:<?php echo esc_attr($pk_fg); ?>;"><?php echo esc_html((string)($pick['waku'] ?? '')); ?></div>
+                                <div class="bfv-pick-info">
+                                    <div class="bfv-pick-name">
+                                        <?php if ($pk_reg !== '' && $pk_name !== '') : ?>
+                                            <a class="bfv-waku-name-link" href="<?php echo esc_url(home_url('/player/' . $pk_reg . '/')); ?>"><?php echo $pk_female . esc_html($pk_name); ?></a>
+                                        <?php else : ?>
+                                            <?php echo $pk_female . esc_html($pk_name); ?>
+                                        <?php endif; ?>
+                                    </div>
                                     <div class="bfv-pick-meta">
                                         <?php if (!empty($pick['grade'])) : ?>
                                             <?php echo boat_forecast_viewer_render_grade($pick['grade']); ?>
@@ -3042,7 +3101,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                     <section class="bfv-detail-block">
                         <h4>実データ</h4>
                         <div class="bfv-detail-wrap">
-                            <table class="bfv-detail-table sticky-name-table">
+                            <table class="bfv-detail-table sticky-name-table has-rank">
                                 <tr>
                                     <th>順</th>
                                     <th>艇</th>
