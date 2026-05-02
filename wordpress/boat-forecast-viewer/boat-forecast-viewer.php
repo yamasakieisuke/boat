@@ -2310,24 +2310,39 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); min-height: 32px; grid-template-columns: 24px minmax(0, 1fr); }
         .bfv-detail-table .bfv-waku-band { font-size: 12px; }
         .bfv-detail-table .bfv-waku-name { font-size: 12px; padding: 2px 8px; }
-        /* Phase 12-b: テーブルセル内では band が row 全高の縦帯になるよう stretch */
+        /* Phase 12-b: テーブル1列目（順）を flex 化して mark + cell を横並びに、band は td 全高 */
         .bfv-detail-table td,
         .bfv-comment-table td,
         .bfv-orig-tenji td { height: 1px; }
-        .bfv-detail-table td > .bfv-waku-name-cell,
-        .bfv-comment-table td > .bfv-waku-name-cell,
-        .bfv-orig-tenji td > .bfv-waku-name-cell,
-        .bfv-detail-table td > .bfv-waku-name-link,
-        .bfv-comment-table td > .bfv-waku-name-link,
-        .bfv-orig-tenji td > .bfv-waku-name-link {
+        .bfv-detail-table tr > td:first-child,
+        .bfv-comment-table tr > td:first-child,
+        .bfv-orig-tenji tr > td:first-child {
+            display: flex;
+            align-items: stretch;
+            gap: 6px;
+            min-height: 100%;
+        }
+        .bfv-detail-table tr > td:first-child > .bfv-rank-mark,
+        .bfv-comment-table tr > td:first-child > .bfv-rank-mark,
+        .bfv-orig-tenji tr > td:first-child > .bfv-rank-mark {
+            align-self: center;
+            flex: 0 0 auto;
+        }
+        .bfv-detail-table tr > td:first-child > .bfv-waku-name-cell,
+        .bfv-comment-table tr > td:first-child > .bfv-waku-name-cell,
+        .bfv-orig-tenji tr > td:first-child > .bfv-waku-name-cell,
+        .bfv-detail-table tr > td:first-child > .bfv-waku-name-link,
+        .bfv-comment-table tr > td:first-child > .bfv-waku-name-link,
+        .bfv-orig-tenji tr > td:first-child > .bfv-waku-name-link {
+            flex: 1 1 auto;
+            min-width: 0;
+            align-self: stretch;
             display: grid;
-            width: 100%;
-            height: 100%;
             min-height: 0;
         }
-        .bfv-detail-table td > .bfv-waku-name-link > .bfv-waku-name-cell,
-        .bfv-comment-table td > .bfv-waku-name-link > .bfv-waku-name-cell,
-        .bfv-orig-tenji td > .bfv-waku-name-link > .bfv-waku-name-cell {
+        .bfv-detail-table tr > td:first-child > .bfv-waku-name-link > .bfv-waku-name-cell,
+        .bfv-comment-table tr > td:first-child > .bfv-waku-name-link > .bfv-waku-name-cell,
+        .bfv-orig-tenji tr > td:first-child > .bfv-waku-name-link > .bfv-waku-name-cell {
             display: grid;
             width: 100%;
             height: 100%;
@@ -2400,44 +2415,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             line-height: 1;
             vertical-align: middle;
         }
-        /* sticky 1列目: band を1行目・名前を2行目へ強制折返し（Phase 12-b: chip→band 対応） */
-        .sticky-name-table td:nth-child(1) .bfv-waku-name-cell,
-        .sticky-score-table td:nth-child(1) .bfv-waku-name-cell {
-            display: inline-flex;
-            flex-wrap: wrap;
-            align-items: center;
-            column-gap: 4px;
-            row-gap: 2px;
-            vertical-align: middle;
-            max-width: 100%;
-            border: 0;
-            background: transparent;
-            overflow: visible;
-            min-height: auto;
-        }
-        .sticky-name-table td:nth-child(1) .bfv-waku-band,
-        .sticky-score-table td:nth-child(1) .bfv-waku-band {
-            flex: 0 0 auto;
-            border: 1px solid rgba(0,0,0,.15);
-            border-radius: var(--bfv-radius-sm);
-            padding: 1px 6px;
-            font-size: 11px;
-        }
-        .sticky-name-table td:nth-child(1) .bfv-waku-name,
-        .sticky-score-table td:nth-child(1) .bfv-waku-name {
-            flex: 0 0 100%;
-            display: block;
-            padding: 0;
-            white-space: normal;
-            overflow: visible;
-            text-overflow: clip;
-            word-break: keep-all;
-            overflow-wrap: anywhere;
-            font-size: inherit;
-            font-weight: inherit;
-            color: inherit;
-            line-height: inherit;
-        }
+        /* sticky 1列目: 旧 chip override は削除。band+name は横並びの統一表記へ（Phase 12-b 微修正） */
         @media (max-width: 960px) {
             .bfv-grid { grid-template-columns: 1fr; }
             .bfv-bets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
