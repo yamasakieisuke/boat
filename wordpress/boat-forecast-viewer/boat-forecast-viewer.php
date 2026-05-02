@@ -1870,18 +1870,19 @@ function boat_forecast_viewer_render_single($payload, $post) {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 10px;
-            margin-top: 12px;
+            margin-top: 14px;
             min-width: 0;
         }
         .bfv-review-card {
-            background: rgba(255,255,255,.1);
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.10);
             border-radius: var(--bfv-radius-md);
-            padding: 12px;
+            padding: 14px 16px;
             min-width: 0;
         }
         .bfv-review-card.is-primary {
-            background: rgba(255,255,255,.18);
-            border: 1px solid rgba(255,255,255,.2);
+            background: rgba(255,255,255,.16);
+            border-color: rgba(255,255,255,.22);
         }
         .bfv-review-sub {
             font-size: 10px;
@@ -1898,9 +1899,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-review-value {
             font-family: var(--bfv-font-mono);
-            font-size: 26px;
-            font-weight: 500;
-            letter-spacing: -0.01em;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             line-height: 1;
         }
 
@@ -2061,11 +2062,14 @@ function boat_forecast_viewer_render_single($payload, $post) {
             word-break: break-word;
         }
         .bfv-review-table th {
-            background: rgba(255,255,255,.12);
+            position: sticky;
+            top: 0;
+            background: rgba(255,255,255,.14);
             color: rgba(255,255,255,.88);
+            z-index: 2;
         }
         .bfv-review-table tr:nth-child(even) td {
-            background: rgba(255,255,255,.05);
+            background: rgba(255,255,255,.04);
         }
         .bfv-review-table th:first-child,
         .bfv-review-table td:first-child {
@@ -2076,11 +2080,11 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-review-table td:last-child {
             min-width: 180px;
         }
-        /* v5.18: 判定マーク色分け */
-        .verdict-hit { color: #1f7a4d; font-weight: 700; }
-        .verdict-order { color: #1565c0; font-weight: 700; }
-        .verdict-box { color: #916626; }
-        .verdict-miss { color: rgba(255,255,255,.4); }
+        /* Phase 4: 判定マーク色（ダーク背景AA対応） */
+        .verdict-hit { color: #6ddca6; font-weight: 700; }
+        .verdict-order { color: #8fb8ff; font-weight: 700; }
+        .verdict-box { color: #e7c478; font-weight: 700; }
+        .verdict-miss { color: rgba(255,255,255,.35); }
         /* ===== Phase 9: 予算 / 展示 / コメント統一 ===== */
         /* コメント実データ判定マーク */
         .bfv-comment-table .cmt-good    { color: var(--bfv-ok); font-weight: 700; }
