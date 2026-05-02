@@ -1605,14 +1605,21 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-pick {
             display: grid;
-            grid-template-columns: 24px minmax(0, 1fr) auto;
+            grid-template-columns: 24px minmax(140px, max-content) minmax(0, 1fr) auto;
             gap: 10px;
-            align-items: center;
+            align-items: stretch;
             padding: 10px 12px;
             border-radius: var(--bfv-radius-sm);
             background: var(--bfv-surface);
             border: 1px solid var(--bfv-border);
         }
+        .bfv-pick > .bfv-pick-mark,
+        .bfv-pick > .bfv-score,
+        .bfv-pick > .bfv-pick-detail { align-self: center; }
+        .bfv-pick > .bfv-waku-name-cell,
+        .bfv-pick > .bfv-waku-name-link { align-self: stretch; height: 100%; }
+        .bfv-pick > .bfv-waku-name-link .bfv-waku-name-cell { height: 100%; }
+        .bfv-pick-detail { display: grid; gap: 4px; min-width: 0; }
         .bfv-pick-mark {
             display: inline-flex;
             align-items: center;
@@ -2303,6 +2310,29 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); min-height: 32px; grid-template-columns: 24px minmax(0, 1fr); }
         .bfv-detail-table .bfv-waku-band { font-size: 12px; }
         .bfv-detail-table .bfv-waku-name { font-size: 12px; padding: 2px 8px; }
+        /* Phase 12-b: テーブルセル内では band が row 全高の縦帯になるよう stretch */
+        .bfv-detail-table td,
+        .bfv-comment-table td,
+        .bfv-orig-tenji td { height: 1px; }
+        .bfv-detail-table td > .bfv-waku-name-cell,
+        .bfv-comment-table td > .bfv-waku-name-cell,
+        .bfv-orig-tenji td > .bfv-waku-name-cell,
+        .bfv-detail-table td > .bfv-waku-name-link,
+        .bfv-comment-table td > .bfv-waku-name-link,
+        .bfv-orig-tenji td > .bfv-waku-name-link {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+        }
+        .bfv-detail-table td > .bfv-waku-name-link > .bfv-waku-name-cell,
+        .bfv-comment-table td > .bfv-waku-name-link > .bfv-waku-name-cell,
+        .bfv-orig-tenji td > .bfv-waku-name-link > .bfv-waku-name-cell {
+            display: grid;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
+        }
         .bfv-rank-cell {
             font-weight: 600;
             white-space: nowrap;
@@ -2996,10 +3026,8 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <?php $mark = (string) ($pick['mark'] ?? ''); ?>
                             <section class="bfv-pick">
                                 <span class="bfv-pick-mark<?php echo $mark === '' ? ' is-plain' : ''; ?>"><?php echo esc_html($mark); ?></span>
-                                <div>
-                                    <div class="bfv-pick-name">
-                                        <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female']), 'lg', $pick['reg_no'] ?? ''); ?>
-                                    </div>
+                                <?php echo boat_forecast_viewer_render_waku_name($pick['waku'] ?? '', $pick['name'] ?? '', !empty($pick['is_female']), 'lg', $pick['reg_no'] ?? ''); ?>
+                                <div class="bfv-pick-detail">
                                     <div class="bfv-pick-meta">
                                         <?php if (!empty($pick['grade'])) : ?>
                                             <?php echo boat_forecast_viewer_render_grade($pick['grade']); ?>
