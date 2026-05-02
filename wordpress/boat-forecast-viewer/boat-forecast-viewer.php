@@ -1019,10 +1019,9 @@ function boat_forecast_viewer_render_single($payload, $post) {
         }
         .bfv-info-card strong {
             font-size: 10px;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.04em;
             color: var(--bfv-ink-dim);
             font-weight: 600;
-            text-transform: uppercase;
         }
         .bfv-info-card span {
             font-size: 13px;
@@ -1509,8 +1508,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-size: 10px;
             font-weight: 500;
             color: var(--bfv-muted);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            letter-spacing: 0.04em;
             margin: 0;
         }
         .bfv-betbox .bfv-bet { font-size: 17px; }
@@ -1597,8 +1595,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
             font-size: 9.5px;
             color: var(--bfv-muted);
             margin-bottom: 4px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            letter-spacing: 0.04em;
             font-weight: 500;
         }
         .bfv-picks {
@@ -1892,8 +1889,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-review-card strong {
             display: block;
             font-size: 11px;
-            letter-spacing: .06em;
-            text-transform: uppercase;
+            letter-spacing: .04em;
             color: rgba(255,255,255,.7);
             margin-bottom: 6px;
         }
@@ -3824,7 +3820,7 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
     <?php if ($venue_slug) : ?>
         <header class="bfva-hero">
             <h1><?php echo esc_html($venue_name); ?></h1>
-            <p>Forecast Archive</p>
+            <p>予想一覧</p>
         </header>
     <?php else :
         // Phase 13: 30-day HIT RATE KPI + sparkline
@@ -4056,8 +4052,7 @@ function boat_forecast_viewer_render_review() {
             gap: 6px;
             font-family: var(--bfv-font-mono);
             font-size: 10px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            letter-spacing: 0.04em;
             padding: 4px 10px;
             border-radius: 999px;
             background: rgba(255,255,255,.10);
@@ -4094,8 +4089,7 @@ function boat_forecast_viewer_render_review() {
             display: block;
             font-family: var(--bfv-font-mono);
             font-size: 10px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            letter-spacing: 0.04em;
             color: rgba(255,255,255,.55);
             margin-bottom: 6px;
         }
@@ -4306,7 +4300,7 @@ function boat_forecast_viewer_render_review() {
 <?php boat_forecast_viewer_render_nav('review', 'REVIEW'); ?>
 <div class="bfrv-shell">
     <section class="bfrv-hero">
-        <span class="bfrv-kicker">Review · 振り返り</span>
+        <span class="bfrv-kicker">振り返り</span>
         <h1>振り返り一覧</h1>
         <p>振り返りデータがある開催をまとめています。</p>
         <div class="bfrv-stats">
