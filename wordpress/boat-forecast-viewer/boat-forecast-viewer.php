@@ -313,6 +313,34 @@ function boat_forecast_viewer_render_waku_name($waku, $name, $is_female, $size =
     return $cell;
 }
 
+/**
+ * Phase 12-c: テーブル行内で「順 / 艇 / 選手名」を独立 td として返す。
+ * $mark が null の場合は「順」td を出さない（「艇 / 選手名」の2 td）。
+ * 「艇」td に枠色を background-color として直接適用 → 自動的に row 全高の縦帯になる。
+ */
+function boat_forecast_viewer_render_waku_tds($waku, $name, $is_female, $reg_no = '', $mark = null) {
+    list($bg, $fg, $border) = boat_forecast_viewer_waku_colors($waku);
+    $female = !empty($is_female) ? '<span class="bfv-female">♥</span>' : '';
+    $name = preg_replace('/[\x{3000}\s]+/u', ' ', (string) $name);
+    $name = trim($name);
+    $reg_no = preg_replace('/\D/', '', (string) $reg_no);
+
+    $name_html = $female . esc_html($name);
+    if ($reg_no !== '' && $name !== '') {
+        $name_html = '<a class="bfv-waku-name-link" href="' . esc_url(home_url('/player/' . $reg_no . '/')) . '">' . $name_html . '</a>';
+    }
+
+    $band_style = sprintf('background:%s;color:%s;', esc_attr($bg), esc_attr($fg));
+
+    $out = '';
+    if ($mark !== null) {
+        $out .= '<td class="bfv-rank-td"><span class="bfv-rank-mark">' . esc_html((string) $mark) . '</span></td>';
+    }
+    $out .= '<td class="bfv-band-td" style="' . $band_style . '"><span class="bfv-band-num">' . esc_html((string) $waku) . '</span></td>';
+    $out .= '<td class="bfv-name-td">' . $name_html . '</td>';
+    return $out;
+}
+
 function boat_forecast_viewer_load_payload($post_id) {
     $raw = get_post_meta($post_id, 'forecast_payload', true);
     if (!is_string($raw) || $raw === '') {
@@ -2310,44 +2338,49 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-detail-table .bfv-waku-name-cell { max-width: 100%; font-family: var(--bfv-font-sans); min-height: 32px; grid-template-columns: 24px minmax(0, 1fr); }
         .bfv-detail-table .bfv-waku-band { font-size: 12px; }
         .bfv-detail-table .bfv-waku-name { font-size: 12px; padding: 2px 8px; }
-        /* Phase 12-b: テーブル1列目（順）を flex 化して mark + cell を横並びに、band は td 全高 */
-        .bfv-detail-table td,
-        .bfv-comment-table td,
-        .bfv-orig-tenji td { height: 1px; }
-        .bfv-detail-table tr > td:first-child,
-        .bfv-comment-table tr > td:first-child,
-        .bfv-orig-tenji tr > td:first-child {
-            display: flex;
-            align-items: stretch;
-            gap: 6px;
-            min-height: 100%;
+        /* Phase 12-c: 「順 / 艇 / 選手名」3 td 構造（artist-table 系） */
+        .bfv-rank-td {
+            width: 32px;
+            text-align: center;
+            padding: 4px 4px;
+            white-space: nowrap;
+            vertical-align: middle;
         }
-        .bfv-detail-table tr > td:first-child > .bfv-rank-mark,
-        .bfv-comment-table tr > td:first-child > .bfv-rank-mark,
-        .bfv-orig-tenji tr > td:first-child > .bfv-rank-mark {
-            align-self: center;
-            flex: 0 0 auto;
+        .bfv-rank-td .bfv-rank-mark {
+            color: var(--bfv-ink);
+            font-weight: 800;
+            font-size: 14px;
+            line-height: 1;
+            margin-right: 0;
         }
-        .bfv-detail-table tr > td:first-child > .bfv-waku-name-cell,
-        .bfv-comment-table tr > td:first-child > .bfv-waku-name-cell,
-        .bfv-orig-tenji tr > td:first-child > .bfv-waku-name-cell,
-        .bfv-detail-table tr > td:first-child > .bfv-waku-name-link,
-        .bfv-comment-table tr > td:first-child > .bfv-waku-name-link,
-        .bfv-orig-tenji tr > td:first-child > .bfv-waku-name-link {
-            flex: 1 1 auto;
-            min-width: 0;
-            align-self: stretch;
-            display: grid;
-            min-height: 0;
+        .bfv-band-td {
+            width: 28px;
+            min-width: 28px;
+            text-align: center;
+            padding: 0 6px;
+            font-family: var(--bfv-font-mono);
+            font-weight: 700;
+            font-size: 13px;
+            white-space: nowrap;
+            vertical-align: middle;
+            line-height: 1;
+            border-right: 1px solid rgba(0, 0, 0, .08);
         }
-        .bfv-detail-table tr > td:first-child > .bfv-waku-name-link > .bfv-waku-name-cell,
-        .bfv-comment-table tr > td:first-child > .bfv-waku-name-link > .bfv-waku-name-cell,
-        .bfv-orig-tenji tr > td:first-child > .bfv-waku-name-link > .bfv-waku-name-cell {
-            display: grid;
-            width: 100%;
-            height: 100%;
-            min-height: 0;
+        .bfv-band-num { font-variant-numeric: tabular-nums; }
+        .bfv-name-td {
+            padding: 4px 10px;
+            font-weight: 600;
+            max-width: 140px;
+            min-width: 90px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: middle;
+            font-feature-settings: "palt";
         }
+        .bfv-name-td .bfv-waku-name-link { color: inherit; text-decoration: none; }
+        .bfv-name-td .bfv-waku-name-link:hover { color: var(--bfv-accent); text-decoration: underline; }
+        .bfv-name-td .bfv-female { color: var(--bfv-accent); margin-right: 3px; }
         .bfv-rank-cell {
             font-weight: 600;
             white-space: nowrap;
@@ -2375,37 +2408,8 @@ function boat_forecast_viewer_render_single($payload, $post) {
         .bfv-meter.rank3 .bfv-meter-fill { background: linear-gradient(90deg, #7e888f, #c5ccd1); }
         .bfv-meter.top3 .bfv-meter-fill { background: linear-gradient(90deg, #1e7b65, #5ac8b8); }
         .bfv-meter.score .bfv-meter-fill { background: linear-gradient(90deg, #1e7b65, #5ac8b8); }
-        .sticky-name-table th:nth-child(1),
-        .sticky-name-table td:nth-child(1) {
-            position: sticky;
-            left: 0;
-            z-index: 3;
-            min-width: 100px;
-            max-width: 140px;
-        }
-        .sticky-score-table th:nth-child(1),
-        .sticky-score-table td:nth-child(1) {
-            position: sticky;
-            left: 0;
-            z-index: 4;
-            min-width: 100px;
-            max-width: 140px;
-        }
-        .sticky-name-table td:nth-child(1),
-        .sticky-score-table td:nth-child(1) {
-            background: var(--bfv-surface);
-            box-shadow: 1px 0 0 var(--bfv-border-soft);
-        }
-        .sticky-name-table th:nth-child(1),
-        .sticky-score-table th:nth-child(1) {
-            background: var(--bfv-surface-2);
-            z-index: 5;
-        }
-        /* sticky 1列目内: [マーク + 枠番] を1行目に固定、選手名を2行目に折返し */
-        .sticky-name-table td:nth-child(1),
-        .sticky-score-table td:nth-child(1) {
-            line-height: 1.35;
-        }
+        /* Phase 12-c: 旧 sticky 1列目固定は新 3-td 構造（順/艇/選手名）と衝突するため撤去。
+           モバイル横スクロール時の選手名固定は別フェーズで再構築予定。 */
         .bfv-rank-mark {
             display: inline-block;
             margin-right: 4px;
@@ -2858,7 +2862,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <h4>コメント実データ</h4>
                             <div class="bfv-detail-wrap">
                                 <table class="bfv-detail-table sticky-name-table bfv-comment-table">
-                                    <tr><th>艇</th><th>状態</th><th>コメント</th><th>判定根拠</th></tr>
+                                    <tr><th>艇</th><th>選手名</th><th>状態</th><th>コメント</th><th>判定根拠</th></tr>
                                     <?php
                                         $comment_picks = $race['top_picks'];
                                         usort($comment_picks, function ($a, $b) { return (int) ($a['waku'] ?? 0) - (int) ($b['waku'] ?? 0); });
@@ -2877,7 +2881,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                             $keywords = isset($cp['comment_matched_keywords']) && is_array($cp['comment_matched_keywords']) ? $cp['comment_matched_keywords'] : [];
                                         ?>
                                         <tr>
-                                            <td><?php echo boat_forecast_viewer_render_waku_name($cp['waku'] ?? '', $cp['name'] ?? '', !empty($cp['is_female']), 'sm', $cp['reg_no'] ?? ''); ?></td>
+                                            <?php echo boat_forecast_viewer_render_waku_tds($cp['waku'] ?? '', $cp['name'] ?? '', !empty($cp['is_female']), $cp['reg_no'] ?? ''); ?>
                                             <td class="<?php echo esc_attr($cmt_cls); ?>"><?php echo esc_html($cmt_mark); ?></td>
                                             <td>
                                                 <?php if (!empty($cp['comment_text'])) : ?>
@@ -2913,7 +2917,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <h4>展示実データ</h4>
                         <div class="bfv-detail-wrap">
                             <table class="bfv-detail-table sticky-name-table">
-                                <tr><th>艇</th><th>展示T</th><th>チルト</th><th>進入</th><th>前走ST</th><th>前走着</th><th>評価</th></tr>
+                                <tr><th>艇</th><th>選手名</th><th>展示T</th><th>チルト</th><th>進入</th><th>前走ST</th><th>前走着</th><th>評価</th></tr>
                                 <?php foreach ($race['exhibition_section']['rows'] as $exrow) : ?>
                                     <?php
                                         $rating = (string) ($exrow['rating'] ?? '');
@@ -2926,7 +2930,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                         $entry_warn = ($entry !== '' && $waku_str !== '' && $entry !== $waku_str) ? ' ⚠' : '';
                                     ?>
                                     <tr>
-                                        <td><?php echo boat_forecast_viewer_render_waku_name($exrow['waku'] ?? '', $exrow['name'] ?? '', false, 'sm', $exrow['reg_no'] ?? ''); ?></td>
+                                        <?php echo boat_forecast_viewer_render_waku_tds($exrow['waku'] ?? '', $exrow['name'] ?? '', false, $exrow['reg_no'] ?? ''); ?>
                                         <td><strong><?php echo esc_html((string) ($exrow['time'] ?? '')); ?></strong></td>
                                         <td><?php echo esc_html((string) ($exrow['tilt'] ?? '')); ?></td>
                                         <td><?php echo esc_html($entry . $entry_warn); ?></td>
@@ -2961,6 +2965,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <table class="bfv-detail-table sticky-name-table bfv-orig-tenji">
                                 <tr>
                                     <th>艇</th>
+                                    <th>選手名</th>
                                     <th>一周</th>
                                     <th>まわり足</th>
                                     <th>直線</th>
@@ -2983,7 +2988,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                         $eval_v = $orow['evaluation'] ?? null;
                                     ?>
                                     <tr>
-                                        <td><?php echo boat_forecast_viewer_render_waku_name($orow['waku'] ?? '', $orow['name'] ?? '', !empty($orow['is_female']), 'sm', $orow['reg_no'] ?? ''); ?></td>
+                                        <?php echo boat_forecast_viewer_render_waku_tds($orow['waku'] ?? '', $orow['name'] ?? '', !empty($orow['is_female']), $orow['reg_no'] ?? ''); ?>
                                         <td class="<?php echo esc_attr($cell_cls($lap_rank)); ?>"><?php echo $fmt($orow['lap_time'] ?? null); ?><?php if ($lap_rank === 1) echo '<span class="bfv-rank-mark">★</span>'; ?></td>
                                         <td class="<?php echo esc_attr($cell_cls($turn_rank)); ?>"><?php echo $fmt($orow['turn_time'] ?? null); ?><?php if ($turn_rank === 1) echo '<span class="bfv-rank-mark">★</span>'; ?></td>
                                         <td class="<?php echo esc_attr($cell_cls($straight_rank)); ?>"><?php echo $fmt($orow['straight_time'] ?? null); ?><?php if ($straight_rank === 1) echo '<span class="bfv-rank-mark">★</span>'; ?></td>
@@ -3039,7 +3044,9 @@ boat_forecast_viewer_render_nav('single', $single_section);
                         <div class="bfv-detail-wrap">
                             <table class="bfv-detail-table sticky-name-table">
                                 <tr>
-                                    <th>順 / 艇</th>
+                                    <th>順</th>
+                                    <th>艇</th>
+                                    <th>選手名</th>
                                     <th>全国勝率</th>
                                     <th>当地勝率</th>
                                     <th>モーター2連</th>
@@ -3075,10 +3082,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                     }
                                 ?>
                                 <tr>
-                                    <td>
-                                        <span class="bfv-rank-mark"><?php echo esc_html(boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?></span>
-                                        <?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm', $row['reg_no'] ?? ''); ?>
-                                    </td>
+                                    <?php echo boat_forecast_viewer_render_waku_tds($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), $row['reg_no'] ?? '', boat_forecast_viewer_mark_for_rank($row['rank'] ?? 0)); ?>
                                     <td>今期 <?php echo esc_html((string) ($global['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($global['adopted_pct'] ?? '-')); ?></td>
                                     <td>今期 <?php echo esc_html((string) ($local['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($local['adopted_pct'] ?? '-')); ?></td>
                                     <td>今期 <?php echo esc_html((string) ($motor['season_pct'] ?? '-')); ?> / 採用 <?php echo esc_html((string) ($motor['adopted_pct'] ?? '-')); ?></td>
@@ -3101,6 +3105,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <table class="bfv-detail-table sticky-name-table">
                                 <tr>
                                     <th>艇</th>
+                                    <th>選手名</th>
                                     <th>参照</th>
                                     <th>1着%</th>
                                     <th>2着%</th>
@@ -3115,7 +3120,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                     $global = isset($row['waku_stats']['global']) && is_array($row['waku_stats']['global']) ? $row['waku_stats']['global'] : [];
                                 ?>
                                 <tr>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm', $row['reg_no'] ?? ''); ?></td>
+                                    <?php echo boat_forecast_viewer_render_waku_tds($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), $row['reg_no'] ?? ''); ?>
                                     <td><?php echo esc_html((string) $picked['label']); ?></td>
                                     <td><?php echo esc_html((string) ($stats['1st_pct'] ?? '---')); ?><?php echo boat_forecast_viewer_render_meter($stats['1st_pct'] ?? 0, 100, 'rank1'); ?></td>
                                     <td><?php echo esc_html((string) ($stats['2nd_pct'] ?? '---')); ?><?php echo boat_forecast_viewer_render_meter($stats['2nd_pct'] ?? 0, 100, 'rank2'); ?></td>
@@ -3134,6 +3139,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                             <table class="bfv-detail-table sticky-name-table">
                                 <tr>
                                     <th>艇</th>
+                                    <th>選手名</th>
                                     <th>級</th>
                                     <th>総合</th>
                                     <th>全勝寄与</th>
@@ -3150,7 +3156,7 @@ boat_forecast_viewer_render_nav('single', $single_section);
                                     $breakdown = isset($row['breakdown']) && is_array($row['breakdown']) ? $row['breakdown'] : [];
                                 ?>
                                 <tr>
-                                    <td><?php echo boat_forecast_viewer_render_waku_name($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), 'sm', $row['reg_no'] ?? ''); ?></td>
+                                    <?php echo boat_forecast_viewer_render_waku_tds($row['waku'] ?? '', $row['name'] ?? '', !empty($row['is_female']), $row['reg_no'] ?? ''); ?>
                                     <td><?php echo boat_forecast_viewer_render_grade($row['grade'] ?? ''); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($row['score'] ?? '', 2)); ?><?php echo boat_forecast_viewer_render_meter($row['score'] ?? 0, 1.0, 'score'); ?></td>
                                     <td><?php echo esc_html(boat_forecast_viewer_format_decimal($breakdown['global_win_rate'] ?? '-', 2)); ?></td>
