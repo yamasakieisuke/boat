@@ -103,6 +103,7 @@ function boat_forecast_viewer_collect_archive_items() {
         'numberposts' => -1,
         'orderby' => 'date',
         'order' => 'DESC',
+        'update_post_meta_cache' => false,
     ]);
 
     $venues = [];
@@ -153,6 +154,8 @@ function boat_forecast_viewer_collect_archive_items() {
             'hit_1st' => $hit_1st,
             'hit_any' => $hit_any,
         ];
+        unset($payload);
+        wp_cache_delete($post->ID, 'post_meta');
     }
 
     foreach ($venues as $slug => $venue) {
@@ -4120,6 +4123,7 @@ function boat_forecast_viewer_render_review() {
         'numberposts'  => -1,
         'orderby'      => 'date',
         'order'        => 'DESC',
+        'update_post_meta_cache' => false,
     ]);
 
     $all_items        = [];
@@ -4128,6 +4132,8 @@ function boat_forecast_viewer_render_review() {
     foreach ($posts as $post) {
         $payload = boat_forecast_viewer_load_payload($post->ID);
         if (empty($payload['review_summary']) || !is_array($payload['review_summary'])) {
+            unset($payload);
+            wp_cache_delete($post->ID, 'post_meta');
             continue;
         }
         $review     = $payload['review_summary'];
@@ -4146,6 +4152,8 @@ function boat_forecast_viewer_render_review() {
             'review'     => $review,
             'link'       => get_permalink($post) . '#review',
         ];
+        unset($payload);
+        wp_cache_delete($post->ID, 'post_meta');
     }
     $overall_rate   = ($total_races > 0) ? round($weighted_any_sum / $total_races, 1) : 0;
     $total_hits_est = ($total_races > 0) ? (int) round($total_races * $overall_rate / 100) : 0;
