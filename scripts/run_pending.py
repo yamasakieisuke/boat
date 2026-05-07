@@ -9,19 +9,27 @@ data/pending_tasks.json に登録されたタスクを順番に再試行し、
 ・未公開のまま → タスクを保持（次回実行まで積み残し）
 
 タスクの種類:
-  exhibition : 展示データ取得（fetch_at = 発走15分前に取得開始）
-  odds       : 3連単オッズ取得（fetch_at = 発走10分前に取得開始）
+  exhibition : 展示データ取得（fetch_at = 発走10分前）。福岡(22)はオリジナル展示も同時取得。
+  odds       : 3連単オッズ取得（fetch_at = 発走10分前）
   results    : 結果CSV取得（翌朝以降に公開）
   verify     : 的中率照合（results取得済みが前提）
 
 タスクのタイミング制御:
-  fetch_at   : この時刻より前は試行しない（展示=15分前 / オッズ=10分前）
+  fetch_at   : この時刻より前は試行しない（展示・オッズ = 発走10分前）
+  next_try_at: 失敗時の次回試行時刻（5分後 = 発走5分前に再試行）
+  retry_count: 試行回数。MAX_RETRY_COUNT=2 で打ち切り（1回目失敗→5分前再試行→失敗で削除）
   deadline   : この時刻を過ぎたらタスクを自動削除（展示・オッズ = 発走時刻）
 
+依頼キュー連携:
+  data/fetch_requests.json に {jcd, date, [r1_start], [races]} を入れておくと、
+  run_all() 冒頭の process_fetch_requests() が pending に変換してから処理する。
+  morning は予測のみ生成し、追跡対象会場は依頼ベースで明示的に登録する設計。
+
 使い方:
-  python3 scripts/run_pending.py             # 全タスクを試行
+  python3 scripts/run_pending.py             # 全タスクを試行（依頼キューも自動消化）
   python3 scripts/run_pending.py --list      # タスク一覧を表示するだけ
   python3 scripts/run_pending.py --add ...   # タスクを手動登録
+  python3 scripts/run_pending.py --process-requests  # 依頼キューだけ処理して終了
 ──────────────────────────────────────────────────────────────
 """
 
@@ -38,9 +46,11 @@ DATA_DIR         = BASE_DIR / "data"
 OUTPUT_DIR       = BASE_DIR / "output"
 PENDING_FILE     = DATA_DIR / "pending_tasks.json"
 PENDING_MD_FILE  = OUTPUT_DIR / "pending_tasks.md"
-EXHIBITION_FETCH_LEAD_MIN = 15
-ODDS_FETCH_LEAD_MIN       = 15
-RETRY_INTERVAL_MIN        = 2
+FETCH_REQUESTS_FILE = DATA_DIR / "fetch_requests.json"
+EXHIBITION_FETCH_LEAD_MIN = 10   # 発走の何分前から取得を試みるか（v5.22: 15→10）
+ODDS_FETCH_LEAD_MIN       = 10   # 同上（v5.22: 15→10）
+RETRY_INTERVAL_MIN        = 5    # 失敗時の次回試行までの間隔（v5.22: 2→5。10分前失敗→5分前で再試行）
+MAX_RETRY_COUNT           = 2    # 試行回数の上限。これに達したら deadline 待たず削除（v5.22 新規）
 
 QUIET = False  # --quiet 指定時に True（積み残し 0件のときに出力を抑制）
 
@@ -94,7 +104,7 @@ def _update_md(tasks: list[dict]):
     if not tasks:
         lines.append("（積み残しタスクなし）\n")
     else:
-        lines.append("| ID | 種別 | 会場 | 日付 | R | 取得開始(15分前) | 期限(発走) | 登録日時 |\n")
+        lines.append("| ID | 種別 | 会場 | 日付 | R | 取得開始(10分前) | 期限(発走) | 登録日時 |\n")
         lines.append("|---|---|---|---|---|---|---|---|\n")
         for t in sorted(tasks, key=lambda x: x.get("fetch_at", x.get("deadline", ""))):
             vname = VENUE_NAMES.get(t.get("jcd", ""), t.get("jcd", "-"))
@@ -354,6 +364,14 @@ def run_verify_task(task: dict) -> str:
 # ── メインループ ──────────────────────────────────────────────────
 
 def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
+    # 先に依頼キューを消化して pending を最新化（dry_run でも消化する。
+    # 依頼処理は副作用が pending 登録のみで、cron でも安全に毎回流せる）
+    if not dry_run:
+        try:
+            process_fetch_requests()
+        except Exception as e:
+            print(f"  [WARN] 依頼キュー処理で例外（続行）: {e}")
+
     tasks   = load_tasks()
     if jcd_filter:
         tasks = [t for t in tasks if t.get("jcd") in jcd_filter]
@@ -443,14 +461,19 @@ def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
         else:
             if typ in ("exhibition", "odds"):
                 task["retry_count"] = int(task.get("retry_count", 0) or 0) + 1
-                deadline_dt = datetime.datetime.fromisoformat(task["deadline"])
-                next_try_dt = min(
-                    datetime.datetime.now() + datetime.timedelta(minutes=RETRY_INTERVAL_MIN),
-                    deadline_dt
-                )
-                task["next_try_at"] = next_try_dt.strftime("%Y-%m-%dT%H:%M:00")
-                print(f"⏸  未公開/未整形 → {RETRY_INTERVAL_MIN}分後に再試行")
-                keep.append(task)
+                if task["retry_count"] >= MAX_RETRY_COUNT:
+                    # 最大試行回数に達した → deadline を待たず即削除
+                    print(f"⛔ 試行{task['retry_count']}回失敗（上限{MAX_RETRY_COUNT}） → タスク削除")
+                    expired_ids.append(tid)
+                else:
+                    deadline_dt = datetime.datetime.fromisoformat(task["deadline"])
+                    next_try_dt = min(
+                        datetime.datetime.now() + datetime.timedelta(minutes=RETRY_INTERVAL_MIN),
+                        deadline_dt
+                    )
+                    task["next_try_at"] = next_try_dt.strftime("%Y-%m-%dT%H:%M:00")
+                    print(f"⏸  未公開/未整形 → {RETRY_INTERVAL_MIN}分後に再試行（{task['retry_count']}/{MAX_RETRY_COUNT}）")
+                    keep.append(task)
             else:
                 # results / verify はデッドラインまで無制限に継続
                 print("⏸  未公開 → 積み残し継続")
@@ -485,8 +508,11 @@ def register_exhibition_tasks(jcd: str, date: str, races: list[int],
                                r1_time_str: str = ""):
     """
     展示タスクを一括登録。
-    fetch_at  = 発走15分前（公開後すぐ取りに行く）
+    fetch_at  = 発走10分前（v5.22: 15→10）
+    next_try  = 失敗時の5分後（=発走5分前で再試行）
     deadline  = 発走時刻（過ぎたら削除）
+    最大試行 = MAX_RETRY_COUNT 回（達したら deadline 待たず削除）
+    福岡(22)は exhibition 取得時に同時にオリジナル展示も取得される。
     r1_time_str: R1の発走時刻 "HH:MM"（省略時はWebから取得）
     """
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -527,8 +553,10 @@ def register_odds_tasks(jcd: str, date: str, races: list[int],
                         r1_time_str: str = ""):
     """
     オッズタスクを一括登録。
-    fetch_at  = 発走15分前
+    fetch_at  = 発走10分前（v5.22: 15→10）
+    next_try  = 失敗時の5分後（=発走5分前で再試行）
     deadline  = 発走時刻
+    最大試行 = MAX_RETRY_COUNT 回
     r1_time_str: R1の発走時刻 "HH:MM"（省略時はWebから取得）
     """
     now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -554,6 +582,7 @@ def register_odds_tasks(jcd: str, date: str, races: list[int],
             "fetch_at":   fetch_at.strftime("%Y-%m-%dT%H:%M:00"),
             "deadline":   race_dt.strftime("%Y-%m-%dT%H:%M:00"),
             "created_at": now_str,
+            "retry_count": 0,
         }
         add_task(task)
 
@@ -576,6 +605,90 @@ def register_results_task(jcd: str, date: str, deadline_str: str = ""):
         "created_at": now_str,
     }
     add_task(task)
+
+
+# ── 依頼キュー処理 ────────────────────────────────────────────────
+
+def load_fetch_requests() -> list[dict]:
+    """fetch_requests.json から依頼一覧を読み出す。
+
+    受け付ける形式:
+      {"requests": [{"jcd":"22","date":"20260503","r1_start":"10:30","races":[1..12]}, ...]}
+      または top-level list でも可。
+    """
+    if not FETCH_REQUESTS_FILE.exists():
+        return []
+    try:
+        with open(FETCH_REQUESTS_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+    except (json.JSONDecodeError, OSError) as e:
+        print(f"  [WARN] fetch_requests.json 読み込み失敗（無視して続行）: {e}")
+        return []
+
+    if isinstance(data, list):
+        return data
+    if isinstance(data, dict):
+        return data.get("requests", []) or []
+    return []
+
+
+def save_fetch_requests(requests: list[dict]):
+    """残った依頼を書き戻す（dict 形式で統一）。"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(FETCH_REQUESTS_FILE, "w", encoding="utf-8") as f:
+        json.dump({"requests": requests}, f, ensure_ascii=False, indent=2)
+
+
+def process_fetch_requests() -> int:
+    """依頼キューを読んで pending タスク（exhibition + odds）に変換する。
+
+    依頼スキーマ:
+      jcd      : str  (必須)  会場コード "01"〜"24"
+      date     : str  (必須)  "YYYYMMDD"
+      r1_start : str  (任意)  "HH:MM"。省略時はWebからR1発走時刻を取得。
+      races    : list (任意)  対象レース番号。省略時は [1..12] 全レース。
+
+    処理した依頼はファイルから削除する。失敗した依頼は残して次回再試行。
+    福岡(22) はオリジナル展示も exhibition タスク内で同時取得される。
+
+    戻り値: 処理した依頼数
+    """
+    requests = load_fetch_requests()
+    if not requests:
+        return 0
+
+    print(f"\n  📨 依頼キュー処理: {len(requests)}件 ({FETCH_REQUESTS_FILE.name})")
+
+    remaining: list[dict] = []
+    processed = 0
+    for req in requests:
+        jcd = str(req.get("jcd", "")).strip()
+        date = str(req.get("date", "")).strip()
+        if not jcd or not date:
+            print(f"  [WARN] 不正な依頼（jcd/date 欠如）→ 破棄: {req}")
+            continue
+        r1_start = str(req.get("r1_start", "")).strip()
+        races = req.get("races") or list(range(1, 13))
+        try:
+            races = [int(r) for r in races]
+        except (TypeError, ValueError):
+            print(f"  [WARN] races が不正 → 破棄: {req}")
+            continue
+
+        vname = VENUE_NAMES.get(jcd, jcd)
+        race_label = f"R{min(races)}〜R{max(races)}" if len(races) > 1 else f"R{races[0]}"
+        try:
+            print(f"  → {vname}({jcd}) {date} {race_label} 展示+オッズ登録 (R1={r1_start or 'auto'})")
+            register_exhibition_tasks(jcd, date, races, r1_start)
+            register_odds_tasks(jcd, date, races, r1_start)
+            processed += 1
+        except Exception as e:
+            print(f"  [ERROR] 依頼処理失敗（残して次回再試行）: {jcd} {date}: {e}")
+            remaining.append(req)
+
+    save_fetch_requests(remaining)
+    print(f"  ✓ 処理 {processed}件 / 残 {len(remaining)}件\n")
+    return processed
 
 
 def register_verify_task(jcd: str, date: str, deadline_str: str = ""):
@@ -607,16 +720,36 @@ if __name__ == "__main__":
     parser.add_argument("--quiet", action="store_true", help="積み残し 0件 or 実行可能タスクなし のとき標準出力を抑制（cron ポーリング用）")
     parser.add_argument("--jcd", action="append", metavar="JCD", help="指定会場のみ実行（例: --jcd 22 --jcd 23）。複数指定可。未指定は全会場")
     parser.add_argument("--add-exhibition", nargs="+", metavar="JCD DATE [HH:MM]",
-                        help="展示タスクを登録（発走15分前に自動取得）: --add-exhibition 19 20260316 [R1発走HH:MM]")
+                        help="展示タスクを登録（発走10分前に自動取得）: --add-exhibition 19 20260316 [R1発走HH:MM]")
     parser.add_argument("--add-odds",      nargs="+", metavar="JCD DATE [HH:MM]",
                         help="オッズタスクを登録（発走10分前に自動取得）: --add-odds 19 20260316 [R1発走HH:MM]")
     parser.add_argument("--add-results",  nargs=2, metavar=("JCD", "DATE"),
                         help="結果タスクを登録: --add-results 19 20260316")
     parser.add_argument("--add-verify",   nargs=2, metavar=("JCD", "DATE"),
                         help="照合タスクを登録: --add-verify 19 20260316")
+    parser.add_argument("--process-requests", action="store_true",
+                        help="依頼キュー(fetch_requests.json)だけ処理して終了")
+    parser.add_argument("--add-request", nargs="+", metavar="JCD DATE [HH:MM]",
+                        help="依頼を fetch_requests.json に追加: --add-request 22 20260503 [10:30]")
     args = parser.parse_args()
 
-    if args.add_exhibition:
+    if args.add_request:
+        jcd  = args.add_request[0]
+        date = args.add_request[1]
+        r1t  = args.add_request[2] if len(args.add_request) > 2 else ""
+        existing = load_fetch_requests()
+        new_req = {"jcd": jcd, "date": date}
+        if r1t:
+            new_req["r1_start"] = r1t
+        new_req["requested_at"] = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:00")
+        # 同一 jcd+date があれば上書き（最新の依頼を優先）
+        existing = [r for r in existing if not (r.get("jcd") == jcd and r.get("date") == date)]
+        existing.append(new_req)
+        save_fetch_requests(existing)
+        print(f"  ➕ 依頼登録: {VENUE_NAMES.get(jcd, jcd)}({jcd}) {date} R1={r1t or 'auto'} → fetch_requests.json")
+    elif args.process_requests:
+        process_fetch_requests()
+    elif args.add_exhibition:
         jcd  = args.add_exhibition[0]
         date = args.add_exhibition[1]
         r1t  = args.add_exhibition[2] if len(args.add_exhibition) > 2 else ""
