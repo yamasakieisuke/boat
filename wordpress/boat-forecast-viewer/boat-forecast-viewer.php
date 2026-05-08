@@ -135,12 +135,13 @@ function boat_forecast_viewer_collect_archive_items() {
             $venues[$venue_slug]['latest_link'] = get_permalink($post);
         }
         // Phase 13: per-item hit rates from review_summary for KPI aggregation.
-        $hit_1st = null;
+        // v5.22: 主指標を hit_1st → hit_3tan(順位一致) へ切替。3連単買い目運用に合わせた基準変更。
+        $hit_3tan = null;
         $hit_any = null;
         if (!empty($payload['review_summary']) && is_array($payload['review_summary'])) {
             $rs = $payload['review_summary'];
-            if (isset($rs['hit_1st_pct']) && is_numeric($rs['hit_1st_pct'])) {
-                $hit_1st = (float) $rs['hit_1st_pct'];
+            if (isset($rs['hit_3tan_pct']) && is_numeric($rs['hit_3tan_pct'])) {
+                $hit_3tan = (float) $rs['hit_3tan_pct'];
             }
             if (isset($rs['hit_bet_any_pct']) && is_numeric($rs['hit_bet_any_pct'])) {
                 $hit_any = (float) $rs['hit_bet_any_pct'];
@@ -151,7 +152,7 @@ function boat_forecast_viewer_collect_archive_items() {
             'link' => get_permalink($post),
             'date' => $race_date,
             'has_review' => !empty($payload['review_summary']),
-            'hit_1st' => $hit_1st,
+            'hit_3tan' => $hit_3tan,
             'hit_any' => $hit_any,
         ];
         unset($payload);
@@ -162,17 +163,17 @@ function boat_forecast_viewer_collect_archive_items() {
         usort($venue['items'], function ($a, $b) {
             return strcmp((string) $b['date'], (string) $a['date']);
         });
-        // Phase 13: compute per-venue KPI averages across all reviewed items.
-        $h1 = [];
+        // Phase 13 / v5.22: per-venue KPI averages（主指標は3連単(順位一致)）
+        $h3 = [];
         $ha = [];
         foreach ($venue['items'] as $it) {
-            if ($it['hit_1st'] !== null) $h1[] = $it['hit_1st'];
+            if ($it['hit_3tan'] !== null) $h3[] = $it['hit_3tan'];
             if ($it['hit_any'] !== null) $ha[] = $it['hit_any'];
         }
-        $venue['hit_1st_avg'] = $h1 ? array_sum($h1) / count($h1) : null;
-        $venue['hit_any_avg'] = $ha ? array_sum($ha) / count($ha) : null;
+        $venue['hit_3tan_avg'] = $h3 ? array_sum($h3) / count($h3) : null;
+        $venue['hit_any_avg']  = $ha ? array_sum($ha) / count($ha) : null;
         // Sparkline: last 8 reviewed items in chronological order (old -> new).
-        $venue['sparkline'] = array_slice(array_reverse($h1), -8);
+        $venue['sparkline'] = array_slice(array_reverse($h3), -8);
         $venue['all_items'] = $venue['items'];
         $venue['items'] = array_slice($venue['items'], 0, 4);
         $venues[$slug] = $venue;
@@ -197,14 +198,14 @@ function boat_forecast_viewer_compute_global_kpi($venues, $window_days = 30) {
     foreach ($venues as $venue) {
         $pool = isset($venue['all_items']) ? $venue['all_items'] : (isset($venue['items']) ? $venue['items'] : []);
         foreach ($pool as $it) {
-            if (!isset($it['hit_1st']) || $it['hit_1st'] === null) continue;
+            if (!isset($it['hit_3tan']) || $it['hit_3tan'] === null) continue;
             if ((string) $it['date'] < $cutoff) continue;
             $flat[] = $it;
         }
     }
     usort($flat, function ($a, $b) { return strcmp((string) $a['date'], (string) $b['date']); });
     $nums = [];
-    foreach ($flat as $it) $nums[] = (float) $it['hit_1st'];
+    foreach ($flat as $it) $nums[] = (float) $it['hit_3tan'];
     return [
         'window_days' => (int) $window_days,
         'hit_rate'    => $nums ? array_sum($nums) / count($nums) : null,
@@ -250,7 +251,8 @@ function boat_forecast_viewer_render_sparkline($values, $width = 80, $height = 2
  */
 function boat_forecast_viewer_match_filter($venue, $filter, $today_ymd) {
     if ($filter === 'curated') {
-        return isset($venue['hit_1st_avg']) && $venue['hit_1st_avg'] !== null && $venue['hit_1st_avg'] >= 50.0;
+        // v5.22: 3連単(順位一致) 20%以上の会場を厳選。順位一致率は1着率より低いため閾値を緩和。
+        return isset($venue['hit_3tan_avg']) && $venue['hit_3tan_avg'] !== null && $venue['hit_3tan_avg'] >= 20.0;
     }
     if ($filter === 'today') {
         return isset($venue['latest_date']) && (string) $venue['latest_date'] === (string) $today_ymd;
@@ -3999,7 +4001,7 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
     ?>
         <header class="bfva-hero">
             <div class="bfva-hero-kpi">
-                <span class="bfva-hero-label">Last 30d · Hit Rate</span>
+                <span class="bfva-hero-label">Last 30d · 3連単 Hit Rate</span>
                 <?php if ($global_kpi['hit_rate'] !== null) : ?>
                     <span class="bfva-hero-value"><?php echo esc_html(number_format($global_kpi['hit_rate'], 1)); ?><small>%</small></span>
                 <?php else : ?>
@@ -4055,8 +4057,8 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
             if (!boat_forecast_viewer_match_filter($venue, $filter_key, $today_ymd)) continue;
             $latest_link = !empty($venue['latest_link']) ? $venue['latest_link'] : home_url('/race/' . $venue['slug'] . '/');
             $items = isset($venue['items']) && is_array($venue['items']) ? $venue['items'] : [];
-            $hit_1st_avg = isset($venue['hit_1st_avg']) ? $venue['hit_1st_avg'] : null;
-            $hit_any_avg = isset($venue['hit_any_avg']) ? $venue['hit_any_avg'] : null;
+            $hit_3tan_avg = isset($venue['hit_3tan_avg']) ? $venue['hit_3tan_avg'] : null;
+            $hit_any_avg  = isset($venue['hit_any_avg'])  ? $venue['hit_any_avg']  : null;
             $spark_values = isset($venue['sparkline']) ? $venue['sparkline'] : [];
         ?>
             <article class="bfva-card">
@@ -4070,12 +4072,12 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
 
                 <div class="bfva-card-kpi">
                     <div class="bfva-kpi-col is-primary">
-                        <?php if ($hit_1st_avg !== null) : ?>
-                            <span class="bfva-kpi-num"><?php echo esc_html(number_format($hit_1st_avg, 1)); ?><small>%</small></span>
+                        <?php if ($hit_3tan_avg !== null) : ?>
+                            <span class="bfva-kpi-num"><?php echo esc_html(number_format($hit_3tan_avg, 1)); ?><small>%</small></span>
                         <?php else : ?>
                             <span class="bfva-kpi-num is-null">—</span>
                         <?php endif; ?>
-                        <span class="bfva-kpi-sub">1着 HIT</span>
+                        <span class="bfva-kpi-sub">3連単 HIT</span>
                     </div>
                     <div class="bfva-kpi-col">
                         <?php if ($hit_any_avg !== null) : ?>
@@ -4090,8 +4092,8 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
 
                 <div class="bfva-card-list">
                     <?php foreach ($items as $item):
-                        $row_hit = ($item['hit_1st'] !== null)
-                            ? number_format($item['hit_1st'], 1) . '%'
+                        $row_hit = ($item['hit_3tan'] !== null)
+                            ? number_format($item['hit_3tan'], 1) . '%'
                             : (!empty($item['has_review']) ? '振返済' : '予想のみ');
                     ?>
                         <a class="bfva-card-row<?php echo !empty($item['has_review']) ? ' has-review' : ''; ?>"
