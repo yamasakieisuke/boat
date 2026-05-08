@@ -4077,7 +4077,7 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
                         <?php else : ?>
                             <span class="bfva-kpi-num is-null">—</span>
                         <?php endif; ?>
-                        <span class="bfva-kpi-sub">3連単 HIT</span>
+                        <span class="bfva-kpi-sub">3連単</span>
                     </div>
                     <div class="bfva-kpi-col">
                         <?php if ($hit_any_avg !== null) : ?>
