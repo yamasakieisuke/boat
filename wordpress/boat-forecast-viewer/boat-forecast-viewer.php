@@ -3309,17 +3309,14 @@ boat_forecast_viewer_render_nav('single', $single_section);
             </div>
             <div class="bfv-review-grid">
                 <div class="bfv-review-card is-primary">
-                    <strong>1着的中</strong>
-                    <div class="bfv-review-value"><?php echo esc_html((string) ($review['hit_1st_pct'] ?? '-')); ?>%</div>
-                </div>
-                <div class="bfv-review-card is-primary">
                     <strong>レース的中</strong>
                     <div class="bfv-review-value"><?php echo esc_html((string) ($review['hit_bet_any_pct'] ?? '-')); ?>%</div>
-                    <div class="bfv-review-sub">買い目8点のいずれかが的中</div>
+                    <div class="bfv-review-sub">3連単買い目8点のいずれかが的中</div>
                 </div>
-                <div class="bfv-review-card">
+                <div class="bfv-review-card is-primary">
                     <strong>本命</strong>
                     <div class="bfv-review-value"><?php echo esc_html((string) ($review['hit_honmei_pct'] ?? '-')); ?>%</div>
+                    <div class="bfv-review-sub">本命4点のいずれかが3連単的中</div>
                 </div>
                 <div class="bfv-review-card">
                     <strong>その他</strong>
@@ -3332,6 +3329,11 @@ boat_forecast_viewer_render_nav('single', $single_section);
                     ?>
                     <div class="bfv-review-sub">対抗<?php echo esc_html($tai); ?>% / 抑え<?php echo esc_html($osh); ?>% / 穴<?php echo esc_html($ana); ?>%</div>
                     <?php endif; ?>
+                </div>
+                <div class="bfv-review-card">
+                    <strong>1着的中</strong>
+                    <div class="bfv-review-value"><?php echo esc_html((string) ($review['hit_1st_pct'] ?? '-')); ?>%</div>
+                    <div class="bfv-review-sub">本命1番手の頭が一致（参考）</div>
                 </div>
             </div>
             <?php
@@ -3379,11 +3381,11 @@ boat_forecast_viewer_render_nav('single', $single_section);
             ?>
             <?php if ($has_extra_cards) : ?>
                 <div class="bfv-review-grid-extra">
+                    <?php if (isset($review['hit_3tan_pct'])) : ?>
+                        <div class="bfv-review-card"><strong>3連単(順位一致)</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_3tan_pct']); ?>%</div></div>
+                    <?php endif; ?>
                     <?php if (isset($review['hit_3fuku_pct'])) : ?>
                         <div class="bfv-review-card"><strong>3連複</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_3fuku_pct']); ?>%</div></div>
-                    <?php endif; ?>
-                    <?php if (isset($review['hit_3tan_pct'])) : ?>
-                        <div class="bfv-review-card"><strong>3連単</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_3tan_pct']); ?>%</div></div>
                     <?php endif; ?>
                     <?php if (isset($review['hit_2tan_pct'])) : ?>
                         <div class="bfv-review-card"><strong>2連単</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_2tan_pct']); ?>%</div></div>
@@ -4551,14 +4553,14 @@ function boat_forecast_viewer_render_review() {
                                 <div class="bfrv-row-meta">
                                     <span class="bfrv-pill <?php echo esc_attr($pill_class); ?>">買い目的中 <?php echo esc_html(number_format($any_pct, 1)); ?>%</span>
                                     <span class="bfrv-pill">推定<?php echo esc_html((string) $est_hits); ?>/<?php echo esc_html((string) $races_n); ?> R</span>
-                                    <?php if ($first_pct > 0) : ?>
-                                        <span class="bfrv-pill">1着 <?php echo esc_html(number_format($first_pct, 1)); ?>%</span>
+                                    <?php if ($tan_pct > 0) : ?>
+                                        <span class="bfrv-pill">3連単 <?php echo esc_html(number_format($tan_pct, 1)); ?>%</span>
                                     <?php endif; ?>
                                     <?php if ($fuku_pct > 0) : ?>
                                         <span class="bfrv-pill">3連複 <?php echo esc_html(number_format($fuku_pct, 1)); ?>%</span>
                                     <?php endif; ?>
-                                    <?php if ($tan_pct > 0) : ?>
-                                        <span class="bfrv-pill">3連単 <?php echo esc_html(number_format($tan_pct, 1)); ?>%</span>
+                                    <?php if ($first_pct > 0) : ?>
+                                        <span class="bfrv-pill">1着 <?php echo esc_html(number_format($first_pct, 1)); ?>%</span>
                                     <?php endif; ?>
                                     <?php if (!empty($review['avg_rank'])) : ?>
                                         <span class="bfrv-pill">平均着順 <?php echo esc_html((string) $review['avg_rank']); ?></span>
@@ -4872,9 +4874,9 @@ function boat_forecast_viewer_render_accuracy() {
     };
     $kpis = [
         ['label' => '買い目的中率',   'k' => 'hit_bet_any_pct',  'n' => 'hit_bet_any'],
-        ['label' => '1着的中率',     'k' => 'hit_1st_pct',      'n' => 'hit_1st'],
-        ['label' => '3連単的中率',   'k' => 'hit_3tan_pct',     'n' => 'hit_3tan'],
         ['label' => '本命的中率',     'k' => 'hit_honmei_pct',   'n' => 'hit_honmei'],
+        ['label' => '3連単的中率',   'k' => 'hit_3tan_pct',     'n' => 'hit_3tan'],
+        ['label' => '1着的中率',     'k' => 'hit_1st_pct',      'n' => 'hit_1st'],
     ];
 ?>
     <section class="bfac-hero">
@@ -4916,9 +4918,9 @@ function boat_forecast_viewer_render_accuracy() {
                     <th>順</th>
                     <th>会場</th>
                     <th>R数</th>
-                    <th>1着%</th>
                     <th>買い目%</th>
                     <th>3連単%</th>
+                    <th>1着%</th>
                     <th>平均着順</th>
                 </tr>
             </thead>
@@ -4931,9 +4933,9 @@ function boat_forecast_viewer_render_accuracy() {
                     <td><span class="bfac-rank<?php echo $cls; ?>"><?php echo $rank; ?></span></td>
                     <td class="bfac-name"><?php echo esc_html($v['name']); ?></td>
                     <td><?php echo (int) $v['n']; ?></td>
-                    <td><?php echo esc_html($v['hit_1st_pct']); ?>%</td>
                     <td><?php echo esc_html($v['hit_bet_any_pct']); ?>%</td>
                     <td><?php echo esc_html($v['hit_3tan_pct']); ?>%</td>
+                    <td><?php echo esc_html($v['hit_1st_pct']); ?>%</td>
                     <td><?php echo esc_html($v['avg_rank']); ?></td>
                 </tr>
             <?php endforeach; ?>
@@ -5054,8 +5056,8 @@ function boat_forecast_viewer_render_accuracy() {
                 <b><?php echo esc_html($row['week']); ?></b>
                 <span><?php echo (int) ($row['total_races'] ?? 0); ?>R</span>
                 <span>買目 <?php echo esc_html($row['hit_bet_any_pct'] ?? 0); ?>%</span>
-                <span>1着 <?php echo esc_html($row['hit_1st_pct'] ?? 0); ?>%</span>
                 <span class="bfac-week-3tan">3単 <?php echo esc_html($row['hit_3tan_pct'] ?? 0); ?>%</span>
+                <span>1着 <?php echo esc_html($row['hit_1st_pct'] ?? 0); ?>%</span>
             </a>
         <?php endforeach; ?>
         </div>

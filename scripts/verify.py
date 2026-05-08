@@ -334,7 +334,8 @@ def update_verify_md(summary: dict):
     同じ (run_date, jcd) の行があれば上書き。
 
     フォーマット例:
-    | 2026-03-15 | 福岡(22) | 12R | 75.0% | 16.7% | 8.3% | 9.50 |
+    | 2026-03-15 | 福岡(22) | 12R | 75.0% | 8.3% | 16.7% | 9.50 |
+    （並びは 3連単中心: 買い目→3連単→3連複→1着）
     """
     DATA_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -344,16 +345,16 @@ def update_verify_md(summary: dict):
         f"| {vname} "
         f"| {summary['date_from']}〜{summary['date_to']} "
         f"| {summary['total_races']}R "
-        f"| {summary['hit_1st_pct']}% "
         f"| {summary['hit_bet_any_pct']}% "
-        f"| {summary['hit_3fuku_pct']}% "
         f"| {summary['hit_3tan_pct']}% "
+        f"| {summary['hit_3fuku_pct']}% "
+        f"| {summary['hit_1st_pct']}% "
         f"| {summary['avg_rank']:.2f} |"
     )
 
     header = (
         "# 予測精度ログ\n\n"
-        "| 検証日 | 会場 | 対象期間 | レース数 | 1着% | 買い目% | 3連複% | 3連単% | 平均着順 |\n"
+        "| 検証日 | 会場 | 対象期間 | レース数 | 買い目% | 3連単% | 3連複% | 1着% | 平均着順 |\n"
         "|---|---|---|---|---|---|---|---|---|\n"
     )
 
@@ -428,7 +429,7 @@ def update_verify_html() -> None:
         '<p class="note">会場ごとの検証結果。日別詳細HTMLと、会場別・月別の集計を確認できます。</p>',
         '<h2>最新検証一覧</h2>',
         '<div class="tbl-wrap"><table>',
-        "<tr><th>検証日</th><th>会場</th><th>対象期間</th><th>R数</th><th>1着%</th><th>買い目%</th><th>3連複%</th><th>3連単%</th><th>平均着順</th><th>詳細</th></tr>",
+        "<tr><th>検証日</th><th>会場</th><th>対象期間</th><th>R数</th><th>買い目%</th><th>3連単%</th><th>3連複%</th><th>1着%</th><th>平均着順</th><th>詳細</th></tr>",
     ]
 
     for row in rows:
@@ -451,10 +452,10 @@ def update_verify_html() -> None:
             f"<td>{he(vname)}</td>"
             f"<td>{he(row.get('date_from',''))}〜{he(row.get('date_to',''))}</td>"
             f"<td>{he(row.get('total_races',''))}R</td>"
-            f"<td class=\"{pct_class(float(row.get('hit_1st_pct', 0)))}\">{he(row.get('hit_1st_pct',''))}%</td>"
             f"<td class=\"{bet_pct_cls}\">{he(bet_pct_text)}</td>"
-            f"<td class=\"{pct_class(float(row.get('hit_3fuku_pct', 0)))}\">{he(row.get('hit_3fuku_pct',''))}%</td>"
             f"<td class=\"{pct_class(float(row.get('hit_3tan_pct', 0)))}\">{he(row.get('hit_3tan_pct',''))}%</td>"
+            f"<td class=\"{pct_class(float(row.get('hit_3fuku_pct', 0)))}\">{he(row.get('hit_3fuku_pct',''))}%</td>"
+            f"<td class=\"{pct_class(float(row.get('hit_1st_pct', 0)))}\">{he(row.get('hit_1st_pct',''))}%</td>"
             f"<td>{he(row.get('avg_rank',''))}</td>"
             f"<td>{detail_html}</td>"
             "</tr>"
@@ -958,15 +959,16 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         print("  対象データなし（実績CSVが揃っていないか、日付範囲に予測ログがありません）")
         return None
 
-    # ── 集計表示 ────────────────────────────────────────────────
+    # ── 集計表示（3連単中心） ────────────────────────────────────
     print(f"\n  検証レース数:   {total} R")
-    print(f"  1着的中率:     {hit_1st}/{total}  ({hit_1st/total*100:.1f}%)")
-    print(f"  ★ レース的中率: {hit_bet_any}/{total}  ({hit_bet_any/total*100:.1f}%)  ← 買い目のいずれかが3連単的中")
+    print(f"  ★ レース的中率: {hit_bet_any}/{total}  ({hit_bet_any/total*100:.1f}%)  ← 3連単買い目のいずれかが的中")
     print(f"     本命:      {hit_honmei}/{total}  ({hit_honmei/total*100:.1f}%)")
+    print(f"     3連単(順位一致): {hit_top3_all}/{total}  ({hit_top3_all/total*100:.1f}%)")
+    print(f"     3連複:     {hit_top3_box}/{total}  ({hit_top3_box/total*100:.1f}%)")
     print(f"     その他:    {hit_others}/{total}  ({hit_others/total*100:.1f}%)  (対抗{hit_taikou} / 抑え{hit_oshi} / 穴{hit_ana})")
     print(f"  予測1位の平均着順: {rank_sum/total:.2f}  (理想値:1.0)")
-    # 補足指標（従来互換）
-    print(f"  (参考) 3連複: {hit_top3_box}/{total}({hit_top3_box/total*100:.1f}%) / 3連単(順位一致): {hit_top3_all}/{total}({hit_top3_all/total*100:.1f}%)")
+    # 補足指標（1着は本命1番手の頭一致＝参考扱い）
+    print(f"  (参考) 1着的中: {hit_1st}/{total}  ({hit_1st/total*100:.1f}%)")
     print()
 
     # ── 月別集計 ────────────────────────────────────────────────
