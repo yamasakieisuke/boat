@@ -68,17 +68,35 @@ def exhibition_has_valid_times(exhibition_rows: list[dict], min_valid_rows: int 
     valid = sum(1 for row in exhibition_rows or [] if _is_number_text(row.get("exhibition_time", "")))
     return valid >= min_valid_rows
 
-def fetch(url, params=None, wait=1.5):
-    """共通HTTPフェッチ（過負荷防止のwait付き）"""
+def fetch(url, params=None, wait=1.5, retries=2, timeout=15):
+    """共通HTTPフェッチ（過負荷防止のwait付き）
+
+    Timeout / ConnectionError / 5xx は最大 retries 回まで線形バックオフ再試行。
+    4xx や JSON エラー等は即時諦めて None 返却。
+    """
     time.sleep(wait)
-    try:
-        res = requests.get(url, params=params, headers=HEADERS, timeout=15)
-        res.raise_for_status()
-        res.encoding = "utf-8"
-        return res.text
-    except Exception as e:
-        print(f"[ERROR] fetch failed: {url} -> {e}")
-        return None
+    last_err: Exception | None = None
+    for attempt in range(retries + 1):
+        try:
+            res = requests.get(url, params=params, headers=HEADERS, timeout=timeout)
+            if 500 <= res.status_code < 600:
+                raise requests.HTTPError(f"{res.status_code} server error", response=res)
+            res.raise_for_status()
+            res.encoding = "utf-8"
+            return res.text
+        except (requests.Timeout, requests.ConnectionError, requests.HTTPError) as e:
+            last_err = e
+            if attempt < retries:
+                backoff = 10 * (attempt + 1)
+                print(f"[WARN] fetch retry {attempt+1}/{retries} in {backoff}s: {url} -> {e}")
+                time.sleep(backoff)
+                continue
+            break
+        except Exception as e:
+            print(f"[ERROR] fetch failed: {url} -> {e}")
+            return None
+    print(f"[ERROR] fetch failed after {retries+1} attempts: {url} -> {last_err}")
+    return None
 
 
 def _run_parallel_race_jobs(jobs: list[tuple[int, callable]], label: str,
