@@ -7,7 +7,7 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 
 ## プロジェクト概要
 
-ボートレース予想エンジン **v5.20**（2026-04-18 稼働）。
+ボートレース予想エンジン **v5.23**（2026-05-15 朝バッチ単一コマンド化）。
 - 公営競技（ボートレース）の公開データを統計分析し、個人ブログ(WordPress)に予測レポートを公開するデータサイエンス用途のバッチ
 - 本格詳細は `README.md`（47KB）、優先度タスクは `TODO.md`、バージョン履歴は `docs/version_history.md`
 
@@ -20,30 +20,53 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 | .env | `~/repos/boat/.env` | `WP_SYNC_URL` / `WP_SYNC_TOKEN`。**gitignore済** |
 | 蓄積データ | `~/repos/boat/data/` | racecard/player/tide等、**gitignore済** |
 | 出力HTML | `~/repos/boat/output/` | 会場別、**gitignore済** |
-| ペンディング | `~/repos/boat/data/pending_tasks.json` | 展示/オッズ取得予定 |
-| 実行ログ | Cowork UI 各タスクのセッション履歴 | 旧 launchd 時代のログは `~/Library/Logs/claude-tasks/` に残存 |
+| ペンディング | `~/repos/boat/data/fetch_requests.json` | 展示/オッズ取得依頼（v5.22〜） |
+| 実行ログ | Cowork UI 各タスクのセッション履歴 / GitHub Actions | 旧 launchd 時代のログは `~/Library/Logs/claude-tasks/` に残存 |
 
-## スケジュール実行（Cowork Scheduled tasks）
+## スケジュール実行（現行構成 2026-05-15〜）
 
-**2026-04-22 以降は Cowork 側で定期実行。** launchd は全ジョブ `launchctl unload` で停止済み（plist ファイルは残置）。
+### 朝バッチ: GitHub Actions に移行済み
 
-| taskId | cron | 頻度 | フォルダ接続 |
+**2026-05-15 に Cowork sandbox から boatrace.jp への TCP 接続がブロックされる問題が判明し、朝バッチを GitHub Actions に移行。**
+
+| 実行基盤 | タスク | cron (UTC) | 備考 |
 |---|---|---|---|
-| `boat-daily-morning-v2` | `0 8 * * *` | 毎朝 08:00 | ✅ `~/repos/boat` 必須 |
-| `boat-race-fetcher` | `*/4 9-22 * * *` | 9-22時の4分毎 | ✅ `~/repos/boat` 必須 |
+| **GitHub Actions** | `morning-batch.yml` | `0 23 * * *`（08:00 JST） | boatrace.jp に直接接続可 |
+| Cowork（停止中） | `boat-daily-morning-v2` | — | ネットワーク制限により無効化 |
+| Cowork（有効） | `boat-race-fetcher` | `*/4 9-22 * * *` | 9-22時の4分毎 |
 
-### Cowork 運用の重要ポイント
+**GitHub Actions の手動実行**: リポジトリ → Actions → Boat Morning Batch → Run workflow
+- `skip_verify`: 前日 verify スキップ
+- `jcd`: 特定会場のみ（例: 22）
+- `date`: 日付指定 YYYYMMDD
 
-1. **タスク単位でフォルダ接続**が必要。Cowork のスケジュール起動は interactive session とは別の isolated sandbox で走るため、各タスク詳細画面で `~/repos/boat` を明示接続する。未接続だと `BOAT_DIR` 検出失敗で即終了
+**必要な GitHub Secrets**（Settings → Secrets → Actions）:
+- `WP_SYNC_URL` / `WP_SYNC_TOKEN`（`.env` と同じ値）
+
+### Cowork sandbox のネットワーク制限（既知の問題）
+
+- スケジュールタスクの isolated sandbox は boatrace.jp（184.26.219.91）への **TCP 接続がブロック**される
+- インタラクティブセッションからは到達可能だが 1リクエスト約 10秒と低速（サンドボックスの地理的距離）
+- Pro プランのため Admin → Capabilities でのネットワーク設定変更不可
+- **回避策**: `mcp__workspace__web_fetch`（MCP経由）は Anthropic インフラ経由なので制限を受けない
+
+### `boat-race-fetcher` (Cowork) の重要ポイント
+
+1. **タスク単位でフォルダ接続**が必要。各タスク詳細画面で `~/repos/boat` を明示接続
 2. **AUP 文言の挿入**: プロンプト冒頭に公営ギャンブル用途明示を残しておく（Claude の応答拒否予防）
 3. **launchd 二重起動禁止**: `launchctl list | grep -E "boat|claude-code\.task"` で何も出ないのが正常
-4. 端末非依存のため、どの Mac で Cowork を起動していても実行される（逆に新規 Mac でも上記フォルダ接続は個別に必要）
 
 ### 関連ファイル
 
-- 定義 SKILL（Cowork プロンプトの原本）: `~/Agent/personal-life/Scheduled/boat-*/SKILL.md`（iCloud 同期）
+- 朝バッチ workflow: `.github/workflows/morning-batch.yml`
+- 定義 SKILL（Cowork プロンプトの原本）: `~/Documents/Claude/Scheduled/boat-*/SKILL.md`（iCloud 同期）
 - launchd plist（停止中・ロールフォワード用）: `~/Library/LaunchAgents/com.claude-code.task.*.plist` / `com.boat.*.plist`
 - 運用引き継ぎ: [docs/COWORK_ROLLBACK_HANDOVER.md](docs/COWORK_ROLLBACK_HANDOVER.md)
+
+### v5.22〜 の主要変更
+
+- **pending 登録廃止**: `pending_tasks.json` → `fetch_requests.json` の依頼ベースに変更
+- **朝バッチ単一コマンド化 (v5.23)**: `scripts/run_morning.py` が STEP 0〜5 を統合実行
 
 ## 作業開始時/終了時の運用
 
@@ -69,4 +92,5 @@ Claude Code は本ディレクトリで起動するとこのファイルを自�
 - `docs/wordpress_handover.md` — WP 側プラグインの引き継ぎ
 - `docs/version_history.md` — v5.20 までの変更履歴
 - `docs/WP_AUTO_DEPLOY.md` — `wordpress/**` push での GitHub Actions 自動FTPSデプロイ
+- `.github/workflows/morning-batch.yml` — 朝バッチ GitHub Actions ワークフロー（2026-05-15〜）
 - `docs/claude-design-assets/README.md` — Claude Design 連携素材と投入手順
