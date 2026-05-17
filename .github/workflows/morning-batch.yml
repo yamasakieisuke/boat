@@ -20,10 +20,13 @@ on:
         default: ''
 
 jobs:
-  morning-batch:
-    name: 朝バッチ実行
+  prep:
+    name: 前日verify+会場選定
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 20
+    outputs:
+      venues: ${{ steps.list.outputs.venues }}
+      target_date: ${{ steps.list.outputs.target_date }}
 
     steps:
       - name: Checkout
@@ -44,7 +47,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # 前日 verify のために data/logs を前回実行分から復元
       - name: Restore data/logs cache
         uses: actions/cache/restore@v4
         with:
@@ -53,29 +55,78 @@ jobs:
           restore-keys: |
             data-logs-
 
-      - name: Run morning batch
-        run: |
-          ARGS=""
-          if [ "${{ github.event.inputs.skip_verify }}" = "true" ]; then
-            ARGS="$ARGS --skip-verify"
-          fi
-          if [ -n "${{ github.event.inputs.jcd }}" ]; then
-            ARGS="$ARGS --jcd ${{ github.event.inputs.jcd }}"
-          fi
-          if [ -n "${{ github.event.inputs.date }}" ]; then
-            ARGS="$ARGS --date ${{ github.event.inputs.date }}"
-          fi
-          echo "実行コマンド: python3 scripts/run_morning.py $ARGS"
-          python3 scripts/run_morning.py $ARGS
+      - name: STEP 0 morning_verify
+        if: github.event.inputs.skip_verify != 'true'
+        run: python3 scripts/morning_verify.py
         env:
           WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
           TZ: Asia/Tokyo
 
-      # 次回の verify 用に data/logs を保存（失敗時も保存）
       - name: Save data/logs cache
         if: always()
         uses: actions/cache/save@v4
         with:
           path: data/logs
           key: data-logs-${{ github.run_id }}
+
+      - name: STEP 1-2 list venues
+        id: list
+        run: |
+          DATE="${{ github.event.inputs.date }}"
+          if [ -z "$DATE" ]; then
+            DATE=$(date +%Y%m%d)
+          fi
+          echo "target_date=$DATE" >> "$GITHUB_OUTPUT"
+
+          if [ -n "${{ github.event.inputs.jcd }}" ]; then
+            VENUES="[\"${{ github.event.inputs.jcd }}\"]"
+          else
+            VENUES=$(python3 scripts/run_morning.py --list-venues --date "$DATE")
+          fi
+          echo "venues=$VENUES" >> "$GITHUB_OUTPUT"
+          echo "対象日付: $DATE / 対象会場: $VENUES"
+        env:
+          TZ: Asia/Tokyo
+
+  predict:
+    name: 予測 jcd=${{ matrix.jcd }}
+    needs: prep
+    if: needs.prep.outputs.venues != '[]' && needs.prep.outputs.venues != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        jcd: ${{ fromJson(needs.prep.outputs.venues) }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: STEP 3-5 predict ${{ matrix.jcd }}
+        run: |
+          python3 scripts/run_morning.py \
+            --jcd "${{ matrix.jcd }}" \
+            --skip-verify \
+            --date "${{ needs.prep.outputs.target_date }}"
+        env:
+          WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
+          WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
+          TZ: Asia/Tokyo

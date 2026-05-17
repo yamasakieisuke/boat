@@ -6,7 +6,9 @@ Claude のターン消費を抑えるため、会場選択ロジックも Python
 from __future__ import annotations
 
 import argparse
+import contextlib
 import datetime
+import json
 import re
 import subprocess
 import sys
@@ -17,7 +19,7 @@ sys.path.insert(0, str(BOAT_DIR))
 
 import scripts.scraper as sc
 
-MAX_VENUES = 8
+MAX_VENUES = 6
 
 GRADE_ORDER = {"SG": 0, "PG1": 1, "G1": 2, "G2": 3, "G3": 4}
 
@@ -119,9 +121,18 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="会場選択結果のみ表示して終了")
     parser.add_argument("--skip-verify", action="store_true", help="STEP 0 (前日 verify) をスキップ")
     parser.add_argument("--jcd", help="特定会場のみ処理（STEP 1-2 スキップ）")
+    parser.add_argument("--list-venues", action="store_true",
+                        help="選択された会場一覧をJSONで stdout に出力して終了（GitHub Actions matrix 用）")
     args = parser.parse_args()
 
     date_str = args.date
+
+    if args.list_venues:
+        with contextlib.redirect_stdout(sys.stderr):
+            active = fetch_active_venues(date_str)
+            selected = select_venues(active)
+        print(json.dumps(selected))
+        return 0
 
     if args.jcd:
         selected = [args.jcd]
