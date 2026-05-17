@@ -9,6 +9,7 @@ build_stats.py  —  過去CSV → 選手・モーター統計JSONを生成
     hist_global_win_rate    : 全国1着率（実績）
     hist_local_win_rate     : 当地1着率（実績）
     hist_avg_st             : 全CSVから集計した平均ST
+    hist_exhibition         : 展示タイム集計 {overall_avg, count, by_venue, recent_avg, recent_deviation}
     hist_motor_stats        : {motor_no: {win_rate, 2rate, races}}
 
   data/motors/{motor_no}.json:
@@ -129,6 +130,65 @@ def compute_st_stats(rows_for_player: list[dict]) -> dict:
         }
     return result
 
+
+def compute_exhibition_stats(rows_for_player: list[dict], recent_n: int = 20) -> dict:
+    """
+    展示タイム（exhibition_time）の集計。
+      overall_avg : 全期間・全会場の平均
+      count       : 有効サンプル数
+      by_venue    : {jcd: {avg, count}}
+      recent_avg  : 直近 recent_n 走の平均
+      recent_deviation : 直近走の「会場平均からの偏差」平均（負=会場平均より速い）
+    """
+    samples = []  # [(date, jcd, val)]
+    for row in rows_for_player:
+        et = row.get("exhibition_time","").strip()
+        if not re.match(r"^\d+\.\d+$", et):
+            continue
+        try:
+            val = float(et)
+        except ValueError:
+            continue
+        if not (5.5 <= val <= 8.5):
+            continue
+        jcd = VENUE_CODE_MAP.get(row.get("venue_name","").strip(), "")
+        date = row.get("date","").strip()
+        samples.append((date, jcd, val))
+
+    if not samples:
+        return {}
+
+    samples.sort(key=lambda x: x[0])
+    vals = [v for _,_,v in samples]
+    by_venue: dict[str, list[float]] = defaultdict(list)
+    for _, j, v in samples:
+        if j:
+            by_venue[j].append(v)
+
+    result = {
+        "overall_avg": round(sum(vals)/len(vals), 2),
+        "count": len(vals),
+        "by_venue": {
+            j: {"avg": round(sum(v)/len(v), 2), "count": len(v)}
+            for j, v in by_venue.items()
+        },
+    }
+
+    recent = samples[-recent_n:]
+    if recent:
+        rvals = [v for _,_,v in recent]
+        result["recent_avg"] = round(sum(rvals)/len(rvals), 2)
+        result["recent_count"] = len(rvals)
+        deviations = []
+        for _, j, v in recent:
+            base = sum(by_venue[j]) / len(by_venue[j]) if j and by_venue.get(j) else None
+            if base is not None:
+                deviations.append(v - base)
+        if deviations:
+            result["recent_deviation"] = round(sum(deviations)/len(deviations), 3)
+
+    return result
+
 def build_player_stats(all_rows: list[dict], local_rows: list[dict], local_jcd: str):
     """全選手の統計をplayers/フォルダに保存（既存データへマージ）"""
     # reg_no でグルーピング
@@ -171,6 +231,9 @@ def build_player_stats(all_rows: list[dict], local_rows: list[dict], local_jcd: 
             st_info = compute_st_stats(g_rows)
             if st_info:
                 existing["hist_avg_st"] = st_info
+            ex_info = compute_exhibition_stats(g_rows)
+            if ex_info:
+                existing["hist_exhibition"] = ex_info
 
         # 当地統計
         if l_rows:
@@ -183,6 +246,62 @@ def build_player_stats(all_rows: list[dict], local_rows: list[dict], local_jcd: 
             json.dump(existing, f, ensure_ascii=False, indent=2)
 
     print(f"選手統計を {save_dir} に保存しました")
+
+def build_top1_followers(all_rows: list[dict]) -> None:
+    """
+    v5.23: 会場別 1着waku別 の2-3着連動テーブルを生成。
+    出力: data/venues/stats/top1_followers.json
+    """
+    from collections import Counter
+    by_race: dict = defaultdict(dict)
+    for r in all_rows:
+        try:
+            rank = int(r.get("rank", "") or 0)
+            waku = int(r.get("waku", "") or 0)
+        except ValueError:
+            continue
+        if rank not in (1, 2, 3) or waku not in range(1, 7):
+            continue
+        jcd = VENUE_CODE_MAP.get(r.get("venue_name", "").strip(), "")
+        if not jcd:
+            continue
+        key = (r.get("date", ""), jcd, r.get("race_no", ""))
+        by_race[key][rank] = waku
+
+    agg: dict = defaultdict(lambda: {"n": 0, "w2": Counter(), "w3": Counter(), "combo": Counter()})
+    for (_, jcd, _), ranks in by_race.items():
+        if 1 in ranks and 2 in ranks and 3 in ranks:
+            w1, w2, w3 = ranks[1], ranks[2], ranks[3]
+            a = agg[(jcd, w1)]
+            a["n"] += 1
+            a["w2"][w2] += 1
+            a["w3"][w3] += 1
+            a["combo"][(w2, w3)] += 1
+
+    out: dict = {}
+    jcd_names = {v: k for k, v in VENUE_CODE_MAP.items()}
+    for (jcd, w1), data in agg.items():
+        n = data["n"]
+        if n < 5:
+            continue
+        venue_dict = out.setdefault(jcd, {"name": jcd_names.get(jcd, ""), "by_winner": {}})
+        venue_dict["by_winner"][str(w1)] = {
+            "n": n,
+            "w2_dist": {str(w): round(c / n, 3) for w, c in data["w2"].most_common()},
+            "w3_dist": {str(w): round(c / n, 3) for w, c in data["w3"].most_common()},
+            "top_combos": [
+                {"combo": f"{w1}-{w2}-{w3}", "count": c, "pct": round(c / n, 3)}
+                for (w2, w3), c in data["combo"].most_common(5)
+            ],
+        }
+
+    stats_dir = DATA_DIR / "venues" / "stats"
+    stats_dir.mkdir(parents=True, exist_ok=True)
+    out_path = stats_dir / "top1_followers.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(out, f, ensure_ascii=False, indent=2)
+    print(f"連動テーブル: {len(out)}会場 → {out_path}")
+
 
 def build_motor_stats(local_rows: list[dict], jcd: str):
     """モーター統計を motors/ フォルダに保存"""
@@ -248,6 +367,10 @@ def main():
 
     print("\nモーター統計を構築中...")
     build_motor_stats(local_rows, args.jcd)
+
+    if not args.no_global:
+        print("\n会場別連動テーブルを構築中（v5.23）...")
+        build_top1_followers(all_rows)
 
     print("\n=== 完了 ===")
 

@@ -406,7 +406,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.20"
+PREDICTOR_VERSION = "v5.23"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
@@ -972,18 +972,37 @@ def calc_st_score(racer, player_stats):
 
 
 # ── 展示スコア ───────────────────────────────────────────────────
-def calc_exhibition_score(waku, exhibition_data):
-    """展示タイム（直線スピード）の相対スコア。最速=1.0、最遅=0.0"""
-    if not exhibition_data: return 0.5
-    times = {}
-    for e in exhibition_data.get("exhibition", []):
-        w = int(safe_float(e.get("waku",0)))
-        t = safe_float(e.get("exhibition_time",0))
-        if w > 0 and t > 0: times[w] = t
-    if not times or waku not in times: return 0.5
-    mn, mx = min(times.values()), max(times.values())
-    if mx - mn < 0.01: return 0.5
-    return round(1.0 - (times[waku] - mn) / (mx - mn), 4)
+def calc_exhibition_score(waku, exhibition_data, player_stats=None, jcd: str = ""):
+    """
+    展示タイム（直線スピード）の相対スコア。最速=1.0、最遅=0.0
+
+    優先順位:
+      1) 当日展示が取れている場合: 全6艇の相対ランキング
+      2) 取れていない場合: player_stats["hist_exhibition"]["recent_deviation"] を form 指標として使用
+         - recent_deviation < -0.05 (会場平均より速い) → 高スコア
+         - recent_deviation > +0.05 (会場平均より遅い) → 低スコア
+    """
+    if exhibition_data:
+        times = {}
+        for e in exhibition_data.get("exhibition", []):
+            w = int(safe_float(e.get("waku", 0)))
+            t = safe_float(e.get("exhibition_time", 0))
+            if w > 0 and t > 0:
+                times[w] = t
+        if times and waku in times:
+            mn, mx = min(times.values()), max(times.values())
+            if mx - mn >= 0.01:
+                return round(1.0 - (times[waku] - mn) / (mx - mn), 4)
+
+    # フォールバック: 直近偏差から form 指標
+    if player_stats:
+        hist_ex = player_stats.get("hist_exhibition") or {}
+        dev = hist_ex.get("recent_deviation")
+        if dev is not None:
+            # -0.05 → 1.0, 0 → 0.5, +0.05 → 0.0 にマップ
+            score = 0.5 - dev * 10.0
+            return round(max(0.0, min(1.0, score)), 4)
+    return 0.5
 
 def calc_exhibition_st_score(waku, exhibition_data):
     """スタート展示のSTスコア。start_timing フィールドを優先使用（旧 exhibition_st は廃止）"""
@@ -1457,7 +1476,8 @@ def score_racer(racer, waku, jcd, race_no, date_str,
     b["st_score"]        = round(calc_st_score(racer, player_stats) * WEIGHTS["st_score"], 5)
 
     # 展示スコア（展示タイム60% + ST30% + チルト10%）
-    ex_score             = (calc_exhibition_score(waku, exhibition_data)    * 0.6
+    # v5.21: live exhibition がない場合は player_stats["hist_exhibition"] にフォールバック
+    ex_score             = (calc_exhibition_score(waku, exhibition_data, player_stats, jcd) * 0.6
                           + calc_exhibition_st_score(waku, exhibition_data) * 0.3
                           + calc_tilt_score(waku, exhibition_data)          * 0.1)
     b["exhibition_score"]= round(ex_score * WEIGHTS["exhibition_score"], 5)
@@ -1632,8 +1652,10 @@ def predict(jcd: str, date: str, race_no: int, verbose: bool = True,
     scored.sort(key=lambda x: x["score"], reverse=True)
     combo_stats = load_combo_stats(jcd) if _COMBO_STATS_AVAILABLE else None
     bets = _suggest_3rentan(scored, weather, combo_stats=combo_stats, exhibition_data=exhibition,
-                            date_str=date, race_no=race_no, race_name=race_name)
-    confidence_pct, is_rough, _ = _calc_confidence(scored)
+                            date_str=date, race_no=race_no, race_name=race_name, jcd=jcd)
+    # v5.22: 1号艇の沈みリスク推定
+    w1_estimate = estimate_w1_winrate(scored, jcd)
+    confidence_pct, is_rough, _ = _calc_confidence(scored, sink_risk=w1_estimate.get("sink_risk"))
     # v5.19: セオリーパターン発動記録（verify 用）
     triggered_patterns = _detect_race_patterns(scored, exhibition, weather)
     applied_patterns = _extract_applied_patterns(bets)
@@ -1645,7 +1667,8 @@ def predict(jcd: str, date: str, race_no: int, verbose: bool = True,
         _save_prediction_log(jcd, date, race_no, scored, tide_data,
                              bets=bets, confidence=_format_confidence(confidence_pct), is_rough=is_rough,
                              odds_data=odds_data, exhibition_data=exhibition, weather=weather,
-                             triggered_patterns=triggered_patterns, applied_patterns=applied_patterns)
+                             triggered_patterns=triggered_patterns, applied_patterns=applied_patterns,
+                             w1_estimate=w1_estimate)
 
     if _return_context:
         ctx = {
@@ -1694,7 +1717,8 @@ def _extract_applied_patterns(bets) -> list[str]:
 def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
                          confidence: str = "", is_rough: bool = False,
                          odds_data=None, exhibition_data=None, weather=None,
-                         triggered_patterns=None, applied_patterns=None):
+                         triggered_patterns=None, applied_patterns=None,
+                         w1_estimate=None):
     """
     予測結果を JSON で保存（後で実績と照合するため）
     保存先: data/logs/{date}/{jcd}_R{race_no:02d}_pred.json
@@ -1766,6 +1790,8 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
         # v5.19: セオリーパターン発動記録（#1 verify 追跡用）
         "triggered_patterns": triggered_patterns or {},
         "applied_patterns":   applied_patterns or [],
+        # v5.22: 1号艇沈みリスク推定（estimated 1着率 / sink_risk / 補正係数）
+        "w1_estimate":        w1_estimate or {},
     }
     log_dir = DATA_DIR / "logs" / date
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -1943,7 +1969,8 @@ def _suggest_3rentan(scored: list, weather=None,
                      combo_stats: dict | None = None,
                      exhibition_data=None,
                      date_str: str = "", race_no: int = 0,
-                     race_name: str = "") -> list[tuple[str, str, str]]:
+                     race_name: str = "",
+                     jcd: str = "") -> list[tuple[str, str, str]]:
     """
     3連単の買い目を生成して返す。
     戻り値: [(ラベル, "X-Y-Z", 理由), ...]
@@ -2177,6 +2204,33 @@ def _suggest_3rentan(scored: list, weather=None,
                 excluded_combos=existing_combos
             )
             _add_formation("本命②", outer_form)
+
+    # ── v5.23: 会場別 1着waku別の連動テーブルから follower bets を追加 ──
+    # 「3まくり→1残し→4差し」「4まくり→5-6連発」など、会場特性の出やすい縦目を採用
+    if jcd:
+        # score上位3艇のうち non-1 を対象（1号艇1着シナリオは既存ロジックで網羅）
+        for cand_winner in p[:3]:
+            if cand_winner == 1:
+                continue
+            top_combos = get_top1_followers(jcd, cand_winner, min_n=8)
+            if not top_combos:
+                continue
+            # 上位2件のうち、まだ未登場の組合せを追加
+            added = 0
+            for c in top_combos[:3]:
+                if added >= 2:
+                    break
+                combo_str = c.get("combo", "")
+                if not combo_str or combo_str in existing_combos:
+                    continue
+                pct = c.get("pct", 0)
+                if pct < 0.08:  # 8% 未満の頻度は除外（ノイズ防止）
+                    continue
+                reason = f"会場連動(w1={cand_winner}, 頻度{pct*100:.1f}%, n={top_combos[0].get('count','?')})"
+                # bets に直接追加（_add_formation 経由ではなく軽量に）
+                bets.append(("対抗", combo_str, reason))
+                existing_combos.add(combo_str)
+                added += 1
 
     # ── 穴：upset_score で一発候補を選出 ─────────────────────────
     # scored[3:] = 4〜6位（スコア順）の選手を評価
@@ -2748,8 +2802,155 @@ def _build_budget_plan(bets: list[tuple[str, str, str]], scored: list,
     return best_plan
 
 
+# ── 沈みリスク計算（v5.22） ────────────────────────────────────────
+_VENUE_W1_WINRATE_CACHE: dict | None = None
+_TOP1_FOLLOWERS_CACHE: dict | None = None
+
+
+def _load_venue_w1_winrate() -> dict:
+    """data/venues/stats/w1_winrate.json をロード（キャッシュ）"""
+    global _VENUE_W1_WINRATE_CACHE
+    if _VENUE_W1_WINRATE_CACHE is None:
+        path = BASE_DIR / "data" / "venues" / "stats" / "w1_winrate.json"
+        if path.exists():
+            try:
+                _VENUE_W1_WINRATE_CACHE = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                _VENUE_W1_WINRATE_CACHE = {}
+        else:
+            _VENUE_W1_WINRATE_CACHE = {}
+    return _VENUE_W1_WINRATE_CACHE
+
+
+def _load_top1_followers() -> dict:
+    """data/venues/stats/top1_followers.json をロード（キャッシュ）"""
+    global _TOP1_FOLLOWERS_CACHE
+    if _TOP1_FOLLOWERS_CACHE is None:
+        path = BASE_DIR / "data" / "venues" / "stats" / "top1_followers.json"
+        if path.exists():
+            try:
+                _TOP1_FOLLOWERS_CACHE = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                _TOP1_FOLLOWERS_CACHE = {}
+        else:
+            _TOP1_FOLLOWERS_CACHE = {}
+    return _TOP1_FOLLOWERS_CACHE
+
+
+def get_top1_followers(jcd: str, w1_winner: int, min_n: int = 8) -> list[dict]:
+    """
+    会場 jcd で 1着=w1_winner だった場合の最頻 2-3着パターン TOP5 を返す。
+    サンプル数が min_n 未満なら空リスト（信頼できない統計のため除外）。
+    各要素: {"combo": "X-Y-Z", "count": N, "pct": 0.XXX}
+    """
+    table = _load_top1_followers()
+    by_winner = (table.get(jcd, {}) or {}).get("by_winner", {})
+    data = by_winner.get(str(w1_winner), {})
+    if not data or data.get("n", 0) < min_n:
+        return []
+    return data.get("top_combos", [])
+
+
+def estimate_w1_winrate(scored: list, jcd: str) -> dict:
+    """
+    1号艇の推定1着率を返す。
+
+    入力:
+      scored: スコア降順ソート済みの全6艇のリスト
+      jcd:    会場コード
+
+    出力 dict:
+      base_rate:      会場ベース1号艇1着率
+      grade_mult, score_rank_mult, st_mult, gw_mult: 補正係数
+      estimated:      最終推定1着率 [0.05, 0.95]
+      sink_risk:      1 - estimated（沈みリスク）
+      w1_score_rank:  1号艇のscore順位（1始まり）
+      w1_grade:       1号艇のグレード
+      reasons:        補正の説明文字列
+
+    背景: v5.20 verify 2440R 分析より、1号艇=B1×特定会場 / score非1位 / ST遅 / 勝率低
+    の各条件で1着率が -15〜-27pt 低下することが判明。これらの合成で推定。
+    """
+    venue_data = _load_venue_w1_winrate().get(jcd, {})
+    base_rate = float(venue_data.get("overall_w1_winrate", 0.578))
+
+    # waku=1 の艇を探す
+    w1_row = next((r for r in scored if int(r.get("waku", 0)) == 1), None)
+    if not w1_row:
+        return {
+            "base_rate": base_rate, "grade_mult": 1.0, "score_rank_mult": 1.0,
+            "st_mult": 1.0, "gw_mult": 1.0,
+            "estimated": base_rate, "sink_risk": round(1 - base_rate, 3),
+            "w1_score_rank": None, "w1_grade": "", "reasons": [],
+        }
+
+    # 1号艇の grade
+    w1_grade = (w1_row.get("racer", {}) or {}).get("grade", "") or w1_row.get("grade", "")
+    grade_mult_map = {"A1": 1.25, "A2": 1.10, "B1": 0.70, "B2": 0.65}
+    grade_mult = grade_mult_map.get(w1_grade, 1.0)
+
+    # score順位
+    sorted_by_score = sorted(scored, key=lambda r: -r.get("score", 0))
+    try:
+        w1_score_rank = next(i + 1 for i, r in enumerate(sorted_by_score) if int(r.get("waku", 0)) == 1)
+    except StopIteration:
+        w1_score_rank = 6
+    score_rank_mult_map = {1: 1.0, 2: 0.70, 3: 0.55, 4: 0.60, 5: 0.65, 6: 0.65}
+    score_rank_mult = score_rank_mult_map.get(w1_score_rank, 0.65)
+
+    # ST相対 (w1_st - min(others))
+    def get_st(row):
+        rm = row.get("raw_metrics", {}) or {}
+        st = rm.get("st", {}) or {}
+        return st.get("hist_avg") or st.get("racecard_avg") or _avg_st_from_scored(row)
+    w1_st = get_st(w1_row)
+    other_sts = [get_st(r) for r in scored if int(r.get("waku", 0)) != 1]
+    other_sts = [s for s in other_sts if s and s > 0]
+    if other_sts and w1_st and w1_st > 0:
+        st_gap = w1_st - min(other_sts)
+    else:
+        st_gap = 0.0
+    if st_gap <= -0.005:   st_mult = 1.35
+    elif st_gap <= 0:      st_mult = 1.15
+    elif st_gap <= 0.005:  st_mult = 1.00
+    elif st_gap <= 0.020:  st_mult = 0.85
+    else:                  st_mult = 0.75
+
+    # 全国勝率
+    racer = w1_row.get("racer", {}) or {}
+    gw = float(racer.get("global_win", 0) or 0)
+    if gw >= 15.0:   gw_mult = 1.10
+    elif gw >= 10.0: gw_mult = 1.00
+    elif gw >= 5.0:  gw_mult = 0.85
+    else:            gw_mult = 0.70
+
+    estimated = base_rate * grade_mult * score_rank_mult * st_mult * gw_mult
+    estimated = max(0.05, min(0.95, estimated))
+
+    reasons = []
+    if grade_mult < 1.0:        reasons.append(f"{w1_grade}級 ×{grade_mult:.2f}")
+    if score_rank_mult < 1.0:   reasons.append(f"scoreランク{w1_score_rank}位 ×{score_rank_mult:.2f}")
+    if st_mult < 1.0:           reasons.append(f"ST不利({st_gap:+.3f}) ×{st_mult:.2f}")
+    elif st_mult > 1.0:         reasons.append(f"ST有利({st_gap:+.3f}) ×{st_mult:.2f}")
+    if gw_mult < 1.0:           reasons.append(f"勝率{gw:.1f} ×{gw_mult:.2f}")
+
+    return {
+        "base_rate":       round(base_rate, 3),
+        "grade_mult":      grade_mult,
+        "score_rank_mult": score_rank_mult,
+        "st_mult":         st_mult,
+        "gw_mult":         gw_mult,
+        "st_gap":          round(st_gap, 3),
+        "estimated":       round(estimated, 3),
+        "sink_risk":       round(1 - estimated, 3),
+        "w1_score_rank":   w1_score_rank,
+        "w1_grade":        w1_grade,
+        "reasons":         reasons,
+    }
+
+
 # ── 信頼度計算（v5.8） ────────────────────────────────────────────
-def _calc_confidence(scored: list) -> tuple[int, bool, bool]:
+def _calc_confidence(scored: list, sink_risk: float | None = None) -> tuple[int, bool, bool]:
     """
     1位・2位のスコア差から信頼度%と荒れフラグを返す。
     戻り値: (confidence_pct, is_rough, is_dominant)
@@ -2757,6 +2958,7 @@ def _calc_confidence(scored: list) -> tuple[int, bool, bool]:
       - 展示データなし
       - コメント根拠が薄い
       - 1位〜3位が接近
+      - v5.22: sink_risk >= 0.55 で荒れ判定強化（1号艇が score 上位でない時に頻発）
     """
     if len(scored) < 2:
         return 70, False, False
@@ -2793,9 +2995,19 @@ def _calc_confidence(scored: list) -> tuple[int, bool, bool]:
     elif gap13 < 0.080:
         pct -= 3
 
+    # v5.22: 沈みリスク補正（1号艇が score上位でない/弱い場合の荒れ予想）
+    if sink_risk is not None:
+        if sink_risk >= 0.65:
+            pct -= 10
+        elif sink_risk >= 0.55:
+            pct -= 5
+        elif sink_risk <= 0.15:
+            pct += 3  # 1号艇本命確信時
+
     pct = round(pct)
-    is_rough = gap <= 0.015
-    is_dominant = gap >= 0.040 and gap13 >= 0.080 and pct >= 85
+    is_rough = (gap <= 0.015) or (sink_risk is not None and sink_risk >= 0.55)
+    is_dominant = (gap >= 0.040 and gap13 >= 0.080 and pct >= 85 and
+                   (sink_risk is None or sink_risk <= 0.20))
     return int(max(55, min(90, pct))), is_rough, is_dominant
 
 
@@ -3271,10 +3483,11 @@ def _print_exhibition_section(scored, exhibition):
 
 
 def _print_bet_section(scored, weather, odds_data, combo_stats, exhibition_data=None,
-                       date_str: str = "", race_no: int = 0, race_name: str = ""):
+                       date_str: str = "", race_no: int = 0, race_name: str = "",
+                       jcd: str = ""):
     confidence_pct, is_rough, _ = _calc_confidence(scored)
     bets = _suggest_3rentan(scored, weather, combo_stats=combo_stats, exhibition_data=exhibition_data,
-                            date_str=date_str, race_no=race_no, race_name=race_name)
+                            date_str=date_str, race_no=race_no, race_name=race_name, jcd=jcd)
     has_odds = bool(odds_data and odds_data.get("odds_3t"))
     rough_str = ' <span class="conf-low">⚡荒れ注意</span>' if is_rough else ""
     conf_cls = _confidence_class(confidence_pct)
@@ -3678,7 +3891,7 @@ def _print_result(jcd, date, race_no, scored, venue, exhibition, weather,
 
     _print_score_section(scored)
     _print_bet_section(scored, weather, odds_data, combo_stats, exhibition_data=exhibition,
-                       date_str=date, race_no=race_no, race_name=race_name)
+                       date_str=date, race_no=race_no, race_name=race_name, jcd=jcd)
 
     print('</div>')  # race-block
 
@@ -3760,7 +3973,8 @@ if __name__ == "__main__":
             bets       = _suggest_3rentan(scored, ctx.get("weather"), combo_stats=combo_stats,
                                           exhibition_data=ctx.get("exhibition"),
                                           date_str=args.date, race_no=r,
-                                          race_name=ctx.get("race_name",""))
+                                          race_name=ctx.get("race_name",""),
+                                          jcd=args.jcd)
             conf_pct, rough, dominant = _calc_confidence(scored)
             all_race_data.append({
                 "race_no":   r,

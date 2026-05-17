@@ -38,6 +38,7 @@ JCD_TO_VENUE = {
 
 RESULTLIST_URL = "https://www.boatrace.jp/owpc/pc/race/resultlist?hd={date}&jcd={jcd}"
 RACERESULT_URL = "https://www.boatrace.jp/owpc/pc/race/raceresult?rno={rno}&jcd={jcd}&hd={date}"
+BEFOREINFO_URL = "https://www.boatrace.jp/owpc/pc/race/beforeinfo?rno={rno}&jcd={jcd}&hd={date}"
 
 
 def norm_num(text: str) -> str:
@@ -54,7 +55,101 @@ def combo_from_cell(td) -> str:
     return "-".join(nums)
 
 
-def parse_result_page(html: str, date_str: str, jcd: str, race_no: int) -> list[dict]:
+def parse_start_info(soup) -> tuple[dict[int, dict], str]:
+    """
+    スタート情報テーブルから {waku: {course, st, kimarite}} と全体決まり手を返す。
+    HTML 構造:
+      <span class="table1_boatImage1Number is-typeN"> N </span>  ← N = コース順位（進入順）
+      <span class="table1_boatImage1Time"> .15  逃げ </span>     ← ST と (1着艇のみ) 決まり手
+    数字の先頭は枠番、.XX が ST。
+    """
+    result: dict[int, dict] = {}
+    kimarite_all = ""
+
+    start_tbl = None
+    for t in soup.select("table"):
+        heads = [th.get_text(" ", strip=True) for th in t.select("thead th")]
+        if heads and heads[0] == "スタート情報":
+            start_tbl = t
+            break
+    if not start_tbl:
+        return result, kimarite_all
+
+    for tr in start_tbl.select("tbody tr"):
+        td = tr.select_one("td")
+        if not td:
+            continue
+        num_span = td.select_one(".table1_boatImage1Number")
+        time_span = td.select_one(".table1_boatImage1Time")
+        if not num_span:
+            continue
+        waku_txt = num_span.get_text(strip=True)
+        try:
+            waku = int(waku_txt)
+        except ValueError:
+            continue
+        course = waku
+        for cls in num_span.get("class", []):
+            m = re.match(r"is-type(\d)", cls)
+            if m:
+                course = int(m.group(1))
+                break
+        time_txt = (time_span.get_text(" ", strip=True) if time_span else "").strip()
+        st = ""
+        m = re.match(r"(F?\.\d{2}|F?\d\.\d{2})", time_txt)
+        if m:
+            st = m.group(1)
+        # 1着艇の場合、ST 後ろに「逃げ」「差し」等が付く
+        km = ""
+        if st:
+            after = time_txt[len(st):].strip()
+            if after:
+                km = after.split()[0] if after.split() else ""
+        result[waku] = {"course": course, "st_timing": st, "kimarite": km}
+
+    # 決まり手テーブル（単独）からも拾う
+    for t in soup.select("table"):
+        heads = [th.get_text(" ", strip=True) for th in t.select("thead th")]
+        if heads == ["決まり手"]:
+            cells = [td.get_text(" ", strip=True) for td in t.select("tbody td")]
+            if cells:
+                kimarite_all = cells[0].strip()
+            break
+
+    return result, kimarite_all
+
+
+def fetch_exhibition_map(html: str) -> dict[int, dict]:
+    """
+    beforeinfo ページから {waku: {exhibition_time, tilt}} を返す。
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    out: dict[int, dict] = {}
+    for t in soup.select("table"):
+        heads = [th.get_text(" ", strip=True) for th in t.select("thead th")]
+        if not any("展示" in h for h in heads):
+            continue
+        # 各艇 = 4行構成 (1行目: 枠/写真/選手名/体重/展示タイム/チルト/...) を抽出
+        for tr in t.select("tbody tr"):
+            tds = tr.select("td")
+            if len(tds) < 6:
+                continue
+            waku_txt = tds[0].get_text(" ", strip=True)
+            if not waku_txt.isdigit():
+                continue
+            try:
+                waku = int(waku_txt)
+            except ValueError:
+                continue
+            ex_time = tds[4].get_text(" ", strip=True).strip()
+            tilt    = tds[5].get_text(" ", strip=True).strip()
+            out[waku] = {"exhibition_time": ex_time, "tilt": tilt}
+        break
+    return out
+
+
+def parse_result_page(html: str, date_str: str, jcd: str, race_no: int,
+                      exhibition_map: dict[int, dict] | None = None) -> list[dict]:
     soup = BeautifulSoup(html, "html.parser")
 
     result_table = None
@@ -125,6 +220,10 @@ def parse_result_page(html: str, date_str: str, jcd: str, race_no: int) -> list[
             elif kind == "2連複":
                 pays.update({"pair": combo, "pair_pay": pay, "pair_pop": pop})
 
+    start_map, _km_all = parse_start_info(soup)
+    if exhibition_map is None:
+        exhibition_map = {}
+
     rows = []
     for tr in result_table.select("tbody tr"):
         tds = tr.select("td")
@@ -137,6 +236,12 @@ def parse_result_page(html: str, date_str: str, jcd: str, race_no: int) -> list[
         nums = re.findall(r"\d{4}", racer_text)
         reg_no = nums[0] if nums else ""
         name = re.sub(r"^\d{4}\s*", "", racer_text).strip()
+        try:
+            waku_int = int(tds[1].get_text(strip=True))
+        except ValueError:
+            waku_int = 0
+        sinfo = start_map.get(waku_int, {})
+        einfo = exhibition_map.get(waku_int, {})
         row = {k:"" for k in CSV_HEADER}
         row.update({
             "date": date_str,
@@ -148,9 +253,12 @@ def parse_result_page(html: str, date_str: str, jcd: str, race_no: int) -> list[
             "wind_ms": wind_ms,
             "wave_cm": wave_cm,
             "rank": rank,
-            "waku": tds[1].get_text(strip=True),
+            "waku": str(waku_int) if waku_int else tds[1].get_text(strip=True),
             "reg_no": reg_no,
             "name": name,
+            "exhibition_time": einfo.get("exhibition_time", ""),
+            "course_enter":    str(sinfo.get("course", "")) if sinfo.get("course") else "",
+            "st_timing":       sinfo.get("st_timing", ""),
             "race_time": tds[3].get_text(strip=True).replace("'", ".").replace('"', ""),
             **pays,
         })
@@ -175,7 +283,13 @@ def fetch_official_results(date_str: str, jcd: str) -> list[dict]:
     rows = []
     for race_no in discover_available_races(date_str, jcd, session):
         html = session.get(RACERESULT_URL.format(date=date_str, jcd=jcd, rno=race_no), timeout=30).text
-        rows.extend(parse_result_page(html, date_str, jcd, race_no))
+        ex_map: dict[int, dict] = {}
+        try:
+            ex_html = session.get(BEFOREINFO_URL.format(date=date_str, jcd=jcd, rno=race_no), timeout=30).text
+            ex_map = fetch_exhibition_map(ex_html)
+        except Exception as e:
+            print(f"[WARN] beforeinfo 取得失敗 {date_str} {jcd} R{race_no}: {e}")
+        rows.extend(parse_result_page(html, date_str, jcd, race_no, exhibition_map=ex_map))
     return rows
 
 
