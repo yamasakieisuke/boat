@@ -19,7 +19,7 @@ sys.path.insert(0, str(BOAT_DIR))
 
 import scripts.scraper as sc
 
-MAX_VENUES = 6
+MAX_VENUES = 10
 
 GRADE_ORDER = {"SG": 0, "PG1": 1, "G1": 2, "G2": 3, "G3": 4}
 
