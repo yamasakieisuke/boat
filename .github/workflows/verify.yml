@@ -1,0 +1,65 @@
+name: Boat Daily Verify
+
+on:
+  schedule:
+    # 09:30 JST = 00:30 UTC（LZH 公開を待つため遅め）
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '対象日付 YYYYMMDD（空欄=昨日）'
+        type: string
+        default: ''
+
+jobs:
+  verify:
+    name: 前日 verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore data/logs cache
+        uses: actions/cache/restore@v4
+        with:
+          path: data/logs
+          key: data-logs-${{ github.run_id }}
+          restore-keys: |
+            data-logs-
+
+      - name: Run morning_verify
+        run: |
+          DATE="${{ github.event.inputs.date }}"
+          if [ -n "$DATE" ]; then
+            python3 scripts/morning_verify.py --date "$DATE"
+          else
+            python3 scripts/morning_verify.py
+          fi
+        env:
+          WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
+          WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
+          TZ: Asia/Tokyo
+
+      - name: Save data/logs cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: data/logs
+          key: data-logs-${{ github.run_id }}

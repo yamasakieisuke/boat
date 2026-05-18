@@ -1,4 +1,4 @@
-name: Boat Morning Batch
+name: Boat Daily Predict
 
 on:
   schedule:
@@ -6,10 +6,6 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch:
     inputs:
-      skip_verify:
-        description: '前日 verify をスキップ'
-        type: boolean
-        default: false
       jcd:
         description: '特定会場のみ処理（例: 22）空欄=全会場'
         type: string
@@ -21,9 +17,9 @@ on:
 
 jobs:
   prep:
-    name: 前日verify+会場選定
+    name: 会場選定
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     outputs:
       venues: ${{ steps.list.outputs.venues }}
       target_date: ${{ steps.list.outputs.target_date }}
@@ -46,29 +42,6 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
-
-      - name: Restore data/logs cache
-        uses: actions/cache/restore@v4
-        with:
-          path: data/logs
-          key: data-logs-${{ github.run_id }}
-          restore-keys: |
-            data-logs-
-
-      - name: STEP 0 morning_verify
-        if: github.event.inputs.skip_verify != 'true'
-        run: python3 scripts/morning_verify.py
-        env:
-          WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
-          WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
-          TZ: Asia/Tokyo
-
-      - name: Save data/logs cache
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: data/logs
-          key: data-logs-${{ github.run_id }}
 
       - name: STEP 1-2 list venues
         id: list
