@@ -1,0 +1,747 @@
+{
+  "jcd": "21",
+  "date": "20260517",
+  "race_no": 6,
+  "version": "v5.20",
+  "predicted_at": "2026-05-17T11:28:01",
+  "confidence": "78%",
+  "is_rough": false,
+  "bets": [
+    {
+      "label": "本命①",
+      "combo": "1-2-4",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-3-4",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-3-6",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-2-6",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-2-3",
+      "reason": "多軸top stage=予選(4.3%)/period=middle(4.8%)"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-3-2",
+      "reason": "多軸top stage=予選(4.3%)/period=middle(4.0%)"
+    },
+    {
+      "label": "本命②",
+      "combo": "4-1-2",
+      "reason": "4カドまくり差し(conf=0.65)"
+    },
+    {
+      "label": "本命②",
+      "combo": "4-1-5",
+      "reason": "4カドまくり差し(conf=0.65)"
+    },
+    {
+      "label": "穴",
+      "combo": "6-1-2",
+      "reason": "⚡穴:モーター普通/ST0.14速/全国W24% 連れ出し2枠(29%) 1着狙い"
+    },
+    {
+      "label": "穴",
+      "combo": "6-1-3",
+      "reason": "⚡穴:モーター普通/ST0.14速/全国W24% 連れ出し2枠(29%) 1着狙い"
+    },
+    {
+      "label": "穴",
+      "combo": "6-2-3",
+      "reason": "⚡穴:モーター普通/ST0.14速/全国W24% 連れ出し2枠(29%) 1着狙い"
+    },
+    {
+      "label": "出目④",
+      "combo": "1-4-2",
+      "reason": "順序違い保険"
+    },
+    {
+      "label": "出目④",
+      "combo": "2-4-1",
+      "reason": "EV上位 overall(EV2.54) 平均23331円"
+    }
+  ],
+  "honmei": [
+    {
+      "combo": "1-2-4",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "combo": "1-3-4",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "combo": "1-3-6",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    },
+    {
+      "combo": "1-2-6",
+      "reason": "1着1固定 / 2着候補3,2 / 3着候補4,6"
+    }
+  ],
+  "others": [
+    {
+      "subtype": "対抗",
+      "combo": "4-1-2",
+      "reason": "4カドまくり差し(conf=0.65)"
+    },
+    {
+      "subtype": "対抗",
+      "combo": "4-1-5",
+      "reason": "4カドまくり差し(conf=0.65)"
+    },
+    {
+      "subtype": "穴",
+      "combo": "6-1-2",
+      "reason": "⚡穴:モーター普通/ST0.14速/全国W24% 連れ出し2枠(29%) 1着狙い"
+    },
+    {
+      "subtype": "穴",
+      "combo": "6-1-3",
+      "reason": "⚡穴:モーター普通/ST0.14速/全国W24% 連れ出し2枠(29%) 1着狙い"
+    }
+  ],
+  "predictions": [
+    {
+      "rank": 1,
+      "waku": 1,
+      "name": "吉田　　裕平",
+      "grade": "A1",
+      "reg_no": "4914",
+      "motor_no": "21",
+      "score": 0.62394,
+      "breakdown": {
+        "global_win_rate": 0.03296,
+        "local_win_rate": 0.00976,
+        "motor_2rate": 0.03048,
+        "boat_2rate": 0.0025,
+        "course_advantage": 0.21181,
+        "grade_bonus": 0.05,
+        "st_score": 0.132,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.09,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.00943
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 7.19,
+          "hist_pct": 29.54,
+          "adopted_pct": 20.6
+        },
+        "local_win": {
+          "season_pct": 8.13,
+          "hist_pct": 0.0,
+          "adopted_pct": 8.13
+        },
+        "motor_2rate": {
+          "season_pct": 38.1,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 38.1
+        },
+        "boat_2rate": {
+          "season_pct": 12.5
+        },
+        "st": {
+          "racecard_avg": 0.11,
+          "hist_avg": 0.118,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            3,
+            5,
+            4
+          ],
+          "races": [
+            {
+              "course": 3,
+              "rank": 3
+            },
+            {
+              "course": 2,
+              "rank": 5
+            },
+            {
+              "course": 6,
+              "rank": 4
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 1,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "",
+          "text": "",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 43,
+          "1st_pct": 83.7,
+          "2nd_pct": 14.0,
+          "3rd_pct": 0.0,
+          "4th_pct": 0.0,
+          "5th_pct": 0.0,
+          "6th_pct": 2.3,
+          "top2_pct": 97.7,
+          "top3_pct": 97.7
+        }
+      }
+    },
+    {
+      "rank": 2,
+      "waku": 3,
+      "name": "石本　　裕武",
+      "grade": "A1",
+      "reg_no": "5267",
+      "motor_no": "60",
+      "score": 0.45116,
+      "breakdown": {
+        "global_win_rate": 0.03641,
+        "local_win_rate": 0.00864,
+        "motor_2rate": 0.032,
+        "boat_2rate": 0.011,
+        "course_advantage": 0.08151,
+        "grade_bonus": 0.05,
+        "st_score": 0.101,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.06567,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.00993
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 6.69,
+          "hist_pct": 33.47,
+          "adopted_pct": 22.76
+        },
+        "local_win": {
+          "season_pct": 7.2,
+          "hist_pct": null,
+          "adopted_pct": 7.2
+        },
+        "motor_2rate": {
+          "season_pct": 40.0,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 40.0
+        },
+        "boat_2rate": {
+          "season_pct": 55.0
+        },
+        "st": {
+          "racecard_avg": 0.15,
+          "hist_avg": 0.149,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            6,
+            4,
+            1
+          ],
+          "races": [
+            {
+              "course": 6,
+              "rank": 6
+            },
+            {
+              "course": 1,
+              "rank": 4
+            },
+            {
+              "course": 6,
+              "rank": 1
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 3,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "",
+          "text": "",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 37,
+          "1st_pct": 24.3,
+          "2nd_pct": 18.9,
+          "3rd_pct": 27.0,
+          "4th_pct": 8.1,
+          "5th_pct": 13.5,
+          "6th_pct": 8.1,
+          "top2_pct": 43.2,
+          "top3_pct": 70.3
+        }
+      }
+    },
+    {
+      "rank": 3,
+      "waku": 2,
+      "name": "定松　　勇樹",
+      "grade": "A1",
+      "reg_no": "5121",
+      "motor_no": "57",
+      "score": 0.44587,
+      "breakdown": {
+        "global_win_rate": 0.03347,
+        "local_win_rate": 0.00868,
+        "motor_2rate": 0.02353,
+        "boat_2rate": 0.01111,
+        "course_advantage": 0.08237,
+        "grade_bonus": 0.05,
+        "st_score": 0.11201,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.05946,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.01024
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 8.11,
+          "hist_pct": 29.46,
+          "adopted_pct": 20.92
+        },
+        "local_win": {
+          "season_pct": 7.23,
+          "hist_pct": 0.0,
+          "adopted_pct": 7.23
+        },
+        "motor_2rate": {
+          "season_pct": 29.41,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 29.41
+        },
+        "boat_2rate": {
+          "season_pct": 55.56
+        },
+        "st": {
+          "racecard_avg": 0.14,
+          "hist_avg": 0.138,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            4,
+            1,
+            5
+          ],
+          "races": [
+            {
+              "course": 2,
+              "rank": 4
+            },
+            {
+              "course": 3,
+              "rank": 1
+            },
+            {
+              "course": 5,
+              "rank": 5
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 2,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "",
+          "text": "",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 41,
+          "1st_pct": 22.0,
+          "2nd_pct": 39.0,
+          "3rd_pct": 12.2,
+          "4th_pct": 12.2,
+          "5th_pct": 12.2,
+          "6th_pct": 2.4,
+          "top2_pct": 61.0,
+          "top3_pct": 73.2
+        }
+      }
+    },
+    {
+      "rank": 4,
+      "waku": 4,
+      "name": "桑原　　　悠",
+      "grade": "A1",
+      "reg_no": "4497",
+      "motor_no": "19",
+      "score": 0.40897,
+      "breakdown": {
+        "global_win_rate": 0.02877,
+        "local_win_rate": 0.00726,
+        "motor_2rate": 0.02222,
+        "boat_2rate": 0.01143,
+        "course_advantage": 0.07354,
+        "grade_bonus": 0.05,
+        "st_score": 0.11201,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.04,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.00874
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 7.07,
+          "hist_pct": 25.26,
+          "adopted_pct": 17.98
+        },
+        "local_win": {
+          "season_pct": 6.05,
+          "hist_pct": null,
+          "adopted_pct": 6.05
+        },
+        "motor_2rate": {
+          "season_pct": 27.78,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 27.78
+        },
+        "boat_2rate": {
+          "season_pct": 57.14
+        },
+        "st": {
+          "racecard_avg": 0.14,
+          "hist_avg": 0.138,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            3,
+            5
+          ],
+          "races": [
+            {
+              "course": 4,
+              "rank": 3
+            },
+            {
+              "course": 1,
+              "rank": 5
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 4,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "",
+          "text": "",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 27,
+          "1st_pct": 14.8,
+          "2nd_pct": 11.1,
+          "3rd_pct": 33.3,
+          "4th_pct": 11.1,
+          "5th_pct": 11.1,
+          "6th_pct": 18.5,
+          "top2_pct": 25.9,
+          "top3_pct": 59.3
+        }
+      }
+    },
+    {
+      "rank": 5,
+      "waku": 6,
+      "name": "佐藤　　　翼",
+      "grade": "A1",
+      "reg_no": "4573",
+      "motor_no": "12",
+      "score": 0.34993,
+      "breakdown": {
+        "global_win_rate": 0.02715,
+        "local_win_rate": 0.0,
+        "motor_2rate": 0.0379,
+        "boat_2rate": 0.01053,
+        "course_advantage": 0.02721,
+        "grade_bonus": 0.05,
+        "st_score": 0.115,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.01595,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.01119
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 6.68,
+          "hist_pct": 23.83,
+          "adopted_pct": 16.97
+        },
+        "local_win": {
+          "season_pct": 0.0,
+          "hist_pct": 0.0,
+          "adopted_pct": 0.0
+        },
+        "motor_2rate": {
+          "season_pct": 47.37,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 47.37
+        },
+        "boat_2rate": {
+          "season_pct": 52.63
+        },
+        "st": {
+          "racecard_avg": 0.13,
+          "hist_avg": 0.135,
+          "f_count": 1,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            2,
+            5,
+            1
+          ],
+          "races": [
+            {
+              "course": 3,
+              "rank": 2
+            },
+            {
+              "course": 5,
+              "rank": 5
+            },
+            {
+              "course": 2,
+              "rank": 1
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 6,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "",
+          "text": "",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 34,
+          "1st_pct": 5.9,
+          "2nd_pct": 14.7,
+          "3rd_pct": 26.5,
+          "4th_pct": 17.6,
+          "5th_pct": 11.8,
+          "6th_pct": 23.5,
+          "top2_pct": 20.6,
+          "top3_pct": 47.1
+        }
+      }
+    },
+    {
+      "rank": 6,
+      "waku": 5,
+      "name": "馬場　　貴也",
+      "grade": "A1",
+      "reg_no": "4262",
+      "motor_no": "47",
+      "score": 0.3397,
+      "breakdown": {
+        "global_win_rate": 0.03065,
+        "local_win_rate": 0.01338,
+        "motor_2rate": 0.02134,
+        "boat_2rate": 0.007,
+        "course_advantage": 0.0432,
+        "grade_bonus": 0.05,
+        "st_score": 0.10999,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.0,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.00914
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 7.2,
+          "hist_pct": 27.13,
+          "adopted_pct": 19.16
+        },
+        "local_win": {
+          "season_pct": 6.44,
+          "hist_pct": 14.29,
+          "adopted_pct": 11.15
+        },
+        "motor_2rate": {
+          "season_pct": 26.67,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 26.67
+        },
+        "boat_2rate": {
+          "season_pct": 35.0
+        },
+        "st": {
+          "racecard_avg": 0.14,
+          "hist_avg": 0.14,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            6,
+            2,
+            4
+          ],
+          "races": [
+            {
+              "course": 5,
+              "rank": 6
+            },
+            {
+              "course": 2,
+              "rank": 2
+            },
+            {
+              "course": 2,
+              "rank": 4
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 5,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "",
+          "text": "",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {
+          "races": 3,
+          "1st_pct": 0.0,
+          "2nd_pct": 0.0,
+          "3rd_pct": 66.7,
+          "4th_pct": 0.0,
+          "5th_pct": 33.3,
+          "6th_pct": 0.0,
+          "top2_pct": 0.0,
+          "top3_pct": 66.7
+        },
+        "global": {
+          "races": 37,
+          "1st_pct": 13.5,
+          "2nd_pct": 21.6,
+          "3rd_pct": 10.8,
+          "4th_pct": 10.8,
+          "5th_pct": 24.3,
+          "6th_pct": 18.9,
+          "top2_pct": 35.1,
+          "top3_pct": 45.9
+        }
+      }
+    }
+  ],
+  "tide_status": "下げ",
+  "budget_plans": [],
+  "course_order": [],
+  "triggered_patterns": {
+    "2差し": 0.45,
+    "3カド": 0.35,
+    "4カドまくり": 0.65,
+    "外差し": 0.45
+  },
+  "applied_patterns": [
+    "4カドまくり"
+  ]
+}

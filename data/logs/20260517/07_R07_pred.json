@@ -1,0 +1,879 @@
+{
+  "jcd": "07",
+  "date": "20260517",
+  "race_no": 7,
+  "version": "v5.20",
+  "predicted_at": "2026-05-17T11:37:42",
+  "confidence": "82%",
+  "is_rough": false,
+  "bets": [
+    {
+      "label": "本命①",
+      "combo": "1-3-2",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-4-2",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-3-5",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-4-5",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-2-3",
+      "reason": "多軸top stage=一般(6.3%)/period=middle(6.6%)"
+    },
+    {
+      "label": "本命①",
+      "combo": "1-3-4",
+      "reason": "多軸top stage=一般(5.4%)/period=middle(5.7%)"
+    },
+    {
+      "label": "出目④",
+      "combo": "1-2-4",
+      "reason": "統計保険 2着2枠(31%) 3着3枠(46%)"
+    },
+    {
+      "label": "出目④",
+      "combo": "4-5-1",
+      "reason": "EV上位 overall(EV1.50) 平均14668円"
+    },
+    {
+      "label": "出目④",
+      "combo": "1-2-5",
+      "reason": "EV上位 period=middle(EV1.37) 平均3883円"
+    }
+  ],
+  "honmei": [
+    {
+      "combo": "1-3-2",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "combo": "1-4-2",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "combo": "1-3-5",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    },
+    {
+      "combo": "1-4-5",
+      "reason": "1着1固定 / 2着候補4,3 / 3着候補5,2"
+    }
+  ],
+  "others": [
+    {
+      "subtype": "抑え",
+      "combo": "1-3-4",
+      "reason": "本命溢れ: 多軸top stage=一般(5.4%)/period=middle(5.7%)"
+    },
+    {
+      "subtype": "抑え",
+      "combo": "1-2-3",
+      "reason": "本命溢れ: 多軸top stage=一般(6.3%)/period=middle(6.6%)"
+    },
+    {
+      "subtype": "抑え",
+      "combo": "1-2-4",
+      "reason": "統計保険 2着2枠(31%) 3着3枠(46%)"
+    },
+    {
+      "subtype": "抑え",
+      "combo": "4-5-1",
+      "reason": "EV上位 overall(EV1.50) 平均14668円"
+    }
+  ],
+  "predictions": [
+    {
+      "rank": 1,
+      "waku": 1,
+      "name": "黒澤　めぐみ",
+      "grade": "A2",
+      "reg_no": "4791",
+      "motor_no": "47",
+      "score": 0.48878,
+      "breakdown": {
+        "global_win_rate": 0.02224,
+        "local_win_rate": 0.0129,
+        "motor_2rate": 0.01821,
+        "boat_2rate": 0.00642,
+        "course_advantage": 0.16119,
+        "grade_bonus": 0.0375,
+        "st_score": 0.071,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.09,
+        "comment_score": 0.0204,
+        "female_factor": 0.01,
+        "series_score": 0.00892
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 5.18,
+          "hist_pct": 19.71,
+          "adopted_pct": 13.9
+        },
+        "local_win": {
+          "season_pct": 5.44,
+          "hist_pct": 14.29,
+          "adopted_pct": 10.75
+        },
+        "motor_2rate": {
+          "season_pct": 22.76,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 22.76
+        },
+        "boat_2rate": {
+          "season_pct": 32.12
+        },
+        "st": {
+          "racecard_avg": 0.17,
+          "hist_avg": 0.179,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            2,
+            3,
+            6,
+            4,
+            4,
+            1,
+            2,
+            6
+          ],
+          "races": [
+            {
+              "course": 2,
+              "rank": 2
+            },
+            {
+              "course": 4,
+              "rank": 3
+            },
+            {
+              "course": 4,
+              "rank": 6
+            },
+            {
+              "course": 1,
+              "rank": 4
+            },
+            {
+              "course": 3,
+              "rank": 4
+            },
+            {
+              "course": 5,
+              "rank": 1
+            },
+            {
+              "course": 1,
+              "rank": 2
+            },
+            {
+              "course": 5,
+              "rank": 6
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 1,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "会場公式サイト",
+          "text": "乗り心地が良くなっていた。",
+          "base_score": 0.5,
+          "matched_keywords": [
+            {
+              "keyword": "良くなっ",
+              "delta": 0.18,
+              "start": 5,
+              "end": 9,
+              "length": 4
+            }
+          ],
+          "raw_score": 0.68,
+          "history_bonus": 0.0,
+          "final_label": "▲"
+        }
+      },
+      "waku_stats": {
+        "local": {
+          "races": 1,
+          "1st_pct": 100.0,
+          "2nd_pct": 0.0,
+          "3rd_pct": 0.0,
+          "4th_pct": 0.0,
+          "5th_pct": 0.0,
+          "6th_pct": 0.0,
+          "top2_pct": 100.0,
+          "top3_pct": 100.0
+        },
+        "global": {
+          "races": 38,
+          "1st_pct": 52.6,
+          "2nd_pct": 18.4,
+          "3rd_pct": 7.9,
+          "4th_pct": 13.2,
+          "5th_pct": 5.3,
+          "6th_pct": 2.6,
+          "top2_pct": 71.1,
+          "top3_pct": 78.9
+        }
+      }
+    },
+    {
+      "rank": 2,
+      "waku": 4,
+      "name": "藤堂　　里香",
+      "grade": "A2",
+      "reg_no": "4473",
+      "motor_no": "17",
+      "score": 0.35533,
+      "breakdown": {
+        "global_win_rate": 0.02034,
+        "local_win_rate": 0.02597,
+        "motor_2rate": 0.0273,
+        "boat_2rate": 0.00681,
+        "course_advantage": 0.06257,
+        "grade_bonus": 0.0375,
+        "st_score": 0.075,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.03865,
+        "comment_score": 0.0114,
+        "female_factor": 0.01,
+        "series_score": 0.00979
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 5.09,
+          "hist_pct": 17.79,
+          "adopted_pct": 12.71
+        },
+        "local_win": {
+          "season_pct": 4.11,
+          "hist_pct": 33.33,
+          "adopted_pct": 21.64
+        },
+        "motor_2rate": {
+          "season_pct": 34.13,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 34.13
+        },
+        "boat_2rate": {
+          "season_pct": 34.07
+        },
+        "st": {
+          "racecard_avg": 0.17,
+          "hist_avg": 0.175,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            1,
+            5,
+            2,
+            5,
+            6,
+            3,
+            3,
+            1
+          ],
+          "races": [
+            {
+              "course": 1,
+              "rank": 1
+            },
+            {
+              "course": 5,
+              "rank": 5
+            },
+            {
+              "course": 4,
+              "rank": 2
+            },
+            {
+              "course": 2,
+              "rank": 5
+            },
+            {
+              "course": 6,
+              "rank": 6
+            },
+            {
+              "course": 3,
+              "rank": 3
+            },
+            {
+              "course": 3,
+              "rank": 3
+            },
+            {
+              "course": 1,
+              "rank": 1
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 4,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "会場公式サイト",
+          "text": "ずっとターンで滑る感じが直らない。",
+          "base_score": 0.5,
+          "matched_keywords": [
+            {
+              "keyword": "直らない",
+              "delta": -0.12,
+              "start": 12,
+              "end": 16,
+              "length": 4
+            }
+          ],
+          "raw_score": 0.38,
+          "history_bonus": 0.0,
+          "final_label": "▼"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 28,
+          "1st_pct": 14.3,
+          "2nd_pct": 21.4,
+          "3rd_pct": 17.9,
+          "4th_pct": 10.7,
+          "5th_pct": 21.4,
+          "6th_pct": 14.3,
+          "top2_pct": 35.7,
+          "top3_pct": 53.6
+        }
+      }
+    },
+    {
+      "rank": 3,
+      "waku": 3,
+      "name": "滝沢　　織寧",
+      "grade": "B1",
+      "reg_no": "5287",
+      "motor_no": "12",
+      "score": 0.30083,
+      "breakdown": {
+        "global_win_rate": 0.00698,
+        "local_win_rate": 0.00289,
+        "motor_2rate": 0.0157,
+        "boat_2rate": 0.00782,
+        "course_advantage": 0.08694,
+        "grade_bonus": 0.025,
+        "st_score": 0.09,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.0,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.0105
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 3.63,
+          "hist_pct": 4.85,
+          "adopted_pct": 4.36
+        },
+        "local_win": {
+          "season_pct": 2.41,
+          "hist_pct": null,
+          "adopted_pct": 2.41
+        },
+        "motor_2rate": {
+          "season_pct": 19.63,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 19.63
+        },
+        "boat_2rate": {
+          "season_pct": 39.11
+        },
+        "st": {
+          "racecard_avg": 0.17,
+          "hist_avg": 0.16,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            3,
+            5,
+            6,
+            1,
+            4,
+            2,
+            2
+          ],
+          "races": [
+            {
+              "course": 6,
+              "rank": 3
+            },
+            {
+              "course": 2,
+              "rank": 5
+            },
+            {
+              "course": 4,
+              "rank": 6
+            },
+            {
+              "course": 1,
+              "rank": 1
+            },
+            {
+              "course": 5,
+              "rank": 4
+            },
+            {
+              "course": 4,
+              "rank": 2
+            },
+            {
+              "course": 4,
+              "rank": 2
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 3,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "会場公式サイト",
+          "text": "リングがバテたせいか、全然進んでいなかった。",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 32,
+          "1st_pct": 0.0,
+          "2nd_pct": 9.4,
+          "3rd_pct": 12.5,
+          "4th_pct": 28.1,
+          "5th_pct": 37.5,
+          "6th_pct": 12.5,
+          "top2_pct": 9.4,
+          "top3_pct": 21.9
+        }
+      }
+    },
+    {
+      "rank": 4,
+      "waku": 5,
+      "name": "永田　　　楽",
+      "grade": "B1",
+      "reg_no": "5296",
+      "motor_no": "32",
+      "score": 0.29461,
+      "breakdown": {
+        "global_win_rate": 0.01227,
+        "local_win_rate": 0.01775,
+        "motor_2rate": 0.02464,
+        "boat_2rate": 0.0064,
+        "course_advantage": 0.06482,
+        "grade_bonus": 0.025,
+        "st_score": 0.054,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.02379,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.01094
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 3.35,
+          "hist_pct": 10.55,
+          "adopted_pct": 7.67
+        },
+        "local_win": {
+          "season_pct": 3.65,
+          "hist_pct": 22.22,
+          "adopted_pct": 14.79
+        },
+        "motor_2rate": {
+          "season_pct": 30.8,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 30.8
+        },
+        "boat_2rate": {
+          "season_pct": 32.0
+        },
+        "st": {
+          "racecard_avg": 0.19,
+          "hist_avg": 0.196,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            1,
+            3,
+            2,
+            4,
+            5,
+            2,
+            4,
+            5
+          ],
+          "races": [
+            {
+              "course": 1,
+              "rank": 1
+            },
+            {
+              "course": 5,
+              "rank": 3
+            },
+            {
+              "course": 6,
+              "rank": 2
+            },
+            {
+              "course": 5,
+              "rank": 4
+            },
+            {
+              "course": 2,
+              "rank": 5
+            },
+            {
+              "course": 4,
+              "rank": 2
+            },
+            {
+              "course": 4,
+              "rank": 4
+            },
+            {
+              "course": 4,
+              "rank": 5
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 5,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "会場公式サイト",
+          "text": "レバーを当てた時の反応はいいけど、押しやつながりがない。",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 34,
+          "1st_pct": 8.8,
+          "2nd_pct": 11.8,
+          "3rd_pct": 17.6,
+          "4th_pct": 17.6,
+          "5th_pct": 32.4,
+          "6th_pct": 11.8,
+          "top2_pct": 20.6,
+          "top3_pct": 38.2
+        }
+      }
+    },
+    {
+      "rank": 5,
+      "waku": 2,
+      "name": "中村　紋夕梨",
+      "grade": "B2",
+      "reg_no": "5346",
+      "motor_no": "71",
+      "score": 0.29215,
+      "breakdown": {
+        "global_win_rate": 0.00405,
+        "local_win_rate": 0.00151,
+        "motor_2rate": 0.02054,
+        "boat_2rate": 0.00613,
+        "course_advantage": 0.08828,
+        "grade_bonus": 0.0125,
+        "st_score": 0.048,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.045,
+        "comment_score": 0.015,
+        "female_factor": 0.01,
+        "series_score": 0.01114
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 2.53,
+          "hist_pct": 0.0,
+          "adopted_pct": 2.53
+        },
+        "local_win": {
+          "season_pct": 1.26,
+          "hist_pct": null,
+          "adopted_pct": 1.26
+        },
+        "motor_2rate": {
+          "season_pct": 25.68,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 25.68
+        },
+        "boat_2rate": {
+          "season_pct": 30.64
+        },
+        "st": {
+          "racecard_avg": 0.19,
+          "hist_avg": 0.202,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            5,
+            4,
+            6,
+            3,
+            1,
+            5,
+            2
+          ],
+          "races": [
+            {
+              "course": 6,
+              "rank": 5
+            },
+            {
+              "course": 5,
+              "rank": 4
+            },
+            {
+              "course": 6,
+              "rank": 6
+            },
+            {
+              "course": 5,
+              "rank": 3
+            },
+            {
+              "course": 4,
+              "rank": 1
+            },
+            {
+              "course": 3,
+              "rank": 5
+            },
+            {
+              "course": 5,
+              "rank": 2
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 2,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "会場公式サイト",
+          "text": "乗りやすさはあるけど、足はもっと欲しい。",
+          "base_score": 0.5,
+          "matched_keywords": [],
+          "raw_score": 0.5,
+          "history_bonus": 0.0,
+          "final_label": "―"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {}
+      }
+    },
+    {
+      "rank": 6,
+      "waku": 6,
+      "name": "島倉　　　都",
+      "grade": "B1",
+      "reg_no": "4987",
+      "motor_no": "74",
+      "score": 0.25834,
+      "breakdown": {
+        "global_win_rate": 0.00916,
+        "local_win_rate": 0.0038,
+        "motor_2rate": 0.01962,
+        "boat_2rate": 0.00549,
+        "course_advantage": 0.05475,
+        "grade_bonus": 0.025,
+        "st_score": 0.078,
+        "exhibition_score": 0.03,
+        "hist_waku_score": 0.0,
+        "comment_score": 0.0105,
+        "female_factor": 0.01,
+        "series_score": 0.01202
+      },
+      "raw_metrics": {
+        "global_win": {
+          "season_pct": 3.93,
+          "hist_pct": 6.92,
+          "adopted_pct": 5.72
+        },
+        "local_win": {
+          "season_pct": 3.17,
+          "hist_pct": null,
+          "adopted_pct": 3.17
+        },
+        "motor_2rate": {
+          "season_pct": 24.53,
+          "hist_pct": null,
+          "hist_races": 0,
+          "adopted_pct": 24.53
+        },
+        "boat_2rate": {
+          "season_pct": 27.44
+        },
+        "st": {
+          "racecard_avg": 0.17,
+          "hist_avg": 0.172,
+          "f_count": 0,
+          "l_count": 0
+        },
+        "series": {
+          "ranks": [
+            2,
+            6,
+            5,
+            4,
+            3,
+            1,
+            2
+          ],
+          "races": [
+            {
+              "course": 4,
+              "rank": 2
+            },
+            {
+              "course": 6,
+              "rank": 6
+            },
+            {
+              "course": 6,
+              "rank": 5
+            },
+            {
+              "course": 5,
+              "rank": 4
+            },
+            {
+              "course": 6,
+              "rank": 3
+            },
+            {
+              "course": 1,
+              "rank": 1
+            },
+            {
+              "course": 5,
+              "rank": 2
+            }
+          ]
+        },
+        "exhibition": {
+          "time": "",
+          "start_timing": "",
+          "tilt": "",
+          "entry_course": "",
+          "actual_course": 6,
+          "prev_rank": ""
+        },
+        "comment": {
+          "source": "会場公式サイト",
+          "text": "４日目のまま行ったら全くダメだった。乗りづらかった。",
+          "base_score": 0.5,
+          "matched_keywords": [
+            {
+              "keyword": "ダメ",
+              "delta": -0.15,
+              "start": 12,
+              "end": 14,
+              "length": 2
+            }
+          ],
+          "raw_score": 0.35,
+          "history_bonus": 0.0,
+          "final_label": "▼"
+        }
+      },
+      "waku_stats": {
+        "local": {},
+        "global": {
+          "races": 22,
+          "1st_pct": 0.0,
+          "2nd_pct": 0.0,
+          "3rd_pct": 18.2,
+          "4th_pct": 18.2,
+          "5th_pct": 36.4,
+          "6th_pct": 27.3,
+          "top2_pct": 0.0,
+          "top3_pct": 18.2
+        }
+      }
+    }
+  ],
+  "tide_status": "上げ",
+  "budget_plans": [],
+  "course_order": [],
+  "triggered_patterns": {
+    "2差し": 0.15,
+    "3カド": 0.45,
+    "4カドまくり": 0.32,
+    "外差し": 0.15
+  },
+  "applied_patterns": []
+}
