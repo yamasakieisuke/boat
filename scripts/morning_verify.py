@@ -55,7 +55,11 @@ from fetch_results_official import (
     JCD_TO_VENUE,
     RACERESULT_URL,
     RESULTLIST_URL,
+    CSV_HEADER as OFFICIAL_CSV_HEADER,
 )
+from fetch_results import fetch_text as fetch_lzh_text, parse_text as parse_lzh_text
+
+VENUE_TO_JCD = {v: k for k, v in JCD_TO_VENUE.items()}
 
 MAX_WORKERS  = 8    # 並列リクエスト数
 REQ_TIMEOUT  = 30   # 1リクエストあたりのタイムアウト（秒）
@@ -144,6 +148,37 @@ def find_predicted_jcds(date_str: str) -> list[str]:
         return []
     jcds = sorted({f.name.split("_")[0] for f in day_dir.glob("*_pred.json")})
     return jcds
+
+
+def fetch_via_lzh(date_str: str, jcds: list[str]) -> dict[str, list]:
+    """公式LZH（mbrace.or.jp）から date_str 当日の全会場結果を一括取得し、
+    予測対象 jcds に絞った {jcd: [rows]} を返す。
+
+    LZH が未公開 / 解凍失敗 / 当該会場がアーカイブに含まれない 場合は、
+    その jcd は結果dict に含まれない（呼び出し側で HTML フォールバック）。
+
+    LZHの row には公式HTMLスキーマ外の列が含まれる場合があるため、
+    write_day_csv に渡せるよう OFFICIAL_CSV_HEADER の列に絞って返す。
+    """
+    text = fetch_lzh_text(date_str)
+    if not text:
+        return {}
+
+    try:
+        records = parse_lzh_text(text, date_str)
+    except Exception as e:
+        print(f"  [WARN] LZH パース失敗: {e}")
+        return {}
+
+    target = set(jcds)
+    grouped: dict[str, list] = {}
+    for rec in records:
+        jcd = VENUE_TO_JCD.get(rec.get("venue_name", ""))
+        if not jcd or jcd not in target:
+            continue
+        slim = {k: rec.get(k, "") for k in OFFICIAL_CSV_HEADER}
+        grouped.setdefault(jcd, []).append(slim)
+    return grouped
 
 
 def fetch_race_result(session: requests.Session, jcd: str, race_no: int, date_str: str):
@@ -245,10 +280,29 @@ def main():
     venues = [f"{JCD_TO_VENUE.get(j, j)}({j})" for j in jcds]
     print(f"  対象会場: {', '.join(venues)}")
 
-    # ① 結果取得
+    # ① 結果取得（LZH 優先 → HTML フォールバック）
     if not args.verify_only:
-        print(f"\n【結果取得】{date_str}")
-        all_rows = fetch_results_parallel(date_str, jcds)
+        print(f"\n【結果取得 STEP 1/2】LZH 一括取得を試行 (mbrace.or.jp)")
+        lzh_rows = fetch_via_lzh(date_str, jcds)
+        missing = [j for j in jcds if not lzh_rows.get(j)]
+        if lzh_rows:
+            got = sorted(lzh_rows.keys())
+            print(f"  LZH 取得成功: {len(got)} 会場 → "
+                  + ", ".join(f"{JCD_TO_VENUE.get(j, j)}({j})" for j in got))
+        else:
+            print(f"  LZH 未公開 or 取得失敗（全会場を HTML フォールバック）")
+
+        if missing:
+            print(f"\n【結果取得 STEP 2/2】HTML フォールバック: "
+                  + ", ".join(f"{JCD_TO_VENUE.get(j, j)}({j})" for j in missing))
+            html_rows = fetch_results_parallel(date_str, missing)
+        else:
+            html_rows = {}
+
+        all_rows: dict[str, list] = {jcd: [] for jcd in jcds}
+        all_rows.update(lzh_rows)
+        for jcd, rows in html_rows.items():
+            all_rows[jcd] = rows
         saved_jcds = save_results_csv(date_str, all_rows)
     else:
         # verify-only の場合は CSV 既存前提で全 JCD を対象にする
