@@ -94,14 +94,23 @@ def run(cmd: list[str], **kwargs) -> int:
 def process_venue(jcd: str, date_str: str) -> bool:
     """1会場の STEP 3-5。失敗時 False。"""
     try:
-        for r in range(1, 13):
-            sc.scrape_racecard(jcd, date_str, r)
-        for r in range(1, 13):
-            sc.scrape_players_from_racecard(jcd, date_str, r)
-        for r in range(1, 13):
-            sc.scrape_weather(jcd, date_str, r)
-        for r in range(1, 13):
-            sc.scrape_comments(jcd, date_str, r)
+        races = list(range(1, 13))
+        sc._run_parallel_race_jobs(
+            [(r, lambda r=r: sc.scrape_racecard(jcd, date_str, r)) for r in races],
+            label=f"出走表 {jcd} {date_str}",
+        )
+        sc._run_parallel_race_jobs(
+            [(r, lambda r=r: sc.scrape_players_from_racecard(jcd, date_str, r)) for r in races],
+            label=f"選手 {jcd} {date_str}",
+        )
+        sc._run_parallel_race_jobs(
+            [(r, lambda r=r: sc.scrape_weather(jcd, date_str, r)) for r in races],
+            label=f"気象 {jcd} {date_str}",
+        )
+        sc._run_parallel_race_jobs(
+            [(r, lambda r=r: sc.scrape_comments(jcd, date_str, r)) for r in races],
+            label=f"コメント {jcd} {date_str}",
+        )
         rc = run(["python3", "scripts/fetch_tide.py", "--jcd", jcd, "--date", date_str])
         if rc != 0:
             print(f"[WARN] fetch_tide failed jcd={jcd} rc={rc}", file=sys.stderr)
