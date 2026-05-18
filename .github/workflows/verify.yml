@@ -2,7 +2,7 @@ name: Boat Daily Verify
 
 on:
   schedule:
-    # 09:30 JST = 00:30 UTC（LZH 公開を待つため遅め）
+    # 09:30 JST = 00:30 UTC（LZH 公開を確実に待つ）
     - cron: '30 0 * * *'
   workflow_dispatch:
     inputs:
@@ -10,6 +10,10 @@ on:
         description: '対象日付 YYYYMMDD（空欄=昨日）'
         type: string
         default: ''
+
+permissions:
+  actions: read
+  contents: read
 
 jobs:
   verify:
@@ -36,30 +40,38 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Restore data/logs cache
-        uses: actions/cache/restore@v4
-        with:
-          path: data/logs
-          key: data-logs-${{ github.run_id }}
-          restore-keys: |
-            data-logs-
+      - name: Resolve target date
+        id: dateres
+        run: |
+          DATE="${{ github.event.inputs.date }}"
+          if [ -z "$DATE" ]; then
+            DATE=$(TZ=Asia/Tokyo date -d 'yesterday' +%Y%m%d)
+          fi
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          echo "対象日付: $DATE"
+        env:
+          TZ: Asia/Tokyo
+
+      - name: Download predlogs artifact from predict workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE="${{ steps.dateres.outputs.date }}"
+          mkdir -p "data/logs/${DATE}"
+          # predict.yml の直近 20 件の run から predlogs-{DATE} を探す
+          for RUN_ID in $(gh run list --workflow=predict.yml --limit=20 --json databaseId --jq '.[].databaseId'); do
+            if gh run download "$RUN_ID" --name "predlogs-${DATE}" --dir "data/logs/${DATE}" 2>/dev/null; then
+              echo "predlogs-${DATE} を run ${RUN_ID} から取得"
+              ls "data/logs/${DATE}" | head -10
+              exit 0
+            fi
+          done
+          echo "::warning::predlogs-${DATE} が直近20件の predict run に見つからず（pred.json なしで verify を試行）"
 
       - name: Run morning_verify
         run: |
-          DATE="${{ github.event.inputs.date }}"
-          if [ -n "$DATE" ]; then
-            python3 scripts/morning_verify.py --date "$DATE"
-          else
-            python3 scripts/morning_verify.py
-          fi
+          python3 scripts/morning_verify.py --date "${{ steps.dateres.outputs.date }}"
         env:
           WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
           TZ: Asia/Tokyo
-
-      - name: Save data/logs cache
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: data/logs
-          key: data-logs-${{ github.run_id }}

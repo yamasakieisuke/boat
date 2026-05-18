@@ -103,3 +103,35 @@ jobs:
           WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
           TZ: Asia/Tokyo
+
+      - name: Upload pred.json artifact piece
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: predlogs-piece-${{ needs.prep.outputs.target_date }}-${{ matrix.jcd }}
+          path: data/logs/${{ needs.prep.outputs.target_date }}/${{ matrix.jcd }}_*
+          retention-days: 14
+          if-no-files-found: warn
+
+  bundle:
+    name: pred ログをまとめる
+    needs: [prep, predict]
+    if: always() && needs.prep.outputs.venues != '[]' && needs.prep.outputs.venues != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Download all pred pieces
+        uses: actions/download-artifact@v4
+        with:
+          pattern: predlogs-piece-${{ needs.prep.outputs.target_date }}-*
+          path: ./bundled
+          merge-multiple: true
+
+      - name: Upload combined predlogs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: predlogs-${{ needs.prep.outputs.target_date }}
+          path: ./bundled
+          retention-days: 14
+          if-no-files-found: error
