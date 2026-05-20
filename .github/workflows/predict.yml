@@ -2,8 +2,8 @@ name: Boat Daily Predict
 
 on:
   schedule:
-    # 08:13 JST = 23:13 UTC (前日)。ジャスト時刻は GitHub Actions のスケジューラ混雑で skip されることがあるため +13 分
-    - cron: '13 23 * * *'
+    # 翌日 00:43 JST = 15:43 UTC（夜バッチ：N日夜に N+1 日を予測）。深夜帯は scheduler 負荷低めで遅延が出にくい
+    - cron: '43 15 * * *'
   workflow_dispatch:
     inputs:
       jcd:

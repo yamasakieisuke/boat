@@ -2,8 +2,8 @@ name: Boat Daily Verify
 
 on:
   schedule:
-    # 09:43 JST = 00:43 UTC（LZH 公開を確実に待つ）。30分ちょうどは混雑で skip されやすいため +13 分
-    - cron: '43 0 * * *'
+    # 翌日 00:13 JST = 15:13 UTC（夜バッチ：N日夜にその日を verify）。LZH 未公開時は HTML フォールバックで対応
+    - cron: '13 15 * * *'
   workflow_dispatch:
     inputs:
       date:
