@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       date:
-        description: '対象日付 YYYYMMDD（空欄=昨日）'
+        description: '対象日付 YYYYMMDD（空欄=実行時点の昨日 JST。夜バッチで cron 発火時は当日 JST = レース実施日）'
         type: string
         default: ''
 
