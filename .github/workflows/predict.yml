@@ -135,3 +135,59 @@ jobs:
           path: ./bundled
           retention-days: 14
           if-no-files-found: error
+
+  watchlist:
+    name: WATCH会場 → fetch_requests 書き出し
+    needs: [prep, predict]
+    if: always() && needs.prep.outputs.venues != '[]' && needs.prep.outputs.venues != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    concurrency:
+      group: boat-state-write
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write fetch_requests for WATCH venues
+        run: |
+          mkdir -p data
+          python3 scripts/run_morning.py \
+            --write-fetch-requests \
+            --date "${{ needs.prep.outputs.target_date }}"
+        env:
+          TZ: Asia/Tokyo
+
+      - name: Commit fetch_requests.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/fetch_requests.json
+          if ! git diff --staged --quiet; then
+            git commit -m "predict: WATCH会場 fetch_requests を更新 (${{ needs.prep.outputs.target_date }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin main && git push origin main && break
+              echo "push retry $i"
+              sleep 5
+            done
+          else
+            echo "no changes in fetch_requests.json"
+          fi

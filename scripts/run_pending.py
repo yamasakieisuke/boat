@@ -363,7 +363,8 @@ def run_verify_task(task: dict) -> str:
 
 # ── メインループ ──────────────────────────────────────────────────
 
-def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
+def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None,
+            success_report_file: str | None = None):
     # 先に依頼キューを消化して pending を最新化（dry_run でも消化する。
     # 依頼処理は副作用が pending 登録のみで、cron でも安全に毎回流せる）
     if not dry_run:
@@ -406,6 +407,7 @@ def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
     print(f"{'='*60}")
 
     keep, done_ids, expired_ids = [], [], []
+    success_pairs: set[tuple[str, str]] = set()  # (jcd, date) for exhibition/odds success
 
     for task in tasks:
         tid  = task["id"]
@@ -455,6 +457,8 @@ def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
         if result == "done":
             print("✅ 完了 → タスク削除")
             done_ids.append(tid)
+            if typ in ("exhibition", "odds") and task.get("jcd") and task.get("date"):
+                success_pairs.add((task["jcd"], task["date"]))
         elif result == "expired":
             print("⌛ 期限切れ → タスク削除")
             expired_ids.append(tid)
@@ -485,6 +489,15 @@ def run_all(dry_run: bool = False, jcd_filter: list[str] | None = None):
 
     print(f"\n  完了: {len(done_ids)}件  期限切れ: {len(expired_ids)}件  残: {len(keep)}件")
     print(f"{'='*60}\n")
+
+    if success_report_file and success_pairs:
+        try:
+            with open(success_report_file, "w", encoding="utf-8") as f:
+                for jcd, date in sorted(success_pairs):
+                    f.write(f"{jcd}\t{date}\n")
+            print(f"  [REPORT] 成功 jcd-date {len(success_pairs)}件 → {success_report_file}")
+        except OSError as e:
+            print(f"  [WARN] success report 書き込み失敗: {e}")
 
 
 # ── タスク登録ヘルパー ────────────────────────────────────────────
@@ -731,6 +744,8 @@ if __name__ == "__main__":
                         help="依頼キュー(fetch_requests.json)だけ処理して終了")
     parser.add_argument("--add-request", nargs="+", metavar="JCD DATE [HH:MM]",
                         help="依頼を fetch_requests.json に追加: --add-request 22 20260503 [10:30]")
+    parser.add_argument("--report-success", metavar="FILE",
+                        help="exhibition/odds 取得成功の (jcd, date) を TSV で FILE に書き出す（fetch_pending.yml 用）")
     args = parser.parse_args()
 
     if args.add_request:
@@ -776,4 +791,4 @@ if __name__ == "__main__":
             print(f"{'─'*60}")
     else:
         globals()["QUIET"] = bool(args.quiet)
-        run_all(jcd_filter=args.jcd)
+        run_all(jcd_filter=args.jcd, success_report_file=args.report_success)

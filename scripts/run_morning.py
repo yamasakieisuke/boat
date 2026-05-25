@@ -30,6 +30,11 @@ PRIORITY_ORDER = [
     "10",
 ]
 
+# 展示/オッズの polling 対象（fetch_pending.yml が読み込む fetch_requests.json に登録される）
+WATCH_VENUES_ALWAYS = {"22", "24"}  # 福岡（オリジナル展示あり）, 大村
+WATCH_GRADES = {"SG", "PG1", "G1", "G2", "G3"}
+WATCH_CLASSES = {"lady", "ladies", "venus"}  # オールレディース系（boatrace.jp の is-* クラス）
+
 INDEX_URL = "https://www.boatrace.jp/owpc/pc/race/index"
 
 
@@ -85,6 +90,41 @@ def select_venues(active: list[dict]) -> list[str]:
     return selected
 
 
+def select_watch_venues(active: list[dict]) -> list[str]:
+    """展示/オッズ polling の対象会場を返す。
+
+    - WATCH_VENUES_ALWAYS（福岡・大村）を必ず含める（その日に開催している場合のみ）
+    - グレード戦（SG/PG1/G1/G2/G3）開催会場を追加
+    - オールレディース系（lady/ladies/venus クラス）開催会場を追加
+    """
+    active_jcds = {v["jcd"] for v in active}
+    selected: set[str] = set(WATCH_VENUES_ALWAYS) & active_jcds
+    for v in active:
+        grade = v.get("grade")
+        if grade in WATCH_GRADES or grade in WATCH_CLASSES:
+            selected.add(v["jcd"])
+    return sorted(selected)
+
+
+def write_fetch_requests(date_str: str, watch_jcds: list[str]) -> None:
+    """fetch_requests.json に watch 会場の依頼を書き込む（既存は上書き）。
+
+    fetch_pending.yml がこのファイルを読んで pending_tasks に変換する。
+    """
+    from pathlib import Path as _Path
+    data_dir = BOAT_DIR / "data"
+    data_dir.mkdir(exist_ok=True)
+    path = data_dir / "fetch_requests.json"
+    requested_at = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:00")
+    requests = [
+        {"jcd": jcd, "date": date_str, "requested_at": requested_at}
+        for jcd in watch_jcds
+    ]
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump({"requests": requests}, f, ensure_ascii=False, indent=2)
+    print(f"[INFO] fetch_requests.json に {len(requests)}件登録: {watch_jcds}")
+
+
 def run(cmd: list[str], **kwargs) -> int:
     """サブプロセス実行。終了コードを返す。"""
     print(f"[RUN] {' '.join(cmd)}", flush=True)
@@ -132,6 +172,8 @@ def main() -> int:
     parser.add_argument("--jcd", help="特定会場のみ処理（STEP 1-2 スキップ）")
     parser.add_argument("--list-venues", action="store_true",
                         help="選択された会場一覧をJSONで stdout に出力して終了（GitHub Actions matrix 用）")
+    parser.add_argument("--write-fetch-requests", action="store_true",
+                        help="WATCH会場（福岡/大村+グレード+レディース）の依頼を fetch_requests.json に書き出して終了")
     args = parser.parse_args()
 
     date_str = args.date
@@ -141,6 +183,15 @@ def main() -> int:
             active = fetch_active_venues(date_str)
             selected = select_venues(active)
         print(json.dumps(selected))
+        return 0
+
+    if args.write_fetch_requests:
+        active = fetch_active_venues(date_str)
+        print(f"[INFO] active venues ({len(active)}): "
+              + ", ".join(f"{v['jcd']}({v['grade']})" for v in active))
+        watch = select_watch_venues(active)
+        print(f"[INFO] watch venues ({len(watch)}): {watch}")
+        write_fetch_requests(date_str, watch)
         return 0
 
     if args.jcd:

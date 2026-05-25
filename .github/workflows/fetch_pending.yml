@@ -1,0 +1,128 @@
+name: Boat Fetch Pending (展示/オッズ)
+
+# 展示/オッズの polling 取得。
+# - predict.yml の watchlist job が fetch_requests.json を書き出し
+# - このワークフローが10分間隔で run_pending.py を実行 → 取得成功 jcd は predictor 再実行で WP 更新
+# - 状態（pending_tasks.json + data/raw/{date}/ + data/odds/{date}/）は fetch-state-{date} artifact に保存し次回 poll へ持ち越し
+
+on:
+  schedule:
+    # JST 10:00-20:55 / 5分間隔（UTC 01:00-11:55）
+    # 10分窓に必ず2回入るよう5分間隔。cron遅延（0-3分）でも1回は捕捉できる安全マージン
+    - cron: '*/5 1-11 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '対象日付 YYYYMMDD（空欄=実行時点の今日 JST）'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: boat-fetch-pending
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    name: 展示/オッズ取得
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Resolve target date
+        id: dateres
+        run: |
+          DATE="${{ github.event.inputs.date }}"
+          if [ -z "$DATE" ]; then
+            DATE=$(date +%Y%m%d)
+          fi
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          echo "対象日付: $DATE"
+        env:
+          TZ: Asia/Tokyo
+
+      - name: Restore fetch-state artifact (previous poll)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE="${{ steps.dateres.outputs.date }}"
+          mkdir -p data data/raw "data/raw/$DATE" data/odds "data/odds/$DATE"
+          # 直近 30 件の fetch_pending run から fetch-state-{DATE} を探す
+          for RUN_ID in $(gh run list --workflow=fetch_pending.yml --limit=30 --json databaseId --jq '.[].databaseId'); do
+            if gh run download "$RUN_ID" --name "fetch-state-${DATE}" --dir ./_state 2>/dev/null; then
+              echo "fetch-state-${DATE} を run ${RUN_ID} から復元"
+              # artifact は data/... 構造を保持しているので rsync で重ね書き
+              if [ -d ./_state/data ]; then
+                cp -R ./_state/data/. data/ 2>/dev/null || true
+              fi
+              rm -rf ./_state
+              ls data/raw/$DATE 2>/dev/null | head -5
+              ls data/odds/$DATE 2>/dev/null | head -5
+              break
+            fi
+          done
+          echo "（fetch-state なし＝今日の初回 poll か、retention 期限切れ）"
+
+      - name: Process pending tasks
+        id: pending
+        env:
+          WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
+          WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
+          TZ: Asia/Tokyo
+        run: |
+          python3 scripts/run_pending.py --quiet --report-success /tmp/success.tsv || true
+          if [ -f /tmp/success.tsv ]; then
+            echo "成功 (jcd, date):"
+            cat /tmp/success.tsv
+          else
+            echo "今回の poll で成功タスクなし"
+          fi
+
+      - name: Re-run prediction & WP publish for successful venues
+        if: hashFiles('/tmp/success.tsv') != ''
+        env:
+          WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
+          WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
+          TZ: Asia/Tokyo
+        run: |
+          while IFS=$'\t' read -r JCD DATE; do
+            [ -z "$JCD" ] && continue
+            echo "=== re-predict jcd=$JCD date=$DATE ==="
+            python3 scripts/run_morning.py --jcd "$JCD" --skip-verify --date "$DATE" || echo "[WARN] predict失敗 jcd=$JCD"
+          done < /tmp/success.tsv
+
+      - name: Upload fetch-state artifact (for next poll)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fetch-state-${{ steps.dateres.outputs.date }}
+          path: |
+            data/pending_tasks.json
+            data/raw/${{ steps.dateres.outputs.date }}/
+            data/odds/${{ steps.dateres.outputs.date }}/
+          retention-days: 3
+          overwrite: true
+          if-no-files-found: ignore
