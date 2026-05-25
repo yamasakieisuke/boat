@@ -169,11 +169,7 @@ def run_exhibition_task(task: dict) -> str:
     deadline = datetime.datetime.fromisoformat(task["deadline"])
     now      = datetime.datetime.now()
 
-    if now > deadline:
-        return "expired"
-
-    # 展示データが既に有効な形で取得済みなら done
-    # ※ exhibition_time が float として読める値を持つ場合のみ「取得済み」と判断
+    # 既に有効なデータがあれば deadline 前後問わず done（再 predict トリガに乗せるため）
     ex_path = DATA_DIR / "raw" / date / f"{jcd}_R{race_no:02d}_exhibition.json"
     if ex_path.exists():
         with open(ex_path, encoding="utf-8") as f:
@@ -185,6 +181,9 @@ def run_exhibition_task(task: dict) -> str:
             valid = False
         if valid:
             return "done"
+
+    if now > deadline:
+        return "expired"
 
     # 取得を試みる
     try:
@@ -223,16 +222,16 @@ def run_odds_task(task: dict) -> str:
     deadline = datetime.datetime.fromisoformat(task["deadline"])
     now      = datetime.datetime.now()
 
-    if now > deadline:
-        return "expired"
-
-    # 既にオッズデータが取得済みか確認
+    # 既に有効なデータがあれば deadline 前後問わず done（再 predict トリガに乗せるため）
     odds_path = DATA_DIR / "odds" / date / f"{jcd}_R{race_no:02d}.json"
     if odds_path.exists():
         with open(odds_path, encoding="utf-8") as f:
             od = json.load(f)
         if od.get("odds_3t"):
             return "done"
+
+    if now > deadline:
+        return "expired"
 
     # 取得を試みる
     try:
