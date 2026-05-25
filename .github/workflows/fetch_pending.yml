@@ -93,16 +93,20 @@ jobs:
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
           TZ: Asia/Tokyo
         run: |
-          python3 scripts/run_pending.py --quiet --report-success /tmp/success.tsv || true
-          if [ -f /tmp/success.tsv ]; then
+          # success.tsv は GITHUB_WORKSPACE 内に置く（hashFiles は workspace 外を見ない）
+          SUCCESS_FILE="$GITHUB_WORKSPACE/_success.tsv"
+          python3 scripts/run_pending.py --quiet --report-success "$SUCCESS_FILE" || true
+          if [ -s "$SUCCESS_FILE" ]; then
             echo "成功 (jcd, date):"
-            cat /tmp/success.tsv
+            cat "$SUCCESS_FILE"
+            echo "has_success=true" >> "$GITHUB_OUTPUT"
           else
             echo "今回の poll で成功タスクなし"
+            echo "has_success=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Re-run prediction & WP publish for successful venues
-        if: hashFiles('/tmp/success.tsv') != ''
+        if: steps.pending.outputs.has_success == 'true'
         env:
           WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
@@ -112,7 +116,7 @@ jobs:
             [ -z "$JCD" ] && continue
             echo "=== re-predict jcd=$JCD date=$DATE ==="
             python3 scripts/run_morning.py --jcd "$JCD" --skip-verify --date "$DATE" || echo "[WARN] predict失敗 jcd=$JCD"
-          done < /tmp/success.tsv
+          done < "$GITHUB_WORKSPACE/_success.tsv"
 
       - name: Upload fetch-state artifact (for next poll)
         if: always()
