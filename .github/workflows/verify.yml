@@ -13,7 +13,7 @@ on:
 
 permissions:
   actions: read
-  contents: read
+  contents: write
 
 jobs:
   verify:
@@ -75,3 +75,25 @@ jobs:
           WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
           TZ: Asia/Tokyo
+
+      - name: Rebuild player/motor stats (build_stats.py)
+        run: |
+          python3 scripts/build_stats.py 2>&1 | tail -10
+        env:
+          TZ: Asia/Tokyo
+
+      - name: Commit updated stats & results CSV
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/players/ data/motors/ data/results_csv/ 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            git commit -m "verify: 統計データ更新 (${{ steps.dateres.outputs.date }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin main && git push origin main && break
+              echo "push retry $i"
+              sleep 5
+            done
+          else
+            echo "no stats changes"
+          fi
