@@ -1,0 +1,134 @@
+{
+  "hist_global_waku_stats": {
+    "3": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 100.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "4": {
+      "races": 11,
+      "1st_pct": 9.1,
+      "2nd_pct": 9.1,
+      "3rd_pct": 9.1,
+      "4th_pct": 18.2,
+      "5th_pct": 27.3,
+      "6th_pct": 27.3,
+      "top2_pct": 18.2,
+      "top3_pct": 27.3
+    },
+    "5": {
+      "races": 37,
+      "1st_pct": 2.7,
+      "2nd_pct": 5.4,
+      "3rd_pct": 5.4,
+      "4th_pct": 13.5,
+      "5th_pct": 27.0,
+      "6th_pct": 45.9,
+      "top2_pct": 8.1,
+      "top3_pct": 13.5
+    },
+    "6": {
+      "races": 82,
+      "1st_pct": 1.2,
+      "2nd_pct": 3.7,
+      "3rd_pct": 1.2,
+      "4th_pct": 8.5,
+      "5th_pct": 23.2,
+      "6th_pct": 62.2,
+      "top2_pct": 4.9,
+      "top3_pct": 6.1
+    }
+  },
+  "hist_global_win_rate": 2.29,
+  "hist_avg_st": {
+    "avg_st": 0.174,
+    "st_count": 121,
+    "course_st": {
+      "4": 0.117,
+      "5": 0.183,
+      "6": 0.177
+    }
+  },
+  "gender": "F",
+  "reg_no": "5416",
+  "hist_exhibition": {
+    "overall_avg": 6.76,
+    "count": 121,
+    "by_venue": {
+      "09": {
+        "avg": 6.78,
+        "count": 17
+      },
+      "11": {
+        "avg": 6.77,
+        "count": 17
+      },
+      "13": {
+        "avg": 6.83,
+        "count": 8
+      },
+      "06": {
+        "avg": 6.69,
+        "count": 15
+      },
+      "08": {
+        "avg": 6.78,
+        "count": 9
+      },
+      "04": {
+        "avg": 6.9,
+        "count": 9
+      },
+      "12": {
+        "avg": 6.78,
+        "count": 5
+      },
+      "05": {
+        "avg": 6.7,
+        "count": 15
+      },
+      "22": {
+        "avg": 6.9,
+        "count": 1
+      },
+      "16": {
+        "avg": 6.78,
+        "count": 2
+      }
+    },
+    "recent_avg": 6.75,
+    "recent_count": 20,
+    "recent_deviation": 0.002
+  },
+  "hist_local_waku_stats": {
+    "5": {
+      "races": 2,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 100.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "6": {
+      "races": 4,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 25.0,
+      "6th_pct": 75.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 0.0
+}

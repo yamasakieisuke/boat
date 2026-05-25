@@ -1,0 +1,118 @@
+{
+  "reg_no": "5413",
+  "st_勝率": "1.41",
+  "st_3連対率": "2.85%",
+  "st_優出回数": "0回",
+  "st_平均スタートタイミング": "0.17",
+  "st_出遅れ回数（選手責任）": "0回",
+  "st_1着": "0.0%（0回）",
+  "st_3着": "1.4%（1回）",
+  "st_5着": "10.0%（7回）",
+  "hist_global_waku_stats": {
+    "4": {
+      "races": 3,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 100.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "5": {
+      "races": 37,
+      "1st_pct": 0.0,
+      "2nd_pct": 8.1,
+      "3rd_pct": 2.7,
+      "4th_pct": 5.4,
+      "5th_pct": 8.1,
+      "6th_pct": 75.7,
+      "top2_pct": 8.1,
+      "top3_pct": 10.8
+    },
+    "6": {
+      "races": 90,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 1.1,
+      "4th_pct": 10.0,
+      "5th_pct": 12.2,
+      "6th_pct": 76.7,
+      "top2_pct": 0.0,
+      "top3_pct": 1.1
+    }
+  },
+  "hist_global_win_rate": 0.0,
+  "hist_avg_st": {
+    "avg_st": 0.158,
+    "st_count": 116,
+    "course_st": {
+      "5": 0.177,
+      "6": 0.155
+    }
+  },
+  "hist_local_waku_stats": {
+    "5": {
+      "races": 5,
+      "1st_pct": 0.0,
+      "2nd_pct": 20.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 20.0,
+      "5th_pct": 20.0,
+      "6th_pct": 40.0,
+      "top2_pct": 20.0,
+      "top3_pct": 20.0
+    },
+    "6": {
+      "races": 6,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 16.7,
+      "6th_pct": 83.3,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 0.0,
+  "gender": "F",
+  "hist_exhibition": {
+    "overall_avg": 6.8,
+    "count": 117,
+    "by_venue": {
+      "21": {
+        "avg": 6.81,
+        "count": 17
+      },
+      "20": {
+        "avg": 6.88,
+        "count": 8
+      },
+      "23": {
+        "avg": 6.78,
+        "count": 8
+      },
+      "16": {
+        "avg": 6.86,
+        "count": 8
+      },
+      "18": {
+        "avg": 7.01,
+        "count": 8
+      },
+      "22": {
+        "avg": 6.87,
+        "count": 3
+      },
+      "02": {
+        "avg": 6.68,
+        "count": 6
+      }
+    },
+    "recent_avg": 6.78,
+    "recent_count": 20,
+    "recent_deviation": -0.0
+  }
+}

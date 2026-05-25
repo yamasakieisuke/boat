@@ -1,0 +1,109 @@
+{
+  "hist_global_waku_stats": {
+    "2": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 100.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "4": {
+      "races": 23,
+      "1st_pct": 4.3,
+      "2nd_pct": 4.3,
+      "3rd_pct": 0.0,
+      "4th_pct": 13.0,
+      "5th_pct": 13.0,
+      "6th_pct": 65.2,
+      "top2_pct": 8.7,
+      "top3_pct": 8.7
+    },
+    "5": {
+      "races": 44,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 6.8,
+      "4th_pct": 9.1,
+      "5th_pct": 34.1,
+      "6th_pct": 50.0,
+      "top2_pct": 0.0,
+      "top3_pct": 6.8
+    },
+    "6": {
+      "races": 98,
+      "1st_pct": 0.0,
+      "2nd_pct": 3.1,
+      "3rd_pct": 1.0,
+      "4th_pct": 10.2,
+      "5th_pct": 24.5,
+      "6th_pct": 61.2,
+      "top2_pct": 3.1,
+      "top3_pct": 4.1
+    }
+  },
+  "hist_global_win_rate": 0.6,
+  "hist_avg_st": {
+    "avg_st": 0.206,
+    "st_count": 160,
+    "course_st": {
+      "4": 0.219,
+      "5": 0.179,
+      "6": 0.208
+    }
+  },
+  "gender": "M",
+  "reg_no": "5341",
+  "hist_exhibition": {
+    "overall_avg": 6.83,
+    "count": 162,
+    "by_venue": {
+      "09": {
+        "avg": 6.75,
+        "count": 5
+      },
+      "06": {
+        "avg": 6.79,
+        "count": 12
+      },
+      "03": {
+        "avg": 6.95,
+        "count": 39
+      },
+      "05": {
+        "avg": 6.78,
+        "count": 27
+      },
+      "04": {
+        "avg": 6.83,
+        "count": 19
+      },
+      "01": {
+        "avg": 6.83,
+        "count": 23
+      },
+      "08": {
+        "avg": 6.82,
+        "count": 17
+      },
+      "11": {
+        "avg": 6.71,
+        "count": 9
+      },
+      "12": {
+        "avg": 6.67,
+        "count": 4
+      },
+      "02": {
+        "avg": 6.69,
+        "count": 2
+      }
+    },
+    "recent_avg": 6.77,
+    "recent_count": 20,
+    "recent_deviation": -0.044
+  }
+}

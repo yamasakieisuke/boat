@@ -1,0 +1,212 @@
+{
+  "hist_global_waku_stats": {
+    "1": {
+      "races": 41,
+      "1st_pct": 53.7,
+      "2nd_pct": 24.4,
+      "3rd_pct": 4.9,
+      "4th_pct": 12.2,
+      "5th_pct": 4.9,
+      "6th_pct": 0.0,
+      "top2_pct": 78.0,
+      "top3_pct": 82.9
+    },
+    "2": {
+      "races": 41,
+      "1st_pct": 7.3,
+      "2nd_pct": 29.3,
+      "3rd_pct": 7.3,
+      "4th_pct": 26.8,
+      "5th_pct": 14.6,
+      "6th_pct": 14.6,
+      "top2_pct": 36.6,
+      "top3_pct": 43.9
+    },
+    "3": {
+      "races": 36,
+      "1st_pct": 13.9,
+      "2nd_pct": 13.9,
+      "3rd_pct": 33.3,
+      "4th_pct": 13.9,
+      "5th_pct": 11.1,
+      "6th_pct": 13.9,
+      "top2_pct": 27.8,
+      "top3_pct": 61.1
+    },
+    "4": {
+      "races": 35,
+      "1st_pct": 17.1,
+      "2nd_pct": 17.1,
+      "3rd_pct": 8.6,
+      "4th_pct": 20.0,
+      "5th_pct": 31.4,
+      "6th_pct": 5.7,
+      "top2_pct": 34.3,
+      "top3_pct": 42.9
+    },
+    "5": {
+      "races": 32,
+      "1st_pct": 3.1,
+      "2nd_pct": 12.5,
+      "3rd_pct": 21.9,
+      "4th_pct": 21.9,
+      "5th_pct": 25.0,
+      "6th_pct": 15.6,
+      "top2_pct": 15.6,
+      "top3_pct": 37.5
+    },
+    "6": {
+      "races": 30,
+      "1st_pct": 3.3,
+      "2nd_pct": 6.7,
+      "3rd_pct": 26.7,
+      "4th_pct": 16.7,
+      "5th_pct": 33.3,
+      "6th_pct": 13.3,
+      "top2_pct": 10.0,
+      "top3_pct": 36.7
+    }
+  },
+  "hist_global_win_rate": 17.67,
+  "hist_avg_st": {
+    "avg_st": 0.189,
+    "st_count": 211,
+    "course_st": {
+      "1": 0.17,
+      "2": 0.196,
+      "3": 0.189,
+      "4": 0.175,
+      "5": 0.189,
+      "6": 0.236
+    }
+  },
+  "hist_local_waku_stats": {
+    "1": {
+      "races": 2,
+      "1st_pct": 50.0,
+      "2nd_pct": 50.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 100.0,
+      "top3_pct": 100.0
+    },
+    "2": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 100.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "3": {
+      "races": 2,
+      "1st_pct": 0.0,
+      "2nd_pct": 50.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 50.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 50.0,
+      "top3_pct": 50.0
+    },
+    "4": {
+      "races": 2,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 100.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "6": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 100.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 12.5,
+  "gender": "M",
+  "reg_no": "3475",
+  "hist_exhibition": {
+    "overall_avg": 6.82,
+    "count": 211,
+    "by_venue": {
+      "09": {
+        "avg": 6.77,
+        "count": 6
+      },
+      "06": {
+        "avg": 6.75,
+        "count": 13
+      },
+      "04": {
+        "avg": 6.85,
+        "count": 29
+      },
+      "05": {
+        "avg": 6.79,
+        "count": 17
+      },
+      "03": {
+        "avg": 6.82,
+        "count": 12
+      },
+      "02": {
+        "avg": 6.82,
+        "count": 8
+      },
+      "01": {
+        "avg": 6.8,
+        "count": 25
+      },
+      "17": {
+        "avg": 6.71,
+        "count": 10
+      },
+      "10": {
+        "avg": 6.82,
+        "count": 5
+      },
+      "08": {
+        "avg": 6.91,
+        "count": 1
+      },
+      "12": {
+        "avg": 6.85,
+        "count": 21
+      },
+      "22": {
+        "avg": 7.02,
+        "count": 8
+      },
+      "21": {
+        "avg": 6.99,
+        "count": 1
+      },
+      "16": {
+        "avg": 6.95,
+        "count": 8
+      },
+      "11": {
+        "avg": 6.81,
+        "count": 25
+      }
+    },
+    "recent_avg": 6.76,
+    "recent_count": 20,
+    "recent_deviation": -0.017
+  }
+}

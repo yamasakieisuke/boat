@@ -1,0 +1,170 @@
+{
+  "hist_global_waku_stats": {
+    "1": {
+      "races": 44,
+      "1st_pct": 52.3,
+      "2nd_pct": 22.7,
+      "3rd_pct": 6.8,
+      "4th_pct": 6.8,
+      "5th_pct": 6.8,
+      "6th_pct": 4.5,
+      "top2_pct": 75.0,
+      "top3_pct": 81.8
+    },
+    "2": {
+      "races": 42,
+      "1st_pct": 21.4,
+      "2nd_pct": 23.8,
+      "3rd_pct": 28.6,
+      "4th_pct": 4.8,
+      "5th_pct": 9.5,
+      "6th_pct": 11.9,
+      "top2_pct": 45.2,
+      "top3_pct": 73.8
+    },
+    "3": {
+      "races": 36,
+      "1st_pct": 13.9,
+      "2nd_pct": 22.2,
+      "3rd_pct": 22.2,
+      "4th_pct": 19.4,
+      "5th_pct": 5.6,
+      "6th_pct": 16.7,
+      "top2_pct": 36.1,
+      "top3_pct": 58.3
+    },
+    "4": {
+      "races": 37,
+      "1st_pct": 8.1,
+      "2nd_pct": 21.6,
+      "3rd_pct": 29.7,
+      "4th_pct": 13.5,
+      "5th_pct": 16.2,
+      "6th_pct": 10.8,
+      "top2_pct": 29.7,
+      "top3_pct": 59.5
+    },
+    "5": {
+      "races": 36,
+      "1st_pct": 8.3,
+      "2nd_pct": 25.0,
+      "3rd_pct": 13.9,
+      "4th_pct": 27.8,
+      "5th_pct": 13.9,
+      "6th_pct": 11.1,
+      "top2_pct": 33.3,
+      "top3_pct": 47.2
+    },
+    "6": {
+      "races": 35,
+      "1st_pct": 5.7,
+      "2nd_pct": 14.3,
+      "3rd_pct": 28.6,
+      "4th_pct": 20.0,
+      "5th_pct": 17.1,
+      "6th_pct": 14.3,
+      "top2_pct": 20.0,
+      "top3_pct": 48.6
+    }
+  },
+  "hist_global_win_rate": 19.57,
+  "hist_avg_st": {
+    "avg_st": 0.158,
+    "st_count": 202,
+    "course_st": {
+      "1": 0.163,
+      "2": 0.167,
+      "3": 0.147,
+      "4": 0.15,
+      "5": 0.158,
+      "6": 0.163
+    }
+  },
+  "gender": "M",
+  "reg_no": "4977",
+  "hist_exhibition": {
+    "overall_avg": 6.83,
+    "count": 202,
+    "by_venue": {
+      "18": {
+        "avg": 6.98,
+        "count": 4
+      },
+      "21": {
+        "avg": 6.79,
+        "count": 8
+      },
+      "03": {
+        "avg": 6.93,
+        "count": 14
+      },
+      "04": {
+        "avg": 6.84,
+        "count": 10
+      },
+      "02": {
+        "avg": 6.94,
+        "count": 1
+      },
+      "20": {
+        "avg": 6.87,
+        "count": 8
+      },
+      "19": {
+        "avg": 6.95,
+        "count": 1
+      },
+      "12": {
+        "avg": 6.86,
+        "count": 23
+      },
+      "11": {
+        "avg": 6.76,
+        "count": 25
+      },
+      "10": {
+        "avg": 6.76,
+        "count": 3
+      },
+      "07": {
+        "avg": 6.71,
+        "count": 4
+      },
+      "06": {
+        "avg": 6.71,
+        "count": 6
+      },
+      "08": {
+        "avg": 6.82,
+        "count": 10
+      },
+      "09": {
+        "avg": 6.88,
+        "count": 4
+      },
+      "16": {
+        "avg": 6.96,
+        "count": 1
+      },
+      "24": {
+        "avg": 6.91,
+        "count": 7
+      },
+      "23": {
+        "avg": 6.94,
+        "count": 1
+      },
+      "01": {
+        "avg": 6.78,
+        "count": 9
+      },
+      "05": {
+        "avg": 6.76,
+        "count": 3
+      }
+    },
+    "recent_avg": 6.77,
+    "recent_count": 20,
+    "recent_deviation": -0.161
+  }
+}

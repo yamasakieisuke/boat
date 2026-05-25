@@ -1,0 +1,213 @@
+{
+  "reg_no": "4979",
+  "st_勝率": "5.52",
+  "st_3連対率": "56.19%",
+  "st_優出回数": "1回",
+  "st_平均スタートタイミング": "0.16",
+  "st_出遅れ回数（選手責任）": "0回",
+  "st_1着": "20.0%（21回）",
+  "st_3着": "16.2%（17回）",
+  "st_5着": "12.4%（13回）",
+  "hist_global_waku_stats": {
+    "1": {
+      "races": 40,
+      "1st_pct": 62.5,
+      "2nd_pct": 15.0,
+      "3rd_pct": 10.0,
+      "4th_pct": 5.0,
+      "5th_pct": 0.0,
+      "6th_pct": 7.5,
+      "top2_pct": 77.5,
+      "top3_pct": 87.5
+    },
+    "2": {
+      "races": 43,
+      "1st_pct": 9.3,
+      "2nd_pct": 16.3,
+      "3rd_pct": 14.0,
+      "4th_pct": 23.3,
+      "5th_pct": 18.6,
+      "6th_pct": 18.6,
+      "top2_pct": 25.6,
+      "top3_pct": 39.5
+    },
+    "3": {
+      "races": 43,
+      "1st_pct": 7.0,
+      "2nd_pct": 18.6,
+      "3rd_pct": 27.9,
+      "4th_pct": 11.6,
+      "5th_pct": 16.3,
+      "6th_pct": 18.6,
+      "top2_pct": 25.6,
+      "top3_pct": 53.5
+    },
+    "4": {
+      "races": 47,
+      "1st_pct": 12.8,
+      "2nd_pct": 10.6,
+      "3rd_pct": 19.1,
+      "4th_pct": 17.0,
+      "5th_pct": 17.0,
+      "6th_pct": 23.4,
+      "top2_pct": 23.4,
+      "top3_pct": 42.6
+    },
+    "5": {
+      "races": 46,
+      "1st_pct": 8.7,
+      "2nd_pct": 19.6,
+      "3rd_pct": 13.0,
+      "4th_pct": 23.9,
+      "5th_pct": 21.7,
+      "6th_pct": 13.0,
+      "top2_pct": 28.3,
+      "top3_pct": 41.3
+    },
+    "6": {
+      "races": 32,
+      "1st_pct": 0.0,
+      "2nd_pct": 9.4,
+      "3rd_pct": 21.9,
+      "4th_pct": 18.8,
+      "5th_pct": 21.9,
+      "6th_pct": 28.1,
+      "top2_pct": 9.4,
+      "top3_pct": 31.2
+    }
+  },
+  "hist_global_win_rate": 16.73,
+  "hist_avg_st": {
+    "avg_st": 0.169,
+    "st_count": 225,
+    "course_st": {
+      "1": 0.164,
+      "2": 0.172,
+      "3": 0.168,
+      "4": 0.155,
+      "5": 0.17,
+      "6": 0.19
+    }
+  },
+  "hist_local_waku_stats": {
+    "1": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 100.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "3": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 100.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "4": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 100.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "6": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 100.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 0.0,
+  "gender": "M",
+  "hist_exhibition": {
+    "overall_avg": 6.86,
+    "count": 226,
+    "by_venue": {
+      "07": {
+        "avg": 6.76,
+        "count": 8
+      },
+      "04": {
+        "avg": 6.85,
+        "count": 17
+      },
+      "01": {
+        "avg": 6.96,
+        "count": 2
+      },
+      "08": {
+        "avg": 6.84,
+        "count": 9
+      },
+      "06": {
+        "avg": 6.82,
+        "count": 3
+      },
+      "11": {
+        "avg": 6.77,
+        "count": 23
+      },
+      "17": {
+        "avg": 6.76,
+        "count": 18
+      },
+      "13": {
+        "avg": 6.85,
+        "count": 9
+      },
+      "12": {
+        "avg": 6.85,
+        "count": 18
+      },
+      "23": {
+        "avg": 6.83,
+        "count": 4
+      },
+      "21": {
+        "avg": 6.77,
+        "count": 1
+      },
+      "16": {
+        "avg": 6.96,
+        "count": 24
+      },
+      "03": {
+        "avg": 7.05,
+        "count": 15
+      },
+      "02": {
+        "avg": 6.89,
+        "count": 5
+      },
+      "22": {
+        "avg": 6.85,
+        "count": 4
+      },
+      "14": {
+        "avg": 6.86,
+        "count": 1
+      }
+    },
+    "recent_avg": 6.86,
+    "recent_count": 20,
+    "recent_deviation": -0.023
+  }
+}

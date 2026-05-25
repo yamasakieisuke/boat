@@ -1,0 +1,190 @@
+{
+  "reg_no": "4846",
+  "st_勝率": "3.30",
+  "st_3連対率": "25.28%",
+  "st_優出回数": "0回",
+  "st_平均スタートタイミング": "0.17",
+  "st_出遅れ回数（選手責任）": "0回",
+  "st_1着": "5.7%（5回）",
+  "st_3着": "9.2%（8回）",
+  "st_5着": "23.0%（20回）",
+  "hist_global_waku_stats": {
+    "1": {
+      "races": 24,
+      "1st_pct": 20.8,
+      "2nd_pct": 20.8,
+      "3rd_pct": 33.3,
+      "4th_pct": 8.3,
+      "5th_pct": 12.5,
+      "6th_pct": 4.2,
+      "top2_pct": 41.7,
+      "top3_pct": 75.0
+    },
+    "2": {
+      "races": 35,
+      "1st_pct": 2.9,
+      "2nd_pct": 25.7,
+      "3rd_pct": 11.4,
+      "4th_pct": 20.0,
+      "5th_pct": 20.0,
+      "6th_pct": 20.0,
+      "top2_pct": 28.6,
+      "top3_pct": 40.0
+    },
+    "3": {
+      "races": 42,
+      "1st_pct": 4.8,
+      "2nd_pct": 7.1,
+      "3rd_pct": 21.4,
+      "4th_pct": 14.3,
+      "5th_pct": 21.4,
+      "6th_pct": 31.0,
+      "top2_pct": 11.9,
+      "top3_pct": 33.3
+    },
+    "4": {
+      "races": 38,
+      "1st_pct": 2.6,
+      "2nd_pct": 7.9,
+      "3rd_pct": 2.6,
+      "4th_pct": 18.4,
+      "5th_pct": 26.3,
+      "6th_pct": 42.1,
+      "top2_pct": 10.5,
+      "top3_pct": 13.2
+    },
+    "5": {
+      "races": 32,
+      "1st_pct": 0.0,
+      "2nd_pct": 15.6,
+      "3rd_pct": 12.5,
+      "4th_pct": 6.2,
+      "5th_pct": 25.0,
+      "6th_pct": 40.6,
+      "top2_pct": 15.6,
+      "top3_pct": 28.1
+    },
+    "6": {
+      "races": 29,
+      "1st_pct": 0.0,
+      "2nd_pct": 3.4,
+      "3rd_pct": 6.9,
+      "4th_pct": 6.9,
+      "5th_pct": 24.1,
+      "6th_pct": 58.6,
+      "top2_pct": 3.4,
+      "top3_pct": 10.3
+    }
+  },
+  "hist_global_win_rate": 4.5,
+  "hist_avg_st": {
+    "avg_st": 0.17,
+    "st_count": 185,
+    "course_st": {
+      "1": 0.143,
+      "2": 0.155,
+      "3": 0.166,
+      "4": 0.171,
+      "5": 0.182,
+      "6": 0.201
+    }
+  },
+  "hist_local_waku_stats": {
+    "1": {
+      "races": 1,
+      "1st_pct": 100.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 100.0,
+      "top3_pct": 100.0
+    },
+    "2": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 100.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "5": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 100.0,
+      "5th_pct": 0.0,
+      "6th_pct": 0.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 33.33,
+  "gender": "M",
+  "hist_exhibition": {
+    "overall_avg": 6.85,
+    "count": 185,
+    "by_venue": {
+      "20": {
+        "avg": 7.0,
+        "count": 7
+      },
+      "15": {
+        "avg": 6.89,
+        "count": 10
+      },
+      "19": {
+        "avg": 6.72,
+        "count": 8
+      },
+      "13": {
+        "avg": 6.86,
+        "count": 16
+      },
+      "23": {
+        "avg": 6.81,
+        "count": 9
+      },
+      "09": {
+        "avg": 6.82,
+        "count": 7
+      },
+      "03": {
+        "avg": 7.03,
+        "count": 9
+      },
+      "16": {
+        "avg": 6.87,
+        "count": 10
+      },
+      "02": {
+        "avg": 6.87,
+        "count": 7
+      },
+      "06": {
+        "avg": 6.72,
+        "count": 9
+      },
+      "04": {
+        "avg": 6.85,
+        "count": 3
+      },
+      "05": {
+        "avg": 6.77,
+        "count": 1
+      },
+      "22": {
+        "avg": 6.8,
+        "count": 3
+      }
+    },
+    "recent_avg": 6.85,
+    "recent_count": 20,
+    "recent_deviation": -0.002
+  }
+}

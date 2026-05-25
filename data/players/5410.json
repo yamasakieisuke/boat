@@ -1,0 +1,122 @@
+{
+  "hist_global_waku_stats": {
+    "4": {
+      "races": 5,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 100.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "5": {
+      "races": 41,
+      "1st_pct": 2.4,
+      "2nd_pct": 2.4,
+      "3rd_pct": 0.0,
+      "4th_pct": 9.8,
+      "5th_pct": 14.6,
+      "6th_pct": 70.7,
+      "top2_pct": 4.9,
+      "top3_pct": 4.9
+    },
+    "6": {
+      "races": 95,
+      "1st_pct": 0.0,
+      "2nd_pct": 1.1,
+      "3rd_pct": 2.1,
+      "4th_pct": 5.3,
+      "5th_pct": 20.0,
+      "6th_pct": 71.6,
+      "top2_pct": 1.1,
+      "top3_pct": 3.2
+    }
+  },
+  "hist_global_win_rate": 0.71,
+  "hist_avg_st": {
+    "avg_st": 0.175,
+    "st_count": 128,
+    "course_st": {
+      "5": 0.194,
+      "6": 0.174
+    }
+  },
+  "gender": "F",
+  "reg_no": "5410",
+  "hist_local_waku_stats": {
+    "5": {
+      "races": 3,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 33.3,
+      "5th_pct": 33.3,
+      "6th_pct": 33.3,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
+    "6": {
+      "races": 5,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 40.0,
+      "5th_pct": 20.0,
+      "6th_pct": 40.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 0.0,
+  "hist_exhibition": {
+    "overall_avg": 6.78,
+    "count": 131,
+    "by_venue": {
+      "07": {
+        "avg": 6.74,
+        "count": 14
+      },
+      "08": {
+        "avg": 6.88,
+        "count": 6
+      },
+      "04": {
+        "avg": 6.89,
+        "count": 20
+      },
+      "09": {
+        "avg": 6.91,
+        "count": 6
+      },
+      "05": {
+        "avg": 6.74,
+        "count": 7
+      },
+      "03": {
+        "avg": 6.84,
+        "count": 13
+      },
+      "06": {
+        "avg": 6.73,
+        "count": 9
+      },
+      "11": {
+        "avg": 6.7,
+        "count": 23
+      },
+      "12": {
+        "avg": 6.73,
+        "count": 11
+      },
+      "19": {
+        "avg": 6.74,
+        "count": 4
+      }
+    },
+    "recent_avg": 6.78,
+    "recent_count": 20,
+    "recent_deviation": -0.018
+  }
+}

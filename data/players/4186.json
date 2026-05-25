@@ -1,0 +1,124 @@
+{
+  "hist_global_waku_stats": {
+    "1": {
+      "races": 18,
+      "1st_pct": 16.7,
+      "2nd_pct": 22.2,
+      "3rd_pct": 5.6,
+      "4th_pct": 16.7,
+      "5th_pct": 11.1,
+      "6th_pct": 27.8,
+      "top2_pct": 38.9,
+      "top3_pct": 44.4
+    },
+    "2": {
+      "races": 28,
+      "1st_pct": 7.1,
+      "2nd_pct": 10.7,
+      "3rd_pct": 14.3,
+      "4th_pct": 28.6,
+      "5th_pct": 21.4,
+      "6th_pct": 17.9,
+      "top2_pct": 17.9,
+      "top3_pct": 32.1
+    },
+    "3": {
+      "races": 29,
+      "1st_pct": 6.9,
+      "2nd_pct": 10.3,
+      "3rd_pct": 10.3,
+      "4th_pct": 10.3,
+      "5th_pct": 17.2,
+      "6th_pct": 44.8,
+      "top2_pct": 17.2,
+      "top3_pct": 27.6
+    },
+    "4": {
+      "races": 24,
+      "1st_pct": 0.0,
+      "2nd_pct": 4.2,
+      "3rd_pct": 8.3,
+      "4th_pct": 29.2,
+      "5th_pct": 41.7,
+      "6th_pct": 16.7,
+      "top2_pct": 4.2,
+      "top3_pct": 12.5
+    },
+    "5": {
+      "races": 20,
+      "1st_pct": 0.0,
+      "2nd_pct": 5.0,
+      "3rd_pct": 10.0,
+      "4th_pct": 20.0,
+      "5th_pct": 30.0,
+      "6th_pct": 35.0,
+      "top2_pct": 5.0,
+      "top3_pct": 15.0
+    },
+    "6": {
+      "races": 20,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 5.0,
+      "4th_pct": 5.0,
+      "5th_pct": 35.0,
+      "6th_pct": 55.0,
+      "top2_pct": 0.0,
+      "top3_pct": 5.0
+    }
+  },
+  "hist_global_win_rate": 5.04,
+  "hist_avg_st": {
+    "avg_st": 0.176,
+    "st_count": 139,
+    "course_st": {
+      "1": 0.161,
+      "2": 0.195,
+      "3": 0.16,
+      "4": 0.159,
+      "5": 0.193,
+      "6": 0.191
+    }
+  },
+  "hist_exhibition": {
+    "overall_avg": 6.78,
+    "count": 139,
+    "by_venue": {
+      "02": {
+        "avg": 6.81,
+        "count": 16
+      },
+      "05": {
+        "avg": 6.75,
+        "count": 27
+      },
+      "06": {
+        "avg": 6.74,
+        "count": 20
+      },
+      "04": {
+        "avg": 6.86,
+        "count": 25
+      },
+      "09": {
+        "avg": 6.84,
+        "count": 7
+      },
+      "03": {
+        "avg": 6.64,
+        "count": 12
+      },
+      "11": {
+        "avg": 6.75,
+        "count": 6
+      },
+      "12": {
+        "avg": 6.71,
+        "count": 5
+      }
+    },
+    "recent_avg": 6.79,
+    "recent_count": 20,
+    "recent_deviation": -0.112
+  }
+}

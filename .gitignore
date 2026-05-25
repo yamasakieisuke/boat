@@ -17,6 +17,17 @@ logs/
 # Exception: fetch_pending.yml が読む依頼ファイル（predict.yml watchlist が書き込む）
 !data/fetch_requests.json
 
+# Exception: 予想に必要な統計データ（verify.yml が build_stats.py で更新→commit）
+# - results_csv: build_stats.py の入力ソース（過去レース結果）
+# - players: 選手の枠別着順実績ほか（predictor が直接読む）
+# - motors: モーター成績（predictor が直接読む）
+!data/results_csv/
+!data/results_csv/**
+!data/players/
+!data/players/**
+!data/motors/
+!data/motors/**
+
 # Python
 __pycache__/
 *.pyc
