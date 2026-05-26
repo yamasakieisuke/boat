@@ -86,7 +86,9 @@ jobs:
               break
             fi
           done
-          [ $RESTORED -eq 0 ] && echo "（fetch-state なし＝今日の初回 poll か、retention 期限切れ）"
+          if [ $RESTORED -eq 0 ]; then
+            echo "（fetch-state なし＝今日の初回 poll か、retention 期限切れ）"
+          fi
 
       - name: Process pending tasks
         id: pending
