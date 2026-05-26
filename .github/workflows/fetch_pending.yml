@@ -19,7 +19,7 @@ on:
 
 permissions:
   contents: write
-  actions: read
+  actions: write  # self-trigger チェーン用
 
 concurrency:
   group: boat-fetch-pending
@@ -134,3 +134,21 @@ jobs:
           retention-days: 3
           overwrite: true
           if-no-files-found: ignore
+
+      # GHA schedule cron は高負荷時に容赦なくスキップされるため
+      # 自身を chain trigger することで5分間隔の連続実行を保証する。
+      # JST 10:00-20:59 の窓内なら sleep 後に次回をキック → 21時以降は自然停止。
+      - name: Self-trigger next poll (chain)
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          HOUR=$(TZ=Asia/Tokyo date +%-H)
+          if [ "$HOUR" -ge 10 ] && [ "$HOUR" -le 20 ]; then
+            echo "JST ${HOUR}時：active window 内 → 4分半後に次回 poll を chain trigger"
+            sleep 270
+            gh workflow run fetch_pending.yml -f date="${{ steps.dateres.outputs.date }}"
+            echo "✅ 次回 poll を trigger"
+          else
+            echo "JST ${HOUR}時：active window 外（10-20）→ chain 停止。翌日 cron に委ねる"
+          fi
