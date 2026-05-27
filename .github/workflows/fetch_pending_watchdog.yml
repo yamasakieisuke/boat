@@ -50,7 +50,7 @@ jobs:
           echo "⚠️ 15 分以上 fetch_pending run なし → chain 切断と判定、復活 trigger"
           DATE=$(TZ=Asia/Tokyo date +%Y%m%d)
           for i in 1 2 3; do
-            if gh workflow run fetch_pending.yml -f date="$DATE"; then
+            if gh workflow run fetch_pending.yml --repo "${{ github.repository }}" -f date="$DATE"; then
               echo "✅ fetch_pending を dispatch（試行 $i, date=$DATE）"
               exit 0
             fi
