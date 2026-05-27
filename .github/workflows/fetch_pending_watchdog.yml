@@ -1,0 +1,62 @@
+name: Boat Fetch Pending Watchdog
+
+# fetch_pending.yml の self-trigger チェーンが何らかの理由で途切れた時に復活させる。
+# 15 分間隔で「直近 fetch_pending run が 15 分以内に存在するか」を確認し、
+# なければ workflow_dispatch で chain を再起動する。
+
+on:
+  schedule:
+    # JST 10:00-20:45 / 15 分間隔（UTC 01:00-11:45）
+    - cron: '*/15 1-11 * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: boat-fetch-pending-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    name: chain 死活監視
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: 直近 fetch_pending run を確認し必要なら復活 trigger
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 直近 15 分以内に completed/in_progress な fetch_pending run があれば chain は生きている
+          THRESHOLD=$(date -u -d '15 minutes ago' +%Y-%m-%dT%H:%M:%SZ)
+          LATEST=$(gh run list --repo "${{ github.repository }}" --workflow=fetch_pending.yml --limit=1 --json createdAt,status,conclusion)
+          LATEST_TIME=$(echo "$LATEST" | jq -r '.[0].createdAt')
+          LATEST_STATUS=$(echo "$LATEST" | jq -r '.[0].status')
+          LATEST_CONCL=$(echo "$LATEST" | jq -r '.[0].conclusion')
+          echo "直近 fetch_pending: time=$LATEST_TIME status=$LATEST_STATUS conclusion=$LATEST_CONCL"
+          echo "閾値（これより新しければ生存判定）: $THRESHOLD"
+
+          if [ "$LATEST_STATUS" = "in_progress" ] || [ "$LATEST_STATUS" = "queued" ]; then
+            echo "✅ 現在 in_progress/queued → chain 生存。何もしない"
+            exit 0
+          fi
+
+          if [[ "$LATEST_TIME" > "$THRESHOLD" ]]; then
+            echo "✅ 15 分以内に run 完了あり → chain 生存。何もしない"
+            exit 0
+          fi
+
+          echo "⚠️ 15 分以上 fetch_pending run なし → chain 切断と判定、復活 trigger"
+          DATE=$(TZ=Asia/Tokyo date +%Y%m%d)
+          for i in 1 2 3; do
+            if gh workflow run fetch_pending.yml -f date="$DATE"; then
+              echo "✅ fetch_pending を dispatch（試行 $i, date=$DATE）"
+              exit 0
+            fi
+            BACKOFF=$((i * 10))
+            echo "[WARN] dispatch 失敗（試行 $i/3）→ ${BACKOFF}秒待機"
+            sleep $BACKOFF
+          done
+          echo "[ERROR] 3 回 retry も失敗。次の watchdog cron に委ねる"
+          exit 1
