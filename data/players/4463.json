@@ -21,15 +21,15 @@
       "top3_pct": 87.0
     },
     "2": {
-      "races": 44,
-      "1st_pct": 11.4,
-      "2nd_pct": 25.0,
-      "3rd_pct": 31.8,
-      "4th_pct": 18.2,
-      "5th_pct": 9.1,
-      "6th_pct": 4.5,
-      "top2_pct": 36.4,
-      "top3_pct": 68.2
+      "races": 45,
+      "1st_pct": 13.3,
+      "2nd_pct": 24.4,
+      "3rd_pct": 31.1,
+      "4th_pct": 17.8,
+      "5th_pct": 8.9,
+      "6th_pct": 4.4,
+      "top2_pct": 37.8,
+      "top3_pct": 68.9
     },
     "3": {
       "races": 43,
@@ -65,28 +65,28 @@
       "top3_pct": 37.8
     },
     "6": {
-      "races": 40,
-      "1st_pct": 2.5,
-      "2nd_pct": 10.0,
-      "3rd_pct": 22.5,
-      "4th_pct": 30.0,
-      "5th_pct": 22.5,
-      "6th_pct": 12.5,
-      "top2_pct": 12.5,
-      "top3_pct": 35.0
+      "races": 41,
+      "1st_pct": 2.4,
+      "2nd_pct": 9.8,
+      "3rd_pct": 22.0,
+      "4th_pct": 29.3,
+      "5th_pct": 24.4,
+      "6th_pct": 12.2,
+      "top2_pct": 12.2,
+      "top3_pct": 34.1
     }
   },
-  "hist_global_win_rate": 17.42,
+  "hist_global_win_rate": 17.67,
   "hist_avg_st": {
-    "avg_st": 0.164,
-    "st_count": 255,
+    "avg_st": 0.163,
+    "st_count": 257,
     "course_st": {
       "1": 0.148,
-      "2": 0.168,
+      "2": 0.166,
       "3": 0.15,
       "4": 0.173,
       "5": 0.157,
-      "6": 0.194
+      "6": 0.193
     }
   },
   "hist_local_waku_stats": {
@@ -150,7 +150,7 @@
   "gender": "M",
   "hist_exhibition": {
     "overall_avg": 6.8,
-    "count": 255,
+    "count": 257,
     "by_venue": {
       "08": {
         "avg": 6.82,
@@ -158,7 +158,7 @@
       },
       "17": {
         "avg": 6.74,
-        "count": 14
+        "count": 15
       },
       "14": {
         "avg": 6.84,
@@ -223,10 +223,14 @@
       "03": {
         "avg": 6.75,
         "count": 5
+      },
+      "15": {
+        "avg": 6.77,
+        "count": 1
       }
     },
-    "recent_avg": 6.79,
+    "recent_avg": 6.78,
     "recent_count": 20,
-    "recent_deviation": -0.038
+    "recent_deviation": -0.028
   }
 }
