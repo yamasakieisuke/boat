@@ -23,15 +23,15 @@
       "top3_pct": 56.7
     },
     "3": {
-      "races": 38,
-      "1st_pct": 10.5,
-      "2nd_pct": 28.9,
-      "3rd_pct": 21.1,
-      "4th_pct": 21.1,
-      "5th_pct": 10.5,
-      "6th_pct": 7.9,
-      "top2_pct": 39.5,
-      "top3_pct": 60.5
+      "races": 39,
+      "1st_pct": 10.3,
+      "2nd_pct": 28.2,
+      "3rd_pct": 20.5,
+      "4th_pct": 20.5,
+      "5th_pct": 12.8,
+      "6th_pct": 7.7,
+      "top2_pct": 38.5,
+      "top3_pct": 59.0
     },
     "4": {
       "races": 29,
@@ -56,25 +56,25 @@
       "top3_pct": 45.9
     },
     "6": {
-      "races": 45,
+      "races": 46,
       "1st_pct": 0.0,
-      "2nd_pct": 15.6,
-      "3rd_pct": 11.1,
-      "4th_pct": 20.0,
-      "5th_pct": 28.9,
-      "6th_pct": 24.4,
-      "top2_pct": 15.6,
-      "top3_pct": 26.7
+      "2nd_pct": 15.2,
+      "3rd_pct": 10.9,
+      "4th_pct": 19.6,
+      "5th_pct": 30.4,
+      "6th_pct": 23.9,
+      "top2_pct": 15.2,
+      "top3_pct": 26.1
     }
   },
-  "hist_global_win_rate": 14.9,
+  "hist_global_win_rate": 14.76,
   "hist_avg_st": {
-    "avg_st": 0.162,
-    "st_count": 190,
+    "avg_st": 0.161,
+    "st_count": 192,
     "course_st": {
       "1": 0.174,
       "2": 0.149,
-      "3": 0.144,
+      "3": 0.143,
       "4": 0.146,
       "5": 0.147,
       "6": 0.187
@@ -83,8 +83,8 @@
   "gender": "M",
   "reg_no": "5137",
   "hist_exhibition": {
-    "overall_avg": 6.74,
-    "count": 190,
+    "overall_avg": 6.73,
+    "count": 192,
     "by_venue": {
       "23": {
         "avg": 6.77,
@@ -95,8 +95,8 @@
         "count": 12
       },
       "10": {
-        "avg": 6.68,
-        "count": 5
+        "avg": 6.66,
+        "count": 6
       },
       "06": {
         "avg": 6.64,
@@ -139,12 +139,12 @@
         "count": 2
       },
       "08": {
-        "avg": 6.64,
-        "count": 1
+        "avg": 6.68,
+        "count": 2
       }
     },
-    "recent_avg": 6.68,
+    "recent_avg": 6.66,
     "recent_count": 20,
-    "recent_deviation": -0.019
+    "recent_deviation": -0.022
   }
 }
