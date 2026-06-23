@@ -12,15 +12,15 @@
       "top3_pct": 80.4
     },
     "2": {
-      "races": 51,
-      "1st_pct": 23.5,
-      "2nd_pct": 35.3,
-      "3rd_pct": 11.8,
-      "4th_pct": 13.7,
-      "5th_pct": 9.8,
-      "6th_pct": 5.9,
-      "top2_pct": 58.8,
-      "top3_pct": 70.6
+      "races": 52,
+      "1st_pct": 23.1,
+      "2nd_pct": 36.5,
+      "3rd_pct": 11.5,
+      "4th_pct": 13.5,
+      "5th_pct": 9.6,
+      "6th_pct": 5.8,
+      "top2_pct": 59.6,
+      "top3_pct": 71.2
     },
     "3": {
       "races": 52,
@@ -34,15 +34,15 @@
       "top3_pct": 63.5
     },
     "4": {
-      "races": 49,
-      "1st_pct": 26.5,
-      "2nd_pct": 6.1,
-      "3rd_pct": 14.3,
-      "4th_pct": 22.4,
-      "5th_pct": 18.4,
-      "6th_pct": 12.2,
-      "top2_pct": 32.7,
-      "top3_pct": 46.9
+      "races": 50,
+      "1st_pct": 28.0,
+      "2nd_pct": 6.0,
+      "3rd_pct": 14.0,
+      "4th_pct": 22.0,
+      "5th_pct": 18.0,
+      "6th_pct": 12.0,
+      "top2_pct": 34.0,
+      "top3_pct": 48.0
     },
     "5": {
       "races": 47,
@@ -67,15 +67,15 @@
       "top3_pct": 22.6
     }
   },
-  "hist_global_win_rate": 27.92,
+  "hist_global_win_rate": 28.06,
   "hist_avg_st": {
     "avg_st": 0.159,
-    "st_count": 299,
+    "st_count": 301,
     "course_st": {
       "1": 0.161,
-      "2": 0.163,
+      "2": 0.162,
       "3": 0.147,
-      "4": 0.152,
+      "4": 0.151,
       "5": 0.167,
       "6": 0.163
     }
@@ -84,7 +84,7 @@
   "reg_no": "4610",
   "hist_exhibition": {
     "overall_avg": 6.81,
-    "count": 299,
+    "count": 301,
     "by_venue": {
       "09": {
         "avg": 6.8,
@@ -127,12 +127,12 @@
         "count": 9
       },
       "10": {
-        "avg": 6.74,
-        "count": 11
+        "avg": 6.75,
+        "count": 12
       },
       "08": {
         "avg": 6.81,
-        "count": 13
+        "count": 14
       },
       "02": {
         "avg": 6.84,
@@ -169,6 +169,6 @@
     },
     "recent_avg": 6.85,
     "recent_count": 20,
-    "recent_deviation": 0.003
+    "recent_deviation": 0.009
   }
 }
