@@ -12,15 +12,15 @@
       "top3_pct": 91.3
     },
     "2": {
-      "races": 39,
-      "1st_pct": 7.7,
-      "2nd_pct": 25.6,
-      "3rd_pct": 23.1,
-      "4th_pct": 17.9,
-      "5th_pct": 17.9,
-      "6th_pct": 7.7,
-      "top2_pct": 33.3,
-      "top3_pct": 56.4
+      "races": 40,
+      "1st_pct": 7.5,
+      "2nd_pct": 25.0,
+      "3rd_pct": 22.5,
+      "4th_pct": 17.5,
+      "5th_pct": 17.5,
+      "6th_pct": 10.0,
+      "top2_pct": 32.5,
+      "top3_pct": 55.0
     },
     "3": {
       "races": 41,
@@ -56,24 +56,24 @@
       "top3_pct": 34.3
     },
     "6": {
-      "races": 39,
-      "1st_pct": 5.1,
-      "2nd_pct": 5.1,
-      "3rd_pct": 28.2,
-      "4th_pct": 15.4,
-      "5th_pct": 17.9,
-      "6th_pct": 28.2,
-      "top2_pct": 10.3,
-      "top3_pct": 38.5
+      "races": 40,
+      "1st_pct": 5.0,
+      "2nd_pct": 5.0,
+      "3rd_pct": 27.5,
+      "4th_pct": 17.5,
+      "5th_pct": 17.5,
+      "6th_pct": 27.5,
+      "top2_pct": 10.0,
+      "top3_pct": 37.5
     }
   },
-  "hist_global_win_rate": 20.16,
+  "hist_global_win_rate": 20.0,
   "hist_avg_st": {
     "avg_st": 0.157,
-    "st_count": 230,
+    "st_count": 232,
     "course_st": {
       "1": 0.143,
-      "2": 0.165,
+      "2": 0.164,
       "3": 0.156,
       "4": 0.136,
       "5": 0.178,
@@ -84,7 +84,7 @@
   "reg_no": "4568",
   "hist_exhibition": {
     "overall_avg": 6.78,
-    "count": 231,
+    "count": 233,
     "by_venue": {
       "09": {
         "avg": 6.86,
@@ -151,12 +151,30 @@
         "count": 2
       },
       "23": {
-        "avg": 6.7,
+        "avg": 6.71,
+        "count": 2
+      },
+      "22": {
+        "avg": 6.73,
         "count": 1
       }
     },
     "recent_avg": 6.74,
     "recent_count": 20,
     "recent_deviation": -0.016
-  }
+  },
+  "hist_local_waku_stats": {
+    "2": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 100.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    }
+  },
+  "hist_local_win_rate": 0.0
 }
