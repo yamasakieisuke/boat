@@ -23,15 +23,15 @@
       "top3_pct": 52.4
     },
     "3": {
-      "races": 55,
-      "1st_pct": 32.7,
-      "2nd_pct": 14.5,
-      "3rd_pct": 16.4,
-      "4th_pct": 12.7,
-      "5th_pct": 10.9,
-      "6th_pct": 12.7,
-      "top2_pct": 47.3,
-      "top3_pct": 63.6
+      "races": 56,
+      "1st_pct": 33.9,
+      "2nd_pct": 14.3,
+      "3rd_pct": 16.1,
+      "4th_pct": 12.5,
+      "5th_pct": 10.7,
+      "6th_pct": 12.5,
+      "top2_pct": 48.2,
+      "top3_pct": 64.3
     },
     "4": {
       "races": 56,
@@ -45,15 +45,15 @@
       "top3_pct": 60.7
     },
     "5": {
-      "races": 49,
-      "1st_pct": 10.2,
-      "2nd_pct": 14.3,
-      "3rd_pct": 36.7,
-      "4th_pct": 20.4,
-      "5th_pct": 8.2,
-      "6th_pct": 10.2,
-      "top2_pct": 24.5,
-      "top3_pct": 61.2
+      "races": 50,
+      "1st_pct": 10.0,
+      "2nd_pct": 14.0,
+      "3rd_pct": 38.0,
+      "4th_pct": 20.0,
+      "5th_pct": 8.0,
+      "6th_pct": 10.0,
+      "top2_pct": 24.0,
+      "top3_pct": 62.0
     },
     "6": {
       "races": 48,
@@ -67,16 +67,16 @@
       "top3_pct": 39.6
     }
   },
-  "hist_global_win_rate": 26.27,
+  "hist_global_win_rate": 26.41,
   "hist_avg_st": {
-    "avg_st": 0.139,
-    "st_count": 323,
+    "avg_st": 0.138,
+    "st_count": 325,
     "course_st": {
       "1": 0.13,
       "2": 0.142,
-      "3": 0.129,
+      "3": 0.128,
       "4": 0.141,
-      "5": 0.155,
+      "5": 0.153,
       "6": 0.141
     }
   },
@@ -142,7 +142,7 @@
   "reg_no": "4704",
   "hist_exhibition": {
     "overall_avg": 6.84,
-    "count": 323,
+    "count": 325,
     "by_venue": {
       "18": {
         "avg": 7.04,
@@ -197,8 +197,8 @@
         "count": 2
       },
       "16": {
-        "avg": 6.93,
-        "count": 8
+        "avg": 6.91,
+        "count": 10
       },
       "22": {
         "avg": 6.96,
@@ -221,8 +221,8 @@
         "count": 5
       }
     },
-    "recent_avg": 6.91,
+    "recent_avg": 6.92,
     "recent_count": 20,
-    "recent_deviation": -0.012
+    "recent_deviation": -0.01
   }
 }
