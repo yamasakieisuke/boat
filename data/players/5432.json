@@ -12,35 +12,35 @@
       "top3_pct": 11.1
     },
     "5": {
-      "races": 27,
+      "races": 28,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
-      "3rd_pct": 18.5,
-      "4th_pct": 11.1,
-      "5th_pct": 11.1,
-      "6th_pct": 59.3,
+      "3rd_pct": 17.9,
+      "4th_pct": 10.7,
+      "5th_pct": 14.3,
+      "6th_pct": 57.1,
       "top2_pct": 0.0,
-      "top3_pct": 18.5
+      "top3_pct": 17.9
     },
     "6": {
-      "races": 45,
+      "races": 46,
       "1st_pct": 2.2,
       "2nd_pct": 0.0,
-      "3rd_pct": 6.7,
-      "4th_pct": 6.7,
-      "5th_pct": 28.9,
-      "6th_pct": 55.6,
+      "3rd_pct": 6.5,
+      "4th_pct": 8.7,
+      "5th_pct": 28.3,
+      "6th_pct": 54.3,
       "top2_pct": 2.2,
-      "top3_pct": 8.9
+      "top3_pct": 8.7
     }
   },
-  "hist_global_win_rate": 1.23,
+  "hist_global_win_rate": 1.2,
   "hist_avg_st": {
-    "avg_st": 0.174,
-    "st_count": 78,
+    "avg_st": 0.175,
+    "st_count": 80,
     "course_st": {
       "4": 0.172,
-      "5": 0.173,
+      "5": 0.185,
       "6": 0.175
     }
   },
@@ -48,7 +48,7 @@
   "reg_no": "5432",
   "hist_exhibition": {
     "overall_avg": 6.8,
-    "count": 78,
+    "count": 80,
     "by_venue": {
       "06": {
         "avg": 6.77,
@@ -76,12 +76,12 @@
       },
       "22": {
         "avg": 6.88,
-        "count": 6
+        "count": 8
       }
     },
-    "recent_avg": 6.75,
+    "recent_avg": 6.78,
     "recent_count": 20,
-    "recent_deviation": -0.008
+    "recent_deviation": -0.005
   },
   "hist_local_waku_stats": {
     "4": {
@@ -96,7 +96,7 @@
       "top3_pct": 0.0
     },
     "5": {
-      "races": 1,
+      "races": 2,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
@@ -107,13 +107,13 @@
       "top3_pct": 0.0
     },
     "6": {
-      "races": 2,
+      "races": 3,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 50.0,
+      "4th_pct": 66.7,
       "5th_pct": 0.0,
-      "6th_pct": 50.0,
+      "6th_pct": 33.3,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     }
