@@ -34,26 +34,26 @@
       "top3_pct": 72.7
     },
     "4": {
-      "races": 57,
-      "1st_pct": 14.0,
-      "2nd_pct": 31.6,
-      "3rd_pct": 22.8,
-      "4th_pct": 15.8,
-      "5th_pct": 7.0,
-      "6th_pct": 8.8,
-      "top2_pct": 45.6,
-      "top3_pct": 68.4
+      "races": 58,
+      "1st_pct": 13.8,
+      "2nd_pct": 31.0,
+      "3rd_pct": 22.4,
+      "4th_pct": 17.2,
+      "5th_pct": 6.9,
+      "6th_pct": 8.6,
+      "top2_pct": 44.8,
+      "top3_pct": 67.2
     },
     "5": {
-      "races": 48,
-      "1st_pct": 14.6,
-      "2nd_pct": 12.5,
-      "3rd_pct": 27.1,
-      "4th_pct": 25.0,
-      "5th_pct": 16.7,
-      "6th_pct": 4.2,
-      "top2_pct": 27.1,
-      "top3_pct": 54.2
+      "races": 49,
+      "1st_pct": 14.3,
+      "2nd_pct": 14.3,
+      "3rd_pct": 26.5,
+      "4th_pct": 24.5,
+      "5th_pct": 16.3,
+      "6th_pct": 4.1,
+      "top2_pct": 28.6,
+      "top3_pct": 55.1
     },
     "6": {
       "races": 47,
@@ -67,15 +67,15 @@
       "top3_pct": 51.1
     }
   },
-  "hist_global_win_rate": 27.98,
+  "hist_global_win_rate": 27.81,
   "hist_avg_st": {
-    "avg_st": 0.143,
-    "st_count": 317,
+    "avg_st": 0.144,
+    "st_count": 319,
     "course_st": {
       "1": 0.122,
       "2": 0.146,
       "3": 0.156,
-      "4": 0.143,
+      "4": 0.146,
       "5": 0.151,
       "6": 0.146
     }
@@ -109,11 +109,11 @@
   "reg_no": "4604",
   "hist_exhibition": {
     "overall_avg": 6.76,
-    "count": 317,
+    "count": 319,
     "by_venue": {
       "04": {
-        "avg": 6.81,
-        "count": 22
+        "avg": 6.8,
+        "count": 23
       },
       "03": {
         "avg": 6.86,
@@ -140,8 +140,8 @@
         "count": 7
       },
       "05": {
-        "avg": 6.68,
-        "count": 7
+        "avg": 6.69,
+        "count": 8
       },
       "09": {
         "avg": 6.78,
@@ -196,8 +196,8 @@
         "count": 1
       }
     },
-    "recent_avg": 6.74,
+    "recent_avg": 6.75,
     "recent_count": 20,
-    "recent_deviation": -0.012
+    "recent_deviation": -0.007
   }
 }
