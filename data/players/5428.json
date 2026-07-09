@@ -23,13 +23,13 @@
       "top3_pct": 0.0
     },
     "6": {
-      "races": 56,
+      "races": 57,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
       "4th_pct": 1.8,
-      "5th_pct": 7.1,
-      "6th_pct": 91.1,
+      "5th_pct": 7.0,
+      "6th_pct": 91.2,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     }
@@ -71,7 +71,7 @@
   "hist_local_win_rate": 0.0,
   "hist_exhibition": {
     "overall_avg": 6.77,
-    "count": 55,
+    "count": 56,
     "by_venue": {
       "18": {
         "avg": 6.83,
@@ -80,6 +80,10 @@
       "19": {
         "avg": 6.82,
         "count": 7
+      },
+      "14": {
+        "avg": 6.83,
+        "count": 1
       }
     },
     "recent_avg": 6.8,
