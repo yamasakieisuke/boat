@@ -1,7 +1,7 @@
 {
   "hist_global_waku_stats": {
     "4": {
-      "races": 1,
+      "races": 2,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
@@ -36,17 +36,17 @@
   },
   "hist_global_win_rate": 0.0,
   "hist_avg_st": {
-    "avg_st": 0.196,
-    "st_count": 66,
+    "avg_st": 0.2,
+    "st_count": 67,
     "course_st": {
-      "6": 0.196
+      "6": 0.2
     }
   },
   "gender": "F",
   "reg_no": "5442",
   "hist_exhibition": {
     "overall_avg": 6.82,
-    "count": 67,
+    "count": 68,
     "by_venue": {
       "20": {
         "avg": 6.88,
@@ -63,11 +63,15 @@
       "17": {
         "avg": 6.76,
         "count": 9
+      },
+      "13": {
+        "avg": 6.88,
+        "count": 1
       }
     },
-    "recent_avg": 6.83,
+    "recent_avg": 6.82,
     "recent_count": 20,
-    "recent_deviation": 0.004
+    "recent_deviation": -0.0
   },
   "hist_local_waku_stats": {
     "5": {
