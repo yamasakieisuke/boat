@@ -34,15 +34,15 @@
       "top3_pct": 59.5
     },
     "4": {
-      "races": 42,
-      "1st_pct": 11.9,
-      "2nd_pct": 16.7,
-      "3rd_pct": 9.5,
-      "4th_pct": 26.2,
-      "5th_pct": 9.5,
-      "6th_pct": 26.2,
-      "top2_pct": 28.6,
-      "top3_pct": 38.1
+      "races": 43,
+      "1st_pct": 11.6,
+      "2nd_pct": 16.3,
+      "3rd_pct": 9.3,
+      "4th_pct": 25.6,
+      "5th_pct": 9.3,
+      "6th_pct": 27.9,
+      "top2_pct": 27.9,
+      "top3_pct": 37.2
     },
     "5": {
       "races": 44,
@@ -67,15 +67,15 @@
       "top3_pct": 32.4
     }
   },
-  "hist_global_win_rate": 21.76,
+  "hist_global_win_rate": 21.67,
   "hist_avg_st": {
     "avg_st": 0.146,
-    "st_count": 233,
+    "st_count": 234,
     "course_st": {
       "1": 0.147,
       "2": 0.145,
       "3": 0.159,
-      "4": 0.13,
+      "4": 0.134,
       "5": 0.142,
       "6": 0.156
     }
@@ -84,7 +84,7 @@
   "reg_no": "4108",
   "hist_exhibition": {
     "overall_avg": 6.88,
-    "count": 233,
+    "count": 234,
     "by_venue": {
       "18": {
         "avg": 7.01,
@@ -140,6 +140,10 @@
       },
       "20": {
         "avg": 6.79,
+        "count": 1
+      },
+      "01": {
+        "avg": 6.86,
         "count": 1
       }
     },
