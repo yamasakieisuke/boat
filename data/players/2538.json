@@ -12,15 +12,15 @@
       "top3_pct": 42.4
     },
     "2": {
-      "races": 45,
+      "races": 46,
       "1st_pct": 2.2,
-      "2nd_pct": 6.7,
-      "3rd_pct": 22.2,
-      "4th_pct": 26.7,
-      "5th_pct": 26.7,
-      "6th_pct": 15.6,
-      "top2_pct": 8.9,
-      "top3_pct": 31.1
+      "2nd_pct": 6.5,
+      "3rd_pct": 21.7,
+      "4th_pct": 26.1,
+      "5th_pct": 26.1,
+      "6th_pct": 17.4,
+      "top2_pct": 8.7,
+      "top3_pct": 30.4
     },
     "3": {
       "races": 43,
@@ -56,35 +56,35 @@
       "top3_pct": 14.3
     },
     "6": {
-      "races": 26,
+      "races": 27,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
-      "3rd_pct": 3.8,
-      "4th_pct": 38.5,
-      "5th_pct": 46.2,
-      "6th_pct": 11.5,
+      "3rd_pct": 3.7,
+      "4th_pct": 37.0,
+      "5th_pct": 48.1,
+      "6th_pct": 11.1,
       "top2_pct": 0.0,
-      "top3_pct": 3.8
+      "top3_pct": 3.7
     }
   },
-  "hist_global_win_rate": 1.8,
+  "hist_global_win_rate": 1.79,
   "hist_avg_st": {
-    "avg_st": 0.213,
-    "st_count": 201,
+    "avg_st": 0.212,
+    "st_count": 203,
     "course_st": {
       "1": 0.179,
-      "2": 0.197,
+      "2": 0.195,
       "3": 0.238,
       "4": 0.205,
       "5": 0.219,
-      "6": 0.249
+      "6": 0.241
     }
   },
   "gender": "M",
   "reg_no": "2538",
   "hist_exhibition": {
     "overall_avg": 6.83,
-    "count": 203,
+    "count": 205,
     "by_venue": {
       "02": {
         "avg": 6.94,
@@ -103,8 +103,8 @@
         "count": 3
       },
       "12": {
-        "avg": 6.86,
-        "count": 16
+        "avg": 6.87,
+        "count": 17
       },
       "13": {
         "avg": 6.9,
@@ -123,8 +123,8 @@
         "count": 8
       },
       "11": {
-        "avg": 6.71,
-        "count": 17
+        "avg": 6.73,
+        "count": 18
       },
       "10": {
         "avg": 6.79,
@@ -139,8 +139,8 @@
         "count": 8
       }
     },
-    "recent_avg": 6.85,
+    "recent_avg": 6.89,
     "recent_count": 20,
-    "recent_deviation": -0.008
+    "recent_deviation": 0.014
   }
 }
