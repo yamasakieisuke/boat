@@ -12,15 +12,15 @@
       "top3_pct": 89.5
     },
     "2": {
-      "races": 40,
-      "1st_pct": 22.5,
-      "2nd_pct": 27.5,
-      "3rd_pct": 15.0,
-      "4th_pct": 17.5,
-      "5th_pct": 7.5,
-      "6th_pct": 10.0,
-      "top2_pct": 50.0,
-      "top3_pct": 65.0
+      "races": 41,
+      "1st_pct": 22.0,
+      "2nd_pct": 29.3,
+      "3rd_pct": 14.6,
+      "4th_pct": 17.1,
+      "5th_pct": 7.3,
+      "6th_pct": 9.8,
+      "top2_pct": 51.2,
+      "top3_pct": 65.9
     },
     "3": {
       "races": 47,
@@ -45,15 +45,15 @@
       "top3_pct": 66.7
     },
     "5": {
-      "races": 46,
+      "races": 47,
       "1st_pct": 4.3,
-      "2nd_pct": 13.0,
-      "3rd_pct": 23.9,
-      "4th_pct": 34.8,
-      "5th_pct": 13.0,
-      "6th_pct": 10.9,
-      "top2_pct": 17.4,
-      "top3_pct": 41.3
+      "2nd_pct": 12.8,
+      "3rd_pct": 25.5,
+      "4th_pct": 34.0,
+      "5th_pct": 12.8,
+      "6th_pct": 10.6,
+      "top2_pct": 17.0,
+      "top3_pct": 42.6
     },
     "6": {
       "races": 48,
@@ -67,13 +67,13 @@
       "top3_pct": 37.5
     }
   },
-  "hist_global_win_rate": 21.33,
+  "hist_global_win_rate": 21.18,
   "hist_avg_st": {
     "avg_st": 0.155,
-    "st_count": 266,
+    "st_count": 268,
     "course_st": {
       "1": 0.133,
-      "2": 0.156,
+      "2": 0.159,
       "3": 0.148,
       "4": 0.147,
       "5": 0.176,
@@ -120,7 +120,7 @@
   "reg_no": "4594",
   "hist_exhibition": {
     "overall_avg": 6.83,
-    "count": 266,
+    "count": 268,
     "by_venue": {
       "22": {
         "avg": 6.82,
@@ -131,8 +131,8 @@
         "count": 9
       },
       "15": {
-        "avg": 6.93,
-        "count": 11
+        "avg": 6.92,
+        "count": 12
       },
       "12": {
         "avg": 6.89,
@@ -207,12 +207,12 @@
         "count": 8
       },
       "16": {
-        "avg": 6.88,
-        "count": 4
+        "avg": 6.87,
+        "count": 5
       }
     },
-    "recent_avg": 6.89,
+    "recent_avg": 6.88,
     "recent_count": 20,
-    "recent_deviation": -0.025
+    "recent_deviation": -0.029
   }
 }
