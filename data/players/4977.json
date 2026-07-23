@@ -12,26 +12,26 @@
       "top3_pct": 82.4
     },
     "2": {
-      "races": 47,
-      "1st_pct": 21.3,
-      "2nd_pct": 25.5,
-      "3rd_pct": 25.5,
-      "4th_pct": 4.3,
-      "5th_pct": 12.8,
-      "6th_pct": 10.6,
-      "top2_pct": 46.8,
-      "top3_pct": 72.3
+      "races": 48,
+      "1st_pct": 20.8,
+      "2nd_pct": 27.1,
+      "3rd_pct": 25.0,
+      "4th_pct": 4.2,
+      "5th_pct": 12.5,
+      "6th_pct": 10.4,
+      "top2_pct": 47.9,
+      "top3_pct": 72.9
     },
     "3": {
-      "races": 42,
-      "1st_pct": 16.7,
-      "2nd_pct": 19.0,
-      "3rd_pct": 21.4,
-      "4th_pct": 21.4,
-      "5th_pct": 4.8,
-      "6th_pct": 16.7,
-      "top2_pct": 35.7,
-      "top3_pct": 57.1
+      "races": 43,
+      "1st_pct": 16.3,
+      "2nd_pct": 20.9,
+      "3rd_pct": 20.9,
+      "4th_pct": 20.9,
+      "5th_pct": 4.7,
+      "6th_pct": 16.3,
+      "top2_pct": 37.2,
+      "top3_pct": 58.1
     },
     "4": {
       "races": 43,
@@ -67,14 +67,14 @@
       "top3_pct": 48.7
     }
   },
-  "hist_global_win_rate": 21.35,
+  "hist_global_win_rate": 21.19,
   "hist_avg_st": {
-    "avg_st": 0.156,
-    "st_count": 239,
+    "avg_st": 0.157,
+    "st_count": 241,
     "course_st": {
       "1": 0.16,
       "2": 0.173,
-      "3": 0.146,
+      "3": 0.147,
       "4": 0.147,
       "5": 0.15,
       "6": 0.164
@@ -84,7 +84,7 @@
   "reg_no": "4977",
   "hist_exhibition": {
     "overall_avg": 6.83,
-    "count": 239,
+    "count": 241,
     "by_venue": {
       "18": {
         "avg": 6.98,
@@ -147,12 +147,12 @@
         "count": 12
       },
       "24": {
-        "avg": 6.91,
-        "count": 8
+        "avg": 6.92,
+        "count": 9
       },
       "23": {
-        "avg": 6.8,
-        "count": 6
+        "avg": 6.83,
+        "count": 7
       },
       "01": {
         "avg": 6.78,
@@ -167,8 +167,8 @@
         "count": 1
       }
     },
-    "recent_avg": 6.81,
+    "recent_avg": 6.82,
     "recent_count": 20,
-    "recent_deviation": -0.006
+    "recent_deviation": -0.004
   }
 }
