@@ -1,15 +1,15 @@
 {
   "hist_global_waku_stats": {
     "1": {
-      "races": 67,
-      "1st_pct": 71.6,
-      "2nd_pct": 11.9,
-      "3rd_pct": 10.4,
+      "races": 68,
+      "1st_pct": 72.1,
+      "2nd_pct": 11.8,
+      "3rd_pct": 10.3,
       "4th_pct": 1.5,
-      "5th_pct": 4.5,
+      "5th_pct": 4.4,
       "6th_pct": 0.0,
-      "top2_pct": 83.6,
-      "top3_pct": 94.0
+      "top2_pct": 83.8,
+      "top3_pct": 94.1
     },
     "2": {
       "races": 47,
@@ -23,15 +23,15 @@
       "top3_pct": 66.0
     },
     "3": {
-      "races": 53,
-      "1st_pct": 15.1,
-      "2nd_pct": 35.8,
-      "3rd_pct": 13.2,
-      "4th_pct": 13.2,
-      "5th_pct": 11.3,
-      "6th_pct": 11.3,
-      "top2_pct": 50.9,
-      "top3_pct": 64.2
+      "races": 54,
+      "1st_pct": 14.8,
+      "2nd_pct": 35.2,
+      "3rd_pct": 13.0,
+      "4th_pct": 14.8,
+      "5th_pct": 11.1,
+      "6th_pct": 11.1,
+      "top2_pct": 50.0,
+      "top3_pct": 63.0
     },
     "4": {
       "races": 47,
@@ -67,14 +67,14 @@
       "top3_pct": 48.9
     }
   },
-  "hist_global_win_rate": 25.83,
+  "hist_global_win_rate": 25.99,
   "hist_avg_st": {
     "avg_st": 0.145,
-    "st_count": 274,
+    "st_count": 276,
     "course_st": {
-      "1": 0.131,
+      "1": 0.13,
       "2": 0.148,
-      "3": 0.156,
+      "3": 0.159,
       "4": 0.14,
       "5": 0.147,
       "6": 0.16
@@ -153,7 +153,7 @@
   "hist_local_win_rate": 18.18,
   "hist_exhibition": {
     "overall_avg": 6.86,
-    "count": 274,
+    "count": 276,
     "by_venue": {
       "08": {
         "avg": 6.83,
@@ -172,12 +172,12 @@
         "count": 32
       },
       "17": {
-        "avg": 6.92,
-        "count": 15
+        "avg": 6.91,
+        "count": 16
       },
       "15": {
-        "avg": 6.96,
-        "count": 3
+        "avg": 6.91,
+        "count": 4
       },
       "19": {
         "avg": 6.78,
@@ -220,8 +220,8 @@
         "count": 16
       }
     },
-    "recent_avg": 6.81,
+    "recent_avg": 6.8,
     "recent_count": 20,
-    "recent_deviation": -0.026
+    "recent_deviation": -0.036
   }
 }
