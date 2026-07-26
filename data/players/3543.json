@@ -12,15 +12,15 @@
       "top3_pct": 85.0
     },
     "2": {
-      "races": 39,
-      "1st_pct": 17.9,
-      "2nd_pct": 23.1,
-      "3rd_pct": 23.1,
-      "4th_pct": 17.9,
-      "5th_pct": 5.1,
-      "6th_pct": 12.8,
-      "top2_pct": 41.0,
-      "top3_pct": 64.1
+      "races": 40,
+      "1st_pct": 17.5,
+      "2nd_pct": 22.5,
+      "3rd_pct": 22.5,
+      "4th_pct": 20.0,
+      "5th_pct": 5.0,
+      "6th_pct": 12.5,
+      "top2_pct": 40.0,
+      "top3_pct": 62.5
     },
     "3": {
       "races": 38,
@@ -56,28 +56,28 @@
       "top3_pct": 40.0
     },
     "6": {
-      "races": 32,
-      "1st_pct": 3.1,
-      "2nd_pct": 0.0,
-      "3rd_pct": 21.9,
-      "4th_pct": 21.9,
-      "5th_pct": 34.4,
-      "6th_pct": 18.8,
-      "top2_pct": 3.1,
-      "top3_pct": 25.0
+      "races": 33,
+      "1st_pct": 3.0,
+      "2nd_pct": 3.0,
+      "3rd_pct": 21.2,
+      "4th_pct": 21.2,
+      "5th_pct": 33.3,
+      "6th_pct": 18.2,
+      "top2_pct": 6.1,
+      "top3_pct": 27.3
     }
   },
-  "hist_global_win_rate": 18.38,
+  "hist_global_win_rate": 18.22,
   "hist_avg_st": {
-    "avg_st": 0.166,
-    "st_count": 234,
+    "avg_st": 0.165,
+    "st_count": 236,
     "course_st": {
       "1": 0.157,
-      "2": 0.153,
+      "2": 0.154,
       "3": 0.165,
       "4": 0.171,
       "5": 0.163,
-      "6": 0.191
+      "6": 0.188
     }
   },
   "hist_local_waku_stats": {
@@ -96,7 +96,7 @@
   "hist_local_win_rate": 0.0,
   "hist_exhibition": {
     "overall_avg": 6.82,
-    "count": 234,
+    "count": 236,
     "by_venue": {
       "20": {
         "avg": 6.98,
@@ -104,7 +104,7 @@
       },
       "06": {
         "avg": 6.76,
-        "count": 22
+        "count": 23
       },
       "05": {
         "avg": 6.81,
@@ -165,10 +165,14 @@
       "10": {
         "avg": 6.77,
         "count": 9
+      },
+      "04": {
+        "avg": 6.77,
+        "count": 1
       }
     },
-    "recent_avg": 6.8,
+    "recent_avg": 6.78,
     "recent_count": 20,
-    "recent_deviation": -0.007
+    "recent_deviation": -0.013
   }
 }

@@ -12,15 +12,15 @@
       "top3_pct": 78.0
     },
     "2": {
-      "races": 54,
-      "1st_pct": 13.0,
-      "2nd_pct": 22.2,
-      "3rd_pct": 29.6,
-      "4th_pct": 13.0,
-      "5th_pct": 9.3,
-      "6th_pct": 13.0,
-      "top2_pct": 35.2,
-      "top3_pct": 64.8
+      "races": 55,
+      "1st_pct": 12.7,
+      "2nd_pct": 23.6,
+      "3rd_pct": 29.1,
+      "4th_pct": 12.7,
+      "5th_pct": 9.1,
+      "6th_pct": 12.7,
+      "top2_pct": 36.4,
+      "top3_pct": 65.5
     },
     "3": {
       "races": 46,
@@ -45,15 +45,15 @@
       "top3_pct": 62.7
     },
     "5": {
-      "races": 46,
-      "1st_pct": 13.0,
-      "2nd_pct": 15.2,
-      "3rd_pct": 10.9,
-      "4th_pct": 17.4,
-      "5th_pct": 26.1,
-      "6th_pct": 17.4,
-      "top2_pct": 28.3,
-      "top3_pct": 39.1
+      "races": 47,
+      "1st_pct": 12.8,
+      "2nd_pct": 14.9,
+      "3rd_pct": 10.6,
+      "4th_pct": 17.0,
+      "5th_pct": 25.5,
+      "6th_pct": 19.1,
+      "top2_pct": 27.7,
+      "top3_pct": 38.3
     },
     "6": {
       "races": 44,
@@ -67,14 +67,14 @@
       "top3_pct": 22.7
     }
   },
-  "hist_global_win_rate": 15.81,
+  "hist_global_win_rate": 15.7,
   "hist_avg_st": {
-    "avg_st": 0.161,
-    "st_count": 278,
+    "avg_st": 0.16,
+    "st_count": 280,
     "course_st": {
       "1": 0.161,
-      "2": 0.158,
-      "3": 0.152,
+      "2": 0.156,
+      "3": 0.151,
       "4": 0.173,
       "5": 0.162,
       "6": 0.158
@@ -142,7 +142,7 @@
   "reg_no": "3563",
   "hist_exhibition": {
     "overall_avg": 6.83,
-    "count": 278,
+    "count": 280,
     "by_venue": {
       "11": {
         "avg": 6.8,
@@ -174,7 +174,7 @@
       },
       "13": {
         "avg": 6.88,
-        "count": 10
+        "count": 11
       },
       "22": {
         "avg": 6.88,
@@ -218,11 +218,11 @@
       },
       "14": {
         "avg": 6.9,
-        "count": 7
+        "count": 8
       }
     },
-    "recent_avg": 6.93,
+    "recent_avg": 6.94,
     "recent_count": 20,
-    "recent_deviation": 0.002
+    "recent_deviation": 0.001
   }
 }
