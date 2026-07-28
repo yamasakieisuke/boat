@@ -23,13 +23,13 @@
       "top3_pct": 1.8
     },
     "6": {
-      "races": 115,
+      "races": 116,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 1.7,
       "4th_pct": 1.7,
-      "5th_pct": 16.5,
-      "6th_pct": 80.0,
+      "5th_pct": 17.2,
+      "6th_pct": 79.3,
       "top2_pct": 0.0,
       "top3_pct": 1.7
     }
@@ -48,7 +48,7 @@
   "reg_no": "5406",
   "hist_exhibition": {
     "overall_avg": 6.87,
-    "count": 151,
+    "count": 152,
     "by_venue": {
       "18": {
         "avg": 7.05,
@@ -59,8 +59,8 @@
         "count": 15
       },
       "24": {
-        "avg": 6.97,
-        "count": 5
+        "avg": 6.96,
+        "count": 6
       },
       "23": {
         "avg": 6.98,
@@ -93,7 +93,7 @@
     },
     "recent_avg": 6.9,
     "recent_count": 20,
-    "recent_deviation": 0.005
+    "recent_deviation": 0.007
   },
   "hist_local_waku_stats": {
     "5": {
