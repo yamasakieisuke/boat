@@ -1,15 +1,15 @@
 {
   "hist_global_waku_stats": {
     "4": {
-      "races": 25,
+      "races": 26,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
-      "3rd_pct": 4.0,
-      "4th_pct": 12.0,
-      "5th_pct": 12.0,
-      "6th_pct": 72.0,
+      "3rd_pct": 3.8,
+      "4th_pct": 11.5,
+      "5th_pct": 11.5,
+      "6th_pct": 73.1,
       "top2_pct": 0.0,
-      "top3_pct": 4.0
+      "top3_pct": 3.8
     },
     "5": {
       "races": 46,
@@ -84,7 +84,7 @@
   "reg_no": "5392",
   "hist_exhibition": {
     "overall_avg": 6.85,
-    "count": 165,
+    "count": 166,
     "by_venue": {
       "21": {
         "avg": 6.82,
@@ -92,7 +92,7 @@
       },
       "23": {
         "avg": 6.83,
-        "count": 10
+        "count": 11
       },
       "17": {
         "avg": 6.79,
@@ -123,8 +123,8 @@
         "count": 4
       }
     },
-    "recent_avg": 6.91,
+    "recent_avg": 6.9,
     "recent_count": 20,
-    "recent_deviation": 0.008
+    "recent_deviation": -0.001
   }
 }
