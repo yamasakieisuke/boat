@@ -1,15 +1,15 @@
 {
   "hist_global_waku_stats": {
     "1": {
-      "races": 82,
-      "1st_pct": 72.0,
-      "2nd_pct": 17.1,
-      "3rd_pct": 6.1,
+      "races": 83,
+      "1st_pct": 72.3,
+      "2nd_pct": 16.9,
+      "3rd_pct": 6.0,
       "4th_pct": 0.0,
-      "5th_pct": 4.9,
+      "5th_pct": 4.8,
       "6th_pct": 0.0,
-      "top2_pct": 89.0,
-      "top3_pct": 95.1
+      "top2_pct": 89.2,
+      "top3_pct": 95.2
     },
     "2": {
       "races": 65,
@@ -45,15 +45,15 @@
       "top3_pct": 58.3
     },
     "5": {
-      "races": 50,
-      "1st_pct": 12.0,
-      "2nd_pct": 10.0,
-      "3rd_pct": 28.0,
-      "4th_pct": 28.0,
-      "5th_pct": 14.0,
-      "6th_pct": 8.0,
-      "top2_pct": 22.0,
-      "top3_pct": 50.0
+      "races": 51,
+      "1st_pct": 11.8,
+      "2nd_pct": 9.8,
+      "3rd_pct": 27.5,
+      "4th_pct": 29.4,
+      "5th_pct": 13.7,
+      "6th_pct": 7.8,
+      "top2_pct": 21.6,
+      "top3_pct": 49.0
     },
     "6": {
       "races": 55,
@@ -67,21 +67,21 @@
       "top3_pct": 63.6
     }
   },
-  "hist_global_win_rate": 24.93,
+  "hist_global_win_rate": 25.07,
   "hist_avg_st": {
     "avg_st": 0.146,
-    "st_count": 355,
+    "st_count": 357,
     "course_st": {
       "1": 0.131,
       "2": 0.151,
       "3": 0.146,
-      "4": 0.148,
+      "4": 0.149,
       "5": 0.208
     }
   },
   "hist_local_waku_stats": {
     "1": {
-      "races": 2,
+      "races": 3,
       "1st_pct": 100.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
@@ -114,15 +114,15 @@
       "top3_pct": 100.0
     },
     "5": {
-      "races": 1,
+      "races": 2,
       "1st_pct": 0.0,
-      "2nd_pct": 100.0,
+      "2nd_pct": 50.0,
       "3rd_pct": 0.0,
-      "4th_pct": 0.0,
+      "4th_pct": 50.0,
       "5th_pct": 0.0,
       "6th_pct": 0.0,
-      "top2_pct": 100.0,
-      "top3_pct": 100.0
+      "top2_pct": 50.0,
+      "top3_pct": 50.0
     },
     "6": {
       "races": 2,
@@ -136,12 +136,12 @@
       "top3_pct": 100.0
     }
   },
-  "hist_local_win_rate": 57.14,
+  "hist_local_win_rate": 55.56,
   "gender": "M",
   "reg_no": "4199",
   "hist_exhibition": {
     "overall_avg": 6.81,
-    "count": 355,
+    "count": 357,
     "by_venue": {
       "02": {
         "avg": 6.76,
@@ -168,8 +168,8 @@
         "count": 7
       },
       "22": {
-        "avg": 6.92,
-        "count": 7
+        "avg": 6.94,
+        "count": 9
       },
       "21": {
         "avg": 6.93,
@@ -228,8 +228,8 @@
         "count": 1
       }
     },
-    "recent_avg": 6.77,
+    "recent_avg": 6.8,
     "recent_count": 20,
-    "recent_deviation": 0.01
+    "recent_deviation": 0.022
   }
 }

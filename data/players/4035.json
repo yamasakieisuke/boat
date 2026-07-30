@@ -34,15 +34,15 @@
       "top3_pct": 33.3
     },
     "4": {
-      "races": 54,
-      "1st_pct": 1.9,
-      "2nd_pct": 13.0,
-      "3rd_pct": 14.8,
-      "4th_pct": 13.0,
-      "5th_pct": 18.5,
-      "6th_pct": 38.9,
-      "top2_pct": 14.8,
-      "top3_pct": 29.6
+      "races": 55,
+      "1st_pct": 1.8,
+      "2nd_pct": 12.7,
+      "3rd_pct": 14.5,
+      "4th_pct": 14.5,
+      "5th_pct": 18.2,
+      "6th_pct": 38.2,
+      "top2_pct": 14.5,
+      "top3_pct": 29.1
     },
     "5": {
       "races": 55,
@@ -67,15 +67,15 @@
       "top3_pct": 11.4
     }
   },
-  "hist_global_win_rate": 9.97,
+  "hist_global_win_rate": 9.93,
   "hist_avg_st": {
     "avg_st": 0.204,
-    "st_count": 277,
+    "st_count": 278,
     "course_st": {
       "1": 0.191,
       "2": 0.205,
       "3": 0.226,
-      "4": 0.205,
+      "4": 0.208,
       "5": 0.196,
       "6": 0.187
     }
@@ -83,8 +83,8 @@
   "gender": "M",
   "reg_no": "4035",
   "hist_exhibition": {
-    "overall_avg": 6.82,
-    "count": 277,
+    "overall_avg": 6.83,
+    "count": 278,
     "by_venue": {
       "10": {
         "avg": 6.81,
@@ -155,8 +155,8 @@
         "count": 5
       },
       "22": {
-        "avg": 7.02,
-        "count": 3
+        "avg": 7.05,
+        "count": 4
       },
       "13": {
         "avg": 6.84,
@@ -167,9 +167,9 @@
         "count": 9
       }
     },
-    "recent_avg": 6.79,
+    "recent_avg": 6.81,
     "recent_count": 20,
-    "recent_deviation": -0.028
+    "recent_deviation": -0.027
   },
   "hist_local_waku_stats": {
     "2": {
@@ -195,13 +195,13 @@
       "top3_pct": 100.0
     },
     "4": {
-      "races": 2,
+      "races": 3,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 0.0,
-      "5th_pct": 50.0,
-      "6th_pct": 50.0,
+      "4th_pct": 33.3,
+      "5th_pct": 33.3,
+      "6th_pct": 33.3,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     },
@@ -228,5 +228,5 @@
       "top3_pct": 0.0
     }
   },
-  "hist_local_win_rate": 11.11
+  "hist_local_win_rate": 10.0
 }
