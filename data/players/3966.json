@@ -23,15 +23,15 @@
       "top3_pct": 69.5
     },
     "3": {
-      "races": 60,
-      "1st_pct": 18.3,
-      "2nd_pct": 18.3,
-      "3rd_pct": 28.3,
-      "4th_pct": 26.7,
-      "5th_pct": 5.0,
+      "races": 61,
+      "1st_pct": 18.0,
+      "2nd_pct": 18.0,
+      "3rd_pct": 27.9,
+      "4th_pct": 26.2,
+      "5th_pct": 6.6,
       "6th_pct": 3.3,
-      "top2_pct": 36.7,
-      "top3_pct": 65.0
+      "top2_pct": 36.1,
+      "top3_pct": 63.9
     },
     "4": {
       "races": 57,
@@ -56,27 +56,27 @@
       "top3_pct": 54.7
     },
     "6": {
-      "races": 56,
-      "1st_pct": 3.6,
-      "2nd_pct": 10.7,
-      "3rd_pct": 28.6,
-      "4th_pct": 19.6,
-      "5th_pct": 21.4,
-      "6th_pct": 16.1,
-      "top2_pct": 14.3,
-      "top3_pct": 42.9
+      "races": 57,
+      "1st_pct": 3.5,
+      "2nd_pct": 10.5,
+      "3rd_pct": 29.8,
+      "4th_pct": 19.3,
+      "5th_pct": 21.1,
+      "6th_pct": 15.8,
+      "top2_pct": 14.0,
+      "top3_pct": 43.9
     }
   },
-  "hist_global_win_rate": 26.76,
+  "hist_global_win_rate": 26.61,
   "hist_avg_st": {
-    "avg_st": 0.173,
-    "st_count": 362,
+    "avg_st": 0.174,
+    "st_count": 364,
     "course_st": {
       "1": 0.163,
       "2": 0.169,
-      "3": 0.175,
+      "3": 0.179,
       "4": 0.148,
-      "5": 0.195,
+      "5": 0.194,
       "6": 0.195
     }
   },
@@ -84,7 +84,7 @@
   "reg_no": "3966",
   "hist_exhibition": {
     "overall_avg": 6.82,
-    "count": 363,
+    "count": 365,
     "by_venue": {
       "05": {
         "avg": 6.75,
@@ -92,7 +92,7 @@
       },
       "04": {
         "avg": 6.82,
-        "count": 27
+        "count": 28
       },
       "02": {
         "avg": 6.83,
@@ -124,7 +124,7 @@
       },
       "01": {
         "avg": 6.83,
-        "count": 4
+        "count": 5
       },
       "13": {
         "avg": 6.86,
@@ -171,9 +171,9 @@
         "count": 9
       }
     },
-    "recent_avg": 6.94,
+    "recent_avg": 6.92,
     "recent_count": 20,
-    "recent_deviation": -0.025
+    "recent_deviation": -0.024
   },
   "hist_local_waku_stats": {
     "1": {
