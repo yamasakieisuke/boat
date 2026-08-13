@@ -1,15 +1,15 @@
 {
   "hist_global_waku_stats": {
     "1": {
-      "races": 25,
-      "1st_pct": 48.0,
-      "2nd_pct": 4.0,
-      "3rd_pct": 8.0,
-      "4th_pct": 12.0,
+      "races": 26,
+      "1st_pct": 46.2,
+      "2nd_pct": 3.8,
+      "3rd_pct": 7.7,
+      "4th_pct": 11.5,
       "5th_pct": 0.0,
-      "6th_pct": 28.0,
-      "top2_pct": 52.0,
-      "top3_pct": 60.0
+      "6th_pct": 30.8,
+      "top2_pct": 50.0,
+      "top3_pct": 57.7
     },
     "2": {
       "races": 31,
@@ -23,15 +23,15 @@
       "top3_pct": 41.9
     },
     "3": {
-      "races": 31,
-      "1st_pct": 12.9,
-      "2nd_pct": 16.1,
-      "3rd_pct": 32.3,
-      "4th_pct": 9.7,
-      "5th_pct": 16.1,
-      "6th_pct": 12.9,
-      "top2_pct": 29.0,
-      "top3_pct": 61.3
+      "races": 32,
+      "1st_pct": 12.5,
+      "2nd_pct": 18.8,
+      "3rd_pct": 31.2,
+      "4th_pct": 9.4,
+      "5th_pct": 15.6,
+      "6th_pct": 12.5,
+      "top2_pct": 31.2,
+      "top3_pct": 62.5
     },
     "4": {
       "races": 29,
@@ -67,14 +67,14 @@
       "top3_pct": 35.5
     }
   },
-  "hist_global_win_rate": 18.33,
+  "hist_global_win_rate": 18.13,
   "hist_avg_st": {
-    "avg_st": 0.156,
-    "st_count": 176,
+    "avg_st": 0.157,
+    "st_count": 178,
     "course_st": {
-      "1": 0.2,
+      "1": 0.202,
       "2": 0.154,
-      "3": 0.145,
+      "3": 0.148,
       "4": 0.151,
       "5": 0.148,
       "6": 0.146
@@ -84,7 +84,7 @@
   "reg_no": "4843",
   "hist_exhibition": {
     "overall_avg": 6.76,
-    "count": 177,
+    "count": 179,
     "by_venue": {
       "15": {
         "avg": 6.96,
@@ -112,7 +112,7 @@
       },
       "06": {
         "avg": 6.7,
-        "count": 23
+        "count": 24
       },
       "12": {
         "avg": 6.82,
@@ -129,10 +129,14 @@
       "10": {
         "avg": 6.78,
         "count": 8
+      },
+      "04": {
+        "avg": 6.64,
+        "count": 1
       }
     },
-    "recent_avg": 6.74,
+    "recent_avg": 6.73,
     "recent_count": 20,
-    "recent_deviation": 0.01
+    "recent_deviation": 0.002
   }
 }
