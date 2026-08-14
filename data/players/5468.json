@@ -1,39 +1,39 @@
 {
   "hist_global_waku_stats": {
     "5": {
-      "races": 12,
+      "races": 13,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 16.7,
-      "5th_pct": 8.3,
-      "6th_pct": 75.0,
+      "4th_pct": 15.4,
+      "5th_pct": 7.7,
+      "6th_pct": 76.9,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     },
     "6": {
-      "races": 28,
+      "races": 29,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 3.6,
-      "5th_pct": 17.9,
-      "6th_pct": 78.6,
+      "4th_pct": 3.4,
+      "5th_pct": 17.2,
+      "6th_pct": 79.3,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     }
   },
   "hist_global_win_rate": 0.0,
   "hist_avg_st": {
-    "avg_st": 0.19,
-    "st_count": 40,
+    "avg_st": 0.189,
+    "st_count": 42,
     "course_st": {
-      "6": 0.19
+      "6": 0.189
     }
   },
   "hist_exhibition": {
-    "overall_avg": 6.85,
-    "count": 40,
+    "overall_avg": 6.86,
+    "count": 42,
     "by_venue": {
       "21": {
         "avg": 6.8,
@@ -44,8 +44,8 @@
         "count": 8
       },
       "22": {
-        "avg": 6.91,
-        "count": 11
+        "avg": 6.9,
+        "count": 13
       },
       "18": {
         "avg": 6.94,
@@ -58,7 +58,7 @@
   },
   "hist_local_waku_stats": {
     "5": {
-      "races": 4,
+      "races": 5,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
@@ -69,13 +69,13 @@
       "top3_pct": 0.0
     },
     "6": {
-      "races": 7,
+      "races": 8,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 14.3,
+      "4th_pct": 12.5,
       "5th_pct": 0.0,
-      "6th_pct": 85.7,
+      "6th_pct": 87.5,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     }
