@@ -15,8 +15,28 @@ on:
   workflow_dispatch:  # 手動実行も可能
 
 jobs:
+  # 2026-08-16: 構文エラーのままFTPSで本番へ配ってしまう事故を防ぐ。
+  # macOS には php バイナリが無くローカルで php -l をかけられないため、
+  # デプロイ前の関門をここに置く。失敗したら deploy ジョブは動かない。
+  lint:
+    name: PHP 構文チェック
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: php -l （全PHPファイル）
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            php -l "$f" || fail=1
+          done < <(find wordpress -name '*.php' -print)
+          exit $fail
+
   deploy-plugin:
     name: Deploy plugin (boat-forecast-viewer)
+    needs: lint
     runs-on: ubuntu-latest
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
@@ -47,6 +67,7 @@ jobs:
 
   deploy-sync-endpoint:
     name: Deploy sync endpoint (forecast-sync.php)
+    needs: lint
     runs-on: ubuntu-latest
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
