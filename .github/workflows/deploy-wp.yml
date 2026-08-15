@@ -6,15 +6,26 @@ on:
     paths:
       - 'wordpress/**'
       - '.github/workflows/deploy-wp.yml'
+  # verify.yml が週次精度レポート（wordpress/.../accuracy/）を commit しても、
+  # Actions が GITHUB_TOKEN で行った push は push トリガーを発火させない仕様のため、
+  # verify の完走を契機に明示的に回す。
+  workflow_run:
+    workflows: ["Boat Daily Verify"]
+    types: [completed]
   workflow_dispatch:  # 手動実行も可能
 
 jobs:
   deploy-plugin:
     name: Deploy plugin (boat-forecast-viewer)
     runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # workflow_run では既定で「起動元ワークフローが動き始めた時点のSHA」を指すため、
+          # verify が直後に積んだ accuracy のコミットを取りこぼす。main の最新を明示する。
+          ref: main
 
       - name: FTPS Deploy — plugin
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -37,9 +48,12 @@ jobs:
   deploy-sync-endpoint:
     name: Deploy sync endpoint (forecast-sync.php)
     runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: FTPS Deploy — forecast-sync.php
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
