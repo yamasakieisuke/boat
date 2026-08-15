@@ -215,19 +215,15 @@ def load_results_for_date(date_str: str) -> dict:
 
 def evaluate_prediction(pred_log: dict, actual_results: list) -> dict:
     """
-    1レース分の予測ログと実際の着順を比較して評価指標を返す。
+    1レース分の予測ログと実際の着順を比較する。
+
+    2026-08-15 の整理:
+      「3連複なら当たっていた」「2連単なら当たっていた」式の指標は全て廃止した。
+      実際に買うのは3連単だけなので、当たり外れは evaluate_bets（買い目と
+      won3 の照合）だけで判定する。ここは買い目とは独立した診断値だけを返す。
 
     返値:
-      {
-        "hit_1st":  bool  # 1着的中
-        "hit_2nd":  bool  # 2着的中
-        "hit_3rd":  bool  # 3着的中
-        "hit_top3_all": bool  # 3連単的中（1-2-3着完全一致）
-        "hit_top3_box": bool  # 3連複的中（3着以内3艇一致）
-        "hit_top2_ord": bool  # 2連単的中（1-2着順序一致）
-        "hit_top2_box": bool  # 2連複的中（2着以内2艇一致）
-        "pred_1st_actual_rank": int  # 予測1位の実際の順位
-      }
+      {"pred_1st_actual_rank": int}  # 予測1位の艇が実際に何着だったか
     """
     predictions = pred_log.get("predictions", [])
     actual_sorted = sorted(actual_results, key=lambda r: r["rank"])
@@ -238,24 +234,10 @@ def evaluate_prediction(pred_log: dict, actual_results: list) -> dict:
     if len(actual_order) < 3 or len(pred_order) < 3:
         return {}
 
-    a1, a2, a3 = actual_order[0], actual_order[1], actual_order[2]
-    p1, p2, p3 = pred_order[0], pred_order[1], pred_order[2]
-
-    # 予測1位が実際何位だったか
     pred_1st_actual_rank = next(
-        (r["rank"] for r in actual_results if r["waku"] == p1), 99
+        (r["rank"] for r in actual_results if r["waku"] == pred_order[0]), 99
     )
-
-    return {
-        "hit_1st":           p1 == a1,
-        "hit_2nd":           p2 == a2,
-        "hit_3rd":           p3 == a3,
-        "hit_top3_all":      (p1, p2, p3) == (a1, a2, a3),
-        "hit_top3_box":      set([p1, p2, p3]) == set([a1, a2, a3]),
-        "hit_top2_ord":      (p1, p2) == (a1, a2),
-        "hit_top2_box":      set([p1, p2]) == set([a1, a2]),
-        "pred_1st_actual_rank": pred_1st_actual_rank,
-    }
+    return {"pred_1st_actual_rank": pred_1st_actual_rank}
 
 
 def evaluate_bets(pred_log: dict, actual_won3: str) -> dict:
@@ -368,8 +350,8 @@ def update_verify_md(summary: dict):
     同じ (run_date, jcd) の行があれば上書き。
 
     フォーマット例:
-    | 2026-03-15 | 福岡(22) | 12R | 75.0% | 8.3% | 16.7% | 9.50 |
-    （並びは 3連単中心: 買い目→3連単→3連複→1着）
+    | 2026-03-15 | 福岡(22) | 12R | 30.0% | 75.6% | 58.3% | 9.50 |
+    （買い目的中(3連単) → 回収率 → 頭的中 → 予測1位の平均着順）
     """
     DATA_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -380,16 +362,15 @@ def update_verify_md(summary: dict):
         f"| {summary['date_from']}〜{summary['date_to']} "
         f"| {summary['total_races']}R "
         f"| {summary['hit_bet_any_pct']}% "
-        f"| {summary['hit_3tan_pct']}% "
-        f"| {summary['hit_3fuku_pct']}% "
+        f"| {summary.get('roi_pct', 0)}% "
         f"| {summary['hit_1st_pct']}% "
         f"| {summary['avg_rank']:.2f} |"
     )
 
     header = (
         "# 予測精度ログ\n\n"
-        "| 検証日 | 会場 | 対象期間 | レース数 | 買い目% | 3連単% | 3連複% | 1着% | 平均着順 |\n"
-        "|---|---|---|---|---|---|---|---|---|\n"
+        "| 検証日 | 会場 | 対象期間 | レース数 | 買い目的中% | 回収率% | 頭的中% | 平均着順 |\n"
+        "|---|---|---|---|---|---|---|---|\n"
     )
 
     # 既存ファイルを読み込む
@@ -421,10 +402,10 @@ def update_verify_html() -> None:
     rows.sort(key=lambda r: (r.get("run_date", ""), r.get("jcd", "")), reverse=True)
 
     venue_stats = defaultdict(lambda: {
-        "total_races": 0, "hit_1st": 0, "hit_bet_any": 0, "hit_3fuku": 0, "hit_3tan": 0
+        "total_races": 0, "hit_1st": 0, "hit_bet_any": 0, "points": 0, "payout": 0
     })
     month_stats = defaultdict(lambda: {
-        "total_races": 0, "hit_1st": 0, "hit_bet_any": 0, "hit_3fuku": 0, "hit_3tan": 0
+        "total_races": 0, "hit_1st": 0, "hit_bet_any": 0, "points": 0, "payout": 0
     })
     for row in rows:
         jcd = str(row.get("jcd", "")).zfill(2)
@@ -436,8 +417,9 @@ def update_verify_html() -> None:
             bucket["total_races"] += total
             bucket["hit_1st"] += int(row.get("hit_1st", 0) or 0)
             bucket["hit_bet_any"] += int(row.get("hit_bet_any", 0) or 0)
-            bucket["hit_3fuku"] += int(row.get("hit_3fuku", 0) or 0)
-            bucket["hit_3tan"] += int(row.get("hit_3tan", 0) or 0)
+            _r = row.get("roi") or {}
+            bucket["points"] += int(_r.get("points", 0) or 0)
+            bucket["payout"] += int(_r.get("payout", 0) or 0)
 
     parts = [
         "<!DOCTYPE html>",
@@ -487,8 +469,7 @@ def update_verify_html() -> None:
             f"<td>{he(row.get('date_from',''))}〜{he(row.get('date_to',''))}</td>"
             f"<td>{he(row.get('total_races',''))}R</td>"
             f"<td class=\"{bet_pct_cls}\">{he(bet_pct_text)}</td>"
-            f"<td class=\"{pct_class(float(row.get('hit_3tan_pct', 0)))}\">{he(row.get('hit_3tan_pct',''))}%</td>"
-            f"<td class=\"{pct_class(float(row.get('hit_3fuku_pct', 0)))}\">{he(row.get('hit_3fuku_pct',''))}%</td>"
+            f"<td class=\"{pct_class(float(row.get('roi_pct', 0)))}\">{he(row.get('roi_pct', 0))}%</td>"
             f"<td class=\"{pct_class(float(row.get('hit_1st_pct', 0)))}\">{he(row.get('hit_1st_pct',''))}%</td>"
             f"<td>{he(row.get('avg_rank',''))}</td>"
             f"<td>{detail_html}</td>"
@@ -498,7 +479,7 @@ def update_verify_html() -> None:
     parts.append("</table></div>")
 
     parts.append('<h2>会場別集計</h2><div class="tbl-wrap"><table>')
-    parts.append("<tr><th>会場</th><th>R数</th><th>1着%</th><th>買い目%</th><th>3連複%</th><th>3連単%</th></tr>")
+    parts.append("<tr><th>会場</th><th>R数</th><th>買い目的中%</th><th>回収率%</th><th>頭的中%</th></tr>")
     for jcd, stat in sorted(venue_stats.items()):
         total = stat["total_races"]
         if total <= 0:
@@ -508,17 +489,16 @@ def update_verify_html() -> None:
             "<tr>"
             f"<td>{he(vname)}</td>"
             f"<td>{total}R</td>"
-            f"<td class=\"{pct_class(stat['hit_1st']/total*100)}\">{stat['hit_1st']/total*100:.1f}%</td>"
             f"<td class=\"{pct_class(stat['hit_bet_any']/total*100)}\">{stat['hit_bet_any']/total*100:.1f}%</td>"
-            f"<td class=\"{pct_class(stat['hit_3fuku']/total*100)}\">{stat['hit_3fuku']/total*100:.1f}%</td>"
-            f"<td class=\"{pct_class(stat['hit_3tan']/total*100)}\">{stat['hit_3tan']/total*100:.1f}%</td>"
+            f"<td class=\"{pct_class(_roi_pct(stat['points'], stat['payout']))}\">{_roi_pct(stat['points'], stat['payout'])}%</td>"
+            f"<td class=\"{pct_class(stat['hit_1st']/total*100)}\">{stat['hit_1st']/total*100:.1f}%</td>"
             "</tr>"
         )
     parts.append("</table></div>")
 
     if month_stats:
         parts.append('<h2>月別集計</h2><div class="tbl-wrap"><table>')
-        parts.append("<tr><th>月</th><th>R数</th><th>1着%</th><th>買い目%</th><th>3連複%</th><th>3連単%</th></tr>")
+        parts.append("<tr><th>月</th><th>R数</th><th>買い目的中%</th><th>回収率%</th><th>頭的中%</th></tr>")
         for ym, stat in sorted(month_stats.items(), reverse=True):
             total = stat["total_races"]
             if total <= 0:
@@ -527,10 +507,9 @@ def update_verify_html() -> None:
                 "<tr>"
                 f"<td>{he(ym[:4] + '/' + ym[4:6])}</td>"
                 f"<td>{total}R</td>"
-                f"<td class=\"{pct_class(stat['hit_1st']/total*100)}\">{stat['hit_1st']/total*100:.1f}%</td>"
                 f"<td class=\"{pct_class(stat['hit_bet_any']/total*100)}\">{stat['hit_bet_any']/total*100:.1f}%</td>"
-                f"<td class=\"{pct_class(stat['hit_3fuku']/total*100)}\">{stat['hit_3fuku']/total*100:.1f}%</td>"
-                f"<td class=\"{pct_class(stat['hit_3tan']/total*100)}\">{stat['hit_3tan']/total*100:.1f}%</td>"
+                f"<td class=\"{pct_class(_roi_pct(stat['points'], stat['payout']))}\">{_roi_pct(stat['points'], stat['payout'])}%</td>"
+                f"<td class=\"{pct_class(stat['hit_1st']/total*100)}\">{stat['hit_1st']/total*100:.1f}%</td>"
                 "</tr>"
             )
         parts.append("</table></div>")
@@ -562,8 +541,6 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
     # 集計
     sorted_details = sorted(race_details, key=lambda d: d["race_no"])
     total     = len(sorted_details)
-    hit_3tan  = sum(1 for d in sorted_details if d.get("hit_3tan"))
-    hit_3fuku = sum(1 for d in sorted_details if d.get("hit_3fuku"))
     hit_1st   = sum(1 for d in sorted_details
                     if d.get("combo1","").split("-")[0] == (d.get("won3","") or "").split("-")[0])
 
@@ -574,10 +551,12 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
 
     # 高配当レース（10,000円超）
     big_upset = [d for d in sorted_details if d.get("won3_pay", 0) >= 10000]
-    # 3複は当たっているが3単を外したレース
-    hit_fuku_miss_tan = [d for d in sorted_details
-                         if d.get("hit_3fuku") and not d.get("hit_3tan")]
-    # 1着予測が合っているレース（combo1の先頭枠 = won3先頭枠）
+    # 頭は当たったが買い目を外したレース（惜しかった側の把握用）
+    head_hit_bet_miss = [d for d in sorted_details
+                         if d.get("combo1","").split("-")[0] ==
+                            (d.get("won3","") or "").split("-")[0]
+                         and not d.get("hit_bet_any")]
+    # 頭が当たったレース（combo1の先頭枠 = won3先頭枠）
     hit_1st_races = [d["race_no"] for d in sorted_details
                      if d.get("combo1","").split("-")[0] ==
                         (d.get("won3","") or "").split("-")[0]]
@@ -624,8 +603,9 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
                     mark = "◎抑え的中"
                 else:
                     mark = "◎的中"
-            elif det.get("hit_3fuku", False):
-                mark = "△3連複"
+            elif (det.get("combo1","").split("-")[0]
+                  == (det.get("won3","") or "").split("-")[0]):
+                mark = "△頭のみ"
             else:
                 mark = "✕"
 
@@ -648,8 +628,8 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
         f.write(f"- **買い目的中**: {hit_bet_any_cnt}/{total}R "
                 f"({hit_bet_any_cnt/total*100:.1f}%)  "
                 f"本命 {hit_honmei_cnt}回 / その他 {hit_others_cnt}回\n")
-        f.write(f"- **参考** 3連単(順位一致) {hit_3tan}回 / 3連複 {hit_3fuku}回\n")
-        f.write(f"- **1着予測一致**: {len(hit_1st_races)}R "
+        f.write(f"- **頭は的中したが買い目を外した**: {len(head_hit_bet_miss)}R\n")
+        f.write(f"- **頭的中**: {len(hit_1st_races)}R "
                 f"（{', '.join(str(r)+'R' for r in hit_1st_races) or 'なし'}）\n")
         f.write(f"- **平均配当**: {avg_pay:,.0f}円　平均人気: {avg_pop:.1f}番人気\n")
 
@@ -660,9 +640,9 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
             )
             f.write(f"- **高配当(1万円超)**: {races_str}\n")
 
-        if hit_fuku_miss_tan:
-            r_str = ", ".join(str(d["race_no"]) + "R" for d in hit_fuku_miss_tan)
-            f.write(f"- **3連複○ / 3連単✕**: {r_str}　→ 3着の順序が逆\n")
+        if head_hit_bet_miss:
+            r_str = ", ".join(str(d["race_no"]) + "R" for d in head_hit_bet_miss)
+            f.write(f"- **頭○ / 買い目✕**: {r_str}　→ 2〜3着の組み合わせを外した\n")
 
         # 傾向コメント
         f.write("\n### 傾向コメント\n\n")
@@ -700,13 +680,17 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
 
     print(f"  📝 詳細ファイル保存: {fname}")
 
+    _bet_hits = sum(1 for d in sorted_details if d.get("hit_bet_any"))
+    _points = sum(len(d.get("bet_combos") or []) for d in sorted_details)
+    _payout = sum(d.get("won3_pay", 0) for d in sorted_details if d.get("hit_bet_any"))
     cards = [
         ("検証R", f"{total}R", ""),
-        ("1着%", f"{hit_1st/total*100:.1f}%", "good" if hit_1st/total*100 >= 50 else "mid"),
-        ("買い目%", f"{sum(1 for d in sorted_details if d.get('hit_bet_any'))/total*100:.1f}%", "mid"),
-        ("3連複%", f"{hit_3fuku/total*100:.1f}%", "good" if hit_3fuku/total*100 >= 30 else "mid"),
-        ("3連単%", f"{hit_3tan/total*100:.1f}%", "good" if hit_3tan/total*100 >= 10 else "low"),
-        ("平均着順", f"{sum(1 for _ in []) if False else ''}{''}", ""),
+        ("買い目的中%", f"{_bet_hits/total*100:.1f}%",
+         "good" if _bet_hits/total*100 >= 25 else "mid"),
+        ("回収率%", f"{_roi_pct(_points, _payout):.1f}%",
+         "good" if _roi_pct(_points, _payout) >= 100 else "mid"),
+        ("頭的中%", f"{hit_1st/total*100:.1f}%",
+         "good" if hit_1st/total*100 >= 50 else "mid"),
     ]
     avg_rank = 0.0
     if sorted_details:
@@ -769,8 +753,9 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
                 mark = "◎抑え"
             else:
                 mark = "◎的中"
-        elif det.get("hit_3fuku"):
-            mark = "△3連複"
+        elif (det.get("combo1","").split("-")[0]
+              == (det.get("won3","") or "").split("-")[0]):
+            mark = "△頭のみ"
         else:
             mark = "✕"
         mark_cls = "mark-hit" if mark.startswith("◎") else "mark-mid" if mark.startswith("△") else "mark-miss"
@@ -823,13 +808,13 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
     html.append("</table></div>")
     html.append('<div class="sec">振り返り分析</div><ul>')
     html.append(f"<li>買い目的中: {hit_bet_any_cnt}/{total}R ({hit_bet_any_cnt/total*100:.1f}%) 本命 {hit_honmei_cnt}回 / その他 {hit_others_cnt}回</li>")
-    html.append(f"<li>参考: 3連単(順位一致) {hit_3tan}回 / 3連複 {hit_3fuku}回</li>")
-    html.append(f"<li>1着予測一致: {len(hit_1st_races)}R ({he(', '.join(str(r)+'R' for r in hit_1st_races) or 'なし')})</li>")
+    html.append(f"<li>頭は的中したが買い目を外した: {len(head_hit_bet_miss)}R</li>")
+    html.append(f"<li>頭的中: {len(hit_1st_races)}R ({he(', '.join(str(r)+'R' for r in hit_1st_races) or 'なし')})</li>")
     html.append(f"<li>平均配当: {avg_pay:,.0f}円 / 平均人気: {avg_pop:.1f}番人気</li>")
     if big_upset:
         html.append("<li>高配当(1万円超): " + he(", ".join(f"{d['race_no']}R({d['won3_pay']:,}円/{d['won3_pop']}人気)" for d in big_upset)) + "</li>")
-    if hit_fuku_miss_tan:
-        html.append("<li>3連複○ / 3連単✕: " + he(", ".join(str(d["race_no"]) + "R" for d in hit_fuku_miss_tan)) + "</li>")
+    if head_hit_bet_miss:
+        html.append("<li>頭○ / 買い目✕: " + he(", ".join(str(d["race_no"]) + "R" for d in head_hit_bet_miss)) + "</li>")
     for note in notes:
         html.append(f"<li>{he(note)}</li>")
     html.append("</ul></body></html>")
@@ -958,12 +943,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     log_files = sorted(LOG_DIR.rglob(f"{jcd}_R*_pred.json"))
 
     total     = 0
-    hit_1st   = 0
-    hit_top3_box = 0
-    hit_top3_all = 0
-    hit_top2_ord = 0
-    hit_top2_box = 0
-    hit_bet_any = 0
+    hit_1st   = 0          # 買い目の頭（本命①1点目の1着枠）が実際の1着と一致した数
+    hit_bet_any = 0        # ★主指標: 3連単の買い目のいずれかが的中した数
     hit_bet1 = 0
     hit_bet2 = 0
     hit_bet3 = 0
@@ -1016,11 +997,6 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         bet_ev = evaluate_bets(pred_log, race_data.get("won3", "") if race_data else "")
 
         total += 1
-        hit_1st      += int(ev["hit_1st"])
-        hit_top3_box += int(ev["hit_top3_box"])
-        hit_top3_all += int(ev["hit_top3_all"])
-        hit_top2_ord += int(ev["hit_top2_ord"])
-        hit_top2_box += int(ev["hit_top2_box"])
         hit_bet_any  += int(bet_ev["hit_bet_any"])
         hit_bet1     += int(bet_ev["hit_bet1"])
         hit_bet2     += int(bet_ev["hit_bet2"])
@@ -1073,6 +1049,12 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         else:
             combo1 = combo2 = combo3 = "---"
 
+        # 頭的中は「買い目の先頭の1着枠」で判定する（定義を1つに統一）。
+        # 以前は run_verification が predictions[0]、save_verify_detail が combo1 と
+        # 別々の定義を使っており、同じ「1着的中」が場所によって食い違っていた。
+        head_hit = bool(won3_str) and combo1.split("-")[0] == won3_str.split("-")[0]
+        hit_1st += int(head_hit)
+
         # ── 詳細リストに追記 ────────────────────────────────
         race_details_by_date[date_str].append({
             "race_no":   race_no,
@@ -1080,6 +1062,7 @@ def run_verification(jcd: str, date_from: str, date_to: str,
             "combo2":    combo2,
             "combo3":    combo3,
             "bet_combos": bet_ev["bet_combos"],
+            "bet_points": len(bet_ev.get("bet_cells", [])),
             "honmei_combos": bet_ev.get("honmei_combos", []),
             "others_combos": bet_ev.get("others_combos", []),
             "taikou_combos": bet_ev.get("taikou_combos", []),
@@ -1089,8 +1072,6 @@ def run_verification(jcd: str, date_from: str, date_to: str,
             "won3_pay":  race_data.get("won3_pay", 0)  if race_data else 0,
             "won3_pop":  race_data.get("won3_pop", 0)  if race_data else 0,
             "race_type": race_data.get("race_type","") if race_data else "",
-            "hit_3tan":  ev["hit_top3_all"],
-            "hit_3fuku": ev["hit_top3_box"],
             "hit_bet_any": bet_ev["hit_bet_any"],
             "hit_bet1": bet_ev["hit_bet1"],
             "hit_bet2": bet_ev["hit_bet2"],
@@ -1113,14 +1094,13 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         })
 
         if verbose:
-            mark = "✅" if ev["hit_top3_box"] else "❌"
+            mark = "✅" if bet_ev["hit_bet_any"] else "❌"
             print(f"  {mark} {date_str} R{race_no:2d}  "
                   f"予{p_wakus} → 実{a_wakus}  "
                   f"予1位={pred_1.get('waku','-')}枠({pred_1.get('name','?')})  "
                   f"実際{ev['pred_1st_actual_rank']}位  "
-                  f"{'1着✓' if ev['hit_1st'] else ''}"
-                  f"{'3複✓' if ev['hit_top3_box'] else ''}"
-                  f"{'3単✓' if ev['hit_top3_all'] else ''}")
+                  f"{'頭✓' if head_hit else ''}"
+                  f"{'買✓' if bet_ev['hit_bet_any'] else ''}")
 
     if total == 0:
         print("  対象データなし（実績CSVが揃っていないか、日付範囲に予測ログがありません）")
@@ -1130,8 +1110,6 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     print(f"\n  検証レース数:   {total} R")
     print(f"  ★ レース的中率: {hit_bet_any}/{total}  ({hit_bet_any/total*100:.1f}%)  ← 3連単買い目のいずれかが的中")
     print(f"     本命:      {hit_honmei}/{total}  ({hit_honmei/total*100:.1f}%)")
-    print(f"     3連単(順位一致): {hit_top3_all}/{total}  ({hit_top3_all/total*100:.1f}%)")
-    print(f"     3連複:     {hit_top3_box}/{total}  ({hit_top3_box/total*100:.1f}%)")
     print(f"     その他:    {hit_others}/{total}  ({hit_others/total*100:.1f}%)  (対抗{hit_taikou} / 抑え{hit_oshi} / 穴{hit_ana})")
     print(f"  予測1位の平均着順: {rank_sum/total:.2f}  (理想値:1.0)")
     # 補足指標（1着は本命1番手の頭一致＝参考扱い）
@@ -1143,39 +1121,28 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     _print_roi_block(roi)
 
     # ── 月別集計 ────────────────────────────────────────────────
-    monthly = defaultdict(lambda: {"total":0,"hit_1st":0,"hit_top3_box":0})
-    for log_path in sorted(LOG_DIR.rglob(f"{jcd}_R*_pred.json")):
-        date_str = log_path.parent.name
-        if date_str < date_from or date_str > date_to:
-            continue
-        pred_log = load_json(log_path)
-        if not pred_log:
-            continue
-        race_no = pred_log.get("race_no", 0)
-        if date_str not in cached_results:
-            cached_results[date_str] = load_results_for_date(date_str)
-        race_data2 = cached_results[date_str].get((jcd, race_no))
-        actual2    = race_data2["racers"] if race_data2 else []
-        if not actual2:
-            continue
-        ev = evaluate_prediction(pred_log, actual2)
-        if not ev:
-            continue
-        ym = date_str[:6]
-        monthly[ym]["total"]        += 1
-        monthly[ym]["hit_1st"]      += int(ev["hit_1st"])
-        monthly[ym]["hit_top3_box"] += int(ev["hit_top3_box"])
+    # 既に組み立てた race_details_by_date から作る。以前はログを読み直して
+    # いたが、二重読み込みなうえ集計値の取り違えを生みやすかった。
+    monthly = defaultdict(lambda: {"total": 0, "hit_1st": 0, "hit_bet_any": 0})
+    for d_str, details in race_details_by_date.items():
+        ym = d_str[:6]
+        for d in details:
+            monthly[ym]["total"] += 1
+            monthly[ym]["hit_bet_any"] += int(bool(d.get("hit_bet_any")))
+            if (d.get("combo1", "").split("-")[0]
+                    == (d.get("won3", "") or "").split("-")[0]):
+                monthly[ym]["hit_1st"] += 1
 
     if len(monthly) > 1:
-        print(f"  {'月':8s}  {'R数':>5}  {'1着%':>7}  {'3連複%':>8}")
-        print(f"  {'─'*35}")
+        print(f"  {'月':8s}  {'R数':>5}  {'買い目的中%':>11}  {'頭的中%':>9}")
+        print(f"  {'─'*40}")
         for ym in sorted(monthly.keys()):
             m = monthly[ym]
             t = m["total"]
             print(f"  {ym[:4]}/{ym[4:]:>2s}    "
                   f"{t:>5d}  "
-                  f"{m['hit_1st']/t*100:>6.1f}%  "
-                  f"{m['hit_top3_box']/t*100:>7.1f}%")
+                  f"{m['hit_bet_any']/t*100:>10.1f}%  "
+                  f"{m['hit_1st']/t*100:>8.1f}%")
 
     print(f"\n{'='*72}")
 
@@ -1236,25 +1203,28 @@ def run_verification(jcd: str, date_from: str, date_to: str,
 
     # ── v5.20: 予測バージョン別ヒット率（ロジック改修の効果測定）──
     ver_stats: dict[str, dict] = defaultdict(lambda: {
-        "total": 0, "hit_1st": 0, "hit_3fuku": 0, "hit_bet_any": 0, "hit_honmei": 0
+        "total": 0, "hit_bet_any": 0, "hit_honmei": 0, "points": 0, "payout": 0
     })
     for d in all_details:
         v = d.get("version") or "pre-v5.20"
         s = ver_stats[v]
         s["total"] += 1
-        s["hit_1st"]     += int(bool(d.get("hit_bet1")) or 0)  # 便宜: 1着指標は別集計
-        s["hit_3fuku"]   += int(bool(d.get("hit_3fuku")))
         s["hit_bet_any"] += int(bool(d.get("hit_bet_any")))
         s["hit_honmei"]  += int(bool(d.get("hit_honmei")))
+        s["points"]      += int(d.get("bet_points", 0) or 0)
+        if d.get("hit_bet_any"):
+            s["payout"]  += int(d.get("won3_pay", 0) or 0)
     if len(ver_stats) > 0:
-        print("  ── バージョン別ヒット率（v5.20〜）──")
-        print(f"  {'version':<12} {'R数':>5} {'3複':>7} {'全体':>7} {'本命':>7}")
+        # ロジック改修のA/B用。的中率だけでなく回収率も並べる
+        print("  ── バージョン別（v5.20〜）──")
+        print(f"  {'version':<12} {'R数':>5} {'点/R':>7} {'買い目的中':>10} {'本命':>7} {'回収率':>8}")
         for v, s in sorted(ver_stats.items()):
             if s["total"] == 0: continue
             print(f"  {v:<12} {s['total']:>5} "
-                  f"{s['hit_3fuku']/s['total']*100:>6.1f}% "
-                  f"{s['hit_bet_any']/s['total']*100:>6.1f}% "
-                  f"{s['hit_honmei']/s['total']*100:>6.1f}%")
+                  f"{s['points']/s['total']:>7.2f} "
+                  f"{s['hit_bet_any']/s['total']*100:>9.1f}% "
+                  f"{s['hit_honmei']/s['total']*100:>6.1f}% "
+                  f"{_roi_pct(s['points'], s['payout']):>7.1f}%")
         print()
 
     if any(s["n"] > 0 for s in series_stats.values()):
@@ -1324,12 +1294,10 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         "date_from":     date_from,
         "date_to":       date_to,
         "total_races":   total,
-        "hit_1st":       hit_1st,
-        "hit_2tan":      hit_top2_ord,
-        "hit_2fuku":     hit_top2_box,
-        "hit_3fuku":     hit_top3_box,
-        "hit_3tan":      hit_top3_all,
+        # ★主指標: 3連単の買い目のいずれかが的中したレース数
         "hit_bet_any":   hit_bet_any,
+        # 診断値: 買い目の頭（本命①1点目の1着枠）が実際の1着と一致した数
+        "hit_1st":       hit_1st,
         "hit_bet1":      hit_bet1,
         "hit_bet2":      hit_bet2,
         "hit_bet3":      hit_bet3,
@@ -1346,17 +1314,13 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         "hit_ana_pct":    round(hit_ana    / total * 100, 1),
         "avg_rank":      round(rank_sum / total, 2),
         "hit_1st_pct":   round(hit_1st / total * 100, 1),
-        "hit_2tan_pct":  round(hit_top2_ord / total * 100, 1),
-        "hit_2fuku_pct": round(hit_top2_box / total * 100, 1),
-        "hit_3fuku_pct": round(hit_top3_box / total * 100, 1),
-        "hit_3tan_pct":  round(hit_top3_all / total * 100, 1),
         "hit_bet_any_pct": round(hit_bet_any / total * 100, 1),
         "hit_bet1_pct":  round(hit_bet1 / total * 100, 1),
         "monthly":       {
             ym: {
                 "total":       m["total"],
-                "hit_1st_pct": round(m["hit_1st"]      / m["total"] * 100, 1),
-                "hit_3fuku_pct": round(m["hit_top3_box"] / m["total"] * 100, 1),
+                "hit_1st_pct": round(m["hit_1st"] / m["total"] * 100, 1),
+                "hit_bet_any_pct": round(m["hit_bet_any"] / m["total"] * 100, 1),
             }
             for ym, m in sorted(monthly.items())
         },
@@ -1444,22 +1408,23 @@ def _aggregate_series_stats(summaries: list[dict]) -> dict:
 
 
 def _aggregate_version_stats(summaries: list[dict]) -> dict:
-    """version_stats の各 venue summary の実体キー: total, hit_1st, hit_3fuku, hit_bet_any, hit_honmei
-    (注: ここでの hit_1st は本命の1着的中=hit_bet1 ベースで、純粋な1着的中とは別)
-    """
+    """version_stats の実体キー: total, hit_bet_any, hit_honmei, points, payout"""
     raw: dict[str, dict] = defaultdict(lambda: defaultdict(int))
     for s in summaries:
         for ver, vs in (s.get("version_stats") or {}).items():
             for k, v in vs.items():
                 raw[ver][k] += v or 0
     out: dict[str, dict] = {}
-    metric_keys = ("hit_1st", "hit_bet_any", "hit_3fuku", "hit_honmei")
+    metric_keys = ("hit_bet_any", "hit_honmei")
     for ver, d in raw.items():
         n = d.get("total", 0)
         rec = {"n": n, "total": n}
         for k in metric_keys:
             rec[k] = d.get(k, 0)
             rec[f"{k}_pct"] = round(d.get(k, 0) / n * 100, 1) if n else 0.0
+        rec["points"] = d.get("points", 0)
+        rec["payout"] = d.get("payout", 0)
+        rec["roi_pct"] = _roi_pct(rec["points"], rec["payout"])
         out[ver] = rec
     return out
 
@@ -1512,7 +1477,7 @@ def _update_accuracy_index() -> None:
                 "total_races": o.get("total_races"),
                 "hit_1st_pct": o.get("hit_1st_pct"),
                 "hit_bet_any_pct": o.get("hit_bet_any_pct"),
-                "hit_3tan_pct": o.get("hit_3tan_pct"),
+
                 "roi_pct": o.get("roi_pct", (d.get("roi") or {}).get("roi_pct")),
             }
     weeks = sorted(by_week.values(), key=lambda w: w.get("week") or "", reverse=True)
@@ -1539,8 +1504,6 @@ def _render_accuracy_md(a: dict) -> str:
         f"- 総レース数: **{n}R**　／　対象会場: {o.get('venues_with_data', 0)}",
         f"- 1着的中率:    **{o.get('hit_1st_pct', 0)}%**　({o.get('hit_1st', 0)}/{n})",
         f"- 買い目的中率: **{o.get('hit_bet_any_pct', 0)}%**　({o.get('hit_bet_any', 0)}/{n})",
-        f"- 3連単的中率:  **{o.get('hit_3tan_pct', 0)}%**　({o.get('hit_3tan', 0)}/{n})",
-        f"- 3連複的中率:  {o.get('hit_3fuku_pct', 0)}%　({o.get('hit_3fuku', 0)}/{n})",
         f"- 本命的中率:   {o.get('hit_honmei_pct', 0)}%　／　対抗: {o.get('hit_taikou_pct', 0)}%　／　穴: {o.get('hit_ana_pct', 0)}%　／　押さえ: {o.get('hit_oshi_pct', 0)}%",
     ]
     roi = a.get("roi") or {}
@@ -1582,12 +1545,12 @@ def _render_accuracy_md(a: dict) -> str:
         lines += ["",
                   "## 会場別ランキング (買い目的中率順)",
                   "",
-                  "| 順 | 会場 | R数 | 1着% | 買い目% | 3連単% | 平均着順 |",
+                  "| 順 | 会場 | R数 | 買い目的中% | 回収率% | 頭的中% | 平均着順 |",
                   "|---|---|---:|---:|---:|---:|---:|"]
         for i, v in enumerate(a["by_venue"], 1):
             lines.append(
-                f"| {i} | {v['name']} | {v['n']} | {v['hit_1st_pct']}% | "
-                f"{v['hit_bet_any_pct']}% | {v['hit_3tan_pct']}% | {v['avg_rank']} |"
+                f"| {i} | {v['name']} | {v['n']} | {v['hit_bet_any_pct']}% | "
+                f"{v.get('roi_pct', 0)}% | {v['hit_1st_pct']}% | {v['avg_rank']} |"
             )
 
     if a.get("by_pattern"):
@@ -1618,13 +1581,14 @@ def _render_accuracy_md(a: dict) -> str:
     if a.get("by_version"):
         lines += ["", "## バージョン別",
                   "",
-                  "| version | n | 本命1着% | 買い目% | 3連複% | 本命% |",
+                  "| version | n | 点/R | 買い目的中% | 本命% | 回収率% |",
                   "|---|---:|---:|---:|---:|---:|"]
         for ver, d in sorted(a["by_version"].items()):
+            ppr = round(d.get("points", 0) / d["n"], 2) if d.get("n") else 0
             lines.append(
-                f"| {ver} | {d['n']} | {d.get('hit_1st_pct', 0)}% | "
-                f"{d.get('hit_bet_any_pct', 0)}% | {d.get('hit_3fuku_pct', 0)}% | "
-                f"{d.get('hit_honmei_pct', 0)}% |"
+                f"| {ver} | {d['n']} | {ppr} | "
+                f"{d.get('hit_bet_any_pct', 0)}% | "
+                f"{d.get('hit_honmei_pct', 0)}% | {d.get('roi_pct', 0)}% |"
             )
 
     return "\n".join(lines) + "\n"
@@ -1639,7 +1603,6 @@ def _print_weekly_summary(a: dict) -> None:
     print(f"  対象: {n}R　／　会場: {o.get('venues_with_data', 0)}")
     print(f"  1着:    {o.get('hit_1st_pct', 0)}%  ({o.get('hit_1st', 0)}/{n})")
     print(f"  買い目: {o.get('hit_bet_any_pct', 0)}%  ({o.get('hit_bet_any', 0)}/{n})")
-    print(f"  3連単:  {o.get('hit_3tan_pct', 0)}%  ({o.get('hit_3tan', 0)}/{n})")
     print(f"  本命:   {o.get('hit_honmei_pct', 0)}%　対抗:{o.get('hit_taikou_pct', 0)}%　穴:{o.get('hit_ana_pct', 0)}%　押:{o.get('hit_oshi_pct', 0)}%")
     _print_roi_block(a.get("roi") or {})
     if a.get("diff_prev_week"):
@@ -1652,8 +1615,7 @@ def _print_weekly_summary(a: dict) -> None:
 
 
 _MERGE_COUNT_KEYS = (
-    "hit_1st", "hit_2tan", "hit_2fuku", "hit_3fuku", "hit_3tan",
-    "hit_bet_any", "hit_bet1", "hit_bet2", "hit_bet3",
+    "hit_1st", "hit_bet_any", "hit_bet1", "hit_bet2", "hit_bet3",
     "hit_honmei", "hit_others", "hit_taikou", "hit_oshi", "hit_ana",
 )
 
@@ -1768,8 +1730,7 @@ def run_weekly_report(week_iso: str | None = None,
         return None
 
     total = sum(s["total_races"] for s in summaries)
-    sum_keys = ("hit_1st", "hit_3tan", "hit_3fuku", "hit_2tan", "hit_2fuku",
-                "hit_bet_any", "hit_bet1", "hit_bet2", "hit_bet3",
+    sum_keys = ("hit_1st", "hit_bet_any", "hit_bet1", "hit_bet2", "hit_bet3",
                 "hit_honmei", "hit_others", "hit_taikou", "hit_oshi", "hit_ana")
     overall = {
         "total_races": total,
@@ -1790,8 +1751,6 @@ def run_weekly_report(week_iso: str | None = None,
             "n": s["total_races"],
             "hit_1st_pct": s.get("hit_1st_pct", 0.0),
             "hit_bet_any_pct": s.get("hit_bet_any_pct", 0.0),
-            "hit_3tan_pct": s.get("hit_3tan_pct", 0.0),
-            "hit_3fuku_pct": s.get("hit_3fuku_pct", 0.0),
             "hit_honmei_pct": s.get("hit_honmei_pct", 0.0),
             "roi_pct": (s.get("roi") or {}).get("roi_pct", 0.0),
             "avg_rank": s.get("avg_rank", 0.0),
@@ -1812,7 +1771,7 @@ def run_weekly_report(week_iso: str | None = None,
         try:
             prev = json.loads(prev_path.read_text(encoding="utf-8"))
             po = prev.get("overall", {})
-            for k in ("hit_1st_pct", "hit_bet_any_pct", "hit_3tan_pct",
+            for k in ("hit_1st_pct", "hit_bet_any_pct",
                       "hit_honmei_pct", "roi_pct"):
                 if k in overall and k in po:
                     diff_prev_week[k] = round(overall[k] - po[k], 1)

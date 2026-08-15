@@ -5,12 +5,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 12,
-    "hit_1st": 4,
-    "hit_2tan": 1,
-    "hit_2fuku": 1,
-    "hit_3fuku": 2,
-    "hit_3tan": 0,
     "hit_bet_any": 2,
+    "hit_1st": 3,
     "hit_bet1": 1,
     "hit_bet2": 0,
     "hit_bet3": 0,
@@ -25,18 +21,14 @@
     "hit_oshi_pct": 0.0,
     "hit_ana_pct": 8.3,
     "avg_rank": 2.33,
-    "hit_1st_pct": 33.3,
-    "hit_2tan_pct": 8.3,
-    "hit_2fuku_pct": 8.3,
-    "hit_3fuku_pct": 16.7,
-    "hit_3tan_pct": 0.0,
+    "hit_1st_pct": 25.0,
     "hit_bet_any_pct": 16.7,
     "hit_bet1_pct": 8.3,
     "monthly": {
       "202605": {
         "total": 12,
-        "hit_1st_pct": 33.3,
-        "hit_3fuku_pct": 16.7
+        "hit_1st_pct": 25.0,
+        "hit_bet_any_pct": 16.7
       }
     },
     "pattern_stats": {
@@ -94,17 +86,17 @@
     "version_stats": {
       "v5.23": {
         "total": 1,
-        "hit_1st": 0,
-        "hit_3fuku": 0,
         "hit_bet_any": 0,
-        "hit_honmei": 0
+        "hit_honmei": 0,
+        "points": 8,
+        "payout": 0
       },
       "v5.20": {
         "total": 11,
-        "hit_1st": 1,
-        "hit_3fuku": 2,
         "hit_bet_any": 2,
-        "hit_honmei": 1
+        "hit_honmei": 1,
+        "points": 88,
+        "payout": 2580
       }
     },
     "roi": {
@@ -246,12 +238,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 11,
-    "hit_1st": 9,
-    "hit_2tan": 1,
-    "hit_2fuku": 1,
-    "hit_3fuku": 2,
-    "hit_3tan": 0,
     "hit_bet_any": 4,
+    "hit_1st": 9,
     "hit_bet1": 0,
     "hit_bet2": 0,
     "hit_bet3": 0,
@@ -267,17 +255,13 @@
     "hit_ana_pct": 0.0,
     "avg_rank": 1.27,
     "hit_1st_pct": 81.8,
-    "hit_2tan_pct": 9.1,
-    "hit_2fuku_pct": 9.1,
-    "hit_3fuku_pct": 18.2,
-    "hit_3tan_pct": 0.0,
     "hit_bet_any_pct": 36.4,
     "hit_bet1_pct": 0.0,
     "monthly": {
       "202605": {
         "total": 11,
         "hit_1st_pct": 81.8,
-        "hit_3fuku_pct": 18.2
+        "hit_bet_any_pct": 36.4
       }
     },
     "pattern_stats": {
@@ -335,10 +319,10 @@
     "version_stats": {
       "v5.20": {
         "total": 11,
-        "hit_1st": 0,
-        "hit_3fuku": 2,
         "hit_bet_any": 4,
-        "hit_honmei": 1
+        "hit_honmei": 1,
+        "points": 88,
+        "payout": 4060
       }
     },
     "roi": {
@@ -487,12 +471,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 12,
-    "hit_1st": 7,
-    "hit_2tan": 4,
-    "hit_2fuku": 5,
-    "hit_3fuku": 4,
-    "hit_3tan": 1,
     "hit_bet_any": 4,
+    "hit_1st": 7,
     "hit_bet1": 2,
     "hit_bet2": 0,
     "hit_bet3": 0,
@@ -508,17 +488,13 @@
     "hit_ana_pct": 0.0,
     "avg_rank": 9.83,
     "hit_1st_pct": 58.3,
-    "hit_2tan_pct": 33.3,
-    "hit_2fuku_pct": 41.7,
-    "hit_3fuku_pct": 33.3,
-    "hit_3tan_pct": 8.3,
     "hit_bet_any_pct": 33.3,
     "hit_bet1_pct": 16.7,
     "monthly": {
       "202605": {
         "total": 12,
         "hit_1st_pct": 58.3,
-        "hit_3fuku_pct": 33.3
+        "hit_bet_any_pct": 33.3
       }
     },
     "pattern_stats": {
@@ -576,10 +552,10 @@
     "version_stats": {
       "v5.20": {
         "total": 12,
-        "hit_1st": 2,
-        "hit_3fuku": 4,
         "hit_bet_any": 4,
-        "hit_honmei": 2
+        "hit_honmei": 2,
+        "points": 96,
+        "payout": 2830
       }
     },
     "roi": {
@@ -728,12 +704,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 12,
-    "hit_1st": 5,
-    "hit_2tan": 1,
-    "hit_2fuku": 3,
-    "hit_3fuku": 6,
-    "hit_3tan": 1,
     "hit_bet_any": 5,
+    "hit_1st": 5,
     "hit_bet1": 0,
     "hit_bet2": 0,
     "hit_bet3": 0,
@@ -749,17 +721,13 @@
     "hit_ana_pct": 8.3,
     "avg_rank": 2.33,
     "hit_1st_pct": 41.7,
-    "hit_2tan_pct": 8.3,
-    "hit_2fuku_pct": 25.0,
-    "hit_3fuku_pct": 50.0,
-    "hit_3tan_pct": 8.3,
     "hit_bet_any_pct": 41.7,
     "hit_bet1_pct": 0.0,
     "monthly": {
       "202605": {
         "total": 12,
         "hit_1st_pct": 41.7,
-        "hit_3fuku_pct": 50.0
+        "hit_bet_any_pct": 41.7
       }
     },
     "pattern_stats": {
@@ -817,10 +785,10 @@
     "version_stats": {
       "v5.20": {
         "total": 12,
-        "hit_1st": 0,
-        "hit_3fuku": 6,
         "hit_bet_any": 5,
-        "hit_honmei": 0
+        "hit_honmei": 0,
+        "points": 90,
+        "payout": 7110
       }
     },
     "roi": {
@@ -962,12 +930,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 12,
-    "hit_1st": 10,
-    "hit_2tan": 2,
-    "hit_2fuku": 2,
-    "hit_3fuku": 1,
-    "hit_3tan": 1,
     "hit_bet_any": 6,
+    "hit_1st": 10,
     "hit_bet1": 0,
     "hit_bet2": 1,
     "hit_bet3": 2,
@@ -983,17 +947,13 @@
     "hit_ana_pct": 0.0,
     "avg_rank": 1.33,
     "hit_1st_pct": 83.3,
-    "hit_2tan_pct": 16.7,
-    "hit_2fuku_pct": 16.7,
-    "hit_3fuku_pct": 8.3,
-    "hit_3tan_pct": 8.3,
     "hit_bet_any_pct": 50.0,
     "hit_bet1_pct": 0.0,
     "monthly": {
       "202605": {
         "total": 12,
         "hit_1st_pct": 83.3,
-        "hit_3fuku_pct": 8.3
+        "hit_bet_any_pct": 50.0
       }
     },
     "pattern_stats": {
@@ -1051,10 +1011,10 @@
     "version_stats": {
       "v5.20": {
         "total": 12,
-        "hit_1st": 0,
-        "hit_3fuku": 1,
         "hit_bet_any": 6,
-        "hit_honmei": 3
+        "hit_honmei": 3,
+        "points": 96,
+        "payout": 8440
       }
     },
     "roi": {
@@ -1203,12 +1163,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 12,
-    "hit_1st": 8,
-    "hit_2tan": 1,
-    "hit_2fuku": 1,
-    "hit_3fuku": 2,
-    "hit_3tan": 0,
     "hit_bet_any": 2,
+    "hit_1st": 8,
     "hit_bet1": 0,
     "hit_bet2": 1,
     "hit_bet3": 0,
@@ -1224,17 +1180,13 @@
     "hit_ana_pct": 0.0,
     "avg_rank": 1.83,
     "hit_1st_pct": 66.7,
-    "hit_2tan_pct": 8.3,
-    "hit_2fuku_pct": 8.3,
-    "hit_3fuku_pct": 16.7,
-    "hit_3tan_pct": 0.0,
     "hit_bet_any_pct": 16.7,
     "hit_bet1_pct": 0.0,
     "monthly": {
       "202605": {
         "total": 12,
         "hit_1st_pct": 66.7,
-        "hit_3fuku_pct": 16.7
+        "hit_bet_any_pct": 16.7
       }
     },
     "pattern_stats": {
@@ -1292,10 +1244,10 @@
     "version_stats": {
       "v5.20": {
         "total": 12,
-        "hit_1st": 0,
-        "hit_3fuku": 2,
         "hit_bet_any": 2,
-        "hit_honmei": 1
+        "hit_honmei": 1,
+        "points": 96,
+        "payout": 2270
       }
     },
     "roi": {
@@ -1444,12 +1396,8 @@
     "date_from": "20260517",
     "date_to": "20260517",
     "total_races": 11,
-    "hit_1st": 5,
-    "hit_2tan": 1,
-    "hit_2fuku": 2,
-    "hit_3fuku": 2,
-    "hit_3tan": 1,
     "hit_bet_any": 4,
+    "hit_1st": 5,
     "hit_bet1": 1,
     "hit_bet2": 1,
     "hit_bet3": 0,
@@ -1465,17 +1413,13 @@
     "hit_ana_pct": 0.0,
     "avg_rank": 11.45,
     "hit_1st_pct": 45.5,
-    "hit_2tan_pct": 9.1,
-    "hit_2fuku_pct": 18.2,
-    "hit_3fuku_pct": 18.2,
-    "hit_3tan_pct": 9.1,
     "hit_bet_any_pct": 36.4,
     "hit_bet1_pct": 9.1,
     "monthly": {
       "202605": {
         "total": 11,
         "hit_1st_pct": 45.5,
-        "hit_3fuku_pct": 18.2
+        "hit_bet_any_pct": 36.4
       }
     },
     "pattern_stats": {
@@ -1533,10 +1477,10 @@
     "version_stats": {
       "v5.20": {
         "total": 11,
-        "hit_1st": 1,
-        "hit_3fuku": 2,
         "hit_bet_any": 4,
-        "hit_honmei": 2
+        "hit_honmei": 2,
+        "points": 88,
+        "payout": 4570
       }
     },
     "roi": {

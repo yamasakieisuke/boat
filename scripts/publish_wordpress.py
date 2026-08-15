@@ -623,21 +623,20 @@ def build_review_summary(jcd: str, date: str) -> dict:
             "date": date,
             "run_date": row.get("run_date", ""),
             "total_races": row.get("total_races", 0),
-            # v5.16: 主指標 = レース的中率（買い目のいずれかが3連単的中）
-            "hit_1st_pct": row.get("hit_1st_pct", 0),
+            # ★主指標 = 3連単の買い目のいずれかが的中したレースの割合。
+            # 2026-08-15: 「3連複なら当たっていた」式の指標（hit_3fuku/hit_3tan
+            # (順位一致)/hit_2tan/hit_2fuku）は廃止。実際に買うのは3連単だけで、
+            # 併記すると何の的中率を見ているのか分からなくなるため。
             "hit_bet_any_pct": row.get("hit_bet_any_pct", 0),
+            "roi_pct": row.get("roi_pct", 0),
             "hit_honmei_pct": row.get("hit_honmei_pct", 0),
             "hit_others_pct": row.get("hit_others_pct", 0),
             "hit_taikou_pct": row.get("hit_taikou_pct", 0),
             "hit_oshi_pct": row.get("hit_oshi_pct", 0),
             "hit_ana_pct": row.get("hit_ana_pct", 0),
-            # 参考指標
-            "hit_3fuku_pct": row.get("hit_3fuku_pct", 0),
-            "hit_3tan_pct": row.get("hit_3tan_pct", 0),
+            # 診断値: 買い目の頭（本命①1点目の1着枠）が実際の1着と一致した割合
+            "hit_1st_pct": row.get("hit_1st_pct", 0),
             "avg_rank": row.get("avg_rank", 0),
-            # v5.18: 追加指標
-            "hit_2tan_pct": row.get("hit_2tan_pct", 0),
-            "hit_2fuku_pct": row.get("hit_2fuku_pct", 0),
             "avg_pay": extras.get("avg_pay", 0),
             "avg_pop": extras.get("avg_pop", 0),
             "big_upsets": extras.get("big_upsets", []),

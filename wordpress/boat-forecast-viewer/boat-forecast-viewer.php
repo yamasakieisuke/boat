@@ -135,16 +135,17 @@ function boat_forecast_viewer_collect_archive_items() {
             $venues[$venue_slug]['latest_link'] = get_permalink($post);
         }
         // Phase 13: per-item hit rates from review_summary for KPI aggregation.
-        // v5.22: 主指標を hit_1st → hit_3tan(順位一致) へ切替。3連単買い目運用に合わせた基準変更。
-        $hit_3tan = null;
+        // 2026-08-15: 主指標を hit_3tan(順位一致) → hit_bet_any(3連単の買い目的中) へ。
+        // 順位一致は「買っていない買い目が当たっていたか」を数えており、実運用と乖離していた。
         $hit_any = null;
+        $roi = null;
         if (!empty($payload['review_summary']) && is_array($payload['review_summary'])) {
             $rs = $payload['review_summary'];
-            if (isset($rs['hit_3tan_pct']) && is_numeric($rs['hit_3tan_pct'])) {
-                $hit_3tan = (float) $rs['hit_3tan_pct'];
-            }
             if (isset($rs['hit_bet_any_pct']) && is_numeric($rs['hit_bet_any_pct'])) {
                 $hit_any = (float) $rs['hit_bet_any_pct'];
+            }
+            if (isset($rs['roi_pct']) && is_numeric($rs['roi_pct'])) {
+                $roi = (float) $rs['roi_pct'];
             }
         }
         $venues[$venue_slug]['items'][] = [
@@ -152,8 +153,8 @@ function boat_forecast_viewer_collect_archive_items() {
             'link' => get_permalink($post),
             'date' => $race_date,
             'has_review' => !empty($payload['review_summary']),
-            'hit_3tan' => $hit_3tan,
             'hit_any' => $hit_any,
+            'roi' => $roi,
         ];
         unset($payload);
         wp_cache_delete($post->ID, 'post_meta');
@@ -163,17 +164,17 @@ function boat_forecast_viewer_collect_archive_items() {
         usort($venue['items'], function ($a, $b) {
             return strcmp((string) $b['date'], (string) $a['date']);
         });
-        // Phase 13 / v5.22: per-venue KPI averages（主指標は3連単(順位一致)）
-        $h3 = [];
+        // per-venue KPI averages（主指標は3連単の買い目的中率）
         $ha = [];
+        $ro = [];
         foreach ($venue['items'] as $it) {
-            if ($it['hit_3tan'] !== null) $h3[] = $it['hit_3tan'];
             if ($it['hit_any'] !== null) $ha[] = $it['hit_any'];
+            if (isset($it['roi']) && $it['roi'] !== null) $ro[] = $it['roi'];
         }
-        $venue['hit_3tan_avg'] = $h3 ? array_sum($h3) / count($h3) : null;
-        $venue['hit_any_avg']  = $ha ? array_sum($ha) / count($ha) : null;
+        $venue['hit_any_avg'] = $ha ? array_sum($ha) / count($ha) : null;
+        $venue['roi_avg']     = $ro ? array_sum($ro) / count($ro) : null;
         // Sparkline: last 8 reviewed items in chronological order (old -> new).
-        $venue['sparkline'] = array_slice(array_reverse($h3), -8);
+        $venue['sparkline'] = array_slice(array_reverse($ha), -8);
         $venue['all_items'] = $venue['items'];
         $venue['items'] = array_slice($venue['items'], 0, 4);
         $venues[$slug] = $venue;
@@ -198,14 +199,14 @@ function boat_forecast_viewer_compute_global_kpi($venues, $window_days = 30) {
     foreach ($venues as $venue) {
         $pool = isset($venue['all_items']) ? $venue['all_items'] : (isset($venue['items']) ? $venue['items'] : []);
         foreach ($pool as $it) {
-            if (!isset($it['hit_3tan']) || $it['hit_3tan'] === null) continue;
+            if (!isset($it['hit_any']) || $it['hit_any'] === null) continue;
             if ((string) $it['date'] < $cutoff) continue;
             $flat[] = $it;
         }
     }
     usort($flat, function ($a, $b) { return strcmp((string) $a['date'], (string) $b['date']); });
     $nums = [];
-    foreach ($flat as $it) $nums[] = (float) $it['hit_3tan'];
+    foreach ($flat as $it) $nums[] = (float) $it['hit_any'];
     return [
         'window_days' => (int) $window_days,
         'hit_rate'    => $nums ? array_sum($nums) / count($nums) : null,
@@ -251,8 +252,13 @@ function boat_forecast_viewer_render_sparkline($values, $width = 80, $height = 2
  */
 function boat_forecast_viewer_match_filter($venue, $filter, $today_ymd) {
     if ($filter === 'curated') {
-        // v5.22: 3連単(順位一致) 20%以上の会場を厳選。順位一致率は1着率より低いため閾値を緩和。
-        return isset($venue['hit_3tan_avg']) && $venue['hit_3tan_avg'] !== null && $venue['hit_3tan_avg'] >= 20.0;
+        // 2026-08-15: 主指標の変更に伴い基準を張り替え。旧基準(順位一致20%)は
+        // 順位一致率が実測6%前後のため事実上ほぼ発火しない死んだ条件だった。
+        // 回収率があれば回収率100%超、無ければ買い目的中25%以上を「厳選」とする。
+        if (isset($venue['roi_avg']) && $venue['roi_avg'] !== null) {
+            return $venue['roi_avg'] >= 100.0;
+        }
+        return isset($venue['hit_any_avg']) && $venue['hit_any_avg'] !== null && $venue['hit_any_avg'] >= 25.0;
     }
     if ($filter === 'today') {
         return isset($venue['latest_date']) && (string) $venue['latest_date'] === (string) $today_ymd;
@@ -3377,24 +3383,6 @@ boat_forecast_viewer_render_nav('single', $single_section);
             </div>
             <?php endif; ?>
 
-            <?php /* v5.18: 追加指標カード (R1+R2) */ ?>
-            <?php
-                $has_extra_cards = isset($review['hit_3fuku_pct']) || isset($review['hit_3tan_pct']) || isset($review['hit_2tan_pct']) || isset($review['hit_2fuku_pct']);
-            ?>
-            <?php if ($has_extra_cards) : ?>
-                <div class="bfv-review-grid-extra">
-                    <?php if (isset($review['hit_3tan_pct'])) : ?>
-                        <div class="bfv-review-card"><strong>3連単(順位一致)</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_3tan_pct']); ?>%</div></div>
-                    <?php endif; ?>
-                    <?php if (isset($review['hit_3fuku_pct'])) : ?>
-                        <div class="bfv-review-card"><strong>3連複</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_3fuku_pct']); ?>%</div></div>
-                    <?php endif; ?>
-                    <?php if (isset($review['hit_2tan_pct'])) : ?>
-                        <div class="bfv-review-card"><strong>2連単</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_2tan_pct']); ?>%</div></div>
-                    <?php endif; ?>
-                    <?php if (isset($review['hit_2fuku_pct'])) : ?>
-                        <div class="bfv-review-card"><strong>2連複</strong><div class="bfv-review-value"><?php echo esc_html((string) $review['hit_2fuku_pct']); ?>%</div></div>
-                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <?php /* v5.18: 平均配当・平均人気・高配当レース (R3+R4) */ ?>
@@ -4057,8 +4045,8 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
             if (!boat_forecast_viewer_match_filter($venue, $filter_key, $today_ymd)) continue;
             $latest_link = !empty($venue['latest_link']) ? $venue['latest_link'] : home_url('/race/' . $venue['slug'] . '/');
             $items = isset($venue['items']) && is_array($venue['items']) ? $venue['items'] : [];
-            $hit_3tan_avg = isset($venue['hit_3tan_avg']) ? $venue['hit_3tan_avg'] : null;
-            $hit_any_avg  = isset($venue['hit_any_avg'])  ? $venue['hit_any_avg']  : null;
+            $hit_any_avg = isset($venue['hit_any_avg']) ? $venue['hit_any_avg'] : null;
+            $roi_avg     = isset($venue['roi_avg'])     ? $venue['roi_avg']     : null;
             $spark_values = isset($venue['sparkline']) ? $venue['sparkline'] : [];
         ?>
             <article class="bfva-card">
@@ -4072,28 +4060,28 @@ boat_forecast_viewer_render_nav('archive', $archive_section);
 
                 <div class="bfva-card-kpi">
                     <div class="bfva-kpi-col is-primary">
-                        <?php if ($hit_3tan_avg !== null) : ?>
-                            <span class="bfva-kpi-num"><?php echo esc_html(number_format($hit_3tan_avg, 1)); ?><small>%</small></span>
-                        <?php else : ?>
-                            <span class="bfva-kpi-num is-null">—</span>
-                        <?php endif; ?>
-                        <span class="bfva-kpi-sub">3連単</span>
-                    </div>
-                    <div class="bfva-kpi-col">
                         <?php if ($hit_any_avg !== null) : ?>
                             <span class="bfva-kpi-num"><?php echo esc_html(number_format($hit_any_avg, 1)); ?><small>%</small></span>
                         <?php else : ?>
                             <span class="bfva-kpi-num is-null">—</span>
                         <?php endif; ?>
-                        <span class="bfva-kpi-sub">買目 BOX</span>
+                        <span class="bfva-kpi-sub">的中率</span>
+                    </div>
+                    <div class="bfva-kpi-col">
+                        <?php if ($roi_avg !== null) : ?>
+                            <span class="bfva-kpi-num"><?php echo esc_html(number_format($roi_avg, 1)); ?><small>%</small></span>
+                        <?php else : ?>
+                            <span class="bfva-kpi-num is-null">—</span>
+                        <?php endif; ?>
+                        <span class="bfva-kpi-sub">回収率</span>
                     </div>
                     <?php echo boat_forecast_viewer_render_sparkline($spark_values, 120, 28); ?>
                 </div>
 
                 <div class="bfva-card-list">
                     <?php foreach ($items as $item):
-                        $row_hit = ($item['hit_3tan'] !== null)
-                            ? number_format($item['hit_3tan'], 1) . '%'
+                        $row_hit = ($item['hit_any'] !== null)
+                            ? number_format($item['hit_any'], 1) . '%'
                             : (!empty($item['has_review']) ? '振返済' : '予想のみ');
                     ?>
                         <a class="bfva-card-row<?php echo !empty($item['has_review']) ? ' has-review' : ''; ?>"
@@ -4539,8 +4527,7 @@ function boat_forecast_viewer_render_review() {
                         $races_n   = (int)   ($review['total_races']     ?? 0);
                         $any_pct   = (float) ($review['hit_bet_any_pct'] ?? 0);
                         $first_pct = (float) ($review['hit_1st_pct']     ?? 0);
-                        $fuku_pct  = (float) ($review['hit_3fuku_pct']   ?? 0);
-                        $tan_pct   = (float) ($review['hit_3tan_pct']    ?? 0);
+                        $roi_pct   = (float) ($review['roi_pct']         ?? 0);
                         $est_hits  = $races_n > 0 ? (int) round($races_n * $any_pct / 100) : 0;
                         if    ($any_pct >= 55) { $pill_class = 'is-good'; }
                         elseif ($any_pct >= 35) { $pill_class = 'is-mid'; }
@@ -4877,8 +4864,8 @@ function boat_forecast_viewer_render_accuracy() {
     $kpis = [
         ['label' => '買い目的中率',   'k' => 'hit_bet_any_pct',  'n' => 'hit_bet_any'],
         ['label' => '本命的中率',     'k' => 'hit_honmei_pct',   'n' => 'hit_honmei'],
-        ['label' => '3連単的中率',   'k' => 'hit_3tan_pct',     'n' => 'hit_3tan'],
-        ['label' => '1着的中率',     'k' => 'hit_1st_pct',      'n' => 'hit_1st'],
+        ['label' => '回収率',         'k' => 'roi_pct',          'n' => null],
+        ['label' => '頭的中率',       'k' => 'hit_1st_pct',      'n' => 'hit_1st'],
     ];
 ?>
     <section class="bfac-hero">
@@ -4892,14 +4879,16 @@ function boat_forecast_viewer_render_accuracy() {
         <div class="bfac-hero-grid">
         <?php foreach ($kpis as $k):
             $val = isset($o[$k['k']]) ? $o[$k['k']] : 0;
-            $hit = isset($o[$k['n']]) ? $o[$k['n']] : 0;
+            $hit = ($k['n'] !== null && isset($o[$k['n']])) ? $o[$k['n']] : null;
             $tot = (int) ($o['total_races'] ?? 0);
             $d   = isset($diff[$k['k']]) ? $diff[$k['k']] : null;
         ?>
             <div class="bfac-kpi">
                 <span class="bfac-kpi-label"><?php echo esc_html($k['label']); ?></span>
                 <span class="bfac-kpi-value"><?php echo esc_html($val); ?>%</span>
-                <span class="bfac-kpi-sub"><?php echo (int) $hit; ?>/<?php echo (int) $tot; ?></span>
+                <span class="bfac-kpi-sub"><?php
+                    echo ($hit === null) ? '100円/点' : ((int) $hit . '/' . (int) $tot);
+                ?></span>
                 <span class="bfac-kpi-delta <?php echo $delta_class($d); ?>">
                     前週比 <?php echo esc_html($delta_str($d)); ?>
                 </span>
@@ -4920,9 +4909,9 @@ function boat_forecast_viewer_render_accuracy() {
                     <th>順</th>
                     <th>会場</th>
                     <th>R数</th>
-                    <th>買い目%</th>
-                    <th>3連単%</th>
-                    <th>1着%</th>
+                    <th>買い目的中%</th>
+                    <th>回収率%</th>
+                    <th>頭的中%</th>
                     <th>平均着順</th>
                 </tr>
             </thead>
@@ -4936,7 +4925,7 @@ function boat_forecast_viewer_render_accuracy() {
                     <td class="bfac-name"><?php echo esc_html($v['name']); ?></td>
                     <td><?php echo (int) $v['n']; ?></td>
                     <td><?php echo esc_html($v['hit_bet_any_pct']); ?>%</td>
-                    <td><?php echo esc_html($v['hit_3tan_pct']); ?>%</td>
+                    <td><?php echo esc_html($v['roi_pct'] ?? 0); ?>%</td>
                     <td><?php echo esc_html($v['hit_1st_pct']); ?>%</td>
                     <td><?php echo esc_html($v['avg_rank']); ?></td>
                 </tr>
@@ -5020,10 +5009,10 @@ function boat_forecast_viewer_render_accuracy() {
                 <tr>
                     <th>version</th>
                     <th>n</th>
-                    <th>本命1着%</th>
-                    <th>買い目%</th>
-                    <th>3連複%</th>
+                    <th>点数</th>
+                    <th>買い目的中%</th>
                     <th>本命%</th>
+                    <th>回収率%</th>
                 </tr>
             </thead>
             <tbody>
@@ -5031,10 +5020,10 @@ function boat_forecast_viewer_render_accuracy() {
                 <tr>
                     <td class="bfac-name"><?php echo esc_html($ver); ?></td>
                     <td><?php echo (int) ($d['n'] ?? 0); ?></td>
-                    <td><?php echo esc_html($d['hit_1st_pct'] ?? 0); ?>%</td>
+                    <td><?php echo esc_html($d['points'] ?? 0); ?></td>
                     <td><?php echo esc_html($d['hit_bet_any_pct'] ?? 0); ?>%</td>
-                    <td><?php echo esc_html($d['hit_3fuku_pct'] ?? 0); ?>%</td>
                     <td><?php echo esc_html($d['hit_honmei_pct'] ?? 0); ?>%</td>
+                    <td><?php echo esc_html($d['roi_pct'] ?? 0); ?>%</td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -5058,8 +5047,8 @@ function boat_forecast_viewer_render_accuracy() {
                 <b><?php echo esc_html($row['week']); ?></b>
                 <span><?php echo (int) ($row['total_races'] ?? 0); ?>R</span>
                 <span>買目 <?php echo esc_html($row['hit_bet_any_pct'] ?? 0); ?>%</span>
-                <span class="bfac-week-3tan">3単 <?php echo esc_html($row['hit_3tan_pct'] ?? 0); ?>%</span>
-                <span>1着 <?php echo esc_html($row['hit_1st_pct'] ?? 0); ?>%</span>
+                <span class="bfac-week-3tan">回収 <?php echo esc_html($row['roi_pct'] ?? 0); ?>%</span>
+                <span>頭 <?php echo esc_html($row['hit_1st_pct'] ?? 0); ?>%</span>
             </a>
         <?php endforeach; ?>
         </div>
