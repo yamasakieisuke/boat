@@ -135,7 +135,15 @@ n が小さいので確定的な判断はできないが、3倍の開きは無�
 
 ## 4. 改善計画
 
-### P0 — 検証基盤の修復（これがないと以降が全部積み上がらない）
+### P0 — 検証基盤の修復 ✅ **実装完了（2026-08-15 / commit 5eb0363f）**
+
+実装内容は下記の通り。加えて実装中に判明した点：
+
+- Actions の runner には週全体の pred.json が無いため、`--no-refresh` が探していた「期間まるごと一致のレコード」は永遠に作られない。日別レコードを合算する `_summary_from_history` / `_merge_daily_summaries` を追加して解決
+- `verify_history.json` は git 管理下で毎日書き換わる。無制限だと年17MB級になるため **180日で剪定**する。長期履歴は週次レポート（1週1ファイル）が受け持つ
+- 動作確認は生き残っていた `data/logs/20260517`（7会場82R）で実施。日次verify → verify_history 蓄積 → 週次合算 → ROI 出力 → index.json に過去週(W17)が残ることまで確認済み
+
+
 
 **P0-1. verify結果を永続化する**
 - `.gitignore` に `!data/logs/verify_history.json` の例外を追加、`verify.yml` の commit 対象に含める
