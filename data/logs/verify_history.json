@@ -1,0 +1,1661 @@
+[
+  {
+    "run_date": "2026-08-15",
+    "jcd": "02",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 12,
+    "hit_1st": 4,
+    "hit_2tan": 1,
+    "hit_2fuku": 1,
+    "hit_3fuku": 2,
+    "hit_3tan": 0,
+    "hit_bet_any": 2,
+    "hit_bet1": 1,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 1,
+    "hit_others": 1,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 1,
+    "hit_honmei_pct": 8.3,
+    "hit_others_pct": 8.3,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 8.3,
+    "avg_rank": 2.33,
+    "hit_1st_pct": 33.3,
+    "hit_2tan_pct": 8.3,
+    "hit_2fuku_pct": 8.3,
+    "hit_3fuku_pct": 16.7,
+    "hit_3tan_pct": 0.0,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202605": {
+        "total": 12,
+        "hit_1st_pct": 33.3,
+        "hit_3fuku_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 5,
+        "triggered_hit": 1,
+        "applied": 4,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 2,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 12,
+        "honmei_hit": 1,
+        "top2_rt_sum": 4.250000000000001,
+        "avg_rk_sum": 40.56666666666666
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.23": {
+        "total": 1,
+        "hit_1st": 0,
+        "hit_3fuku": 0,
+        "hit_bet_any": 0,
+        "hit_honmei": 0
+      },
+      "v5.20": {
+        "total": 11,
+        "hit_1st": 1,
+        "hit_3fuku": 2,
+        "hit_bet_any": 2,
+        "hit_honmei": 1
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 96,
+      "stake": 9600,
+      "payout": 2580,
+      "roi_pct": 26.9,
+      "points_per_race": 8.0,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 1,
+          "payout": 580,
+          "hit_pct": 2.08,
+          "roi_pct": 12.1
+        },
+        "対抗": {
+          "points": 16,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え": {
+          "points": 14,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴": {
+          "points": 18,
+          "hits": 1,
+          "payout": 2000,
+          "hit_pct": 5.56,
+          "roi_pct": 111.1
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 580,
+          "hit_pct": 8.33,
+          "roi_pct": 48.3
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#2": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#3": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#4": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#1": {
+          "points": 10,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 7,
+          "hits": 1,
+          "payout": 2000,
+          "hit_pct": 14.29,
+          "roi_pct": 285.7
+        },
+        "抑え#2": {
+          "points": 4,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 7,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 1,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 26.9
+  },
+  {
+    "run_date": "2026-08-15",
+    "jcd": "07",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 11,
+    "hit_1st": 9,
+    "hit_2tan": 1,
+    "hit_2fuku": 1,
+    "hit_3fuku": 2,
+    "hit_3tan": 0,
+    "hit_bet_any": 4,
+    "hit_bet1": 0,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 1,
+    "hit_others": 3,
+    "hit_taikou": 1,
+    "hit_oshi": 2,
+    "hit_ana": 0,
+    "hit_honmei_pct": 9.1,
+    "hit_others_pct": 27.3,
+    "hit_taikou_pct": 9.1,
+    "hit_oshi_pct": 18.2,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.27,
+    "hit_1st_pct": 81.8,
+    "hit_2tan_pct": 9.1,
+    "hit_2fuku_pct": 9.1,
+    "hit_3fuku_pct": 18.2,
+    "hit_3tan_pct": 0.0,
+    "hit_bet_any_pct": 36.4,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202605": {
+        "total": 11,
+        "hit_1st_pct": 81.8,
+        "hit_3fuku_pct": 18.2
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 3,
+        "triggered_hit": 0,
+        "applied": 3,
+        "applied_hit": 0
+      },
+      "3カド": {
+        "triggered": 2,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 11,
+        "honmei_hit": 1,
+        "top2_rt_sum": 3.3603174603174604,
+        "avg_rk_sum": 39.46626984126984
+      }
+    },
+    "version_stats": {
+      "v5.20": {
+        "total": 11,
+        "hit_1st": 0,
+        "hit_3fuku": 2,
+        "hit_bet_any": 4,
+        "hit_honmei": 1
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 88,
+      "stake": 8800,
+      "payout": 4060,
+      "roi_pct": 46.1,
+      "points_per_race": 8.0,
+      "by_tier": {
+        "本命": {
+          "points": 44,
+          "hits": 1,
+          "payout": 760,
+          "hit_pct": 2.27,
+          "roi_pct": 17.3
+        },
+        "対抗": {
+          "points": 12,
+          "hits": 1,
+          "payout": 1060,
+          "hit_pct": 8.33,
+          "roi_pct": 88.3
+        },
+        "抑え": {
+          "points": 25,
+          "hits": 2,
+          "payout": 2240,
+          "hit_pct": 8.0,
+          "roi_pct": 89.6
+        },
+        "穴": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 11,
+          "hits": 1,
+          "payout": 760,
+          "hit_pct": 9.09,
+          "roi_pct": 69.1
+        },
+        "対抗#1": {
+          "points": 10,
+          "hits": 1,
+          "payout": 1060,
+          "hit_pct": 10.0,
+          "roi_pct": 106.0
+        },
+        "対抗#2": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#1": {
+          "points": 9,
+          "hits": 1,
+          "payout": 950,
+          "hit_pct": 11.11,
+          "roi_pct": 105.6
+        },
+        "抑え#2": {
+          "points": 9,
+          "hits": 1,
+          "payout": 1290,
+          "hit_pct": 11.11,
+          "roi_pct": 143.3
+        },
+        "抑え#3": {
+          "points": 6,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#3": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#4": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 4,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 2,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 46.1
+  },
+  {
+    "run_date": "2026-08-15",
+    "jcd": "10",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 12,
+    "hit_1st": 7,
+    "hit_2tan": 4,
+    "hit_2fuku": 5,
+    "hit_3fuku": 4,
+    "hit_3tan": 1,
+    "hit_bet_any": 4,
+    "hit_bet1": 2,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 1,
+    "hit_taikou": 0,
+    "hit_oshi": 1,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 8.3,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 8.3,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 9.83,
+    "hit_1st_pct": 58.3,
+    "hit_2tan_pct": 33.3,
+    "hit_2fuku_pct": 41.7,
+    "hit_3fuku_pct": 33.3,
+    "hit_3tan_pct": 8.3,
+    "hit_bet_any_pct": 33.3,
+    "hit_bet1_pct": 16.7,
+    "monthly": {
+      "202605": {
+        "total": 12,
+        "hit_1st_pct": 58.3,
+        "hit_3fuku_pct": 33.3
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 6,
+        "triggered_hit": 2,
+        "applied": 3,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 2,
+        "triggered_hit": 1,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 9,
+        "honmei_hit": 1,
+        "top2_rt_sum": 3.1333333333333337,
+        "avg_rk_sum": 31.166666666666668
+      },
+      "7走+": {
+        "n": 3,
+        "honmei_hit": 1,
+        "top2_rt_sum": 1.1428571428571428,
+        "avg_rk_sum": 9.571428571428571
+      }
+    },
+    "version_stats": {
+      "v5.20": {
+        "total": 12,
+        "hit_1st": 2,
+        "hit_3fuku": 4,
+        "hit_bet_any": 4,
+        "hit_honmei": 2
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 96,
+      "stake": 9600,
+      "payout": 2170,
+      "roi_pct": 22.6,
+      "points_per_race": 8.0,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 1240,
+          "hit_pct": 4.17,
+          "roi_pct": 25.8
+        },
+        "対抗": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え": {
+          "points": 16,
+          "hits": 1,
+          "payout": 930,
+          "hit_pct": 6.25,
+          "roi_pct": 58.1
+        },
+        "穴": {
+          "points": 21,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 2,
+          "payout": 1240,
+          "hit_pct": 16.67,
+          "roi_pct": 103.3
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#1": {
+          "points": 10,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#1": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#2": {
+          "points": 4,
+          "hits": 1,
+          "payout": 930,
+          "hit_pct": 25.0,
+          "roi_pct": 232.5
+        },
+        "抑え#3": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#4": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#2": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 9,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 9,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#3": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 1,
+      "hit_pop_dist": {
+        "1-3": 4,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 22.6
+  },
+  {
+    "run_date": "2026-08-15",
+    "jcd": "15",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 12,
+    "hit_1st": 5,
+    "hit_2tan": 1,
+    "hit_2fuku": 3,
+    "hit_3fuku": 6,
+    "hit_3tan": 1,
+    "hit_bet_any": 5,
+    "hit_bet1": 0,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 0,
+    "hit_others": 4,
+    "hit_taikou": 1,
+    "hit_oshi": 2,
+    "hit_ana": 1,
+    "hit_honmei_pct": 0.0,
+    "hit_others_pct": 33.3,
+    "hit_taikou_pct": 8.3,
+    "hit_oshi_pct": 16.7,
+    "hit_ana_pct": 8.3,
+    "avg_rank": 2.33,
+    "hit_1st_pct": 41.7,
+    "hit_2tan_pct": 8.3,
+    "hit_2fuku_pct": 25.0,
+    "hit_3fuku_pct": 50.0,
+    "hit_3tan_pct": 8.3,
+    "hit_bet_any_pct": 41.7,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202605": {
+        "total": 12,
+        "hit_1st_pct": 41.7,
+        "hit_3fuku_pct": 50.0
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 7,
+        "triggered_hit": 2,
+        "applied": 6,
+        "applied_hit": 2
+      },
+      "3カド": {
+        "triggered": 4,
+        "triggered_hit": 2,
+        "applied": 1,
+        "applied_hit": 1
+      },
+      "4カドまくり": {
+        "triggered": 3,
+        "triggered_hit": 1,
+        "applied": 2,
+        "applied_hit": 1
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 12,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.20": {
+        "total": 12,
+        "hit_1st": 0,
+        "hit_3fuku": 6,
+        "hit_bet_any": 5,
+        "hit_honmei": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 90,
+      "stake": 9000,
+      "payout": 4780,
+      "roi_pct": 53.1,
+      "points_per_race": 7.5,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗": {
+          "points": 14,
+          "hits": 1,
+          "payout": 1730,
+          "hit_pct": 7.14,
+          "roi_pct": 123.6
+        },
+        "抑え": {
+          "points": 16,
+          "hits": 2,
+          "payout": 1090,
+          "hit_pct": 12.5,
+          "roi_pct": 68.1
+        },
+        "穴": {
+          "points": 12,
+          "hits": 1,
+          "payout": 1960,
+          "hit_pct": 8.33,
+          "roi_pct": 163.3
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#1": {
+          "points": 11,
+          "hits": 1,
+          "payout": 1730,
+          "hit_pct": 9.09,
+          "roi_pct": 157.3
+        },
+        "抑え#1": {
+          "points": 8,
+          "hits": 1,
+          "payout": 540,
+          "hit_pct": 12.5,
+          "roi_pct": 67.5
+        },
+        "抑え#2": {
+          "points": 7,
+          "hits": 1,
+          "payout": 550,
+          "hit_pct": 14.29,
+          "roi_pct": 78.6
+        },
+        "穴#1": {
+          "points": 5,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 5,
+          "hits": 1,
+          "payout": 1960,
+          "hit_pct": 20.0,
+          "roi_pct": 392.0
+        },
+        "穴#3": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#2": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#3": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 6,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 3,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 53.1
+  },
+  {
+    "run_date": "2026-08-15",
+    "jcd": "19",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 12,
+    "hit_1st": 10,
+    "hit_2tan": 2,
+    "hit_2fuku": 2,
+    "hit_3fuku": 1,
+    "hit_3tan": 1,
+    "hit_bet_any": 6,
+    "hit_bet1": 0,
+    "hit_bet2": 1,
+    "hit_bet3": 2,
+    "hit_honmei": 3,
+    "hit_others": 3,
+    "hit_taikou": 2,
+    "hit_oshi": 1,
+    "hit_ana": 0,
+    "hit_honmei_pct": 25.0,
+    "hit_others_pct": 25.0,
+    "hit_taikou_pct": 16.7,
+    "hit_oshi_pct": 8.3,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.33,
+    "hit_1st_pct": 83.3,
+    "hit_2tan_pct": 16.7,
+    "hit_2fuku_pct": 16.7,
+    "hit_3fuku_pct": 8.3,
+    "hit_3tan_pct": 8.3,
+    "hit_bet_any_pct": 50.0,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202605": {
+        "total": 12,
+        "hit_1st_pct": 83.3,
+        "hit_3fuku_pct": 8.3
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 3,
+        "triggered_hit": 2,
+        "applied": 3,
+        "applied_hit": 2
+      },
+      "3カド": {
+        "triggered": 6,
+        "triggered_hit": 3,
+        "applied": 4,
+        "applied_hit": 1
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 7,
+        "honmei_hit": 1,
+        "top2_rt_sum": 2.333333333333333,
+        "avg_rk_sum": 24.5
+      },
+      "7走+": {
+        "n": 5,
+        "honmei_hit": 2,
+        "top2_rt_sum": 1.857142857142857,
+        "avg_rk_sum": 16.142857142857142
+      }
+    },
+    "version_stats": {
+      "v5.20": {
+        "total": 12,
+        "hit_1st": 0,
+        "hit_3fuku": 1,
+        "hit_bet_any": 6,
+        "hit_honmei": 3
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 96,
+      "stake": 9600,
+      "payout": 8440,
+      "roi_pct": 87.9,
+      "points_per_race": 8.0,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 3,
+          "payout": 5030,
+          "hit_pct": 6.25,
+          "roi_pct": 104.8
+        },
+        "対抗": {
+          "points": 19,
+          "hits": 2,
+          "payout": 2950,
+          "hit_pct": 10.53,
+          "roi_pct": 155.3
+        },
+        "抑え": {
+          "points": 21,
+          "hits": 1,
+          "payout": 460,
+          "hit_pct": 4.76,
+          "roi_pct": 21.9
+        },
+        "穴": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 510,
+          "hit_pct": 8.33,
+          "roi_pct": 42.5
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 2,
+          "payout": 4520,
+          "hit_pct": 16.67,
+          "roi_pct": 376.7
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#1": {
+          "points": 12,
+          "hits": 2,
+          "payout": 2950,
+          "hit_pct": 16.67,
+          "roi_pct": 245.8
+        },
+        "対抗#2": {
+          "points": 5,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#1": {
+          "points": 9,
+          "hits": 1,
+          "payout": 460,
+          "hit_pct": 11.11,
+          "roi_pct": 51.1
+        },
+        "抑え#2": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#3": {
+          "points": 5,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 4,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 4,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#3": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#4": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 6,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 3,
+        "11-30": 1,
+        "31+": 0
+      }
+    },
+    "roi_pct": 87.9
+  },
+  {
+    "run_date": "2026-08-15",
+    "jcd": "20",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 12,
+    "hit_1st": 8,
+    "hit_2tan": 1,
+    "hit_2fuku": 1,
+    "hit_3fuku": 2,
+    "hit_3tan": 0,
+    "hit_bet_any": 2,
+    "hit_bet1": 0,
+    "hit_bet2": 1,
+    "hit_bet3": 0,
+    "hit_honmei": 1,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 8.3,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.83,
+    "hit_1st_pct": 66.7,
+    "hit_2tan_pct": 8.3,
+    "hit_2fuku_pct": 8.3,
+    "hit_3fuku_pct": 16.7,
+    "hit_3tan_pct": 0.0,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202605": {
+        "total": 12,
+        "hit_1st_pct": 66.7,
+        "hit_3fuku_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 4,
+        "triggered_hit": 0,
+        "applied": 4,
+        "applied_hit": 0
+      },
+      "3カド": {
+        "triggered": 3,
+        "triggered_hit": 1,
+        "applied": 2,
+        "applied_hit": 1
+      },
+      "4カドまくり": {
+        "triggered": 4,
+        "triggered_hit": 0,
+        "applied": 2,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 11,
+        "honmei_hit": 0,
+        "top2_rt_sum": 1.9999999999999998,
+        "avg_rk_sum": 42.666666666666664
+      },
+      "4-6走": {
+        "n": 1,
+        "honmei_hit": 1,
+        "top2_rt_sum": 0.25,
+        "avg_rk_sum": 3.25
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.20": {
+        "total": 12,
+        "hit_1st": 0,
+        "hit_3fuku": 2,
+        "hit_bet_any": 2,
+        "hit_honmei": 1
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 96,
+      "stake": 9600,
+      "payout": 670,
+      "roi_pct": 7.0,
+      "points_per_race": 8.0,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 1,
+          "payout": 670,
+          "hit_pct": 2.08,
+          "roi_pct": 14.0
+        },
+        "対抗": {
+          "points": 14,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え": {
+          "points": 24,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴": {
+          "points": 10,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 670,
+          "hit_pct": 8.33,
+          "roi_pct": 55.8
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#1": {
+          "points": 10,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#1": {
+          "points": 9,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#2": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#3": {
+          "points": 6,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#4": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 6,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#3": {
+          "points": 1,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#2": {
+          "points": 4,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 6,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 1,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 7.0
+  },
+  {
+    "run_date": "2026-08-15",
+    "jcd": "21",
+    "date_from": "20260517",
+    "date_to": "20260517",
+    "total_races": 11,
+    "hit_1st": 5,
+    "hit_2tan": 1,
+    "hit_2fuku": 2,
+    "hit_3fuku": 2,
+    "hit_3tan": 1,
+    "hit_bet_any": 4,
+    "hit_bet1": 1,
+    "hit_bet2": 1,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 18.2,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 11.45,
+    "hit_1st_pct": 45.5,
+    "hit_2tan_pct": 9.1,
+    "hit_2fuku_pct": 18.2,
+    "hit_3fuku_pct": 18.2,
+    "hit_3tan_pct": 9.1,
+    "hit_bet_any_pct": 36.4,
+    "hit_bet1_pct": 9.1,
+    "monthly": {
+      "202605": {
+        "total": 11,
+        "hit_1st_pct": 45.5,
+        "hit_3fuku_pct": 18.2
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 6,
+        "triggered_hit": 3,
+        "applied": 6,
+        "applied_hit": 3
+      },
+      "3カド": {
+        "triggered": 5,
+        "triggered_hit": 3,
+        "applied": 2,
+        "applied_hit": 1
+      },
+      "4カドまくり": {
+        "triggered": 9,
+        "triggered_hit": 3,
+        "applied": 3,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 10,
+        "honmei_hit": 2,
+        "top2_rt_sum": 2.1666666666666665,
+        "avg_rk_sum": 40.16666666666667
+      },
+      "4-6走": {
+        "n": 1,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.25,
+        "avg_rk_sum": 3.5
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.20": {
+        "total": 11,
+        "hit_1st": 1,
+        "hit_3fuku": 2,
+        "hit_bet_any": 4,
+        "hit_honmei": 2
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 88,
+      "stake": 8800,
+      "payout": 2430,
+      "roi_pct": 27.6,
+      "points_per_race": 8.0,
+      "by_tier": {
+        "本命": {
+          "points": 44,
+          "hits": 2,
+          "payout": 2430,
+          "hit_pct": 4.55,
+          "roi_pct": 55.2
+        },
+        "対抗": {
+          "points": 17,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴": {
+          "points": 25,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 11,
+          "hits": 1,
+          "payout": 1020,
+          "hit_pct": 9.09,
+          "roi_pct": 92.7
+        },
+        "本命#2": {
+          "points": 11,
+          "hits": 1,
+          "payout": 1410,
+          "hit_pct": 9.09,
+          "roi_pct": 128.2
+        },
+        "本命#3": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "対抗#2": {
+          "points": 6,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#2": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#3": {
+          "points": 3,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "抑え#1": {
+          "points": 2,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 4,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 3,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 27.6
+  }
+]

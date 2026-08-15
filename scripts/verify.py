@@ -287,8 +287,23 @@ def evaluate_bets(pred_log: dict, actual_won3: str) -> dict:
     hit_oshi   = actual_won3 in others_by_subtype["抑え"]
     hit_ana    = actual_won3 in others_by_subtype["穴"]
 
+    # ── P0-3: 回収率計測用に「1点ずつ」へ展開する ────────────────
+    # (tier, tier内の並び順, combo)。tier内の順位ごとにROIを見たいので index を持たせる。
+    # 新構造(honmei/others)が無い旧ログは bets 全体を本命扱いにフォールバック。
+    bet_cells: list[tuple[str, int, str]] = []
+    if honmei_combos or others_combos:
+        for i, c in enumerate(honmei_combos):
+            bet_cells.append(("本命", i, c))
+        for st in ("対抗", "抑え", "穴"):
+            for i, c in enumerate(others_by_subtype[st]):
+                bet_cells.append((st, i, c))
+    else:
+        for i, c in enumerate(combos):
+            bet_cells.append(("本命", i, c))
+
     return {
         "bet_combos":  combos,
+        "bet_cells":   bet_cells,
         "hit_bet_any": hit_index >= 0,
         "hit_bet1":    hit_index == 0,
         "hit_bet2":    hit_index == 1,
@@ -307,6 +322,24 @@ def evaluate_bets(pred_log: dict, actual_won3: str) -> dict:
     }
 
 
+# 日別レコードの保持日数（P0-1）。
+# このファイルは git 管理下で毎日書き換わるため、無制限に伸ばすとリポジトリが太る
+# （1レコード約5KB × 10会場/日 ≒ 年17MB）。長期の履歴は週次レポート
+# （wordpress/.../accuracy/*.json、1週1ファイル）が受け持つので、ここは
+# 日単位の粒度が要る範囲だけを残す。
+HISTORY_RETENTION_DAYS = 180
+
+
+def _prune_history(history: list[dict]) -> list[dict]:
+    cutoff = (datetime.date.today()
+              - datetime.timedelta(days=HISTORY_RETENTION_DAYS)).strftime("%Y%m%d")
+    kept = [r for r in history if (r.get("date_to") or "99999999") >= cutoff]
+    dropped = len(history) - len(kept)
+    if dropped:
+        print(f"  🧹 {HISTORY_RETENTION_DAYS}日より古い検証ログ {dropped} 件を削除")
+    return kept
+
+
 def save_verify_log(summary: dict):
     """
     検証サマリーを data/logs/verify_history.json に追記保存する。
@@ -320,6 +353,7 @@ def save_verify_log(summary: dict):
     history = [r for r in history
                if (r["run_date"], r["jcd"], r["date_from"], r["date_to"]) != key]
     history.append(summary)
+    history = _prune_history(history)
     history.sort(key=lambda r: (r["run_date"], r["jcd"]))
 
     with open(VERIFY_HIST_FILE, "w", encoding="utf-8") as f:
@@ -803,6 +837,113 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
     print(f"  📝 詳細HTML保存: {html_fname}")
 
 
+# =============================================================================
+# P0-3: 回収率（ROI）
+# -----------------------------------------------------------------------------
+# 的中率は「当たったか」しか見ない。的中率を上げる改修が回収率を下げていても
+# 検知できないため、100円/点の均等購入を仮定した回収率を一級指標として持つ。
+# 3連単の払戻率は約75%。これを恒常的に上回れているかが実質的な合格ラインになる。
+# =============================================================================
+
+BET_UNIT = 100          # 1点あたりの購入額（円）
+POP_BANDS = (("1-3", 1, 3), ("4-10", 4, 10), ("11-30", 11, 30), ("31+", 31, 10**9))
+
+
+def _roi_pct(points: int, payout: int) -> float:
+    return round(payout / (points * BET_UNIT) * 100, 1) if points else 0.0
+
+
+def _build_roi_block(points: int, payout: int, by_tier: dict, by_cell: dict,
+                     hit_pops: list[int], total_races: int) -> dict:
+    def finalize(src: dict) -> dict:
+        out = {}
+        for k, v in src.items():
+            out[k] = {
+                "points": v["points"],
+                "hits":   v["hits"],
+                "payout": v["payout"],
+                "hit_pct": round(v["hits"] / v["points"] * 100, 2) if v["points"] else 0.0,
+                "roi_pct": _roi_pct(v["points"], v["payout"]),
+            }
+        return out
+
+    pop_dist = {label: 0 for label, _, _ in POP_BANDS}
+    for p in hit_pops:
+        for label, lo, hi in POP_BANDS:
+            if lo <= p <= hi:
+                pop_dist[label] += 1
+                break
+
+    return {
+        "unit":            BET_UNIT,
+        "points":          points,
+        "stake":           points * BET_UNIT,
+        "payout":          payout,
+        "roi_pct":         _roi_pct(points, payout),
+        "points_per_race": round(points / total_races, 2) if total_races else 0.0,
+        "by_tier":         finalize(by_tier),
+        "by_cell":         finalize(by_cell),
+        "hit_pop_median":  (sorted(hit_pops)[len(hit_pops) // 2] if hit_pops else None),
+        "hit_pop_dist":    pop_dist,
+    }
+
+
+def _print_roi_block(roi: dict) -> None:
+    if not roi.get("points"):
+        return
+    print(f"  ── 回収率（{roi['unit']}円/点・3連単の払戻率75%が損益分岐）──")
+    print(f"  購入 {roi['points']}点 / {roi['stake']:,}円　払戻 {roi['payout']:,}円　"
+          f"★回収率 {roi['roi_pct']}%　({roi['points_per_race']}点/R)")
+    if roi.get("by_tier"):
+        print(f"  {'タイプ':<8} {'点数':>7} {'的中率':>8} {'回収率':>9}")
+        for tier in ("本命", "対抗", "抑え", "穴"):
+            d = roi["by_tier"].get(tier)
+            if not d or not d["points"]:
+                continue
+            print(f"  {tier:<8} {d['points']:>7} {d['hit_pct']:>7.2f}% {d['roi_pct']:>8.1f}%")
+    if roi.get("by_cell"):
+        print(f"  {'買い目':<8} {'点数':>7} {'的中率':>8} {'回収率':>9}   ← 並び順ごとの効き")
+        for tier in ("本命", "対抗", "抑え", "穴"):
+            for k in sorted(k for k in roi["by_cell"] if k.startswith(tier + "#")):
+                d = roi["by_cell"][k]
+                if not d["points"]:
+                    continue
+                print(f"  {k:<8} {d['points']:>7} {d['hit_pct']:>7.2f}% {d['roi_pct']:>8.1f}%")
+    if roi.get("hit_pop_median") is not None:
+        dist = "  ".join(f"{k}:{v}" for k, v in roi["hit_pop_dist"].items())
+        print(f"  的中時の人気: 中央値 {roi['hit_pop_median']}番人気　({dist})")
+    print()
+
+
+def _aggregate_roi(summaries: list[dict], total_races: int) -> dict:
+    """複数サマリー（会場別 or 日別）の roi ブロックを合算する。"""
+    points = payout = 0
+    by_tier: dict = defaultdict(lambda: {"points": 0, "hits": 0, "payout": 0})
+    by_cell: dict = defaultdict(lambda: {"points": 0, "hits": 0, "payout": 0})
+    pop_dist: dict = {label: 0 for label, _, _ in POP_BANDS}
+    pop_weighted: list[int] = []
+    for s in summaries:
+        r = s.get("roi") or {}
+        points += r.get("points", 0) or 0
+        payout += r.get("payout", 0) or 0
+        for src, dst in (("by_tier", by_tier), ("by_cell", by_cell)):
+            for k, v in (r.get(src) or {}).items():
+                for f in ("points", "hits", "payout"):
+                    dst[k][f] += v.get(f, 0) or 0
+        for k, v in (r.get("hit_pop_dist") or {}).items():
+            if k in pop_dist:
+                pop_dist[k] += v or 0
+        if r.get("hit_pop_median") is not None:
+            pop_weighted.append(r["hit_pop_median"])
+
+    block = _build_roi_block(points, payout, by_tier, by_cell, [], total_races)
+    block["hit_pop_dist"] = pop_dist
+    # 会場ごとの中央値の中央値（厳密な全体中央値ではないので参考値扱い）
+    block["hit_pop_median"] = (sorted(pop_weighted)[len(pop_weighted) // 2]
+                               if pop_weighted else None)
+    return block
+
+
 def run_verification(jcd: str, date_from: str, date_to: str,
                      verbose: bool = False, save: bool = True):
     """
@@ -835,6 +976,15 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     rank_sum  = 0
     miss_details = []
     hit_details  = []
+
+    # ── P0-3: 回収率（ROI）集計 ────────────────────────────────
+    # 的中率だけを見ていると「当たるが割に合わない買い目」を検知できないため、
+    # 100円/点の均等購入を仮定した回収率を一級指標として計測する。
+    roi_points = 0                     # 総購入点数
+    roi_payout = 0                     # 総払戻（円）
+    roi_tier: dict = defaultdict(lambda: {"points": 0, "hits": 0, "payout": 0})
+    roi_cell: dict = defaultdict(lambda: {"points": 0, "hits": 0, "payout": 0})
+    hit_pops: list[int] = []           # 的中時の人気（人気サイドへの寄りを検知する）
 
     cached_results: dict = {}          # date → results_dict のキャッシュ
     race_details_by_date: dict = defaultdict(list)  # date → [per-race detail]
@@ -882,6 +1032,23 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         hit_oshi     += int(bet_ev.get("hit_oshi",   False))
         hit_ana      += int(bet_ev.get("hit_ana",    False))
         rank_sum     += ev["pred_1st_actual_rank"]
+
+        # ── P0-3: 1点ずつ購入したものとして回収率を積む ──────────
+        won3_str = race_data.get("won3", "")    if race_data else ""
+        won3_pay = int(race_data.get("won3_pay", 0) or 0) if race_data else 0
+        won3_pop = int(race_data.get("won3_pop", 0) or 0) if race_data else 0
+        for tier, idx, combo in bet_ev.get("bet_cells", []):
+            roi_points += 1
+            roi_tier[tier]["points"] += 1
+            roi_cell[f"{tier}#{idx + 1}"]["points"] += 1
+            if won3_str and combo == won3_str:
+                roi_payout += won3_pay
+                roi_tier[tier]["hits"] += 1
+                roi_tier[tier]["payout"] += won3_pay
+                roi_cell[f"{tier}#{idx + 1}"]["hits"] += 1
+                roi_cell[f"{tier}#{idx + 1}"]["payout"] += won3_pay
+        if bet_ev["hit_bet_any"] and won3_pop:
+            hit_pops.append(won3_pop)
 
         preds  = pred_log.get("predictions", [])
         p_waku = [r["waku"] for r in preds]
@@ -970,6 +1137,10 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     # 補足指標（1着は本命1番手の頭一致＝参考扱い）
     print(f"  (参考) 1着的中: {hit_1st}/{total}  ({hit_1st/total*100:.1f}%)")
     print()
+
+    # ── P0-3: 回収率（ROI）────────────────────────────────────
+    roi = _build_roi_block(roi_points, roi_payout, roi_tier, roi_cell, hit_pops, total)
+    _print_roi_block(roi)
 
     # ── 月別集計 ────────────────────────────────────────────────
     monthly = defaultdict(lambda: {"total":0,"hit_1st":0,"hit_top3_box":0})
@@ -1195,6 +1366,9 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         "series_stats": series_stats,
         # v5.20〜: バージョン別集計
         "version_stats": dict(ver_stats),
+        # P0-3: 回収率（100円/点均等購入の仮定）
+        "roi": roi,
+        "roi_pct": roi.get("roi_pct", 0.0),
     }
     if save:
         save_verify_log(summary)
@@ -1306,26 +1480,42 @@ def _save_accuracy_files(week_key: str, accuracy: dict) -> None:
 
 
 def _update_accuracy_index() -> None:
+    """週次レポートの一覧 index.json を作り直す。
+
+    ⚠️ ACCURACY_DIR（output/配下）は .gitignore 対象で、GitHub Actions の
+    runner では毎回空から始まる。ここだけを走査すると index.json が
+    「最新1週分」に潰れて過去週が消える。git 管理下の WP ミラー側も
+    マージ元に含めることで、Actions 実行でも履歴が積み上がるようにする。
+    （同じ週が両方にある場合は生成の新しい方＝ACCURACY_DIR 側を優先）
+    """
     ACCURACY_DIR.mkdir(parents=True, exist_ok=True)
-    weeks: list[dict] = []
-    for p in sorted(ACCURACY_DIR.glob("*.json")):
-        if p.name == "index.json":
+    by_week: dict[str, dict] = {}
+    # WP ミラー → output の順に読み、後勝ちで output 側を優先させる
+    for d_dir in (WP_ACCURACY_DIR, ACCURACY_DIR):
+        if not d_dir.exists():
             continue
-        try:
-            d = json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        o = d.get("overall", {})
-        weeks.append({
-            "week": d.get("week"),
-            "date_from": d.get("date_from"),
-            "date_to": d.get("date_to"),
-            "total_races": o.get("total_races"),
-            "hit_1st_pct": o.get("hit_1st_pct"),
-            "hit_bet_any_pct": o.get("hit_bet_any_pct"),
-            "hit_3tan_pct": o.get("hit_3tan_pct"),
-        })
-    weeks.sort(key=lambda w: w.get("week") or "", reverse=True)
+        for p in sorted(d_dir.glob("*.json")):
+            if p.name == "index.json":
+                continue
+            try:
+                d = json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            week = d.get("week")
+            if not week:
+                continue
+            o = d.get("overall", {})
+            by_week[week] = {
+                "week": week,
+                "date_from": d.get("date_from"),
+                "date_to": d.get("date_to"),
+                "total_races": o.get("total_races"),
+                "hit_1st_pct": o.get("hit_1st_pct"),
+                "hit_bet_any_pct": o.get("hit_bet_any_pct"),
+                "hit_3tan_pct": o.get("hit_3tan_pct"),
+                "roi_pct": o.get("roi_pct", (d.get("roi") or {}).get("roi_pct")),
+            }
+    weeks = sorted(by_week.values(), key=lambda w: w.get("week") or "", reverse=True)
     idx = {
         "updated_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "weeks": weeks,
@@ -1353,6 +1543,33 @@ def _render_accuracy_md(a: dict) -> str:
         f"- 3連複的中率:  {o.get('hit_3fuku_pct', 0)}%　({o.get('hit_3fuku', 0)}/{n})",
         f"- 本命的中率:   {o.get('hit_honmei_pct', 0)}%　／　対抗: {o.get('hit_taikou_pct', 0)}%　／　穴: {o.get('hit_ana_pct', 0)}%　／　押さえ: {o.get('hit_oshi_pct', 0)}%",
     ]
+    roi = a.get("roi") or {}
+    if roi.get("points"):
+        lines += [
+            "",
+            "## 回収率 (100円/点・3連単の払戻率75%が損益分岐)",
+            "",
+            f"- **回収率: {roi.get('roi_pct', 0)}%**　"
+            f"（購入 {roi.get('points', 0):,}点 / {roi.get('stake', 0):,}円　"
+            f"払戻 {roi.get('payout', 0):,}円　{roi.get('points_per_race', 0)}点/R）",
+        ]
+        if roi.get("by_tier"):
+            lines += ["", "| タイプ | 点数 | 的中率 | 回収率 |", "|---|---:|---:|---:|"]
+            for tier in ("本命", "対抗", "抑え", "穴"):
+                d = roi["by_tier"].get(tier)
+                if d and d.get("points"):
+                    lines.append(f"| {tier} | {d['points']:,} | {d['hit_pct']}% | {d['roi_pct']}% |")
+        if roi.get("by_cell"):
+            lines += ["", "### 並び順ごとの効き（点数を削る判断材料）", "",
+                      "| 買い目 | 点数 | 的中率 | 回収率 |", "|---|---:|---:|---:|"]
+            for tier in ("本命", "対抗", "抑え", "穴"):
+                for k in sorted(k for k in roi["by_cell"] if k.startswith(tier + "#")):
+                    d = roi["by_cell"][k]
+                    if d.get("points"):
+                        lines.append(f"| {k} | {d['points']:,} | {d['hit_pct']}% | {d['roi_pct']}% |")
+        if roi.get("hit_pop_dist"):
+            dist = "　".join(f"{k}: {v}" for k, v in roi["hit_pop_dist"].items())
+            lines += ["", f"的中時の人気分布: {dist}"]
     diff = a.get("diff_prev_week") or {}
     if diff:
         parts = []
@@ -1424,6 +1641,7 @@ def _print_weekly_summary(a: dict) -> None:
     print(f"  買い目: {o.get('hit_bet_any_pct', 0)}%  ({o.get('hit_bet_any', 0)}/{n})")
     print(f"  3連単:  {o.get('hit_3tan_pct', 0)}%  ({o.get('hit_3tan', 0)}/{n})")
     print(f"  本命:   {o.get('hit_honmei_pct', 0)}%　対抗:{o.get('hit_taikou_pct', 0)}%　穴:{o.get('hit_ana_pct', 0)}%　押:{o.get('hit_oshi_pct', 0)}%")
+    _print_roi_block(a.get("roi") or {})
     if a.get("diff_prev_week"):
         diffs = ", ".join(f"{k}={('+' if v>0 else '')}{v}" for k, v in a["diff_prev_week"].items())
         print(f"  前週比: {diffs}")
@@ -1431,6 +1649,77 @@ def _print_weekly_summary(a: dict) -> None:
         print(f"\n  会場 TOP5 (買い目%):")
         for v in a["by_venue"][:5]:
             print(f"    {v['name']:>5}  R={v['n']:>3}  買目={v['hit_bet_any_pct']:>5}%  1着={v['hit_1st_pct']:>5}%")
+
+
+_MERGE_COUNT_KEYS = (
+    "hit_1st", "hit_2tan", "hit_2fuku", "hit_3fuku", "hit_3tan",
+    "hit_bet_any", "hit_bet1", "hit_bet2", "hit_bet3",
+    "hit_honmei", "hit_others", "hit_taikou", "hit_oshi", "hit_ana",
+)
+
+
+def _merge_daily_summaries(records: list[dict], jcd: str,
+                           date_from: str, date_to: str) -> dict | None:
+    """同一会場の「日別」サマリー群を、期間まとめの1サマリーに合算する。
+
+    GitHub Actions では毎日1日分ずつ verify が走るため、verify_history には
+    date_from == date_to の日別レコードしか積まれない。週次レポートはこれを
+    束ねて会場サマリーに戻す必要がある。
+    """
+    total = sum(r.get("total_races", 0) or 0 for r in records)
+    if not total:
+        return None
+    merged: dict = {
+        "run_date":  max(r.get("run_date", "") for r in records),
+        "jcd":       jcd,
+        "date_from": date_from,
+        "date_to":   date_to,
+        "total_races": total,
+    }
+    for k in _MERGE_COUNT_KEYS:
+        v = sum(r.get(k, 0) or 0 for r in records)
+        merged[k] = v
+        merged[f"{k}_pct"] = round(v / total * 100, 1)
+    merged["avg_rank"] = round(
+        sum((r.get("avg_rank", 0.0) or 0.0) * (r.get("total_races", 0) or 0)
+            for r in records) / total, 2)
+    merged["pattern_stats"] = _aggregate_pattern_stats(records)
+    merged["series_stats"]  = _aggregate_series_stats(records)
+    merged["version_stats"] = _aggregate_version_stats(records)
+    merged["roi"]     = _aggregate_roi(records, total)
+    merged["roi_pct"] = merged["roi"]["roi_pct"]
+    return merged
+
+
+def _summary_from_history(jcd: str, date_from: str, date_to: str) -> dict | None:
+    """verify_history から指定会場・期間のサマリーを復元する。
+
+    1) 期間そのものが一致するレコードがあればそれを使う（従来の手動実行ぶん）
+    2) 無ければ期間内の日別レコードを合算する（Actions の日次verifyぶん）
+    """
+    history = load_verify_history()
+    exact = next((r for r in reversed(history)
+                  if r.get("jcd") == jcd
+                  and r.get("date_from") == date_from
+                  and r.get("date_to") == date_to), None)
+    if exact:
+        return exact
+
+    # 同じ日について複数回 verify が走っている場合は run_date が新しい方を採用
+    per_day: dict[str, dict] = {}
+    for r in history:
+        if r.get("jcd") != jcd:
+            continue
+        df, dt = r.get("date_from", ""), r.get("date_to", "")
+        if df != dt or not (date_from <= df <= date_to):
+            continue
+        cur = per_day.get(df)
+        if cur is None or (r.get("run_date", "") >= cur.get("run_date", "")):
+            per_day[df] = r
+    if not per_day:
+        return None
+    return _merge_daily_summaries([per_day[d] for d in sorted(per_day)],
+                                  jcd, date_from, date_to)
 
 
 def run_weekly_report(week_iso: str | None = None,
@@ -1467,11 +1756,7 @@ def run_weekly_report(week_iso: str | None = None,
             else:
                 s = run_verification(jcd, df, dt, verbose=False, save=True)
         else:
-            history = load_verify_history()
-            s = next((r for r in reversed(history)
-                      if r.get("jcd") == jcd
-                      and r.get("date_from") == df
-                      and r.get("date_to") == dt), None)
+            s = _summary_from_history(jcd, df, dt)
         if s and s.get("total_races", 0) > 0:
             summaries.append(s)
             print(f"  ✓ {VENUE_NAMES.get(jcd, jcd)}({jcd}): {s['total_races']}R / 買目={s.get('hit_bet_any_pct', 0)}%")
@@ -1508,6 +1793,7 @@ def run_weekly_report(week_iso: str | None = None,
             "hit_3tan_pct": s.get("hit_3tan_pct", 0.0),
             "hit_3fuku_pct": s.get("hit_3fuku_pct", 0.0),
             "hit_honmei_pct": s.get("hit_honmei_pct", 0.0),
+            "roi_pct": (s.get("roi") or {}).get("roi_pct", 0.0),
             "avg_rank": s.get("avg_rank", 0.0),
         }
         for s in summaries
@@ -1516,6 +1802,8 @@ def run_weekly_report(week_iso: str | None = None,
     by_pattern = _aggregate_pattern_stats(summaries)
     by_series_band = _aggregate_series_stats(summaries)
     by_version = _aggregate_version_stats(summaries)
+    roi = _aggregate_roi(summaries, total)
+    overall["roi_pct"] = roi.get("roi_pct", 0.0)
 
     diff_prev_week: dict = {}
     py, pw = _prev_iso_week(year, week)
@@ -1525,7 +1813,7 @@ def run_weekly_report(week_iso: str | None = None,
             prev = json.loads(prev_path.read_text(encoding="utf-8"))
             po = prev.get("overall", {})
             for k in ("hit_1st_pct", "hit_bet_any_pct", "hit_3tan_pct",
-                      "hit_honmei_pct"):
+                      "hit_honmei_pct", "roi_pct"):
                 if k in overall and k in po:
                     diff_prev_week[k] = round(overall[k] - po[k], 1)
         except Exception:
@@ -1541,6 +1829,7 @@ def run_weekly_report(week_iso: str | None = None,
         "by_pattern": by_pattern,
         "by_series_band": by_series_band,
         "by_version": by_version,
+        "roi": roi,
         "diff_prev_week": diff_prev_week,
     }
 

@@ -110,7 +110,7 @@ jobs:
         with:
           name: predlogs-piece-${{ needs.prep.outputs.target_date }}-${{ matrix.jcd }}
           path: data/logs/${{ needs.prep.outputs.target_date }}/${{ matrix.jcd }}_*
-          retention-days: 14
+          retention-days: 90
           if-no-files-found: warn
 
   bundle:
@@ -133,7 +133,7 @@ jobs:
         with:
           name: predlogs-${{ needs.prep.outputs.target_date }}
           path: ./bundled
-          retention-days: 14
+          retention-days: 90
           if-no-files-found: error
 
   watchlist:

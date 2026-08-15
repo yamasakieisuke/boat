@@ -17,6 +17,14 @@ logs/
 # Exception: fetch_pending.yml が読む依頼ファイル（predict.yml watchlist が書き込む）
 !data/fetch_requests.json
 
+# Exception: verify の蓄積ログ（P0-1）
+# Actions の runner は毎回まっさらなので、これを git に載せないと精度の履歴が
+# 一切積み上がらない（日次verifyは走っているのに結果が毎日捨てられていた）。
+# data/logs/ 自体は pred.json で膨らむため、この1ファイルだけを例外にする。
+!data/logs/
+data/logs/*
+!data/logs/verify_history.json
+
 # Exception: 予想に必要な統計データ（verify.yml が build_stats.py で更新→commit）
 # - results_csv: build_stats.py の入力ソース（過去レース結果）
 # - players: 選手の枠別着順実績ほか（predictor が直接読む）

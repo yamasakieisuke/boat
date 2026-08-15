@@ -82,13 +82,27 @@ jobs:
         env:
           TZ: Asia/Tokyo
 
+      # 週次精度レポート（P0-1）
+      # verify_history.json を git に載せているので、--no-refresh で当該週の
+      # 日別レコードを合算して集計できる（runner に週全体の pred.json は無い）。
+      # 毎日走らせて進行中の週を上書き更新し、日曜の実行がその週の確定版になる。
+      - name: Weekly accuracy report
+        run: |
+          python3 scripts/verify.py --report weekly --no-refresh 2>&1 | tail -30
+        env:
+          TZ: Asia/Tokyo
+
       - name: Commit updated stats & results CSV
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/players/ data/motors/ data/results_csv/ 2>/dev/null || true
+          # 精度の蓄積（P0-1）。verify_history は以降の全ての検証の土台になる。
+          # wordpress/ 配下は deploy-wp.yml が push 契機で heteml へ自動デプロイする。
+          git add -f data/logs/verify_history.json 2>/dev/null || true
+          git add -f wordpress/boat-forecast-viewer/data/accuracy/ 2>/dev/null || true
           if ! git diff --staged --quiet; then
-            git commit -m "verify: 統計データ更新 (${{ steps.dateres.outputs.date }})"
+            git commit -m "verify: 統計データ・精度履歴を更新 (${{ steps.dateres.outputs.date }})"
             for i in 1 2 3; do
               git pull --rebase --autostash origin main && git push origin main && break
               echo "push retry $i"
