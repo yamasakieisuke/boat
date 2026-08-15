@@ -1794,10 +1794,52 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
         "applied_patterns":   applied_patterns or [],
         # v5.22: 1号艇沈みリスク推定（estimated 1着率 / sink_risk / 補正係数）
         "w1_estimate":        w1_estimate or {},
+        # v5.24: 展示/オッズが反映済みかのフラグ（verify で層別するため）
+        "has_exhibition":     bool(exhibition_data),
+        "has_odds":           bool(odds_data and odds_data.get("odds_3t")),
+        # v5.24: is_rough の判定材料を残す。
+        # is_rough は (gap12 <= 0.015) or (sink_risk >= 0.55) で決まるが、これまで
+        # 判定結果しか記録しておらず、閾値を動かしたときの影響を事後に評価できなかった。
+        # gap を残しておけば「閾値をXにしていたら」を実データで検証できる。
+        "score_gap12": (round(scored[0]["score"] - scored[1]["score"], 5)
+                        if len(scored) >= 2 else None),
+        "score_gap13": (round(scored[0]["score"] - scored[2]["score"], 5)
+                        if len(scored) >= 3 else None),
     }
     log_dir = DATA_DIR / "logs" / date
     log_dir.mkdir(parents=True, exist_ok=True)
     out = log_dir / f"{jcd}_R{race_no:02d}_pred.json"
+
+    # ── v5.24: 展示/オッズ更新“前”の買い目を保存する ──────────────
+    # このファイルは同一レースで朝の予測→展示/オッズ反映と2回以上書かれるが、
+    # 従来は毎回まるごと上書きしていたため、更新前の買い目が残らず
+    # 「更新が予想を良くしたのか悪くしたのか」を検証できなかった。
+    # 実測では更新後のレースの方が回収率が16pt低く、切り分けが必要になっている。
+    prev = None
+    if out.exists():
+        try:
+            with open(out, encoding="utf-8") as f:
+                prev = json.load(f)
+        except Exception:
+            prev = None
+    if prev:
+        if prev.get("pre_update"):
+            # 3回目以降の書き込み。最初のスナップショットを維持する
+            log["pre_update"] = prev["pre_update"]
+        elif not (prev.get("has_exhibition") or prev.get("has_odds")) and \
+                (log["has_exhibition"] or log["has_odds"]):
+            log["pre_update"] = {
+                "predicted_at": prev.get("predicted_at", ""),
+                "version":      prev.get("version", ""),
+                "confidence":   prev.get("confidence", ""),
+                "is_rough":     prev.get("is_rough", False),
+                "bets":         prev.get("bets", []),
+                "honmei":       prev.get("honmei", []),
+                "others":       prev.get("others", []),
+                # 頭の比較用に予測順の枠だけ持つ（全breakdownは重いので持たない）
+                "pred_waku":    [p.get("waku") for p in prev.get("predictions", [])],
+            }
+
     with open(out, "w", encoding="utf-8") as f:
         json.dump(log, f, ensure_ascii=False, indent=2)
 

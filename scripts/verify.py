@@ -967,6 +967,15 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     roi_cell: dict = defaultdict(lambda: {"points": 0, "hits": 0, "payout": 0})
     hit_pops: list[int] = []           # 的中時の人気（人気サイドへの寄りを検知する）
 
+    # ── P1-1: 展示/オッズ更新の効果測定（v5.24〜）────────────────
+    # 更新のあったレースだけを取り出し、「更新前の買い目」と「更新後の買い目」を
+    # 同じレースで突き合わせる。更新なしのレースと比べると会場や時間帯の偏りが
+    # 混ざるため、同一レース内での比較でないと切り分けにならない。
+    upd = {
+        "before": {"races": 0, "points": 0, "hits": 0, "payout": 0},
+        "after":  {"races": 0, "points": 0, "hits": 0, "payout": 0},
+    }
+
     cached_results: dict = {}          # date → results_dict のキャッシュ
     race_details_by_date: dict = defaultdict(list)  # date → [per-race detail]
 
@@ -1025,6 +1034,21 @@ def run_verification(jcd: str, date_from: str, date_to: str,
                 roi_cell[f"{tier}#{idx + 1}"]["payout"] += won3_pay
         if bet_ev["hit_bet_any"] and won3_pop:
             hit_pops.append(won3_pop)
+
+        # ── P1-1: 更新前 vs 更新後（同一レース内で比較）─────────
+        pre = pred_log.get("pre_update")
+        if pre and won3_str:
+            pre_cells = evaluate_bets(pre, won3_str).get("bet_cells", [])
+            post_cells = bet_ev.get("bet_cells", [])
+            for key, cells in (("before", pre_cells), ("after", post_cells)):
+                if not cells:
+                    continue
+                b = upd[key]
+                b["races"] += 1
+                b["points"] += len(cells)
+                if any(c == won3_str for _, _, c in cells):
+                    b["hits"] += 1
+                    b["payout"] += won3_pay
 
         preds  = pred_log.get("predictions", [])
         p_waku = [r["waku"] for r in preds]
@@ -1119,6 +1143,25 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     # ── P0-3: 回収率（ROI）────────────────────────────────────
     roi = _build_roi_block(roi_points, roi_payout, roi_tier, roi_cell, hit_pops, total)
     _print_roi_block(roi)
+
+    # ── P1-1: 展示/オッズ更新の効果 ─────────────────────────────
+    update_effect = {
+        k: {**v,
+            "hit_pct": round(v["hits"] / v["races"] * 100, 1) if v["races"] else 0.0,
+            "roi_pct": _roi_pct(v["points"], v["payout"]),
+            "points_per_race": round(v["points"] / v["races"], 2) if v["races"] else 0.0}
+        for k, v in upd.items()
+    }
+    if update_effect["after"]["races"]:
+        print("  ── 展示/オッズ更新の効果（同一レースで更新前後を比較）──")
+        print(f"  {'':6} {'R数':>5} {'点/R':>7} {'的中率':>8} {'回収率':>9}")
+        for key, jp in (("before", "更新前"), ("after", "更新後")):
+            d = update_effect[key]
+            print(f"  {jp:6} {d['races']:>5} {d['points_per_race']:>7.2f} "
+                  f"{d['hit_pct']:>7.1f}% {d['roi_pct']:>8.1f}%")
+        diff = update_effect["after"]["roi_pct"] - update_effect["before"]["roi_pct"]
+        print(f"  → 更新による回収率の差: {diff:+.1f}pt")
+        print()
 
     # ── 月別集計 ────────────────────────────────────────────────
     # 既に組み立てた race_details_by_date から作る。以前はログを読み直して
@@ -1333,6 +1376,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         # P0-3: 回収率（100円/点均等購入の仮定）
         "roi": roi,
         "roi_pct": roi.get("roi_pct", 0.0),
+        # P1-1: 展示/オッズ更新の効果（更新前後を同一レースで比較）
+        "update_effect": update_effect,
     }
     if save:
         save_verify_log(summary)
