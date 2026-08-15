@@ -406,7 +406,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.23"
+PREDICTOR_VERSION = "v5.24"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
@@ -1727,10 +1727,12 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
     honmei_list, others_list = _normalize_bets(bets or [])
 
     # v5.20: 予算別買い目ログ保存（4段階予算×strategy別配分）
+    # v5.24: 配分案の母集合は「公開する買い目」に揃える
+    plan_bets = selected_bets(bets or [])
     budget_plans = []
-    if odds_data and odds_data.get("odds_3t") and bets:
+    if odds_data and odds_data.get("odds_3t") and plan_bets:
         for amount in (500, 1000, 2000, 3000):
-            plan = _build_budget_plan(bets, scored, odds_data, budget=amount, unit=100)
+            plan = _build_budget_plan(plan_bets, scored, odds_data, budget=amount, unit=100)
             if plan:
                 budget_plans.append(plan)
 
@@ -2414,8 +2416,23 @@ def _group_bets_by_label(bets: list[tuple[str, str, str]]) -> dict[str, list[tup
 
 
 # ── v5.16: 2セクション構成 (本命 / その他) に正規化 ─────────────────
-HONMEI_CAP = 4
-OTHERS_CAP = 4
+#
+# v5.24 (2026-08-15): 点数の削減と死に筋の除去。
+# 3,317R の実測（docs/accuracy_review_2026-08.md）で、tier内の並び順に
+# 回収率の単調性が無く、下位の買い目ほど期待値を削っていることが分かった:
+#   対抗#2以降 30.0% / 抑え#4 0.0% / 穴#1 56.8%（いずれも本命の75.9%を大きく下回る）
+# そこで tier ごとの上限に加えて「本命+対抗+抑え の合計」に上限を設ける。
+HONMEI_CAP = 4      # 本命の内部上限（従来どおり）
+CORE_CAP   = 4      # 本命+対抗+抑え の合計上限。本命が4点埋めれば対抗/抑えは出ない
+TAIKOU_CAP = 1      # 対抗#2以降は実測ROI 30.0%
+OSHI_CAP   = 3      # 抑え#4 は実測ROI 0.0%
+ANA_CAP    = 1      # 穴は1点だけ（高配当の受け皿は残す）
+
+# 穴は _expand_formation がモデルスコア降順で並べるため、#1 は「穴の中で最も堅い＝
+# 最もオッズが低いレグ」になる。妙味が薄く実測ROIも最下位だったので先頭を飛ばす。
+# ただしこの判定は的中59件 vs 20件の比較で統計的には弱い。P0-1 の蓄積が進んだら
+# 週次レポートの by_cell（穴#1/#2/#3 の回収率）で再確認すること。
+ANA_SKIP_TOP = 1
 
 _SUBTYPE_MAP = {
     "本命①": "本命",
@@ -2428,14 +2445,18 @@ _SUBTYPE_MAP = {
 def _normalize_bets(bets: list[tuple[str, str, str]]) -> tuple[list[dict], list[dict]]:
     """
     bets を 2 セクションに正規化する:
-      本命  : 最大 HONMEI_CAP 点（本命① のみ）
-      その他: 最大 OTHERS_CAP 点（本命② 対抗 / 穴 / 出目④ 抑え）
+      本命  : 本命① のみ（最大 HONMEI_CAP 点）
+      その他: 対抗 / 抑え / 穴
+
+    点数制限（v5.24）:
+      本命 + 対抗 + 抑え = 合計 CORE_CAP 点まで（本命→対抗→抑えの優先順で詰める）
+      穴 = ANA_CAP 点。最有力レグを ANA_SKIP_TOP 個飛ばして採る
 
     戻り値:
       honmei  = [{"combo": "1-2-3", "reason": "..."}, ...]
       others  = [{"subtype": "対抗|抑え|穴", "combo": "...", "reason": "..."}, ...]
 
-    重複出目は排除し、その他は 対抗→穴→抑え の優先順で詰める。
+    重複出目は排除する。
     """
     seen: set[str] = set()
     honmei: list[dict] = []
@@ -2460,15 +2481,25 @@ def _normalize_bets(bets: list[tuple[str, str, str]]) -> tuple[list[dict], list[
             others_by_subtype[subtype].append({"subtype": subtype, "combo": combo, "reason": reason})
             seen.add(combo)
 
-    # その他: 対抗 → 穴 → 抑え の順で詰め、合計 OTHERS_CAP まで
+    # ── v5.24: 本命+対抗+抑え を合計 CORE_CAP 点に絞る ──────────────
+    # 本命を先に確保し、余った枠にだけ対抗（TAIKOU_CAP まで）→ 抑え（OSHI_CAP まで）
+    # を入れる。本命が CORE_CAP を埋めた場合、対抗・抑えは出ない。
+    honmei = honmei[:CORE_CAP]
     others: list[dict] = []
-    for sub in ("対抗", "穴", "抑え"):
-        for item in others_by_subtype[sub]:
-            if len(others) >= OTHERS_CAP:
+    room = CORE_CAP - len(honmei)
+    for sub, cap in (("対抗", TAIKOU_CAP), ("抑え", OSHI_CAP)):
+        if room <= 0:
+            break
+        for item in others_by_subtype[sub][:cap]:
+            if room <= 0:
                 break
             others.append(item)
-        if len(others) >= OTHERS_CAP:
-            break
+            room -= 1
+
+    # 穴は CORE_CAP の枠外。最有力レグを飛ばして ANA_CAP 点だけ採る。
+    # 候補が最有力レグ1点しか無いレースは穴なしになる（その1点こそ実測で最も
+    # 期待値が低かった脚なので、埋め合わせに拾うことはしない）。
+    others.extend(others_by_subtype["穴"][ANA_SKIP_TOP:ANA_SKIP_TOP + ANA_CAP])
 
     return honmei, others
 
@@ -2690,6 +2721,23 @@ def _budget_strategy_for_amount(budget: int) -> dict:
         "distribution": "equal",  # 均等で穴ヒット時の利益を確保
         "prefer_fewer_bets": False,
     }
+
+
+_SUBTYPE_TO_LABEL = {v: k for k, v in _SUBTYPE_MAP.items()}
+
+
+def selected_bets(bets: list[tuple[str, str, str]]) -> list[tuple[str, str, str]]:
+    """実際に公開する買い目だけを (label, combo, reason) 形式で返す。
+
+    v5.24: 予算プランは生の bets を見ていたため、点数上限で切り落とした買い目が
+    配分案に残ってしまっていた（記事から買う側にとっては削減した意味がなくなる）。
+    公開する買い目と配分案の母集合を一致させる。
+    """
+    honmei, others = _normalize_bets(bets or [])
+    keep = [("本命①", b["combo"], b.get("reason", "")) for b in honmei]
+    keep += [(_SUBTYPE_TO_LABEL.get(b["subtype"], b["subtype"]),
+              b["combo"], b.get("reason", "")) for b in others]
+    return keep
 
 
 def _build_budget_plan(bets: list[tuple[str, str, str]], scored: list,
@@ -3494,9 +3542,11 @@ def _print_bet_section(scored, weather, odds_data, combo_stats, exhibition_data=
 
     print('<div class="sec">💴 予算別買い目</div>')
     if has_odds:
+        # v5.24: 配分案の母集合は「公開する買い目」に揃える
+        plan_bets = selected_bets(bets)
         budget_plans = []
         for amount in (500, 1000):
-            plan = _build_budget_plan(bets, scored, odds_data, budget=amount, unit=100)
+            plan = _build_budget_plan(plan_bets, scored, odds_data, budget=amount, unit=100)
             if plan:
                 budget_plans.append(plan)
         if budget_plans:
@@ -3513,7 +3563,7 @@ def _print_bet_section(scored, weather, odds_data, combo_stats, exhibition_data=
                 print('<div class="tbl-wrap"><table class="budget-tbl">'
                       '<tr><th>種別</th><th>買い目</th><th>配分</th><th>オッズ</th><th>的中時収支</th><th>理由</th></tr>')
                 for row in plan["rows"]:
-                    reason = next((r for l, c, r in bets if l.strip() == row["label"] and c == row["combo"]), "")
+                    reason = next((r for l, c, r in plan_bets if l.strip() == row["label"] and c == row["combo"]), "")
                     display_label = _display_bet_label(row["label"], reason)
                     print(f'<tr>'
                           f'<td>{_he(display_label)}</td>'
