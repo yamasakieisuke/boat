@@ -3383,8 +3383,6 @@ boat_forecast_viewer_render_nav('single', $single_section);
             </div>
             <?php endif; ?>
 
-                </div>
-            <?php endif; ?>
             <?php /* v5.18: 平均配当・平均人気・高配当レース (R3+R4) */ ?>
             <?php if (!empty($review['avg_pay']) || !empty($review['avg_pop'])) : ?>
                 <div class="bfv-review-info">
