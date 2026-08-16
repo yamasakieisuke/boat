@@ -406,7 +406,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.24"
+PREDICTOR_VERSION = "v5.25"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
@@ -437,10 +437,19 @@ WEIGHTS = {
 #   一般戦          : 1枠1着率 中間   3連単平均払戻¥18,300  → 標準
 #   予選・その他    : 1枠1着率 7.22%  3連単平均払戻¥19,700  → 荒れやすい
 RACE_TYPE_BONUS = {
+    "fixed_entry": 1.20,  # 進入固定       : course_advantage を1.20倍（下記参照）
     "finalist":   1.12,   # 優勝戦・準優勝戦: course_advantage を1.12倍（1枠有利）
     "general":    1.00,   # 一般戦          : 変更なし
     "qualifier":  0.87,   # 予選・通常戦    : course_advantage を0.87倍（荒れ補正）
 }
+# v5.25 (2026-08-16): 「進入固定」を最優先で分類する。
+# 進入固定戦は前づけが起きないぶんインが最も強く、修復後の results_csv 実測で
+#   進入固定 n=2,047 → 1号艇1着 71.2%
+#   それ以外 n=69,733 → 1号艇1着 54.7%
+# と +16.5pt の差がある。ところが race_name が「予選 進入固定」「一般 進入固定」の
+# 形をとるため _RACE_TYPE_QUALIFIER にマッチし、**最も堅いレースに荒れ補正0.87倍を
+# 逆向きに当てていた**。判定順を変えるだけで直る。
+_RACE_TYPE_FIXED_ENTRY = re.compile(r"進入固定")
 # 大会種別キーワードマッチ（race_name = 節内の個別レース種別名 から分類）
 # ※ SG/G1/G2/G3 は「大会グレード」であり個別レース種別ではないため除外 [BUG FIX v5.2]
 _RACE_TYPE_FINALIST = re.compile(
@@ -505,9 +514,13 @@ def calc_race_style_bonus(waku: int, player_stats: dict) -> float:
 def classify_race_type(race_no: int, race_name: str = "") -> str:
     """
     レース名と番号からレース種別を分類する。
-    戻り値: "finalist" | "general" | "qualifier"
+    戻り値: "fixed_entry" | "finalist" | "general" | "qualifier"
     """
     if race_name:
+        # 「進入固定」は最優先。"予選 進入固定" のように他の語と併記されるため、
+        # 後段の判定に回すと qualifier(0.87倍) に吸われてしまう
+        if _RACE_TYPE_FIXED_ENTRY.search(race_name):
+            return "fixed_entry"
         if _RACE_TYPE_FINALIST.search(race_name):
             return "finalist"
         if _RACE_TYPE_QUALIFIER.search(race_name):
