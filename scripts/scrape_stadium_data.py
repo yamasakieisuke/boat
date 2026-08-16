@@ -15,6 +15,8 @@ scrape_stadium_data.py  —  boatrace.jp/owpc/pc/data/stadium から
   - venue_characteristics.json の course_mod の検証・更新
 """
 
+from __future__ import annotations
+
 import json
 import re
 import time

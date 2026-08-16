@@ -1,0 +1,2559 @@
+{
+  "01": {
+    "name": "桐生",
+    "water_type": "lake",
+    "tidal": false,
+    "tidal_influence": null,
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "02": {
+    "name": "戸田",
+    "water_type": "lake",
+    "tidal": false,
+    "tidal_influence": null,
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "03": {
+    "name": "江戸川",
+    "water_type": "river",
+    "tidal": true,
+    "tidal_influence": "high",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "04": {
+    "name": "平和島",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "05": {
+    "name": "多摩川",
+    "water_type": "river",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "06": {
+    "name": "浜名湖",
+    "water_type": "lake",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "07": {
+    "name": "蒲郡",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "high",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "08": {
+    "name": "常滑",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "09": {
+    "name": "津",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "high",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "10": {
+    "name": "三国",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "low",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "11": {
+    "name": "びわこ",
+    "water_type": "lake",
+    "tidal": false,
+    "tidal_influence": null,
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "12": {
+    "name": "住之江",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "13": {
+    "name": "尼崎",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "14": {
+    "name": "鳴門",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "high",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "15": {
+    "name": "丸亀",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "16": {
+    "name": "児島",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "17": {
+    "name": "宮島",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "high",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "18": {
+    "name": "徳山",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "19": {
+    "name": "下関",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "high",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "20": {
+    "name": "若松",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "21": {
+    "name": "芦屋",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "22": {
+    "name": "福岡",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "23": {
+    "name": "唐津",
+    "water_type": "sea",
+    "tidal": true,
+    "tidal_influence": "medium",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "24": {
+    "name": "大村",
+    "water_type": "lake",
+    "tidal": true,
+    "tidal_influence": "low",
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "_source": "build_venue_characteristics.py / data/results_csv 実測"
+  },
+  "_measured_race_no_tendency": {
+    "early": {
+      "course_mod": [
+        0.9052,
+        1.1296,
+        1.1409,
+        1.1012,
+        1.0931,
+        1.0571
+      ],
+      "n": 24079
+    },
+    "middle": {
+      "course_mod": [
+        0.9416,
+        1.0569,
+        1.0043,
+        1.1097,
+        1.1135,
+        1.15
+      ],
+      "n": 23957
+    },
+    "late": {
+      "course_mod": [
+        1.15,
+        0.85,
+        0.8527,
+        0.85,
+        0.85,
+        0.85
+      ],
+      "n": 23744
+    }
+  },
+  "_default": {
+    "name": "default",
+    "tidal": false,
+    "race_no_tendency": {
+      "early": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "middle": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "late": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "seasonal": {
+      "spring": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "summer": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "autumn": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "winter": {
+        "course_mod": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    },
+    "tidal_conditions": {},
+    "wind": {
+      "headwind_threshold_ms": 99,
+      "headwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "tailwind_course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    }
+  }
+}

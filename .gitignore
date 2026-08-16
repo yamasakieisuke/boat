@@ -17,6 +17,15 @@ logs/
 # Exception: fetch_pending.yml が読む依頼ファイル（predict.yml watchlist が書き込む）
 !data/fetch_requests.json
 
+# Exception: 会場特性（v5.25 / 2026-08-16）
+# predictor.calc_venue_course_mod() はこれが無いと `if not venue: return base` で
+# 即座に抜ける。つまり会場・季節・潮汐の補正が丸ごと無効化される。
+# 2026-08-10 のiCloud事故で消失した際、gitignore の例外が無かったため git にも
+# 残っておらず、補正が死んだまま動いていたことに1週間気づけなかった。
+# 予想の挙動を決めるデータは必ず git に載せること。
+!data/venues/
+!data/venues/**
+
 # Exception: verify の蓄積ログ（P0-1）
 # Actions の runner は毎回まっさらなので、これを git に載せないと精度の履歴が
 # 一切積み上がらない（日次verifyは走っているのに結果が毎日捨てられていた）。

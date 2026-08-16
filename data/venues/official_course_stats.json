@@ -1,0 +1,3654 @@
+{
+  "_comment": "boatrace.jp/owpc/pc/data/stadium から自動取得した公式コース統計",
+  "venues": {
+    "01": {
+      "jcd": "01",
+      "name": "桐生",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 52.2,
+            "sashi": 17.5,
+            "makuri": 7.9,
+            "makuri_sashi": 8.5,
+            "nuki": 8.5,
+            "megmare": 5.2
+          },
+          {
+            "nige": 12.7,
+            "sashi": 21.2,
+            "makuri": 20.9,
+            "makuri_sashi": 15.4,
+            "nuki": 15.2,
+            "megmare": 14.3
+          },
+          {
+            "nige": 14.4,
+            "sashi": 24.7,
+            "makuri": 17.5,
+            "makuri_sashi": 17.1,
+            "nuki": 13.8,
+            "megmare": 12.3
+          },
+          {
+            "nige": 10.6,
+            "sashi": 15.4,
+            "makuri": 20.3,
+            "makuri_sashi": 20.7,
+            "nuki": 16.6,
+            "megmare": 16.0
+          },
+          {
+            "nige": 7.6,
+            "sashi": 14.6,
+            "makuri": 20.6,
+            "makuri_sashi": 18.2,
+            "nuki": 19.8,
+            "megmare": 18.9
+          },
+          {
+            "nige": 3.1,
+            "sashi": 7.3,
+            "makuri": 13.8,
+            "makuri_sashi": 20.7,
+            "nuki": 25.7,
+            "megmare": 29.1
+          }
+        ],
+        "frame_to_course": [
+          [
+            96.4,
+            2.8,
+            0.4,
+            0.2,
+            0.0,
+            0.0
+          ],
+          [
+            1.1,
+            89.0,
+            7.4,
+            1.3,
+            0.4,
+            0.5
+          ],
+          [
+            0.8,
+            2.8,
+            86.2,
+            7.2,
+            1.6,
+            1.1
+          ],
+          [
+            0.1,
+            1.9,
+            3.2,
+            83.5,
+            7.5,
+            3.5
+          ],
+          [
+            1.0,
+            1.3,
+            1.3,
+            5.6,
+            81.6,
+            9.0
+          ],
+          [
+            0.2,
+            2.0,
+            1.3,
+            2.0,
+            8.7,
+            85.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            49.9,
+            17.1,
+            10.4,
+            9.6,
+            7.7,
+            5.1
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            48.1,
+            19.7,
+            8.8,
+            9.0,
+            8.0,
+            6.1
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            48.5,
+            19.0,
+            10.8,
+            9.1,
+            7.4,
+            4.9
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            50.3,
+            18.8,
+            10.7,
+            9.6,
+            5.4,
+            4.9
+          ]
+        }
+      }
+    },
+    "02": {
+      "jcd": "02",
+      "name": "戸田",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 38.7,
+            "sashi": 17.7,
+            "makuri": 13.1,
+            "makuri_sashi": 12.1,
+            "nuki": 10.5,
+            "megmare": 7.6
+          },
+          {
+            "nige": 17.7,
+            "sashi": 24.3,
+            "makuri": 16.2,
+            "makuri_sashi": 16.2,
+            "nuki": 12.5,
+            "megmare": 12.7
+          },
+          {
+            "nige": 18.0,
+            "sashi": 18.2,
+            "makuri": 19.5,
+            "makuri_sashi": 15.6,
+            "nuki": 14.7,
+            "megmare": 13.7
+          },
+          {
+            "nige": 15.8,
+            "sashi": 16.2,
+            "makuri": 18.3,
+            "makuri_sashi": 18.7,
+            "nuki": 17.1,
+            "megmare": 13.6
+          },
+          {
+            "nige": 7.8,
+            "sashi": 16.0,
+            "makuri": 19.7,
+            "makuri_sashi": 20.6,
+            "nuki": 20.6,
+            "megmare": 15.0
+          },
+          {
+            "nige": 2.9,
+            "sashi": 8.5,
+            "makuri": 13.9,
+            "makuri_sashi": 17.6,
+            "nuki": 24.7,
+            "megmare": 32.2
+          }
+        ],
+        "frame_to_course": [
+          [
+            98.9,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.6,
+            94.7,
+            4.2,
+            0.2,
+            0.2,
+            0.0
+          ],
+          [
+            0.2,
+            1.4,
+            91.8,
+            5.0,
+            0.8,
+            0.6
+          ],
+          [
+            0.0,
+            0.8,
+            2.2,
+            88.4,
+            6.0,
+            2.4
+          ],
+          [
+            0.0,
+            0.8,
+            0.6,
+            4.2,
+            84.5,
+            9.7
+          ],
+          [
+            0.2,
+            1.4,
+            1.0,
+            2.0,
+            8.3,
+            86.9
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            39.6,
+            17.9,
+            13.9,
+            10.5,
+            10.3,
+            7.5
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            45.0,
+            19.0,
+            11.9,
+            8.2,
+            8.5,
+            7.2
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            45.8,
+            15.3,
+            10.5,
+            10.9,
+            9.7,
+            7.4
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            44.2,
+            20.5,
+            11.9,
+            9.1,
+            6.9,
+            7.2
+          ]
+        }
+      }
+    },
+    "03": {
+      "jcd": "03",
+      "name": "江戸川",
+      "water_type": "汽水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 45.4,
+            "sashi": 22.0,
+            "makuri": 10.0,
+            "makuri_sashi": 9.2,
+            "nuki": 7.3,
+            "megmare": 5.8
+          },
+          {
+            "nige": 17.2,
+            "sashi": 24.8,
+            "makuri": 18.3,
+            "makuri_sashi": 16.4,
+            "nuki": 12.7,
+            "megmare": 10.2
+          },
+          {
+            "nige": 16.7,
+            "sashi": 21.0,
+            "makuri": 18.5,
+            "makuri_sashi": 16.0,
+            "nuki": 14.1,
+            "megmare": 13.3
+          },
+          {
+            "nige": 12.2,
+            "sashi": 13.8,
+            "makuri": 18.6,
+            "makuri_sashi": 18.8,
+            "nuki": 18.6,
+            "megmare": 17.8
+          },
+          {
+            "nige": 6.8,
+            "sashi": 14.5,
+            "makuri": 20.1,
+            "makuri_sashi": 20.5,
+            "nuki": 20.9,
+            "megmare": 17.0
+          },
+          {
+            "nige": 3.3,
+            "sashi": 5.2,
+            "makuri": 16.0,
+            "makuri_sashi": 20.4,
+            "nuki": 26.3,
+            "megmare": 28.4
+          }
+        ],
+        "frame_to_course": [
+          [
+            100.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            100.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.4,
+            99.5,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.6,
+            99.3,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.8,
+            99.1,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            98.9
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            48.8,
+            19.0,
+            11.1,
+            8.3,
+            8.1,
+            4.4
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            47.6,
+            19.4,
+            10.7,
+            8.2,
+            8.2,
+            5.5
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            47.5,
+            19.3,
+            10.7,
+            10.1,
+            6.3,
+            5.8
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            47.9,
+            20.9,
+            11.1,
+            9.4,
+            6.3,
+            4.0
+          ]
+        }
+      }
+    },
+    "04": {
+      "jcd": "04",
+      "name": "平和島",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 44.7,
+            "sashi": 21.0,
+            "makuri": 12.6,
+            "makuri_sashi": 8.2,
+            "nuki": 7.8,
+            "megmare": 5.4
+          },
+          {
+            "nige": 18.9,
+            "sashi": 22.3,
+            "makuri": 21.0,
+            "makuri_sashi": 14.7,
+            "nuki": 13.4,
+            "megmare": 9.3
+          },
+          {
+            "nige": 18.5,
+            "sashi": 17.8,
+            "makuri": 18.9,
+            "makuri_sashi": 16.3,
+            "nuki": 14.1,
+            "megmare": 14.1
+          },
+          {
+            "nige": 11.2,
+            "sashi": 17.4,
+            "makuri": 16.4,
+            "makuri_sashi": 20.5,
+            "nuki": 17.0,
+            "megmare": 17.2
+          },
+          {
+            "nige": 6.4,
+            "sashi": 15.0,
+            "makuri": 15.9,
+            "makuri_sashi": 20.2,
+            "nuki": 23.0,
+            "megmare": 19.1
+          },
+          {
+            "nige": 1.7,
+            "sashi": 7.6,
+            "makuri": 16.5,
+            "makuri_sashi": 21.1,
+            "nuki": 24.0,
+            "megmare": 28.8
+          }
+        ],
+        "frame_to_course": [
+          [
+            100.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.2,
+            97.6,
+            1.9,
+            0.0,
+            0.2,
+            0.0
+          ],
+          [
+            0.0,
+            0.8,
+            96.3,
+            1.7,
+            0.6,
+            0.4
+          ],
+          [
+            0.0,
+            0.8,
+            1.4,
+            93.3,
+            1.9,
+            2.3
+          ],
+          [
+            0.0,
+            0.6,
+            0.4,
+            3.2,
+            90.7,
+            4.9
+          ],
+          [
+            0.0,
+            0.2,
+            0.2,
+            1.7,
+            6.8,
+            91.0
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            49.1,
+            17.4,
+            13.3,
+            7.8,
+            6.9,
+            5.1
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            47.2,
+            18.2,
+            11.7,
+            8.6,
+            8.6,
+            5.4
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            49.4,
+            21.5,
+            7.4,
+            8.9,
+            7.0,
+            5.5
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            45.1,
+            18.6,
+            9.9,
+            9.9,
+            8.7,
+            7.5
+          ]
+        }
+      }
+    },
+    "05": {
+      "jcd": "05",
+      "name": "多摩川",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 57.1,
+            "sashi": 14.6,
+            "makuri": 9.5,
+            "makuri_sashi": 8.0,
+            "nuki": 7.4,
+            "megmare": 3.2
+          },
+          {
+            "nige": 13.3,
+            "sashi": 26.0,
+            "makuri": 19.1,
+            "makuri_sashi": 17.5,
+            "nuki": 12.2,
+            "megmare": 11.7
+          },
+          {
+            "nige": 11.7,
+            "sashi": 25.4,
+            "makuri": 18.8,
+            "makuri_sashi": 17.2,
+            "nuki": 15.0,
+            "megmare": 11.6
+          },
+          {
+            "nige": 10.0,
+            "sashi": 15.2,
+            "makuri": 22.5,
+            "makuri_sashi": 18.5,
+            "nuki": 17.2,
+            "megmare": 16.3
+          },
+          {
+            "nige": 6.1,
+            "sashi": 12.6,
+            "makuri": 17.3,
+            "makuri_sashi": 21.0,
+            "nuki": 23.1,
+            "megmare": 19.7
+          },
+          {
+            "nige": 2.1,
+            "sashi": 6.6,
+            "makuri": 13.5,
+            "makuri_sashi": 18.6,
+            "nuki": 25.3,
+            "megmare": 33.6
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.8,
+            0.0,
+            0.1,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.3,
+            96.3,
+            2.5,
+            0.6,
+            0.1,
+            0.0
+          ],
+          [
+            0.0,
+            1.4,
+            94.0,
+            3.3,
+            0.6,
+            0.4
+          ],
+          [
+            0.0,
+            0.8,
+            1.6,
+            89.0,
+            4.9,
+            3.5
+          ],
+          [
+            0.0,
+            0.6,
+            0.9,
+            4.9,
+            85.7,
+            7.7
+          ],
+          [
+            0.0,
+            0.9,
+            0.8,
+            2.0,
+            8.6,
+            87.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            54.0,
+            14.0,
+            10.4,
+            9.8,
+            7.6,
+            4.2
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            51.5,
+            19.0,
+            9.6,
+            7.6,
+            6.3,
+            5.6
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            52.4,
+            19.3,
+            9.5,
+            7.8,
+            6.3,
+            4.4
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            56.2,
+            14.6,
+            9.4,
+            7.5,
+            7.0,
+            5.0
+          ]
+        }
+      }
+    },
+    "06": {
+      "jcd": "06",
+      "name": "浜名湖",
+      "water_type": "汽水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 56.2,
+            "sashi": 16.5,
+            "makuri": 6.6,
+            "makuri_sashi": 7.5,
+            "nuki": 5.9,
+            "megmare": 7.0
+          },
+          {
+            "nige": 11.9,
+            "sashi": 25.4,
+            "makuri": 18.4,
+            "makuri_sashi": 13.8,
+            "nuki": 15.9,
+            "megmare": 14.3
+          },
+          {
+            "nige": 13.5,
+            "sashi": 21.5,
+            "makuri": 21.3,
+            "makuri_sashi": 17.9,
+            "nuki": 13.0,
+            "megmare": 12.5
+          },
+          {
+            "nige": 10.1,
+            "sashi": 15.2,
+            "makuri": 18.1,
+            "makuri_sashi": 20.1,
+            "nuki": 21.1,
+            "megmare": 15.2
+          },
+          {
+            "nige": 6.8,
+            "sashi": 15.3,
+            "makuri": 20.9,
+            "makuri_sashi": 20.9,
+            "nuki": 21.6,
+            "megmare": 14.1
+          },
+          {
+            "nige": 2.4,
+            "sashi": 7.2,
+            "makuri": 15.4,
+            "makuri_sashi": 20.8,
+            "nuki": 22.5,
+            "megmare": 31.3
+          }
+        ],
+        "frame_to_course": [
+          [
+            96.8,
+            2.7,
+            0.1,
+            0.1,
+            0.0,
+            0.0
+          ],
+          [
+            1.7,
+            90.4,
+            6.2,
+            0.5,
+            0.3,
+            0.6
+          ],
+          [
+            0.5,
+            2.4,
+            87.3,
+            6.7,
+            1.7,
+            1.2
+          ],
+          [
+            0.6,
+            1.0,
+            4.3,
+            81.5,
+            9.5,
+            2.7
+          ],
+          [
+            0.1,
+            1.2,
+            1.5,
+            7.6,
+            75.6,
+            13.7
+          ],
+          [
+            0.1,
+            2.4,
+            0.3,
+            3.3,
+            12.8,
+            80.8
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            55.2,
+            18.6,
+            7.4,
+            7.1,
+            5.4,
+            6.2
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            48.2,
+            18.4,
+            10.2,
+            8.3,
+            6.6,
+            8.0
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            55.5,
+            17.7,
+            8.9,
+            6.1,
+            5.8,
+            5.6
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            55.3,
+            17.4,
+            10.3,
+            7.1,
+            5.5,
+            4.2
+          ]
+        }
+      }
+    },
+    "07": {
+      "jcd": "07",
+      "name": "蒲郡",
+      "water_type": "汽水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 54.4,
+            "sashi": 17.9,
+            "makuri": 10.2,
+            "makuri_sashi": 7.2,
+            "nuki": 5.8,
+            "megmare": 4.2
+          },
+          {
+            "nige": 14.0,
+            "sashi": 22.4,
+            "makuri": 22.0,
+            "makuri_sashi": 13.5,
+            "nuki": 15.2,
+            "megmare": 12.5
+          },
+          {
+            "nige": 12.0,
+            "sashi": 23.9,
+            "makuri": 20.2,
+            "makuri_sashi": 15.6,
+            "nuki": 15.1,
+            "megmare": 13.0
+          },
+          {
+            "nige": 10.6,
+            "sashi": 17.2,
+            "makuri": 17.0,
+            "makuri_sashi": 20.8,
+            "nuki": 19.9,
+            "megmare": 14.2
+          },
+          {
+            "nige": 7.3,
+            "sashi": 13.9,
+            "makuri": 19.4,
+            "makuri_sashi": 24.5,
+            "nuki": 17.3,
+            "megmare": 17.3
+          },
+          {
+            "nige": 2.5,
+            "sashi": 6.0,
+            "makuri": 12.5,
+            "makuri_sashi": 19.3,
+            "nuki": 26.4,
+            "megmare": 33.1
+          }
+        ],
+        "frame_to_course": [
+          [
+            97.6,
+            1.8,
+            0.1,
+            0.0,
+            0.1,
+            0.1
+          ],
+          [
+            1.6,
+            91.3,
+            5.3,
+            0.8,
+            0.5,
+            0.3
+          ],
+          [
+            0.5,
+            2.8,
+            86.6,
+            7.0,
+            1.5,
+            1.5
+          ],
+          [
+            0.0,
+            1.3,
+            4.6,
+            83.9,
+            7.6,
+            2.3
+          ],
+          [
+            0.0,
+            1.5,
+            1.8,
+            4.8,
+            82.8,
+            8.9
+          ],
+          [
+            0.1,
+            1.1,
+            1.3,
+            3.5,
+            8.0,
+            85.8
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            56.4,
+            16.3,
+            9.6,
+            7.9,
+            5.5,
+            3.9
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            51.7,
+            18.8,
+            12.4,
+            5.6,
+            7.1,
+            4.0
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            65.7,
+            13.0,
+            8.3,
+            4.8,
+            5.3,
+            2.5
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            58.3,
+            15.0,
+            9.1,
+            6.8,
+            5.8,
+            4.7
+          ]
+        }
+      }
+    },
+    "08": {
+      "jcd": "08",
+      "name": "常滑",
+      "water_type": "海水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 60.1,
+            "sashi": 14.5,
+            "makuri": 7.0,
+            "makuri_sashi": 6.7,
+            "nuki": 6.5,
+            "megmare": 4.9
+          },
+          {
+            "nige": 13.0,
+            "sashi": 26.4,
+            "makuri": 19.6,
+            "makuri_sashi": 15.0,
+            "nuki": 14.0,
+            "megmare": 11.8
+          },
+          {
+            "nige": 10.2,
+            "sashi": 22.3,
+            "makuri": 19.7,
+            "makuri_sashi": 19.1,
+            "nuki": 14.8,
+            "megmare": 13.6
+          },
+          {
+            "nige": 9.8,
+            "sashi": 15.8,
+            "makuri": 21.0,
+            "makuri_sashi": 22.2,
+            "nuki": 16.0,
+            "megmare": 14.9
+          },
+          {
+            "nige": 5.3,
+            "sashi": 15.2,
+            "makuri": 19.3,
+            "makuri_sashi": 19.0,
+            "nuki": 22.5,
+            "megmare": 18.4
+          },
+          {
+            "nige": 2.0,
+            "sashi": 6.4,
+            "makuri": 13.9,
+            "makuri_sashi": 18.4,
+            "nuki": 26.3,
+            "megmare": 32.7
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.4,
+            0.2,
+            0.2,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            93.3,
+            5.0,
+            0.6,
+            0.2,
+            0.1
+          ],
+          [
+            0.0,
+            2.6,
+            89.5,
+            6.6,
+            0.6,
+            0.5
+          ],
+          [
+            0.0,
+            0.6,
+            2.7,
+            82.6,
+            9.4,
+            4.5
+          ],
+          [
+            0.0,
+            1.8,
+            1.7,
+            7.2,
+            77.8,
+            11.2
+          ],
+          [
+            0.0,
+            1.4,
+            0.7,
+            2.9,
+            11.9,
+            82.8
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            55.7,
+            15.6,
+            10.6,
+            7.8,
+            5.1,
+            5.0
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            60.4,
+            13.9,
+            9.8,
+            7.1,
+            4.6,
+            3.9
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            57.9,
+            16.2,
+            7.2,
+            8.2,
+            5.6,
+            4.6
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            58.4,
+            16.2,
+            8.5,
+            6.3,
+            7.1,
+            3.3
+          ]
+        }
+      }
+    },
+    "09": {
+      "jcd": "09",
+      "name": "津",
+      "water_type": "汽水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 55.0,
+            "sashi": 17.5,
+            "makuri": 9.7,
+            "makuri_sashi": 6.1,
+            "nuki": 6.7,
+            "megmare": 4.8
+          },
+          {
+            "nige": 16.1,
+            "sashi": 24.4,
+            "makuri": 18.2,
+            "makuri_sashi": 16.0,
+            "nuki": 13.3,
+            "megmare": 11.7
+          },
+          {
+            "nige": 11.9,
+            "sashi": 23.9,
+            "makuri": 18.0,
+            "makuri_sashi": 17.2,
+            "nuki": 16.3,
+            "megmare": 12.5
+          },
+          {
+            "nige": 11.0,
+            "sashi": 16.7,
+            "makuri": 20.7,
+            "makuri_sashi": 19.5,
+            "nuki": 17.9,
+            "megmare": 14.0
+          },
+          {
+            "nige": 5.5,
+            "sashi": 11.5,
+            "makuri": 21.0,
+            "makuri_sashi": 22.3,
+            "nuki": 22.2,
+            "megmare": 17.2
+          },
+          {
+            "nige": 1.6,
+            "sashi": 7.1,
+            "makuri": 13.3,
+            "makuri_sashi": 19.6,
+            "nuki": 23.5,
+            "megmare": 34.7
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.5,
+            0.4,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.2,
+            95.5,
+            3.1,
+            0.5,
+            0.1,
+            0.2
+          ],
+          [
+            0.1,
+            1.4,
+            92.5,
+            3.9,
+            1.6,
+            0.2
+          ],
+          [
+            0.0,
+            0.7,
+            2.0,
+            88.8,
+            5.6,
+            2.7
+          ],
+          [
+            0.0,
+            0.8,
+            1.1,
+            4.5,
+            82.2,
+            11.1
+          ],
+          [
+            0.0,
+            1.0,
+            1.3,
+            2.3,
+            10.4,
+            84.8
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            58.1,
+            15.8,
+            8.3,
+            5.5,
+            7.1,
+            5.1
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            55.3,
+            15.5,
+            7.7,
+            9.4,
+            5.6,
+            6.2
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            58.2,
+            14.2,
+            9.6,
+            6.1,
+            5.8,
+            5.8
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            62.1,
+            13.9,
+            8.8,
+            6.0,
+            4.8,
+            4.1
+          ]
+        }
+      }
+    },
+    "10": {
+      "jcd": "10",
+      "name": "三国",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 50.3,
+            "sashi": 19.3,
+            "makuri": 8.4,
+            "makuri_sashi": 7.3,
+            "nuki": 7.3,
+            "megmare": 7.1
+          },
+          {
+            "nige": 16.0,
+            "sashi": 26.1,
+            "makuri": 16.4,
+            "makuri_sashi": 15.3,
+            "nuki": 14.1,
+            "megmare": 11.8
+          },
+          {
+            "nige": 14.3,
+            "sashi": 20.5,
+            "makuri": 19.1,
+            "makuri_sashi": 19.1,
+            "nuki": 15.4,
+            "megmare": 11.3
+          },
+          {
+            "nige": 11.7,
+            "sashi": 18.7,
+            "makuri": 23.0,
+            "makuri_sashi": 16.8,
+            "nuki": 14.7,
+            "megmare": 14.7
+          },
+          {
+            "nige": 6.2,
+            "sashi": 10.8,
+            "makuri": 19.4,
+            "makuri_sashi": 23.3,
+            "nuki": 22.8,
+            "megmare": 17.2
+          },
+          {
+            "nige": 2.5,
+            "sashi": 5.4,
+            "makuri": 14.6,
+            "makuri_sashi": 18.9,
+            "nuki": 25.6,
+            "megmare": 32.8
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.0,
+            0.7,
+            0.0,
+            0.1,
+            0.0,
+            0.0
+          ],
+          [
+            0.9,
+            93.5,
+            3.9,
+            1.4,
+            0.0,
+            0.1
+          ],
+          [
+            0.1,
+            2.8,
+            91.0,
+            4.8,
+            0.9,
+            0.1
+          ],
+          [
+            0.1,
+            0.6,
+            3.3,
+            86.4,
+            7.0,
+            2.3
+          ],
+          [
+            0.0,
+            1.2,
+            1.1,
+            4.7,
+            83.4,
+            9.4
+          ],
+          [
+            0.0,
+            0.9,
+            0.7,
+            2.3,
+            8.5,
+            87.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            49.1,
+            21.4,
+            9.3,
+            8.7,
+            5.2,
+            6.0
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            53.5,
+            18.2,
+            9.2,
+            7.6,
+            5.0,
+            6.2
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            51.4,
+            18.8,
+            8.3,
+            7.2,
+            7.2,
+            6.8
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            54.4,
+            17.6,
+            8.8,
+            6.0,
+            7.2,
+            5.6
+          ]
+        }
+      }
+    },
+    "11": {
+      "jcd": "11",
+      "name": "びわこ",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 55.2,
+            "sashi": 18.0,
+            "makuri": 8.1,
+            "makuri_sashi": 6.6,
+            "nuki": 6.0,
+            "megmare": 5.8
+          },
+          {
+            "nige": 14.1,
+            "sashi": 26.5,
+            "makuri": 20.6,
+            "makuri_sashi": 17.6,
+            "nuki": 11.0,
+            "megmare": 9.9
+          },
+          {
+            "nige": 15.4,
+            "sashi": 24.0,
+            "makuri": 20.4,
+            "makuri_sashi": 14.8,
+            "nuki": 14.3,
+            "megmare": 10.8
+          },
+          {
+            "nige": 7.6,
+            "sashi": 14.9,
+            "makuri": 21.0,
+            "makuri_sashi": 22.1,
+            "nuki": 19.5,
+            "megmare": 14.6
+          },
+          {
+            "nige": 6.6,
+            "sashi": 11.3,
+            "makuri": 17.2,
+            "makuri_sashi": 22.0,
+            "nuki": 23.1,
+            "megmare": 19.5
+          },
+          {
+            "nige": 1.8,
+            "sashi": 6.0,
+            "makuri": 13.4,
+            "makuri_sashi": 17.7,
+            "nuki": 26.5,
+            "megmare": 34.3
+          }
+        ],
+        "frame_to_course": [
+          [
+            100.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.2,
+            97.6,
+            1.6,
+            0.2,
+            0.0,
+            0.1
+          ],
+          [
+            0.0,
+            0.5,
+            97.0,
+            1.9,
+            0.2,
+            0.1
+          ],
+          [
+            0.0,
+            0.4,
+            0.7,
+            95.3,
+            2.6,
+            0.7
+          ],
+          [
+            0.0,
+            0.5,
+            0.2,
+            1.3,
+            94.7,
+            2.9
+          ],
+          [
+            0.0,
+            0.7,
+            0.2,
+            1.0,
+            2.3,
+            95.5
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            52.5,
+            20.7,
+            8.0,
+            7.4,
+            6.0,
+            5.1
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            51.0,
+            19.8,
+            10.8,
+            6.0,
+            7.5,
+            4.7
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            54.1,
+            18.6,
+            8.9,
+            7.0,
+            5.1,
+            6.0
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            54.3,
+            16.6,
+            8.9,
+            8.4,
+            5.4,
+            6.1
+          ]
+        }
+      }
+    },
+    "12": {
+      "jcd": "12",
+      "name": "住之江",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 56.2,
+            "sashi": 17.6,
+            "makuri": 8.5,
+            "makuri_sashi": 6.9,
+            "nuki": 6.0,
+            "megmare": 4.4
+          },
+          {
+            "nige": 15.2,
+            "sashi": 26.2,
+            "makuri": 18.0,
+            "makuri_sashi": 18.0,
+            "nuki": 11.9,
+            "megmare": 10.3
+          },
+          {
+            "nige": 13.1,
+            "sashi": 23.6,
+            "makuri": 20.9,
+            "makuri_sashi": 16.3,
+            "nuki": 15.6,
+            "megmare": 10.2
+          },
+          {
+            "nige": 10.7,
+            "sashi": 16.1,
+            "makuri": 22.1,
+            "makuri_sashi": 20.9,
+            "nuki": 15.2,
+            "megmare": 14.8
+          },
+          {
+            "nige": 3.5,
+            "sashi": 12.5,
+            "makuri": 18.8,
+            "makuri_sashi": 22.5,
+            "nuki": 23.4,
+            "megmare": 18.9
+          },
+          {
+            "nige": 1.8,
+            "sashi": 4.7,
+            "makuri": 12.6,
+            "makuri_sashi": 15.7,
+            "nuki": 28.3,
+            "megmare": 36.7
+          }
+        ],
+        "frame_to_course": [
+          [
+            100.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.3,
+            94.1,
+            4.6,
+            0.5,
+            0.3,
+            0.0
+          ],
+          [
+            0.0,
+            2.3,
+            91.8,
+            5.3,
+            0.3,
+            0.1
+          ],
+          [
+            0.0,
+            1.5,
+            2.6,
+            87.2,
+            5.8,
+            2.6
+          ],
+          [
+            0.0,
+            0.5,
+            0.7,
+            3.9,
+            86.5,
+            8.3
+          ],
+          [
+            0.0,
+            1.5,
+            0.3,
+            3.1,
+            7.1,
+            87.7
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            61.8,
+            14.3,
+            6.7,
+            6.2,
+            6.0,
+            4.7
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            52.7,
+            15.8,
+            9.5,
+            9.2,
+            7.6,
+            4.9
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            55.7,
+            18.1,
+            8.7,
+            6.3,
+            6.4,
+            4.4
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            62.5,
+            16.0,
+            8.7,
+            5.1,
+            4.3,
+            3.1
+          ]
+        }
+      }
+    },
+    "13": {
+      "jcd": "13",
+      "name": "尼崎",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 61.5,
+            "sashi": 15.8,
+            "makuri": 8.4,
+            "makuri_sashi": 7.5,
+            "nuki": 3.3,
+            "megmare": 3.2
+          },
+          {
+            "nige": 12.2,
+            "sashi": 26.0,
+            "makuri": 18.5,
+            "makuri_sashi": 19.1,
+            "nuki": 15.0,
+            "megmare": 8.9
+          },
+          {
+            "nige": 12.2,
+            "sashi": 21.3,
+            "makuri": 20.8,
+            "makuri_sashi": 15.5,
+            "nuki": 16.3,
+            "megmare": 13.6
+          },
+          {
+            "nige": 9.4,
+            "sashi": 19.4,
+            "makuri": 21.5,
+            "makuri_sashi": 16.4,
+            "nuki": 18.0,
+            "megmare": 15.0
+          },
+          {
+            "nige": 4.3,
+            "sashi": 12.1,
+            "makuri": 17.0,
+            "makuri_sashi": 25.4,
+            "nuki": 21.5,
+            "megmare": 19.4
+          },
+          {
+            "nige": 0.9,
+            "sashi": 6.8,
+            "makuri": 14.8,
+            "makuri_sashi": 17.0,
+            "nuki": 25.7,
+            "megmare": 34.4
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.8,
+            0.1,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.6,
+            96.3,
+            2.3,
+            0.7,
+            0.0,
+            0.0
+          ],
+          [
+            0.1,
+            2.3,
+            94.4,
+            2.3,
+            0.3,
+            0.4
+          ],
+          [
+            0.0,
+            0.6,
+            1.9,
+            90.9,
+            3.0,
+            3.3
+          ],
+          [
+            0.0,
+            0.4,
+            0.7,
+            4.9,
+            86.5,
+            7.3
+          ],
+          [
+            0.0,
+            0.4,
+            0.7,
+            1.0,
+            10.2,
+            87.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            61.4,
+            16.2,
+            9.5,
+            5.7,
+            3.2,
+            3.8
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            56.2,
+            17.7,
+            9.6,
+            7.1,
+            5.6,
+            3.5
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            61.1,
+            16.0,
+            7.2,
+            5.9,
+            5.1,
+            4.4
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            61.8,
+            14.1,
+            9.0,
+            6.8,
+            4.6,
+            3.5
+          ]
+        }
+      }
+    },
+    "14": {
+      "jcd": "14",
+      "name": "鳴門",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 53.9,
+            "sashi": 20.3,
+            "makuri": 7.0,
+            "makuri_sashi": 6.8,
+            "nuki": 6.6,
+            "megmare": 5.2
+          },
+          {
+            "nige": 14.0,
+            "sashi": 25.3,
+            "makuri": 18.0,
+            "makuri_sashi": 17.6,
+            "nuki": 12.0,
+            "megmare": 12.8
+          },
+          {
+            "nige": 14.5,
+            "sashi": 21.3,
+            "makuri": 20.5,
+            "makuri_sashi": 17.9,
+            "nuki": 11.8,
+            "megmare": 13.7
+          },
+          {
+            "nige": 11.2,
+            "sashi": 14.8,
+            "makuri": 21.4,
+            "makuri_sashi": 19.6,
+            "nuki": 17.8,
+            "megmare": 15.2
+          },
+          {
+            "nige": 6.0,
+            "sashi": 11.8,
+            "makuri": 20.0,
+            "makuri_sashi": 19.6,
+            "nuki": 25.3,
+            "megmare": 17.0
+          },
+          {
+            "nige": 1.6,
+            "sashi": 7.6,
+            "makuri": 14.1,
+            "makuri_sashi": 19.6,
+            "nuki": 25.9,
+            "megmare": 30.9
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.8,
+            0.0,
+            0.0,
+            0.1,
+            0.0,
+            0.0
+          ],
+          [
+            0.1,
+            96.6,
+            2.1,
+            0.1,
+            0.3,
+            0.3
+          ],
+          [
+            0.0,
+            1.1,
+            94.4,
+            3.5,
+            0.7,
+            0.0
+          ],
+          [
+            0.0,
+            0.1,
+            2.3,
+            91.4,
+            4.5,
+            1.3
+          ],
+          [
+            0.0,
+            0.5,
+            0.7,
+            3.1,
+            86.5,
+            8.9
+          ],
+          [
+            0.0,
+            1.3,
+            0.3,
+            1.5,
+            7.7,
+            88.8
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            47.2,
+            19.0,
+            9.4,
+            10.4,
+            7.0,
+            6.8
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            48.4,
+            16.0,
+            9.6,
+            8.0,
+            9.6,
+            8.0
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            48.8,
+            19.3,
+            10.3,
+            8.8,
+            7.2,
+            5.4
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            48.6,
+            16.2,
+            9.8,
+            10.0,
+            9.1,
+            5.9
+          ]
+        }
+      }
+    },
+    "15": {
+      "jcd": "15",
+      "name": "丸亀",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 56.1,
+            "sashi": 17.9,
+            "makuri": 8.6,
+            "makuri_sashi": 7.8,
+            "nuki": 5.7,
+            "megmare": 3.5
+          },
+          {
+            "nige": 13.7,
+            "sashi": 25.1,
+            "makuri": 18.5,
+            "makuri_sashi": 16.0,
+            "nuki": 14.6,
+            "megmare": 11.9
+          },
+          {
+            "nige": 12.9,
+            "sashi": 20.1,
+            "makuri": 15.8,
+            "makuri_sashi": 21.2,
+            "nuki": 16.9,
+            "megmare": 12.9
+          },
+          {
+            "nige": 10.3,
+            "sashi": 16.7,
+            "makuri": 24.4,
+            "makuri_sashi": 16.6,
+            "nuki": 18.0,
+            "megmare": 13.7
+          },
+          {
+            "nige": 5.5,
+            "sashi": 12.5,
+            "makuri": 18.6,
+            "makuri_sashi": 22.3,
+            "nuki": 23.7,
+            "megmare": 17.1
+          },
+          {
+            "nige": 2.3,
+            "sashi": 8.5,
+            "makuri": 15.0,
+            "makuri_sashi": 17.0,
+            "nuki": 20.9,
+            "megmare": 36.0
+          }
+        ],
+        "frame_to_course": [
+          [
+            97.5,
+            1.5,
+            0.5,
+            0.1,
+            0.1,
+            0.0
+          ],
+          [
+            1.2,
+            92.0,
+            5.1,
+            1.0,
+            0.3,
+            0.1
+          ],
+          [
+            0.1,
+            1.7,
+            89.8,
+            6.2,
+            1.2,
+            0.7
+          ],
+          [
+            0.7,
+            0.8,
+            2.6,
+            85.4,
+            7.0,
+            3.1
+          ],
+          [
+            0.1,
+            1.7,
+            0.5,
+            4.9,
+            79.3,
+            13.1
+          ],
+          [
+            0.1,
+            1.9,
+            1.4,
+            2.1,
+            11.9,
+            82.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            59.1,
+            15.6,
+            8.2,
+            6.7,
+            6.1,
+            4.0
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            58.3,
+            15.9,
+            7.9,
+            7.7,
+            5.6,
+            4.3
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            55.3,
+            17.5,
+            10.0,
+            6.8,
+            5.0,
+            5.0
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            53.6,
+            21.1,
+            8.0,
+            6.8,
+            5.6,
+            4.6
+          ]
+        }
+      }
+    },
+    "16": {
+      "jcd": "16",
+      "name": "児島",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 52.9,
+            "sashi": 16.6,
+            "makuri": 10.9,
+            "makuri_sashi": 9.0,
+            "nuki": 5.8,
+            "megmare": 4.5
+          },
+          {
+            "nige": 12.2,
+            "sashi": 26.6,
+            "makuri": 15.6,
+            "makuri_sashi": 19.1,
+            "nuki": 14.9,
+            "megmare": 11.4
+          },
+          {
+            "nige": 14.8,
+            "sashi": 17.8,
+            "makuri": 16.8,
+            "makuri_sashi": 20.8,
+            "nuki": 16.6,
+            "megmare": 12.9
+          },
+          {
+            "nige": 12.1,
+            "sashi": 17.0,
+            "makuri": 19.1,
+            "makuri_sashi": 18.5,
+            "nuki": 15.4,
+            "megmare": 17.6
+          },
+          {
+            "nige": 7.5,
+            "sashi": 14.6,
+            "makuri": 21.2,
+            "makuri_sashi": 18.8,
+            "nuki": 20.0,
+            "megmare": 17.5
+          },
+          {
+            "nige": 1.1,
+            "sashi": 8.1,
+            "makuri": 17.2,
+            "makuri_sashi": 14.2,
+            "nuki": 27.4,
+            "megmare": 31.8
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.6,
+            95.6,
+            2.8,
+            0.3,
+            0.5,
+            0.0
+          ],
+          [
+            0.1,
+            1.0,
+            91.8,
+            5.6,
+            1.0,
+            0.3
+          ],
+          [
+            0.1,
+            0.5,
+            3.3,
+            88.1,
+            5.8,
+            2.0
+          ],
+          [
+            0.0,
+            1.0,
+            1.0,
+            3.6,
+            83.0,
+            11.3
+          ],
+          [
+            0.0,
+            0.8,
+            1.0,
+            2.1,
+            9.6,
+            86.3
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            57.8,
+            15.1,
+            9.2,
+            8.3,
+            4.1,
+            5.0
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            58.7,
+            17.1,
+            7.6,
+            5.9,
+            6.2,
+            4.1
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            52.5,
+            17.5,
+            14.1,
+            2.5,
+            6.6,
+            6.6
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            54.7,
+            18.6,
+            8.4,
+            7.3,
+            5.8,
+            5.0
+          ]
+        }
+      }
+    },
+    "17": {
+      "jcd": "17",
+      "name": "宮島",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 57.5,
+            "sashi": 15.1,
+            "makuri": 9.6,
+            "makuri_sashi": 6.5,
+            "nuki": 5.8,
+            "megmare": 5.2
+          },
+          {
+            "nige": 13.2,
+            "sashi": 25.3,
+            "makuri": 21.2,
+            "makuri_sashi": 14.1,
+            "nuki": 15.4,
+            "megmare": 10.6
+          },
+          {
+            "nige": 11.5,
+            "sashi": 22.6,
+            "makuri": 21.5,
+            "makuri_sashi": 19.7,
+            "nuki": 12.0,
+            "megmare": 12.4
+          },
+          {
+            "nige": 10.7,
+            "sashi": 16.8,
+            "makuri": 18.4,
+            "makuri_sashi": 19.0,
+            "nuki": 18.4,
+            "megmare": 16.4
+          },
+          {
+            "nige": 6.0,
+            "sashi": 13.7,
+            "makuri": 18.8,
+            "makuri_sashi": 21.2,
+            "nuki": 23.8,
+            "megmare": 16.1
+          },
+          {
+            "nige": 1.6,
+            "sashi": 7.4,
+            "makuri": 11.5,
+            "makuri_sashi": 20.2,
+            "nuki": 24.9,
+            "megmare": 34.2
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.4,
+            0.3,
+            0.0,
+            0.0,
+            0.0,
+            0.1
+          ],
+          [
+            0.5,
+            92.7,
+            6.0,
+            0.3,
+            0.1,
+            0.1
+          ],
+          [
+            0.0,
+            2.9,
+            91.1,
+            4.9,
+            0.9,
+            0.1
+          ],
+          [
+            0.3,
+            1.6,
+            2.3,
+            90.7,
+            3.8,
+            1.0
+          ],
+          [
+            0.0,
+            0.9,
+            0.3,
+            3.4,
+            85.0,
+            10.1
+          ],
+          [
+            0.0,
+            1.8,
+            0.3,
+            0.5,
+            10.3,
+            86.9
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            58.1,
+            17.9,
+            9.3,
+            6.8,
+            3.5,
+            4.1
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            58.5,
+            15.0,
+            6.6,
+            8.8,
+            6.2,
+            4.6
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            55.6,
+            17.9,
+            8.4,
+            7.9,
+            6.3,
+            3.6
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            57.9,
+            15.6,
+            8.0,
+            8.5,
+            6.4,
+            3.3
+          ]
+        }
+      }
+    },
+    "18": {
+      "jcd": "18",
+      "name": "徳山",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 63.9,
+            "sashi": 17.0,
+            "makuri": 7.1,
+            "makuri_sashi": 5.9,
+            "nuki": 3.2,
+            "megmare": 2.6
+          },
+          {
+            "nige": 13.6,
+            "sashi": 27.1,
+            "makuri": 19.8,
+            "makuri_sashi": 15.8,
+            "nuki": 14.1,
+            "megmare": 9.3
+          },
+          {
+            "nige": 9.6,
+            "sashi": 22.2,
+            "makuri": 20.7,
+            "makuri_sashi": 19.1,
+            "nuki": 15.7,
+            "megmare": 12.4
+          },
+          {
+            "nige": 6.8,
+            "sashi": 17.3,
+            "makuri": 22.5,
+            "makuri_sashi": 18.7,
+            "nuki": 22.2,
+            "megmare": 12.2
+          },
+          {
+            "nige": 5.8,
+            "sashi": 11.4,
+            "makuri": 18.7,
+            "makuri_sashi": 20.9,
+            "nuki": 23.7,
+            "megmare": 19.3
+          },
+          {
+            "nige": 0.7,
+            "sashi": 5.5,
+            "makuri": 12.1,
+            "makuri_sashi": 20.3,
+            "nuki": 20.7,
+            "megmare": 40.4
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.2,
+            0.7,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.3,
+            94.5,
+            4.1,
+            0.6,
+            0.3,
+            0.0
+          ],
+          [
+            0.3,
+            1.6,
+            92.9,
+            4.7,
+            0.3,
+            0.0
+          ],
+          [
+            0.3,
+            0.3,
+            2.0,
+            89.6,
+            5.8,
+            1.8
+          ],
+          [
+            0.0,
+            1.2,
+            0.4,
+            3.5,
+            80.5,
+            14.2
+          ],
+          [
+            0.0,
+            1.5,
+            0.4,
+            1.3,
+            13.1,
+            83.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            65.0,
+            15.2,
+            6.0,
+            6.3,
+            3.8,
+            3.4
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            66.1,
+            16.6,
+            6.3,
+            3.0,
+            4.1,
+            3.6
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            61.1,
+            18.2,
+            6.6,
+            5.1,
+            4.9,
+            3.8
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            62.0,
+            15.3,
+            8.2,
+            6.3,
+            3.6,
+            4.3
+          ]
+        }
+      }
+    },
+    "19": {
+      "jcd": "19",
+      "name": "下関",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 62.2,
+            "sashi": 18.9,
+            "makuri": 7.3,
+            "makuri_sashi": 4.9,
+            "nuki": 3.5,
+            "megmare": 2.9
+          },
+          {
+            "nige": 11.1,
+            "sashi": 24.1,
+            "makuri": 22.2,
+            "makuri_sashi": 16.6,
+            "nuki": 16.2,
+            "megmare": 9.4
+          },
+          {
+            "nige": 11.0,
+            "sashi": 21.0,
+            "makuri": 21.7,
+            "makuri_sashi": 18.1,
+            "nuki": 13.8,
+            "megmare": 14.1
+          },
+          {
+            "nige": 9.6,
+            "sashi": 16.8,
+            "makuri": 21.4,
+            "makuri_sashi": 21.6,
+            "nuki": 15.9,
+            "megmare": 14.5
+          },
+          {
+            "nige": 5.1,
+            "sashi": 13.7,
+            "makuri": 16.9,
+            "makuri_sashi": 22.4,
+            "nuki": 24.6,
+            "megmare": 16.9
+          },
+          {
+            "nige": 1.5,
+            "sashi": 6.2,
+            "makuri": 11.2,
+            "makuri_sashi": 16.8,
+            "nuki": 25.8,
+            "megmare": 38.1
+          }
+        ],
+        "frame_to_course": [
+          [
+            98.1,
+            1.7,
+            0.1,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.8,
+            91.4,
+            5.2,
+            2.0,
+            0.3,
+            0.0
+          ],
+          [
+            0.5,
+            3.0,
+            90.3,
+            4.5,
+            1.1,
+            0.3
+          ],
+          [
+            0.0,
+            1.3,
+            1.3,
+            87.4,
+            6.4,
+            3.4
+          ],
+          [
+            0.3,
+            1.5,
+            2.0,
+            4.0,
+            81.6,
+            10.3
+          ],
+          [
+            0.1,
+            1.1,
+            0.8,
+            1.8,
+            10.5,
+            85.3
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            64.5,
+            17.9,
+            5.9,
+            4.8,
+            3.5,
+            3.0
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            60.0,
+            15.4,
+            9.9,
+            6.1,
+            5.3,
+            3.0
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            61.6,
+            16.0,
+            7.6,
+            5.6,
+            4.9,
+            4.0
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            60.1,
+            18.7,
+            8.1,
+            5.1,
+            4.2,
+            3.5
+          ]
+        }
+      }
+    },
+    "20": {
+      "jcd": "20",
+      "name": "若松",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 58.9,
+            "sashi": 16.4,
+            "makuri": 10.8,
+            "makuri_sashi": 6.3,
+            "nuki": 4.1,
+            "megmare": 3.3
+          },
+          {
+            "nige": 13.7,
+            "sashi": 23.8,
+            "makuri": 21.4,
+            "makuri_sashi": 15.5,
+            "nuki": 14.2,
+            "megmare": 11.2
+          },
+          {
+            "nige": 10.9,
+            "sashi": 23.0,
+            "makuri": 22.1,
+            "makuri_sashi": 15.9,
+            "nuki": 14.6,
+            "megmare": 13.2
+          },
+          {
+            "nige": 10.5,
+            "sashi": 19.6,
+            "makuri": 16.8,
+            "makuri_sashi": 19.6,
+            "nuki": 19.3,
+            "megmare": 13.9
+          },
+          {
+            "nige": 4.9,
+            "sashi": 11.4,
+            "makuri": 17.1,
+            "makuri_sashi": 22.9,
+            "nuki": 25.4,
+            "megmare": 17.9
+          },
+          {
+            "nige": 1.5,
+            "sashi": 6.3,
+            "makuri": 12.4,
+            "makuri_sashi": 20.0,
+            "nuki": 22.0,
+            "megmare": 37.4
+          }
+        ],
+        "frame_to_course": [
+          [
+            98.0,
+            1.5,
+            0.1,
+            0.0,
+            0.0,
+            0.1
+          ],
+          [
+            1.1,
+            93.0,
+            3.7,
+            1.4,
+            0.3,
+            0.3
+          ],
+          [
+            0.6,
+            2.3,
+            91.4,
+            4.1,
+            0.7,
+            0.6
+          ],
+          [
+            0.0,
+            0.9,
+            2.2,
+            85.9,
+            7.4,
+            3.4
+          ],
+          [
+            0.1,
+            0.4,
+            1.1,
+            5.7,
+            81.9,
+            10.6
+          ],
+          [
+            0.1,
+            1.5,
+            1.2,
+            2.8,
+            9.6,
+            84.4
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            59.3,
+            16.0,
+            8.5,
+            6.2,
+            5.7,
+            4.0
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            55.1,
+            16.7,
+            9.7,
+            10.1,
+            5.9,
+            2.3
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            57.9,
+            17.9,
+            9.2,
+            5.4,
+            5.6,
+            3.8
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            64.0,
+            15.2,
+            8.8,
+            6.6,
+            3.0,
+            2.4
+          ]
+        }
+      }
+    },
+    "21": {
+      "jcd": "21",
+      "name": "芦屋",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 58.8,
+            "sashi": 15.8,
+            "makuri": 8.9,
+            "makuri_sashi": 5.2,
+            "nuki": 7.4,
+            "megmare": 3.7
+          },
+          {
+            "nige": 10.2,
+            "sashi": 23.8,
+            "makuri": 19.7,
+            "makuri_sashi": 17.6,
+            "nuki": 14.9,
+            "megmare": 13.5
+          },
+          {
+            "nige": 13.5,
+            "sashi": 20.5,
+            "makuri": 17.2,
+            "makuri_sashi": 18.8,
+            "nuki": 15.3,
+            "megmare": 14.5
+          },
+          {
+            "nige": 9.7,
+            "sashi": 19.8,
+            "makuri": 19.6,
+            "makuri_sashi": 19.0,
+            "nuki": 15.9,
+            "megmare": 15.6
+          },
+          {
+            "nige": 7.0,
+            "sashi": 15.7,
+            "makuri": 21.1,
+            "makuri_sashi": 19.4,
+            "nuki": 18.9,
+            "megmare": 17.7
+          },
+          {
+            "nige": 1.8,
+            "sashi": 5.5,
+            "makuri": 14.5,
+            "makuri_sashi": 20.8,
+            "nuki": 27.7,
+            "megmare": 29.4
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.1,
+            0.6,
+            0.0,
+            0.0,
+            0.0,
+            0.1
+          ],
+          [
+            0.6,
+            92.0,
+            6.8,
+            0.5,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.5,
+            89.2,
+            8.0,
+            0.6,
+            0.5
+          ],
+          [
+            0.1,
+            1.6,
+            2.8,
+            85.3,
+            7.5,
+            2.5
+          ],
+          [
+            0.0,
+            1.1,
+            0.6,
+            5.0,
+            84.9,
+            8.1
+          ],
+          [
+            0.1,
+            3.0,
+            0.6,
+            1.1,
+            7.0,
+            88.0
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            61.8,
+            17.0,
+            7.9,
+            4.8,
+            4.6,
+            3.6
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            54.4,
+            18.0,
+            10.8,
+            7.1,
+            4.8,
+            4.6
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            60.1,
+            15.3,
+            8.5,
+            7.0,
+            6.4,
+            2.4
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            63.7,
+            15.3,
+            7.7,
+            5.2,
+            4.5,
+            3.4
+          ]
+        }
+      }
+    },
+    "22": {
+      "jcd": "22",
+      "name": "福岡",
+      "water_type": "汽水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 59.0,
+            "sashi": 15.2,
+            "makuri": 10.5,
+            "makuri_sashi": 5.6,
+            "nuki": 5.8,
+            "megmare": 3.5
+          },
+          {
+            "nige": 14.3,
+            "sashi": 26.3,
+            "makuri": 21.6,
+            "makuri_sashi": 16.5,
+            "nuki": 13.7,
+            "megmare": 7.4
+          },
+          {
+            "nige": 15.9,
+            "sashi": 25.9,
+            "makuri": 17.0,
+            "makuri_sashi": 13.7,
+            "nuki": 18.0,
+            "megmare": 9.2
+          },
+          {
+            "nige": 7.2,
+            "sashi": 16.5,
+            "makuri": 22.6,
+            "makuri_sashi": 21.0,
+            "nuki": 17.5,
+            "megmare": 14.9
+          },
+          {
+            "nige": 3.1,
+            "sashi": 13.9,
+            "makuri": 19.2,
+            "makuri_sashi": 24.6,
+            "nuki": 22.2,
+            "megmare": 16.7
+          },
+          {
+            "nige": 1.3,
+            "sashi": 3.3,
+            "makuri": 10.2,
+            "makuri_sashi": 19.6,
+            "nuki": 23.0,
+            "megmare": 42.3
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.4,
+            0.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.5,
+            97.4,
+            1.5,
+            0.1,
+            0.0,
+            0.1
+          ],
+          [
+            0.0,
+            0.3,
+            96.8,
+            2.1,
+            0.3,
+            0.1
+          ],
+          [
+            0.0,
+            0.3,
+            1.1,
+            95.1,
+            2.7,
+            0.5
+          ],
+          [
+            0.0,
+            0.7,
+            0.0,
+            1.5,
+            89.5,
+            8.1
+          ],
+          [
+            0.0,
+            0.3,
+            0.5,
+            1.1,
+            7.3,
+            90.5
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            62.0,
+            16.6,
+            7.5,
+            6.2,
+            4.6,
+            2.8
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            55.1,
+            16.9,
+            9.8,
+            6.5,
+            4.9,
+            6.6
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            56.4,
+            19.1,
+            8.2,
+            5.8,
+            5.4,
+            4.7
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            58.1,
+            15.6,
+            8.0,
+            7.0,
+            6.4,
+            4.6
+          ]
+        }
+      }
+    },
+    "23": {
+      "jcd": "23",
+      "name": "唐津",
+      "water_type": "淡水",
+      "tidal": false,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 57.4,
+            "sashi": 19.1,
+            "makuri": 8.2,
+            "makuri_sashi": 6.8,
+            "nuki": 4.0,
+            "megmare": 4.2
+          },
+          {
+            "nige": 14.5,
+            "sashi": 28.0,
+            "makuri": 20.9,
+            "makuri_sashi": 14.8,
+            "nuki": 12.4,
+            "megmare": 9.2
+          },
+          {
+            "nige": 12.0,
+            "sashi": 22.1,
+            "makuri": 23.1,
+            "makuri_sashi": 18.4,
+            "nuki": 15.7,
+            "megmare": 8.4
+          },
+          {
+            "nige": 10.4,
+            "sashi": 14.8,
+            "makuri": 20.6,
+            "makuri_sashi": 20.8,
+            "nuki": 18.6,
+            "megmare": 14.5
+          },
+          {
+            "nige": 5.4,
+            "sashi": 11.7,
+            "makuri": 19.0,
+            "makuri_sashi": 22.2,
+            "nuki": 25.6,
+            "megmare": 15.8
+          },
+          {
+            "nige": 1.4,
+            "sashi": 5.3,
+            "makuri": 9.5,
+            "makuri_sashi": 18.0,
+            "nuki": 24.0,
+            "megmare": 41.5
+          }
+        ],
+        "frame_to_course": [
+          [
+            96.6,
+            2.9,
+            0.3,
+            0.0,
+            0.0,
+            0.1
+          ],
+          [
+            1.8,
+            89.3,
+            7.2,
+            1.3,
+            0.1,
+            0.0
+          ],
+          [
+            0.6,
+            3.4,
+            87.8,
+            7.2,
+            0.4,
+            0.3
+          ],
+          [
+            0.3,
+            2.0,
+            2.1,
+            85.8,
+            6.9,
+            2.7
+          ],
+          [
+            0.3,
+            1.2,
+            1.5,
+            4.6,
+            78.1,
+            14.0
+          ],
+          [
+            0.3,
+            1.0,
+            1.3,
+            0.9,
+            14.5,
+            81.7
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            57.9,
+            18.4,
+            8.5,
+            6.0,
+            4.6,
+            4.3
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            54.0,
+            17.8,
+            9.6,
+            7.1,
+            7.1,
+            4.0
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            53.3,
+            20.7,
+            9.2,
+            7.0,
+            4.4,
+            5.1
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            57.3,
+            17.6,
+            8.0,
+            6.6,
+            5.8,
+            4.5
+          ]
+        }
+      }
+    },
+    "24": {
+      "jcd": "24",
+      "name": "大村",
+      "water_type": "海水",
+      "tidal": true,
+      "motor_type": "減音",
+      "recent": {
+        "course_win_pct": [],
+        "winning_move": [
+          {
+            "nige": 57.6,
+            "sashi": 18.3,
+            "makuri": 7.1,
+            "makuri_sashi": 7.0,
+            "nuki": 4.8,
+            "megmare": 4.8
+          },
+          {
+            "nige": 11.7,
+            "sashi": 26.8,
+            "makuri": 19.1,
+            "makuri_sashi": 15.7,
+            "nuki": 15.4,
+            "megmare": 10.9
+          },
+          {
+            "nige": 12.0,
+            "sashi": 22.6,
+            "makuri": 20.6,
+            "makuri_sashi": 17.2,
+            "nuki": 15.0,
+            "megmare": 12.3
+          },
+          {
+            "nige": 9.7,
+            "sashi": 15.5,
+            "makuri": 19.9,
+            "makuri_sashi": 20.6,
+            "nuki": 20.4,
+            "megmare": 13.6
+          },
+          {
+            "nige": 7.5,
+            "sashi": 11.3,
+            "makuri": 17.8,
+            "makuri_sashi": 20.2,
+            "nuki": 21.7,
+            "megmare": 21.2
+          },
+          {
+            "nige": 2.1,
+            "sashi": 6.4,
+            "makuri": 16.4,
+            "makuri_sashi": 20.3,
+            "nuki": 22.3,
+            "megmare": 32.3
+          }
+        ],
+        "frame_to_course": [
+          [
+            99.1,
+            0.8,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.3,
+            95.6,
+            3.3,
+            0.4,
+            0.1,
+            0.0
+          ],
+          [
+            0.0,
+            0.3,
+            94.8,
+            3.8,
+            0.8,
+            0.1
+          ],
+          [
+            0.0,
+            0.8,
+            0.4,
+            92.1,
+            4.1,
+            2.3
+          ],
+          [
+            0.3,
+            0.8,
+            0.4,
+            2.1,
+            90.0,
+            6.1
+          ],
+          [
+            0.3,
+            1.6,
+            0.8,
+            1.4,
+            4.9,
+            90.6
+          ]
+        ]
+      },
+      "seasonal": {
+        "spring": {
+          "course_win_pct": [
+            59.0,
+            18.6,
+            7.4,
+            5.9,
+            5.7,
+            3.2
+          ]
+        },
+        "summer": {
+          "course_win_pct": [
+            57.5,
+            19.6,
+            8.8,
+            5.8,
+            4.7,
+            3.3
+          ]
+        },
+        "autumn": {
+          "course_win_pct": [
+            65.7,
+            14.8,
+            7.2,
+            5.3,
+            3.4,
+            3.3
+          ]
+        },
+        "winter": {
+          "course_win_pct": [
+            65.8,
+            16.0,
+            7.0,
+            4.5,
+            4.1,
+            2.2
+          ]
+        }
+      }
+    }
+  },
+  "_updated": "2026-08-16"
+}
