@@ -12,70 +12,82 @@
       "top3_pct": 0.0
     },
     "5": {
-      "races": 27,
+      "races": 28,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 0.0,
-      "5th_pct": 22.2,
-      "6th_pct": 77.8,
+      "4th_pct": 3.6,
+      "5th_pct": 21.4,
+      "6th_pct": 75.0,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     },
     "6": {
-      "races": 61,
+      "races": 62,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 6.6,
-      "5th_pct": 11.5,
-      "6th_pct": 82.0,
+      "4th_pct": 6.5,
+      "5th_pct": 11.3,
+      "6th_pct": 82.3,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     }
   },
   "hist_global_win_rate": 0.0,
   "hist_avg_st": {
-    "avg_st": 0.226,
-    "st_count": 82,
+    "avg_st": 0.225,
+    "st_count": 92,
     "course_st": {
       "5": 0.23,
-      "6": 0.226
+      "6": 0.225
     }
   },
   "gender": "F",
   "reg_no": "5435",
   "hist_exhibition": {
-    "overall_avg": 6.8,
-    "count": 82,
+    "overall_avg": 6.81,
+    "count": 92,
     "by_venue": {
       "17": {
-        "avg": 6.78,
-        "count": 15
+        "avg": 6.75,
+        "count": 32
+      },
+      "19": {
+        "avg": 6.82,
+        "count": 10
+      },
+      "14": {
+        "avg": 6.98,
+        "count": 5
+      },
+      "16": {
+        "avg": 6.82,
+        "count": 7
+      },
+      "23": {
+        "avg": 6.72,
+        "count": 11
+      },
+      "13": {
+        "avg": 6.9,
+        "count": 8
       },
       "10": {
-        "avg": 6.74,
-        "count": 2
+        "avg": 6.78,
+        "count": 4
       },
       "24": {
         "avg": 6.91,
-        "count": 6
-      },
-      "21": {
-        "avg": 6.9,
-        "count": 1
+        "count": 7
       },
       "12": {
         "avg": 6.88,
         "count": 8
-      },
-      "23": {
-        "avg": 6.75,
-        "count": 5
       }
     },
     "recent_avg": 6.82,
     "recent_count": 20,
-    "recent_deviation": 0.004
+    "recent_deviation": 0.019
   }
 }

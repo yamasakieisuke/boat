@@ -12,65 +12,73 @@
       "top3_pct": 0.0
     },
     "5": {
-      "races": 30,
+      "races": 32,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 3.3,
-      "5th_pct": 33.3,
-      "6th_pct": 63.3,
+      "4th_pct": 3.1,
+      "5th_pct": 31.2,
+      "6th_pct": 65.6,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     },
     "6": {
-      "races": 63,
+      "races": 70,
       "1st_pct": 0.0,
-      "2nd_pct": 1.6,
-      "3rd_pct": 4.8,
-      "4th_pct": 4.8,
+      "2nd_pct": 1.4,
+      "3rd_pct": 4.3,
+      "4th_pct": 4.3,
       "5th_pct": 14.3,
-      "6th_pct": 74.6,
-      "top2_pct": 1.6,
-      "top3_pct": 6.3
+      "6th_pct": 75.7,
+      "top2_pct": 1.4,
+      "top3_pct": 5.7
     }
   },
   "hist_global_win_rate": 0.0,
   "hist_avg_st": {
-    "avg_st": 0.199,
-    "st_count": 88,
+    "avg_st": 0.202,
+    "st_count": 104,
     "course_st": {
-      "6": 0.199
+      "6": 0.202
     }
   },
   "gender": "F",
   "reg_no": "5442",
   "hist_exhibition": {
     "overall_avg": 6.84,
-    "count": 90,
+    "count": 106,
     "by_venue": {
-      "20": {
-        "avg": 6.88,
+      "17": {
+        "avg": 6.74,
+        "count": 26
+      },
+      "19": {
+        "avg": 6.8,
+        "count": 10
+      },
+      "14": {
+        "avg": 6.97,
         "count": 6
       },
+      "16": {
+        "avg": 6.86,
+        "count": 26
+      },
+      "20": {
+        "avg": 6.9,
+        "count": 8
+      },
       "07": {
-        "avg": 6.77,
-        "count": 1
+        "avg": 6.79,
+        "count": 7
       },
       "22": {
         "avg": 6.89,
         "count": 9
       },
-      "17": {
-        "avg": 6.76,
-        "count": 9
-      },
       "13": {
         "avg": 6.91,
         "count": 8
-      },
-      "16": {
-        "avg": 6.84,
-        "count": 9
       },
       "24": {
         "avg": 7.01,
@@ -79,7 +87,7 @@
     },
     "recent_avg": 6.91,
     "recent_count": 20,
-    "recent_deviation": 0.001
+    "recent_deviation": -0.009
   },
   "hist_local_waku_stats": {
     "5": {

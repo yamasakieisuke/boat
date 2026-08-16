@@ -85,12 +85,12 @@
     "count": 106,
     "by_venue": {
       "21": {
-        "avg": 6.89,
-        "count": 9
+        "avg": 6.9,
+        "count": 12
       },
       "05": {
-        "avg": 6.8,
-        "count": 19
+        "avg": 6.79,
+        "count": 16
       },
       "17": {
         "avg": 6.73,
@@ -105,12 +105,8 @@
         "count": 6
       },
       "10": {
-        "avg": 6.71,
-        "count": 4
-      },
-      "09": {
-        "avg": 6.92,
-        "count": 4
+        "avg": 6.72,
+        "count": 5
       },
       "15": {
         "avg": 6.98,
@@ -121,16 +117,28 @@
         "count": 8
       },
       "04": {
+        "avg": 6.85,
+        "count": 1
+      },
+      "09": {
+        "avg": 6.98,
+        "count": 3
+      },
+      "02": {
         "avg": 6.86,
-        "count": 4
+        "count": 6
       },
       "11": {
-        "avg": 6.79,
-        "count": 13
+        "avg": 6.77,
+        "count": 6
+      },
+      "07": {
+        "avg": 6.8,
+        "count": 7
       }
     },
     "recent_avg": 6.82,
     "recent_count": 20,
-    "recent_deviation": 0.012
+    "recent_deviation": 0.002
   }
 }
