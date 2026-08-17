@@ -23,15 +23,15 @@
       "top3_pct": 64.6
     },
     "3": {
-      "races": 69,
-      "1st_pct": 14.5,
-      "2nd_pct": 26.1,
-      "3rd_pct": 21.7,
-      "4th_pct": 15.9,
-      "5th_pct": 13.0,
-      "6th_pct": 8.7,
-      "top2_pct": 40.6,
-      "top3_pct": 62.3
+      "races": 70,
+      "1st_pct": 14.3,
+      "2nd_pct": 27.1,
+      "3rd_pct": 21.4,
+      "4th_pct": 15.7,
+      "5th_pct": 12.9,
+      "6th_pct": 8.6,
+      "top2_pct": 41.4,
+      "top3_pct": 62.9
     },
     "4": {
       "races": 50,
@@ -45,15 +45,15 @@
       "top3_pct": 66.0
     },
     "5": {
-      "races": 56,
-      "1st_pct": 5.4,
-      "2nd_pct": 25.0,
-      "3rd_pct": 30.4,
-      "4th_pct": 16.1,
-      "5th_pct": 17.9,
-      "6th_pct": 5.4,
-      "top2_pct": 30.4,
-      "top3_pct": 60.7
+      "races": 57,
+      "1st_pct": 5.3,
+      "2nd_pct": 26.3,
+      "3rd_pct": 29.8,
+      "4th_pct": 15.8,
+      "5th_pct": 17.5,
+      "6th_pct": 5.3,
+      "top2_pct": 31.6,
+      "top3_pct": 61.4
     },
     "6": {
       "races": 57,
@@ -67,16 +67,16 @@
       "top3_pct": 38.6
     }
   },
-  "hist_global_win_rate": 22.93,
+  "hist_global_win_rate": 22.81,
   "hist_avg_st": {
     "avg_st": 0.145,
-    "st_count": 375,
+    "st_count": 377,
     "course_st": {
       "1": 0.143,
       "2": 0.15,
-      "3": 0.142,
+      "3": 0.144,
       "4": 0.131,
-      "5": 0.143,
+      "5": 0.141,
       "6": 0.157
     }
   },
@@ -84,7 +84,7 @@
   "reg_no": "4710",
   "hist_exhibition": {
     "overall_avg": 6.81,
-    "count": 375,
+    "count": 377,
     "by_venue": {
       "05": {
         "avg": 6.77,
@@ -159,8 +159,8 @@
         "count": 18
       },
       "14": {
-        "avg": 6.96,
-        "count": 10
+        "avg": 6.93,
+        "count": 12
       },
       "11": {
         "avg": 6.72,
@@ -175,9 +175,9 @@
         "count": 10
       }
     },
-    "recent_avg": 6.79,
+    "recent_avg": 6.8,
     "recent_count": 20,
-    "recent_deviation": -0.064
+    "recent_deviation": -0.074
   },
   "hist_local_waku_stats": {
     "1": {
