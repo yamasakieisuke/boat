@@ -151,13 +151,27 @@ def fetch_text(date_str: str) -> str | None:
 def parse_text(text: str, date_str: str) -> list[dict]:
     lines = text.splitlines()
 
-    # 払戻サマリーを先に収集（先頭ブロック）
-    pay_db: dict[int, dict] = {}
+    # 払戻サマリーを先に収集（各会場ブロックの先頭にある）
+    #
+    # ⚠️ キーは (会場, レース番号)。レース番号だけで引くと、LZHは全24会場ぶんが
+    # 1ファイルに入っているため「ファイル最後の会場」の値で上書きされる。
+    # 通常は後段の個別払戻行(RE_PAY)が会場ごとに上書きするので表面化しないが、
+    # **その舟券種が不成立だと上書きが起きず、他会場の払戻が残る**。
+    # 実例: 20250316 丸亀12R は3連複が不成立なのに trio=1-2-3（他会場の値）が入っていた。
+    # 2026-08-18 に整合性チェッカーが122件（全レースの0.16%）を検出して判明。
+    pay_db: dict[tuple, dict] = {}
+    _pre_venue = ""
     for line in lines:
+        if 'ボートレース' in line and re.search(r'\d{4}/', line):
+            _m = RE_VENUE.search(line)
+            if _m:
+                _vn = clean(_m.group(1)).replace('\u3000', '').replace(' ', '').strip()
+                if _vn:
+                    _pre_venue = _vn
         m = RE_SUM.match(line)
         if m:
             rn = int(m.group(1))
-            pay_db[rn] = {
+            pay_db[(_pre_venue, rn)] = {
                 "won3": m.group(2), "won3_pay": m.group(3),
                 "trio": m.group(4), "trio_pay": m.group(5),
                 "won2": m.group(6), "won2_pay": m.group(7),
@@ -177,7 +191,7 @@ def parse_text(text: str, date_str: str) -> list[dict]:
 
     def flush():
         nonlocal cur_ranks
-        pd = pay_db.get(race_no, {})
+        pd = pay_db.get((venue_name, race_no), {})
         for r in cur_ranks:
             records.append({
                 "date": date_str, "venue_name": venue_name,
@@ -256,7 +270,7 @@ def parse_text(text: str, date_str: str) -> list[dict]:
             comb = m.group(2)
             pay  = m.group(3)
             pop  = m.group(4) or ""
-            rn   = race_no
+            rn   = (venue_name, race_no)
             if rn not in pay_db:
                 pay_db[rn] = {k:"" for k in ["won3","won3_pay","won3_pop",
                                               "won2","won2_pay","won2_pop",

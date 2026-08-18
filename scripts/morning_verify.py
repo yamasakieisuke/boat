@@ -236,6 +236,48 @@ def save_results_csv(date_str: str, all_rows: dict[str, list]) -> list[str]:
     return saved
 
 
+def run_integrity_check(date_str: str) -> bool:
+    """結果CSVを書き出した直後に整合性チェックを走らせる。
+
+    2026-08-16 の会場ズレ事故（LZHパーサの flush() タイミング誤りで各会場の最終レースが
+    隣の会場の成績として記録されていた）を1年半見逃した反省から常設したゲート。
+    検査内容は scripts/check_results_integrity.py を参照。
+
+    ⚠️ 違反があっても verify は止めない。夜間バッチが1つの警告で全部止まると
+    かえって運用が壊れるため、ここは「目立つ警告を出す」までに徹する。
+    戻り値は ERROR が無ければ True。
+    """
+    print(f"\n【整合性チェック】{date_str}")
+    try:
+        from check_results_integrity import check_day, format_report
+        report = check_day(date_str)
+        lines = format_report(report, limit=10, show_info=False)
+    except Exception as e:
+        # チェッカー側の不具合で verify を落とさない
+        print(f"  [WARN] 整合性チェックを実行できませんでした: {e}")
+        return True
+
+    for line in lines:
+        print(line)
+
+    if report.error_count:
+        bar = "!" * 64
+        print(f"\n{bar}")
+        print(f"  [ERROR] 結果データの整合性違反 {report.error_count}件: {date_str}")
+        print( "  取り込みが壊れている可能性が高い。verify・回収率・build_stats の")
+        print( "  すべてがこのCSVを土台にしているため、放置すると下流が静かに壊れる。")
+        print(f"  詳細: python3 scripts/check_results_integrity.py --date {date_str}")
+        print(f"{bar}\n")
+        print("  ※ verify は続行する（バッチは止めない）")
+        return False
+
+    if report.warn_count:
+        print(f"  [WARN] 要確認 {report.warn_count}件（中止・順延・不成立なら正常）")
+    else:
+        print("  ✓ 整合性チェック OK")
+    return True
+
+
 def run_verify(date_str: str, jcds: list[str]):
     """各 JCD について verify.py を実行し、成功した JCD は WordPress へ振り返りを再送信する"""
     for jcd in jcds:
@@ -304,6 +346,9 @@ def main():
         for jcd, rows in html_rows.items():
             all_rows[jcd] = rows
         saved_jcds = save_results_csv(date_str, all_rows)
+
+        # 書き出した結果CSVの不変条件チェック（違反しても verify は止めない）
+        run_integrity_check(date_str)
     else:
         # verify-only の場合は CSV 既存前提で全 JCD を対象にする
         saved_jcds = jcds
