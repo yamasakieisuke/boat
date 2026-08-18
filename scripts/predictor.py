@@ -406,7 +406,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.25"
+PREDICTOR_VERSION = "v5.26"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
@@ -2138,7 +2138,18 @@ def _suggest_3rentan(scored: list, weather=None,
     )
 
     main_seconds = [w for w, _, _ in seq_ranked[:2]] or p[1:3]
-    main_thirds_base = [waku for waku in p[:5] if waku not in {p[0], *main_seconds}]
+    # v5.26 (2026-08-18): 3着候補から2着候補を除外しない。
+    #
+    # 従来は `waku not in {p[0], *main_seconds}` として2着候補を3着から外していた。
+    # そのため 2着候補が {2,3} のとき（頭=1号艇では最頻のケース）本命4点は
+    # 1-2-4 / 1-2-5 / 1-3-4 / 1-3-5 になり、**1-2-3 と 1-3-2 を構造的に買えなかった**。
+    # ところが実測（1号艇が1着の42,044レース）では
+    #   1-2-3 12.94%（1位） / 1-3-2 10.03%（2位）
+    # で、この2つだけで該当レースの約23%を占める。最も当たる出目を買わない
+    # 作りになっていた。
+    # _expand_formation 側は combo ごとに third in {first, second} を弾くので、
+    # 除外を外しても 1-2-2 のような不正な出目は生成されない。
+    main_thirds_base = [waku for waku in p[:5] if waku != p[0]]
     main_thirds = main_thirds_base[:3] if main_thirds_base else [p[2], p[3]]
     main_formation_reason = "本線フォーメーション"
     if combo_stats and main_seconds:
