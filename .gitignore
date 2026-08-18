@@ -17,6 +17,13 @@ logs/
 # Exception: fetch_pending.yml が読む依頼ファイル（predict.yml watchlist が書き込む）
 !data/fetch_requests.json
 
+# Exception: オッズのアーカイブ（2026-08-18）
+# 市場の値付けを持たない限り「どこで市場が間違えているか」は探せない。
+# オッズページは当日〜数日しか遡れないので、取り逃すと二度と手に入らない。
+# 1日1ファイル(gz)にまとめて年間46MB程度。レース単位でファイルを作らないこと。
+!data/odds_archive/
+!data/odds_archive/**
+
 # Exception: 会場特性（v5.25 / 2026-08-16）
 # predictor.calc_venue_course_mod() はこれが無いと `if not venue: return base` で
 # 即座に抜ける。つまり会場・季節・潮汐の補正が丸ごと無効化される。

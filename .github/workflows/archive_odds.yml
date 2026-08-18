@@ -1,0 +1,90 @@
+name: Boat Archive Odds
+
+# その日の全レースの3連単オッズを保存する。
+#
+# 目的: 分析で「公開データで観測できることは全部オッズに織り込まれている」ことが
+# 繰り返し確認された（会場特性は 1コース1着率と回収率の相関が +0.02、頭の入れ替えは
+# 1号艇頭77.8% vs 2号艇頭78.0%）。市場の値付けを持たない限り「どこで市場が
+# 間違えているか」は探せない。その土台を作るのがこのワークフロー。
+#
+# タイミング: オッズページは当日〜数日しか遡れない（実測: 前日は取得可、7日前は不可）。
+# 一方で発走後のオッズは確定値なので、全レース終了後にまとめて取ればよい。
+# 最も遅い会場でも発走は20:50頃なので 21:30 JST に実行する。
+
+on:
+  schedule:
+    # 21:30 JST = 12:30 UTC（全レース終了後）
+    - cron: '30 12 * * *'
+    # 取りこぼし回収。23:40 JST = 14:40 UTC（取得済みはスキップされる）
+    - cron: '40 14 * * *'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: '対象日付 YYYYMMDD（空欄=実行時点の今日 JST）'
+        type: string
+        default: ''
+      sleep:
+        description: '1リクエストごとの待機秒（既定1.5）'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+concurrency:
+  group: boat-archive-odds
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    name: オッズ保存
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: オッズ取得
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          SLEEP="${{ github.event.inputs.sleep }}"
+          if [ -z "$SLEEP" ]; then SLEEP=1.5; fi
+          DATE="${{ github.event.inputs.date }}"
+          if [ -n "$DATE" ]; then
+            python3 scripts/archive_odds.py --date "$DATE" --sleep "$SLEEP"
+          else
+            python3 scripts/archive_odds.py --sleep "$SLEEP"
+          fi
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/odds_archive/ 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            git commit -m "odds: オッズ保存 ($(TZ=Asia/Tokyo date +%Y%m%d))"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin main && git push origin main && break
+              echo "push retry $i"
+              sleep 5
+            done
+          else
+            echo "no odds changes"
+          fi
