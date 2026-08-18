@@ -10,6 +10,10 @@ on:
         description: '対象日付 YYYYMMDD（空欄=実行時点の昨日 JST。夜バッチで cron 発火時は当日 JST = レース実施日）'
         type: string
         default: ''
+      backfill_days:
+        description: '過去何日ぶんの verify を作り直すか（0=しない）。結果CSVを直したときの再計算用。既定3日は毎晩自動で走る'
+        type: string
+        default: ''
 
 permissions:
   actions: read
@@ -81,6 +85,53 @@ jobs:
           python3 scripts/build_stats.py 2>&1 | tail -10
         env:
           TZ: Asia/Tokyo
+
+      # ── 直近N日の verify を作り直す（D-6 / 2026-08-18）──────────────
+      # verify_history は「その時点の results_csv」で計算された結果を持つ。
+      # 2026-08-16 に会場ズレのバグを直して505日ぶんを再生成したが、
+      # 既に記録済みの verify_history は古い（汚染データ由来の）値のままだった。
+      #
+      # 手で直すと同じことが起きるたびに手作業になるので、**毎晩、直近数日を
+      # 作り直す**ことで自動的に追従させる。predlogs artifact の保持は90日
+      # （predict.yml）なので、その範囲なら結果CSVを直せば自然に反映される。
+      #
+      # 結果CSVはリポジトリに入っているので --verify-only で再取得は不要。
+      - name: 直近N日の verify を作り直す
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WP_SYNC_URL: ${{ secrets.WP_SYNC_URL }}
+          WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
+          TZ: Asia/Tokyo
+        run: |
+          DAYS="${{ github.event.inputs.backfill_days }}"
+          if [ -z "$DAYS" ]; then DAYS=3; fi
+          case "$DAYS" in
+            ''|*[!0-9]*) echo "backfill_days='$DAYS' は数値でないのでスキップ"; exit 0 ;;
+          esac
+          if [ "$DAYS" -eq 0 ]; then echo "backfill_days=0 のためスキップ"; exit 0; fi
+          echo "直近 ${DAYS} 日の verify を作り直します"
+
+          # predict.yml の run 一覧は1回だけ取る（毎日ぶん叩かない）
+          RUNS=$(gh run list --workflow=predict.yml --limit=60 --json databaseId --jq '.[].databaseId')
+
+          for i in $(seq 1 "$DAYS"); do
+            D=$(TZ=Asia/Tokyo date -d "-${i} day" +%Y%m%d)
+            if [ ! -f "data/results_csv/${D}.csv" ]; then
+              echo "  ${D}: 結果CSVが無いのでスキップ"; continue
+            fi
+            mkdir -p "data/logs/${D}"
+            FOUND=0
+            for RUN_ID in $RUNS; do
+              if gh run download "$RUN_ID" --name "predlogs-${D}" --dir "data/logs/${D}" 2>/dev/null; then
+                FOUND=1; break
+              fi
+            done
+            if [ "$FOUND" -eq 0 ]; then
+              echo "  ${D}: predlogs が見つからないのでスキップ（保持期間切れ）"; continue
+            fi
+            echo "  ${D}: 再verify"
+            python3 scripts/morning_verify.py --date "$D" --verify-only 2>&1 | tail -5
+          done
 
       # 週次精度レポート（P0-1）
       # verify_history.json を git に載せているので、--no-refresh で当該週の

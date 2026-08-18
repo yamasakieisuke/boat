@@ -330,10 +330,14 @@ def save_verify_log(summary: dict):
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     history = load_verify_history()
 
-    # 同一キーがあれば上書き
-    key = (summary["run_date"], summary["jcd"], summary["date_from"], summary["date_to"])
+    # 同一キーがあれば上書き。
+    # ⚠️ run_date はキーに含めない。含めると「結果CSVを直して再verifyした」ときに
+    # 古い（誤った）レコードが別の run_date として残り、update_verify_html の
+    # 会場別・月別集計で二重計上される。同じ会場・同じ期間の検証結果は
+    # 常に最新の実行だけを残すのが正しい。
+    key = (summary["jcd"], summary["date_from"], summary["date_to"])
     history = [r for r in history
-               if (r["run_date"], r["jcd"], r["date_from"], r["date_to"]) != key]
+               if (r["jcd"], r["date_from"], r["date_to"]) != key]
     history.append(summary)
     history = _prune_history(history)
     history.sort(key=lambda r: (r["run_date"], r["jcd"]))
