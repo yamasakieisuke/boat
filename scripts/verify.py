@@ -283,13 +283,27 @@ def evaluate_bets(pred_log: dict, actual_won3: str) -> dict:
         for i, c in enumerate(combos):
             bet_cells.append(("本命", i, c))
 
+    # ⚠️ 的中判定は必ず bet_cells（実際に公開・購入する買い目）で行う。
+    # pred_log["bets"] は predictor が生成した全候補で、v5.24 の点数上限
+    # （本命+対抗+抑え=4点 / 穴1点）で切り落とした分も入ったままになっている。
+    # 実測では bets=17点 に対し honmei+others=8点 という差があり、
+    # hit_bet_any を bets 基準で取ると**買っていない買い目での的中を数えてしまう**。
+    # 2026-08-19、週次レポートで overall回収率52.9% と by_version回収率129.8% が
+    # 食い違ったことから発覚（点数は同じ801点なのに払戻が42,360円 vs 103,940円）。
+    cell_combos = [c for _, _, c in bet_cells]
+    hit_cell_index = next((i for i, c in enumerate(cell_combos) if c == actual_won3), -1)
+
     return {
         "bet_combos":  combos,
         "bet_cells":   bet_cells,
-        "hit_bet_any": hit_index >= 0,
-        "hit_bet1":    hit_index == 0,
-        "hit_bet2":    hit_index == 1,
-        "hit_bet3":    hit_index == 2,
+        "cell_combos": cell_combos,
+        # ★主指標: 公開する買い目のいずれかが的中したか
+        "hit_bet_any": hit_cell_index >= 0,
+        "hit_bet1":    hit_cell_index == 0,
+        "hit_bet2":    hit_cell_index == 1,
+        "hit_bet3":    hit_cell_index == 2,
+        # 参考: 切り落とす前の全候補での的中（点数削減で失った的中の把握用）
+        "hit_raw_any": hit_index >= 0,
         # v5.16
         "honmei_combos": honmei_combos,
         "others_combos": others_combos,
@@ -1063,7 +1077,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         p_wakus = p_waku[:3]
 
         # ── 買い目3点を予測リストから再構成 ─────────────────
-        logged_bets = bet_ev["bet_combos"]
+        # 頭の判定も公開する買い目の先頭で行う（bet_combos は切り落とし前なので使わない）
+        logged_bets = bet_ev.get("cell_combos") or bet_ev["bet_combos"]
         if logged_bets:
             combo1 = logged_bets[0] if len(logged_bets) >= 1 else "---"
             combo2 = logged_bets[1] if len(logged_bets) >= 2 else "---"
