@@ -11,7 +11,7 @@ on:
         type: string
         default: ''
       backfill_days:
-        description: '過去何日ぶんの verify を作り直すか（0=しない）。結果CSVを直したときの再計算用。既定3日は毎晩自動で走る'
+        description: '過去何日ぶんの verify を作り直すか（0=しない）。結果CSVを直したときの再計算用。既定7日は毎晩自動で走る'
         type: string
         default: ''
 
@@ -104,7 +104,7 @@ jobs:
           TZ: Asia/Tokyo
         run: |
           DAYS="${{ github.event.inputs.backfill_days }}"
-          if [ -z "$DAYS" ]; then DAYS=3; fi
+          if [ -z "$DAYS" ]; then DAYS=7; fi
           case "$DAYS" in
             ''|*[!0-9]*) echo "backfill_days='$DAYS' は数値でないのでスキップ"; exit 0 ;;
           esac
