@@ -67,7 +67,7 @@
       "top3_pct": 29.8
     }
   },
-  "hist_global_win_rate": 18.6,
+  "hist_global_win_rate": 18.48,
   "hist_avg_st": {
     "avg_st": 0.155,
     "st_count": 328,
@@ -84,7 +84,7 @@
   "reg_no": "4156",
   "hist_exhibition": {
     "overall_avg": 6.81,
-    "count": 328,
+    "count": 330,
     "by_venue": {
       "15": {
         "avg": 6.77,
@@ -95,8 +95,8 @@
         "count": 16
       },
       "23": {
-        "avg": 6.76,
-        "count": 5
+        "avg": 6.75,
+        "count": 6
       },
       "09": {
         "avg": 6.84,
@@ -116,7 +116,7 @@
       },
       "12": {
         "avg": 6.93,
-        "count": 39
+        "count": 40
       },
       "11": {
         "avg": 6.84,
@@ -169,7 +169,7 @@
     },
     "recent_avg": 6.84,
     "recent_count": 20,
-    "recent_deviation": 0.017
+    "recent_deviation": 0.018
   },
   "hist_local_waku_stats": {
     "1": {

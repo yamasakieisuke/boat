@@ -106,6 +106,16 @@ def compute_waku_stats(rows_for_player: list[dict]) -> dict:
         }
     return result
 
+# 非完走艇の着順コード（D-9 で拾えるようにした行）。
+# F/L/S は「出走した」ので分母に数える。K0/K1（欠場）は出走していないので除外する。
+ABSENT_RANK_CODES = {"K0", "K1"}
+
+
+def started_rows(rows: list[dict]) -> list[dict]:
+    """出走した行だけを返す（欠場を除く）。勝率の分母に使う。"""
+    return [r for r in rows if (r.get("rank") or "").strip() not in ABSENT_RANK_CODES]
+
+
 def compute_st_stats(rows_for_player: list[dict]) -> dict:
     """平均STを集計（course_enter 別）"""
     sts = []
@@ -225,8 +235,10 @@ def build_player_stats(all_rows: list[dict], local_rows: list[dict], local_jcd: 
         # 全国統計
         if g_rows:
             existing["hist_global_waku_stats"] = compute_waku_stats(g_rows)
+            g_started = started_rows(g_rows)
             existing["hist_global_win_rate"]   = round(
-                sum(1 for r in g_rows if r.get("rank","").strip() == "1") / len(g_rows) * 100, 2
+                sum(1 for r in g_started if r.get("rank","").strip() == "1")
+                / max(len(g_started), 1) * 100, 2
             )
             st_info = compute_st_stats(g_rows)
             if st_info:
@@ -238,8 +250,10 @@ def build_player_stats(all_rows: list[dict], local_rows: list[dict], local_jcd: 
         # 当地統計
         if l_rows:
             existing["hist_local_waku_stats"]  = compute_waku_stats(l_rows)
+            l_started = started_rows(l_rows)
             existing["hist_local_win_rate"]    = round(
-                sum(1 for r in l_rows if r.get("rank","").strip() == "1") / len(l_rows) * 100, 2
+                sum(1 for r in l_started if r.get("rank","").strip() == "1")
+                / max(len(l_started), 1) * 100, 2
             )
 
         with open(existing_path, "w", encoding="utf-8") as f:
@@ -315,6 +329,7 @@ def build_motor_stats(local_rows: list[dict], jcd: str):
     save_dir.mkdir(parents=True, exist_ok=True)
 
     for motor_no, rows in by_motor.items():
+        rows  = started_rows(rows)   # 欠場は出走に数えない
         total = len(rows)
         if total == 0:
             continue

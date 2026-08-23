@@ -129,8 +129,12 @@ def load_results_for_date(date_str: str) -> dict[tuple[str, int], dict]:
                 "won3_pop": int(row.get("won3_pop", 0) or 0),
                 "race_type": row.get("race_type", "").strip(),
             })
-            rank = int(row.get("rank", 0) or 0)
-            waku = int(row.get("waku", 0) or 0)
+            # rank は非完走艇だと "F"/"S1"/"K0" 等のコードが入る（着順を持たない艇）
+            try:
+                rank = int(row.get("rank", 0) or 0)
+                waku = int(row.get("waku", 0) or 0)
+            except ValueError:
+                continue
             if rank and waku:
                 results[key]["racers"].append({"rank": rank, "waku": waku})
     return results

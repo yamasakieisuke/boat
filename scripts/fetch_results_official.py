@@ -303,7 +303,13 @@ def write_day_csv(date_str: str, jcd: str, rows_out: list[dict], replace: bool) 
         venue_name = JCD_TO_VENUE[jcd]
         existing = [r for r in existing if not (r.get("date") == date_str and r.get("venue_name") == venue_name)]
     existing.extend(rows_out)
-    existing.sort(key=lambda r: (r.get("date", ""), r.get("venue_name", ""), int(r.get("race_no") or 0), int(r.get("rank") or 99)))
+    def _rank_key(r: dict) -> int:
+        """非完走艇の rank は "F"/"S1"/"K0" 等のコード。数値でなければ末尾に送る。"""
+        v = str(r.get("rank") or "").strip()
+        return int(v) if v.isdigit() else 99
+
+    existing.sort(key=lambda r: (r.get("date", ""), r.get("venue_name", ""),
+                                 int(r.get("race_no") or 0), _rank_key(r)))
     with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_HEADER)
         writer.writeheader()

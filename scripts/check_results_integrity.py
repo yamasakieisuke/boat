@@ -159,6 +159,11 @@ class Report:
 
 # ── 補助 ───────────────────────────────────────────────
 
+# 非完走艇の着順コード（LZH 帳票の着順欄）。着順を持たない艇なので数値化しない。
+#   F  = フライング   L0/L1 = 出遅れ   K0/K1 = 欠場   S0/S1/S2 = 失格・妨害失格
+NONFINISH_RANK_CODES = {"F", "L0", "L1", "K0", "K1", "S0", "S1", "S2"}
+
+
 def _int_or_none(s: Optional[str]) -> Optional[int]:
     try:
         return int(str(s).strip())
@@ -220,10 +225,13 @@ def _check_rows(date_str: str, rows: List[dict], report: Report) -> None:
                                  f"waku={r.get('waku')!r}", venue, race_no))
 
         # rank=0 は LZH の "00"（レース不成立）。値としては許すが下で別途 WARN。
-        rank = _int_or_none(r.get("rank"))
-        if rank is None or not (0 <= rank <= MAX_BOATS):
-            report.add(Violation(date_str, ERROR, "rank_out_of_range",
-                                 f"rank={r.get('rank')!r}", venue, race_no))
+        # 非完走艇は "F"/"S1"/"K0" 等のコードが入る（D-9 で拾えるようにした行）。
+        rank_raw = (r.get("rank") or "").strip()
+        rank = _int_or_none(rank_raw)
+        if rank_raw not in NONFINISH_RANK_CODES:
+            if rank is None or not (0 <= rank <= MAX_BOATS):
+                report.add(Violation(date_str, ERROR, "rank_out_of_range",
+                                     f"rank={r.get('rank')!r}", venue, race_no))
 
         course = (r.get("course_enter") or "").strip()
         if course:
@@ -296,10 +304,10 @@ def _check_race_block(date_str: str, venue: str, race_no: str, rs: List[dict],
         report.add(Violation(date_str, ERROR, "race_row_overflow",
                              f"{n}行（上限{MAX_BOATS}）。別レースの混入を疑う", venue, race_no))
     elif n < MAX_BOATS:
-        # 既知の限界（D-9）。F/失格/転覆の艇が行ごと落ちるため 6.5% で発生する。
-        # ERROR にすると毎日鳴るので INFO 止まり。
-        report.add(Violation(date_str, INFO, "race_incomplete",
-                             f"{n}艇のみ（F/失格/転覆の行落ち。既知: RE_RANK の制約）",
+        # D-9 修正（非完走艇の行を拾うようにした）以降、6艇そろわないのは本当の欠損。
+        # 5人立て等も実在しうるため WARN 止まりだが、増えたら要調査。
+        report.add(Violation(date_str, WARN, "race_incomplete",
+                             f"{n}艇のみ（欠場を含めても6艇に満たない）",
                              venue, race_no))
 
     # ② 枠番の重複

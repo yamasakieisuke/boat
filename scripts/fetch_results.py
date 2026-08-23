@@ -66,6 +66,15 @@ RE_RANK = re.compile(
     r'^\s{2}(\d{2})\s{2}(\d)\s(\d{4})\s(.+?)\s+'
     r'(\d{1,3})\s+(\d{1,3})\s+(\d\.\d{2})\s+(\d)\s+([\dF.]+)\s*([\d:. ]*)'
 )
+# 非完走艇の着順行（失格・欠場・フライング・出遅れ）
+# 例: '  S1  2 5011 高 木  圭 大 54  137  6.74   2    0.12      .  . '
+#     '  K0  1 4377 濱 本  優 一 40   14 K .         K .        .  . '
+# 着順欄が2桁数字でないため RE_RANK に一致せず、行ごと落ちていた（全レースの6.5%＝
+# 5,069レースが6艇未満。進入コース・展示タイム・F/L情報が丸ごと失われていた）。
+# この帳票は58桁固定レイアウトで、正常行455,394件について列スライスが RE_RANK の
+# 抽出結果と完全一致することを確認済み。非完走行だけ列位置で切り出す。
+RE_RANK_NF = re.compile(r'^\s{2}(F |L0|L1|K0|K1|S0|S1|S2)\s{2}\d\s\d{4}\s')
+
 # 払戻行（個別レース内）
 RE_PAY = re.compile(
     r'(３連単|２連単|３連複|２連複)\s+([\d-]+)\s+(\d+)(?:\s+人気\s+(\d+))?'
@@ -263,6 +272,28 @@ def parse_text(text: str, date_str: str) -> list[dict]:
             })
             continue
 
+        # 非完走艇の着順行 → rank に F/L0/K0/S1 等のコードを入れて残す。
+        # rank が数値でない行は下流の統計ビルダー側で弾かれる（着順を持たない艇なので
+        # 勝率等に混ぜてはいけない）が、進入・展示・ST は生きたデータとして残る。
+        m = RE_RANK_NF.match(nl)
+        if m and race_no > 0 and len(nl) >= 58:
+            def _num(v: str) -> str:
+                v = v.strip()
+                return v if re.search(r'\d', v) else ""
+            cur_ranks.append({
+                "rank":            m.group(1).strip(),
+                "waku":            nl[6],
+                "reg_no":          nl[8:12],
+                "name":            clean(nl[13:21]),
+                "motor_no":        nl[21:25].strip(),
+                "boat_no":         nl[25:31].strip(),
+                "exhibition_time": _num(nl[31:36]),
+                "course_enter":    _num(nl[36:40]),
+                "st_timing":       _num(nl[40:48]),
+                "race_time":       "",
+            })
+            continue
+
         # 人気行（個別レース内払戻）→ pop を補完
         m = RE_PAY.search(line)
         if m:
@@ -377,7 +408,13 @@ def process_day(date_str: str) -> list[dict]:
             else:
                 print(f"[INFO] 公式結果未公開 {date_str} {jcd}")
     if records:
-        records.sort(key=lambda r: (r.get("venue_name", ""), int(r.get("race_no", 0) or 0), int(r.get("rank", 99) or 99)))
+        # 非完走艇の rank は "F"/"S1"/"K0" 等のコードなので数値化できない → 末尾に送る
+        def _rank_key(r: dict) -> int:
+            v = str(r.get("rank") or "").strip()
+            return int(v) if v.isdigit() else 99
+
+        records.sort(key=lambda r: (r.get("venue_name", ""),
+                                    int(r.get("race_no", 0) or 0), _rank_key(r)))
         # v5.21: 福岡レコードにオリジナル展示（一周/まわり足/直線）を join
         _attach_fukuoka_original_exhibition(records, date_str)
         write_csv(records, CSV_DIR / f"{date_str}.csv", append=False)

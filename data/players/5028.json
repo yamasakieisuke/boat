@@ -67,7 +67,7 @@
       "top3_pct": 31.6
     }
   },
-  "hist_global_win_rate": 32.26,
+  "hist_global_win_rate": 32.09,
   "hist_avg_st": {
     "avg_st": 0.16,
     "st_count": 372,
@@ -153,7 +153,7 @@
   "hist_local_win_rate": 30.0,
   "hist_exhibition": {
     "overall_avg": 6.77,
-    "count": 372,
+    "count": 374,
     "by_venue": {
       "10": {
         "avg": 6.72,
@@ -165,7 +165,7 @@
       },
       "17": {
         "avg": 6.66,
-        "count": 36
+        "count": 37
       },
       "06": {
         "avg": 6.67,
@@ -173,7 +173,7 @@
       },
       "20": {
         "avg": 6.83,
-        "count": 68
+        "count": 69
       },
       "02": {
         "avg": 6.68,
@@ -234,6 +234,6 @@
     },
     "recent_avg": 6.96,
     "recent_count": 20,
-    "recent_deviation": 0.094
+    "recent_deviation": 0.095
   }
 }
