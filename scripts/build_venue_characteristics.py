@@ -10,12 +10,17 @@
 `data/results_csv/`（2026-08-16 に修復済み・約76,800レース）の実測から作る。
 
 方針:
-  race_no_tendency … 中立(1.0)。効果自体は実測で大きい（late帯のコース1は全国平均比
-                     +15%超）が、R9-12 は優勝戦・準優勝戦を多く含み、それらには
-                     既に RACE_TYPE_BONUS["finalist"]=1.12 が course_advantage に
-                     掛かっている。ここにも入れると二重計上になる。
-                     レース番号を独立に効かせたいなら RACE_TYPE_BONUS と
-                     切り分けた設計が要るので、本ファイルでは持たない
+  race_no_tendency … 中立(1.0)のまま。効果自体は実測で大きい（late帯のコース1は
+                     全国平均比 +15%超）。
+                     元の無効化理由は「R9-12 は優勝戦・準優勝戦を多く含み、
+                     RACE_TYPE_BONUS["finalist"] と二重計上になる」だったが、
+                     **v5.27 (2026-08-23) で RACE_TYPE_BONUS からレース番号の効果を
+                     割り戻したので、その理由は解消している**
+                     （scripts/calibrate_race_type_bonus.py 参照）。
+                     一方で v5.27 の時点ではレース番号の効果がモデルのどこにも
+                     入っていない状態でもある。有効化は course_advantage の挙動を
+                     大きく変えるうえバックテスト手段が無い（racecards が未完）ため、
+                     種別の較正と同時に入れず、切り分けて判断する
   tidal            … venue_config.py の tidal_influence から
   seasonal         … 中立(1.0)。official_course_stats.json が優先されるため
   tidal_conditions … 中立(1.0)。潮汐ラベル別の実測を持っていないため

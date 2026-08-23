@@ -23,6 +23,10 @@ HEADERS = {
 DEFAULT_RACE_FETCH_WORKERS = 4
 
 
+
+# レース名見出しに付く距離表記（"1800m" 等）。レース名の正当性判定と除去に使う
+_RACE_DISTANCE = re.compile(r"\s*\d{3,4}m\s*$")
+
 def _is_number_text(value) -> bool:
     try:
         float(str(value).strip())
@@ -406,24 +410,31 @@ def scrape_racecard(jcd: str, date: str, race_no: int) -> dict | None:
 
     # ── レース名・種別を取得 ──────────────────────────────────────
     # boatrace.jp の出走表ページのタイトル/見出し部分から取得を試みる
+    # レース名は h3.title16_titleDetail__add2020 に「レース名＋距離」の形で入る。
+    #   例: "カタメン１予選\n\t\t1800m" / "ウインウイン５\n\t\t1800m" / "特別選抜戦Ａ組\n\t\t1800m"
+    # 距離 (\d{3,4}m) が付いていることを正当性の合図に使う。
+    #
+    # ⚠️ 以前はキーワード関門 ["戦","選","杯","R"] で弾いていたため、
+    #    「一般」(10,684レース) や企画レース名（ウインウイン/ランチタイム/サンライズ等）が
+    #    どれにも該当せず race_name が空になっていた。実測で racecards の 24.9% が空。
+    #    番組の意図（企画レースは内が強い）を読む上で、まさに欲しい行が落ちていた。
     race_name = ""
-    for sel in [".heading3_item", ".heading2_item", ".title3_item",
-                ".is-type2 .heading3", "h3", ".race_type"]:
-        el = soup.select_one(sel)
-        if el:
-            text = el.get_text(strip=True)
-            # 「第1R」や「一般戦」「予選」「優勝戦」が含まれているか確認
-            if any(kw in text for kw in ["戦", "選", "杯", "R"]):
-                race_name = text
-                break
-    # 全ページの見出しテキストから予選/一般/優勝戦のキーワードを検索（フォールバック）
+    for el in soup.select("h3.title16_titleDetail__add2020, h3"):
+        text = el.get_text(strip=True)
+        if _RACE_DISTANCE.search(text):
+            race_name = _RACE_DISTANCE.sub("", text)
+            break
     if not race_name:
-        for el in soup.find_all(["h1","h2","h3","h4","span","div"]):
-            text = el.get_text(strip=True)
-            if any(kw in text for kw in ["予選","準優勝戦","優勝戦","一般戦","ドリーム","選抜"]):
-                if len(text) < 40:  # 短すぎず長すぎないもの
-                    race_name = text
+        # 旧レイアウト向けフォールバック
+        for sel in [".heading3_item", ".heading2_item", ".title3_item",
+                    ".is-type2 .heading3", ".race_type"]:
+            el = soup.select_one(sel)
+            if el:
+                text = el.get_text(strip=True)
+                if any(kw in text for kw in ["戦", "選", "杯", "予", "般"]):
+                    race_name = _RACE_DISTANCE.sub("", text)
                     break
+    race_name = re.sub(r"\s+", "", race_name).strip()
 
     # ── 大会グレードを検出して保存 ────────────────────────────────
     # SG / G1 / G2 / G3 / 一般 / レディース

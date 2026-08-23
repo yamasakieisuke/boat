@@ -406,7 +406,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.26"
+PREDICTOR_VERSION = "v5.27"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
@@ -436,11 +436,48 @@ WEIGHTS = {
 #   優勝戦・準優勝戦: 1枠1着率11.95%  3連単平均払戻¥14,000  → 本命寄り
 #   一般戦          : 1枠1着率 中間   3連単平均払戻¥18,300  → 標準
 #   予選・その他    : 1枠1着率 7.22%  3連単平均払戻¥19,700  → 荒れやすい
+# v5.27 (2026-08-23): 77,852レースの実測から較正し直した。
+# 再現手順: python3 scripts/calibrate_race_type_bonus.py
+#
+# 較正の考え方（手で置いた値との違い）:
+#  1. **レース番号の効果を割り戻す**。種別と番号は強く相関する（準優/優勝戦は
+#     必ず終盤、進入固定は序盤）。割り戻さないと「終盤だから内が強い」分まで
+#     種別の手柄にしてしまい、種別パラメータが番号の代理変数になる。
+#     割り戻すことで、この係数は純粋に「番組の組み方」だけを表すようになり、
+#     レース番号の効果と独立に扱えるようになる。
+#     ⚠️ レース番号の効果自体は現状どこにも入っていない。
+#        venue_characteristics.json の race_no_tendency は全会場 1.0 で無効化されて
+#        いる（実測値は診断用の _measured_race_no_tendency にのみ格納）。
+#        無効化の理由が「RACE_TYPE_BONUS["finalist"] と二重計上になるから」
+#        だったので、切り分けが済んだ今は有効化を検討できる状態になった。
+#  2. **加重平均を変えない**。type_bonus は course_advantage 全体にかかる係数で
+#     勝率とは次元が違う。WEIGHTS["course_advantage"] は変更前の平均 0.9061 を
+#     含んだ状態で調整されているはずなので、平均を固定して相対の傾きだけ直す。
+#
+#  区分          n       1着率   素の比  番号調整後   新     旧
+#  qualifier  33,208   45.3%   0.830   0.868    0.788  0.87
+#  general    17,133   54.7%   1.002   1.062    0.964  1.00
+#  kikaku     10,733   62.5%   1.147   1.192    1.081   なし
+#  senbatsu   10,137   65.8%   1.206   1.003    0.910   なし
+#  finalist    4,406   70.4%   1.291   1.078    0.977  1.12
+#  fixed_entry 2,235   70.4%   1.291   1.352    1.226  1.20
+#
+# ⚠️ 最大の発見: **準優勝戦・優勝戦が内枠有利に見えるのは、ほぼ全部が
+#    「終盤レースは内が強い」という番号効果**だった。素の全体比 1.291 が
+#    番号を揃えると 1.078 まで落ちる。種別として上乗せする理由はほとんど無い。
+#    逆に、番号では説明できないのが 進入固定(1.352) と 企画レース(1.192)。
+#    企画レースは番組が意図的に1号艇を強くしている枠で、R1-4 に限っても
+#    予選 0.765 に対し 1.154 と大きく開く。
+#
+# 区分の効果は前後半で割っても ±0.01 しかぶれない（fixed_entry のみ ±0.033）。
 RACE_TYPE_BONUS = {
-    "fixed_entry": 1.20,  # 進入固定       : course_advantage を1.20倍（下記参照）
-    "finalist":   1.12,   # 優勝戦・準優勝戦: course_advantage を1.12倍（1枠有利）
-    "general":    1.00,   # 一般戦          : 変更なし
-    "qualifier":  0.87,   # 予選・通常戦    : course_advantage を0.87倍（荒れ補正）
+    "fixed_entry": 1.226,  # 進入固定      : 前づけが無くインが最も強い
+    "kikaku":      1.081,  # 会場独自の企画レース: 番組が1号艇を強く組む枠
+    "general":     0.964,  # 一般・特賞
+    "finalist":    0.977,  # 優勝戦・準優勝戦: 番号効果を除くとほぼ中立
+    "senbatsu":    0.910,  # 特選・選抜・ドリーム: 同上（終盤に偏るだけ）
+    "qualifier":   0.788,  # 予選          : 実測で最も荒れる（1着率45.3%）
+    "unknown":     0.906,  # レース名が取れないとき＝情報なし（全体平均）
 }
 # v5.25 (2026-08-16): 「進入固定」を最優先で分類する。
 # 進入固定戦は前づけが起きないぶんインが最も強く、修復後の results_csv 実測で
@@ -452,10 +489,13 @@ RACE_TYPE_BONUS = {
 _RACE_TYPE_FIXED_ENTRY = re.compile(r"進入固定")
 # 大会種別キーワードマッチ（race_name = 節内の個別レース種別名 から分類）
 # ※ SG/G1/G2/G3 は「大会グレード」であり個別レース種別ではないため除外 [BUG FIX v5.2]
-_RACE_TYPE_FINALIST = re.compile(
-    r"(優勝戦|準優勝戦|ドリーム|トライアル|マスターズ|シリーズ)")
-_RACE_TYPE_QUALIFIER = re.compile(
-    r"(予選|敗者復活|一般|B級|選考|補充|組合せ|順位決定)")
+# v5.27 (2026-08-23): 分類を6区分に細分化。
+# 旧 qualifier は `予選|一般|…` を1つにまとめており、実測で 予選 42.8% と
+# 予選特選 67.7% という 25pt 差の別物を同じ 0.87倍 で扱っていた。
+_RACE_TYPE_FINALIST  = re.compile(r"(優勝戦|準優勝戦)")
+_RACE_TYPE_SENBATSU  = re.compile(r"(特選|選抜|ドリーム|トライアル|マスターズ|シリーズ)")
+_RACE_TYPE_QUALIFIER = re.compile(r"(予選|敗者復活|B級|選考|補充|組合せ|順位決定)")
+_RACE_TYPE_GENERAL   = re.compile(r"(一般|特賞)")
 
 
 def calc_race_style_bonus(waku: int, player_stats: dict) -> float:
@@ -513,26 +553,46 @@ def calc_race_style_bonus(waku: int, player_stats: dict) -> float:
 
 def classify_race_type(race_no: int, race_name: str = "") -> str:
     """
-    レース名と番号からレース種別を分類する。
-    戻り値: "fixed_entry" | "finalist" | "general" | "qualifier"
+    レース名からレース種別を分類する。
+    戻り値: "fixed_entry" | "finalist" | "senbatsu" | "kikaku"
+            | "general" | "qualifier" | "unknown"
+
+    判定順が意味を持つ:
+      - 「進入固定」は最優先。"予選 進入固定" のように併記されるため、
+        後段に回すと qualifier に吸われる
+      - 「特選/選抜」は「予選」より先。"予選特選" は実測 67.7% で
+        "予選" 42.8% とは別物
+
+    ⚠️ race_no は使わない（v5.27 で廃止）。
+    以前は race_name が無いとき 12R→finalist / 11R→general / それ以外→qualifier と
+    番号で「種別」を推定していた。これをやめた理由:
+      - 12R が優勝戦なのは節の最終日だけで、実測では 12R のうち優勝戦・準優勝戦は
+        29.3% しかない。7割は外している
+      - 番号の効果と種別の効果は別物なので、種別の係数で番号を代理させると
+        どちらも正しく較正できない
+    実測でも、番号帯を揃えると準優勝戦・優勝戦の「種別としての」上乗せは
+    ほぼ消える（素の全体比 1.291 → 番号調整後 1.078）。
+    名前が取れないときは "unknown"（＝情報なし・全体平均）に倒す。
+    なお scraper 側の抽出漏れ（24.9%が空）は v5.27 で直したので、
+    実運用で unknown に落ちるのは休催・ページ異常時くらいのはず。
     """
-    if race_name:
-        # 「進入固定」は最優先。"予選 進入固定" のように他の語と併記されるため、
-        # 後段の判定に回すと qualifier(0.87倍) に吸われてしまう
-        if _RACE_TYPE_FIXED_ENTRY.search(race_name):
-            return "fixed_entry"
-        if _RACE_TYPE_FINALIST.search(race_name):
-            return "finalist"
-        if _RACE_TYPE_QUALIFIER.search(race_name):
-            return "qualifier"
-    # フォールバック: レース番号ベースの推定
-    # 12R は一般的に優勝戦、11R は準優勝戦に近い場合が多い
-    # ただしこれは大会形式に依存するため軽めに扱う
-    if race_no == 12:
-        return "finalist"   # 最終R は優勝戦であることが多い
-    if race_no >= 11:
-        return "general"    # 準決相当 → 中間として扱う
-    return "qualifier"      # 予選・一般戦として扱う
+    name = (race_name or "").strip()
+    if not name:
+        return "unknown"
+    if _RACE_TYPE_FIXED_ENTRY.search(name):
+        return "fixed_entry"
+    if _RACE_TYPE_FINALIST.search(name):
+        return "finalist"
+    if _RACE_TYPE_SENBATSU.search(name):
+        return "senbatsu"
+    if _RACE_TYPE_QUALIFIER.search(name):
+        return "qualifier"
+    if _RACE_TYPE_GENERAL.search(name):
+        return "general"
+    # どのキーワードにも当たらない＝会場独自の企画レース名
+    # （ウインウイン / ランチタイム / サンライズ / エイトビート 等）。
+    # 番組が意図的に1号艇を強くする枠で、番号調整後も 1.19倍と最も効く区分のひとつ。
+    return "kikaku"
 
 
 # ── 女性選手リスト ────────────────────────────────────────────────
