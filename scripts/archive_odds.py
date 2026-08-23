@@ -112,8 +112,10 @@ def main() -> int:
     size = path.stat().st_size
     print(f"保存: {path}  {len(data)}レース  {size/1024:.0f}KB")
     if ok == 0:
+        # ⚠️ ここで非ゼロを返してはいけない。ワークフローのステップが失敗すると
+        # 後続の commit が走らず、**取得できた分まで捨ててしまう**。
+        # オッズは当日〜翌日しか遡れないので、取りこぼしは永久の損失になる。
         print("::warning::オッズを1件も取得できなかった（ページ構造の変更を疑う）")
-        return 1
     return 0
 
 

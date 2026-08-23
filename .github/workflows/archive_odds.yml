@@ -15,8 +15,11 @@ on:
   schedule:
     # 21:30 JST = 12:30 UTC（全レース終了後）
     - cron: '30 12 * * *'
-    # 取りこぼし回収。23:40 JST = 14:40 UTC（取得済みはスキップされる）
+    # 取りこぼし回収（取得済みはスキップされる）。GitHub の cron は遅延・欠落が
+    # 起きうるため複数枠を用意する。実際 2026-08-20〜22 は発火せず3日分を失った。
     - cron: '40 14 * * *'
+    - cron: '10 17 * * *'
+    - cron: '20 22 * * *'
   workflow_dispatch:
     inputs:
       date:
@@ -68,10 +71,16 @@ jobs:
           if [ -z "$SLEEP" ]; then SLEEP=1.5; fi
           DATE="${{ github.event.inputs.date }}"
           if [ -n "$DATE" ]; then
-            python3 scripts/archive_odds.py --date "$DATE" --sleep "$SLEEP"
-          else
-            python3 scripts/archive_odds.py --sleep "$SLEEP"
+            python3 scripts/archive_odds.py --date "$DATE" --sleep "$SLEEP" || true
+            exit 0
           fi
+          # 当日ぶん
+          python3 scripts/archive_odds.py --sleep "$SLEEP" || true
+          # 前日ぶんも取りに行く。オッズページは当日〜翌日までは生きているため、
+          # 実行が1回落ちても翌日の実行で回収できる（取得済みはスキップされる）。
+          # 2026-08-20〜22 に実行が飛んで3日分を失った実績があるので冗長化する。
+          YDAY=$(TZ=Asia/Tokyo date -d 'yesterday' +%Y%m%d)
+          python3 scripts/archive_odds.py --date "$YDAY" --sleep "$SLEEP" || true
 
       - name: Commit
         run: |
