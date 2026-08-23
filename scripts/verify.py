@@ -240,6 +240,16 @@ def evaluate_prediction(pred_log: dict, actual_results: list) -> dict:
     return {"pred_1st_actual_rank": pred_1st_actual_rank}
 
 
+# 定番出目（3連単の出現頻度 上位6通り）。実測 77,853レースでこの6通りが全体の29.2%
+# を占める。1-2-3 が 7.07% で最頻、以下 1-3-2 5.46% / 1-2-4 5.08% / 1-3-4 4.46% /
+# 1-2-5 3.64% / 1-4-2 3.47%（均等なら 0.83%/通り）。
+#
+# 「頻度上位を買えば当たる」のは当たり前で、それは市場も織り込んでいるためオッズが
+# 安い。ここを外した的中＝展開を読めた的中であり、達成感の源泉はそちら側にある。
+# 回収率とは別軸の指標として数える（回収率だけ見ていると定番連打が最適解に見える）。
+STANDARD_COMBOS = frozenset({"1-2-3", "1-3-2", "1-2-4", "1-3-4", "1-2-5", "1-4-2"})
+
+
 def evaluate_bets(pred_log: dict, actual_won3: str) -> dict:
     """
     保存済みの買い目に対する的中状況を返す。
@@ -299,6 +309,9 @@ def evaluate_bets(pred_log: dict, actual_won3: str) -> dict:
         "cell_combos": cell_combos,
         # ★主指標: 公開する買い目のいずれかが的中したか
         "hit_bet_any": hit_cell_index >= 0,
+        # ★達成感指標: 定番出目(上位6通り)以外での的中。展開を読み切れた回数
+        "hit_nonstd":  hit_cell_index >= 0 and actual_won3 not in STANDARD_COMBOS,
+        "won3_is_std": actual_won3 in STANDARD_COMBOS,
         "hit_bet1":    hit_cell_index == 0,
         "hit_bet2":    hit_cell_index == 1,
         "hit_bet3":    hit_cell_index == 2,
@@ -642,10 +655,16 @@ def save_verify_detail(jcd: str, date_str: str, race_details: list):
         hit_bet_any_cnt = sum(1 for d in sorted_details if d.get("hit_bet_any"))
         hit_honmei_cnt  = sum(1 for d in sorted_details if d.get("hit_honmei"))
         hit_others_cnt  = sum(1 for d in sorted_details if d.get("hit_others"))
+        nonstd_total    = sum(1 for d in sorted_details if not d.get("won3_is_std"))
+        hit_nonstd_cnt  = sum(1 for d in sorted_details if d.get("hit_nonstd"))
         f.write("\n---\n\n## 振り返り分析\n\n")
         f.write(f"- **買い目的中**: {hit_bet_any_cnt}/{total}R "
                 f"({hit_bet_any_cnt/total*100:.1f}%)  "
                 f"本命 {hit_honmei_cnt}回 / その他 {hit_others_cnt}回\n")
+        f.write(f"- **定番出目以外での的中**: {hit_nonstd_cnt}/{nonstd_total}R "
+                f"({hit_nonstd_cnt/nonstd_total*100:.1f}%)"
+                if nonstd_total else "- **定番出目以外での的中**: 該当レースなし")
+        f.write(f"　※定番＝{'/'.join(sorted(STANDARD_COMBOS))}（出現頻度上位6通り・全体の29.2%）\n")
         f.write(f"- **頭は的中したが買い目を外した**: {len(head_hit_bet_miss)}R\n")
         f.write(f"- **頭的中**: {len(hit_1st_races)}R "
                 f"（{', '.join(str(r)+'R' for r in hit_1st_races) or 'なし'}）\n")
@@ -963,6 +982,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     total     = 0
     hit_1st   = 0          # 買い目の頭（本命①1点目の1着枠）が実際の1着と一致した数
     hit_bet_any = 0        # ★主指標: 3連単の買い目のいずれかが的中した数
+    hit_nonstd  = 0        # ★達成感指標: 定番出目以外での的中数
+    nonstd_races = 0       # 結果が定番出目以外だったレース数（母数）
     hit_bet1 = 0
     hit_bet2 = 0
     hit_bet3 = 0
@@ -1025,6 +1046,9 @@ def run_verification(jcd: str, date_from: str, date_to: str,
 
         total += 1
         hit_bet_any  += int(bet_ev["hit_bet_any"])
+        hit_nonstd   += int(bet_ev.get("hit_nonstd", False))
+        if not bet_ev.get("won3_is_std", False):
+            nonstd_races += 1
         hit_bet1     += int(bet_ev["hit_bet1"])
         hit_bet2     += int(bet_ev["hit_bet2"])
         hit_bet3     += int(bet_ev["hit_bet3"])
@@ -1116,6 +1140,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
             "won3_pop":  race_data.get("won3_pop", 0)  if race_data else 0,
             "race_type": race_data.get("race_type","") if race_data else "",
             "hit_bet_any": bet_ev["hit_bet_any"],
+            "hit_nonstd":  bet_ev.get("hit_nonstd", False),
+            "won3_is_std": bet_ev.get("won3_is_std", False),
             "hit_bet1": bet_ev["hit_bet1"],
             "hit_bet2": bet_ev["hit_bet2"],
             "hit_bet3": bet_ev["hit_bet3"],
@@ -1152,6 +1178,9 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     # ── 集計表示（3連単中心） ────────────────────────────────────
     print(f"\n  検証レース数:   {total} R")
     print(f"  ★ レース的中率: {hit_bet_any}/{total}  ({hit_bet_any/total*100:.1f}%)  ← 3連単買い目のいずれかが的中")
+    if nonstd_races:
+        print(f"  ★ 非定番的中:   {hit_nonstd}/{nonstd_races}  "
+              f"({hit_nonstd/nonstd_races*100:.1f}%)  ← 結果が定番出目(上位6通り)以外だったレースでの的中")
     print(f"     本命:      {hit_honmei}/{total}  ({hit_honmei/total*100:.1f}%)")
     print(f"     その他:    {hit_others}/{total}  ({hit_others/total*100:.1f}%)  (対抗{hit_taikou} / 抑え{hit_oshi} / 穴{hit_ana})")
     print(f"  予測1位の平均着順: {rank_sum/total:.2f}  (理想値:1.0)")
@@ -1265,7 +1294,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
 
     # ── v5.20: 予測バージョン別ヒット率（ロジック改修の効果測定）──
     ver_stats: dict[str, dict] = defaultdict(lambda: {
-        "total": 0, "hit_bet_any": 0, "hit_honmei": 0, "points": 0, "payout": 0
+        "total": 0, "hit_bet_any": 0, "hit_honmei": 0, "points": 0, "payout": 0,
+        "nonstd_total": 0, "hit_nonstd": 0,
     })
     for d in all_details:
         v = d.get("version") or "pre-v5.20"
@@ -1273,19 +1303,25 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         s["total"] += 1
         s["hit_bet_any"] += int(bool(d.get("hit_bet_any")))
         s["hit_honmei"]  += int(bool(d.get("hit_honmei")))
+        s["hit_nonstd"]  += int(bool(d.get("hit_nonstd")))
+        s["nonstd_total"] += int(not d.get("won3_is_std"))
         s["points"]      += int(d.get("bet_points", 0) or 0)
         if d.get("hit_bet_any"):
             s["payout"]  += int(d.get("won3_pay", 0) or 0)
     if len(ver_stats) > 0:
         # ロジック改修のA/B用。的中率だけでなく回収率も並べる
         print("  ── バージョン別（v5.20〜）──")
-        print(f"  {'version':<12} {'R数':>5} {'点/R':>7} {'買い目的中':>10} {'本命':>7} {'回収率':>8}")
+        print(f"  {'version':<12} {'R数':>5} {'点/R':>7} {'買い目的中':>10} {'本命':>7} "
+              f"{'非定番的中':>12} {'回収率':>8}")
         for v, s in sorted(ver_stats.items()):
             if s["total"] == 0: continue
+            ns = (f"{s['hit_nonstd']}/{s['nonstd_total']}"
+                  if s["nonstd_total"] else "-")
             print(f"  {v:<12} {s['total']:>5} "
                   f"{s['points']/s['total']:>7.2f} "
                   f"{s['hit_bet_any']/s['total']*100:>9.1f}% "
                   f"{s['hit_honmei']/s['total']*100:>6.1f}% "
+                  f"{ns:>12} "
                   f"{_roi_pct(s['points'], s['payout']):>7.1f}%")
         print()
 
@@ -1358,6 +1394,10 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         "total_races":   total,
         # ★主指標: 3連単の買い目のいずれかが的中したレース数
         "hit_bet_any":   hit_bet_any,
+        # ★達成感指標: 定番出目(上位6通り)以外での的中数と、その母数
+        "hit_nonstd":     hit_nonstd,
+        "nonstd_races":   nonstd_races,
+        "hit_nonstd_pct": round(hit_nonstd / nonstd_races * 100, 1) if nonstd_races else 0.0,
         # 診断値: 買い目の頭（本命①1点目の1着枠）が実際の1着と一致した数
         "hit_1st":       hit_1st,
         "hit_bet1":      hit_bet1,
