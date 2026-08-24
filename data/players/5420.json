@@ -1,15 +1,15 @@
 {
   "hist_global_waku_stats": {
     "4": {
-      "races": 21,
+      "races": 22,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
-      "3rd_pct": 9.5,
-      "4th_pct": 9.5,
-      "5th_pct": 23.8,
-      "6th_pct": 57.1,
+      "3rd_pct": 9.1,
+      "4th_pct": 9.1,
+      "5th_pct": 22.7,
+      "6th_pct": 59.1,
       "top2_pct": 0.0,
-      "top3_pct": 9.5
+      "top3_pct": 9.1
     },
     "5": {
       "races": 54,
@@ -23,21 +23,21 @@
       "top3_pct": 3.7
     },
     "6": {
-      "races": 101,
+      "races": 102,
       "1st_pct": 0.0,
       "2nd_pct": 1.0,
       "3rd_pct": 2.0,
-      "4th_pct": 9.9,
-      "5th_pct": 18.8,
-      "6th_pct": 68.3,
+      "4th_pct": 9.8,
+      "5th_pct": 18.6,
+      "6th_pct": 68.6,
       "top2_pct": 1.0,
-      "top3_pct": 3.0
+      "top3_pct": 2.9
     }
   },
   "hist_global_win_rate": 0.0,
   "hist_avg_st": {
     "avg_st": 0.177,
-    "st_count": 179,
+    "st_count": 181,
     "course_st": {
       "4": 0.166,
       "5": 0.147,
@@ -48,7 +48,7 @@
   "reg_no": "5420",
   "hist_exhibition": {
     "overall_avg": 6.89,
-    "count": 181,
+    "count": 183,
     "by_venue": {
       "20": {
         "avg": 6.91,
@@ -72,7 +72,7 @@
       },
       "22": {
         "avg": 6.92,
-        "count": 18
+        "count": 20
       },
       "15": {
         "avg": 6.83,
@@ -99,11 +99,22 @@
         "count": 10
       }
     },
-    "recent_avg": 6.88,
+    "recent_avg": 6.87,
     "recent_count": 20,
-    "recent_deviation": 0.0
+    "recent_deviation": 0.001
   },
   "hist_local_waku_stats": {
+    "4": {
+      "races": 1,
+      "1st_pct": 0.0,
+      "2nd_pct": 0.0,
+      "3rd_pct": 0.0,
+      "4th_pct": 0.0,
+      "5th_pct": 0.0,
+      "6th_pct": 100.0,
+      "top2_pct": 0.0,
+      "top3_pct": 0.0
+    },
     "5": {
       "races": 7,
       "1st_pct": 0.0,
@@ -116,13 +127,13 @@
       "top3_pct": 0.0
     },
     "6": {
-      "races": 10,
+      "races": 11,
       "1st_pct": 0.0,
       "2nd_pct": 0.0,
       "3rd_pct": 0.0,
-      "4th_pct": 40.0,
-      "5th_pct": 20.0,
-      "6th_pct": 40.0,
+      "4th_pct": 36.4,
+      "5th_pct": 18.2,
+      "6th_pct": 45.5,
       "top2_pct": 0.0,
       "top3_pct": 0.0
     }
