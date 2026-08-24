@@ -124,8 +124,14 @@ def racecard_path(date: str, jcd: str, rno: int) -> Path:
     return RACECARD_DIR / date / f"{jcd}_R{rno:02d}.json"
 
 
-def is_done(date: str, jcd: str, rno: int) -> bool:
-    """保存済みなら True。中身が壊れている（空/不正JSON）ものは未取得扱いにする。"""
+def is_done(date: str, jcd: str, rno: int, require_race_name: bool = False) -> bool:
+    """保存済みなら True。中身が壊れている（空/不正JSON）ものは未取得扱いにする。
+
+    require_race_name=True のときは race_name が空のものも未取得扱いにする。
+    scraper の抽出漏れ（〜v5.26 で 24.9% が空）で取り込んだ分を拾い直すため。
+    race_name はレース種別の分類に使うので、空だと RACE_TYPE_BONUS が
+    unknown（情報なし）に落ちてしまう。
+    """
     p = racecard_path(date, jcd, rno)
     if not p.exists() or p.stat().st_size == 0:
         return False
@@ -134,7 +140,11 @@ def is_done(date: str, jcd: str, rno: int) -> bool:
             data = json.load(f)
     except (json.JSONDecodeError, OSError):
         return False
-    return bool(data.get("racers"))
+    if not data.get("racers"):
+        return False
+    if require_race_name and not (data.get("race_name") or "").strip():
+        return False
+    return True
 
 
 # ──────────────────────────────────────────
@@ -192,7 +202,8 @@ def _on_sigint(signum, frame):  # noqa: ARG001
           "（もう一度 Ctrl-C で即時終了）", flush=True)
 
 
-def run(pending: list[tuple[str, str, int]], sleep: float, max_failures: int) -> int:
+def run(pending: list[tuple[str, str, int]], sleep: float, max_failures: int,
+        until: datetime.time | None = None) -> int:
     ok = 0
     failed: list[tuple[str, str, int]] = []
     consecutive_failures = 0
@@ -203,6 +214,17 @@ def run(pending: list[tuple[str, str, int]], sleep: float, max_failures: int) ->
     for i, (date, jcd, rno) in enumerate(pending, 1):
         if _interrupted:
             print("[INFO] 中断した。再実行すれば取得済みはスキップされ続きから走る")
+            break
+
+        # 停止時刻の判定は自前で持つ。
+        # ⚠️ macOS には GNU の `timeout` が無い。ラッパー側で
+        #    `timeout 21000 python3 ...` としていた時期は毎晩
+        #    "timeout: command not found" で即死し、2026-08-23〜25 の3晩、
+        #    1件も取得できていないのに動いているように見えていた。
+        #    外部コマンドに依存させないこと。
+        if until is not None and datetime.datetime.now().time() >= until:
+            print(f"[INFO] 停止時刻 {until.strftime('%H:%M')} に達したので終了する。"
+                  "再実行すれば取得済みはスキップされ続きから走る")
             break
 
         if i > 1:
@@ -278,6 +300,12 @@ def main() -> int:
     p.add_argument("--sleep", type=float, default=DEFAULT_SLEEP,
                    help=f"1件ごとの追加待機秒。scraper.fetch() の1.5秒に上乗せされる"
                         f"（既定: {DEFAULT_SLEEP}）")
+    p.add_argument("--refetch-empty-name", action="store_true",
+                    help="race_name が空の出走表を取り直す（〜v5.26 のスクレイパは"
+                         "24.9%% で取りこぼしていた）。レース種別の分類に必要")
+    p.add_argument("--until", default="",
+                    help="この時刻(HH:MM)で安全に打ち切る。夜間ウィンドウ用。"
+                         "macOS に GNU timeout が無いので外部コマンドに頼らない")
     p.add_argument("--dry-run", action="store_true",
                    help="件数と見積りだけ出して終了。リクエストは送らない")
     p.add_argument("--max-failures", type=int, default=DEFAULT_MAX_FAILURES,
@@ -309,7 +337,7 @@ def main() -> int:
         print("[INFO] 対象レースが0件。--from/--to/--jcd を確認すること")
         return 0
 
-    pending = [t for t in targets if not is_done(*t)]
+    pending = [t for t in targets if not is_done(*t, args.refetch_empty_name)]
     done = len(targets) - len(pending)
 
     if args.limit and args.limit > 0:
@@ -334,7 +362,11 @@ def main() -> int:
     print(f"User-Agent: {args.user_agent}")
     print("Ctrl-C で安全に中断できる（再実行で続きから）\n")
 
-    return run(pending, args.sleep, args.max_failures)
+    until = None
+    if args.until:
+        hh, mm = args.until.split(":")
+        until = datetime.time(int(hh), int(mm))
+    return run(pending, args.sleep, args.max_failures, until)
 
 
 if __name__ == "__main__":
