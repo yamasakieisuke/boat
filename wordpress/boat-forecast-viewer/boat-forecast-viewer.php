@@ -22,6 +22,16 @@ function boat_forecast_viewer_render_favicon() {
     echo '<link rel="shortcut icon" href="' . $href . '">' . "\n";
     echo '<link rel="apple-touch-icon" href="' . $href . '">' . "\n";
 }
+/*
+ * この3つのフックは管理画面・ログイン画面・テーマ側のページにしか効かない。
+ * 本プラグインの5ページ（single / archive / review / accuracy / player）は
+ * wp_head() を呼ばず自前で <head> を組み立てているため、フック経由では
+ * ファビコンが出ない。各 <head> 内で boat_forecast_viewer_render_favicon() を
+ * 直接呼んでいる（boat_forecast_viewer_font_links() の出力の直前）。
+ *
+ * 注: 行コメント（//）の中に PHP の閉じタグを書くと、コメント内であっても
+ *     そこで PHP モードが終了してしまう。この手の説明はブロックコメントで書くこと。
+ */
 add_action('wp_head', 'boat_forecast_viewer_render_favicon', 1);
 add_action('admin_head', 'boat_forecast_viewer_render_favicon', 1);
 add_action('login_head', 'boat_forecast_viewer_render_favicon', 1);
@@ -849,6 +859,7 @@ function boat_forecast_viewer_render_single($payload, $post) {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo esc_html(get_the_title($post)); ?></title>
+<?php boat_forecast_viewer_render_favicon(); ?>
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
@@ -3512,6 +3523,7 @@ function boat_forecast_viewer_render_archive($query) {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Race Forecast Archive</title>
+<?php boat_forecast_viewer_render_favicon(); ?>
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
@@ -4170,6 +4182,7 @@ function boat_forecast_viewer_render_review() {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>振り返り一覧 — ボートレース予想</title>
+<?php boat_forecast_viewer_render_favicon(); ?>
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
@@ -4626,6 +4639,7 @@ function boat_forecast_viewer_render_accuracy() {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>精度ダッシュボード — ボートレース予想</title>
+<?php boat_forecast_viewer_render_favicon(); ?>
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
@@ -5100,6 +5114,7 @@ function boat_forecast_viewer_render_player() {
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $is_top ? '選手一覧' : ('選手 — ' . esc_html($p['name'] ?? $reg_no)); ?> — ボートレース予想</title>
+<?php boat_forecast_viewer_render_favicon(); ?>
 <?php echo boat_forecast_viewer_font_links(); ?>
     <style>
 <?php echo boat_forecast_viewer_common_root_css(); ?>
