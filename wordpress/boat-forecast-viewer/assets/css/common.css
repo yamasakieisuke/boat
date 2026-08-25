@@ -1,0 +1,227 @@
+    :root {
+        /* ===== v5.21 redesign tokens (Phase 1) ===== */
+        --bfv-bg:          #f0eee9;
+        --bfv-surface:     #ffffff;
+        --bfv-surface-sub: #f6f4ef;
+        --bfv-ink:         #1a1915;
+        --bfv-ink-sub:     #5a5750;
+        --bfv-muted:       #8a8680;
+        --bfv-line:        rgba(26,25,21,0.10);
+        --bfv-line-strong: rgba(26,25,21,0.18);
+        --bfv-accent:      #b5542a;      /* warm brick */
+        --bfv-accent-soft: #f6e6db;
+        --bfv-good:        #1e7b65;
+        --bfv-good-soft:   #e6f6f2;
+        --bfv-warn:        #b22323;
+        --bfv-warn-soft:   #fdf3f3;
+        --bfv-hero-ink:    #1a1915;      /* hero dark bg (warm near-black) */
+        --bfv-radius-sm:   6px;
+        --bfv-radius-md:   8px;
+        --bfv-radius-lg:   12px;
+        --bfv-shadow-xs:   0 1px 0 rgba(26,25,21,0.04);
+        --bfv-shadow-sm:   0 1px 2px rgba(26,25,21,0.06), 0 1px 1px rgba(26,25,21,0.04);
+        --bfv-shadow-md:   0 4px 12px rgba(26,25,21,0.06), 0 1px 2px rgba(26,25,21,0.04);
+        --bfv-font-sans:   "IBM Plex Sans JP","Noto Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Helvetica Neue",Arial,Meiryo,sans-serif;
+        --bfv-font-mono:   "IBM Plex Mono","JetBrains Mono",SFMono-Regular,Consolas,Menlo,monospace;
+
+        /* Phase 7+ handoff naming aliases (map to Phase 1 tokens) */
+        --bfv-border:      var(--bfv-line);
+        --bfv-border-soft: rgba(26,25,21,0.04);
+        --bfv-ink-dim:     var(--bfv-muted);
+        --bfv-surface-2:   var(--bfv-surface-sub);
+        --bfv-ok:          var(--bfv-good);
+        --bfv-ok-soft:     var(--bfv-good-soft);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        html { scroll-behavior: smooth; }
+    }
+
+    /* ===== Phase 12: mobile shell (top brand bar + bottom tab bar) ===== */
+    .bfv-topbar {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        background: var(--bfv-ink);
+        color: #fff;
+        border-bottom: 1px solid var(--bfv-line-strong);
+        font-family: var(--bfv-font-mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        min-height: 44px;
+    }
+    .bfv-topbar a { color: inherit; text-decoration: none; }
+    .bfv-topbar-menu,
+    .bfv-topbar-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        font-size: 16px;
+        line-height: 1;
+        opacity: 0.85;
+        transition: background .15s, opacity .15s;
+    }
+    .bfv-topbar-menu:hover,
+    .bfv-topbar-action:hover { background: rgba(255,255,255,.08); opacity: 1; }
+    .bfv-topbar-action { margin-left: auto; }
+    .bfv-topbar-brand {
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        text-transform: lowercase;
+        font-family: var(--bfv-font-sans);
+    }
+    .bfv-topbar-sep { opacity: 0.35; font-weight: 400; }
+    .bfv-topbar-section {
+        color: rgba(255,255,255,.72);
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .bfv-tabbar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40;
+        display: none;
+        grid-template-columns: repeat(5, 1fr);
+        background: rgba(255,255,255,.96);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid var(--bfv-line-strong);
+        padding: 6px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+    }
+    .bfv-tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        padding: 4px 2px;
+        font-family: var(--bfv-font-mono);
+        font-size: 10px;
+        letter-spacing: 0.04em;
+        color: var(--bfv-muted);
+        text-decoration: none;
+        transition: color .15s;
+    }
+    .bfv-tab-icon { font-size: 18px; line-height: 1; }
+    .bfv-tab-label { font-size: 10px; font-weight: 500; }
+    .bfv-tab:hover { color: var(--bfv-ink); }
+    .bfv-tab.is-active { color: var(--bfv-accent); }
+
+    @media (max-width: 768px) {
+        .bfv-tabbar { display: grid; }
+        body { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+        .bfv-gnav { display: none; }
+    }
+
+    /* ==== Drawer (CSS-only checkbox toggle) ================================ */
+    .bfv-drawer-toggle { position: absolute; opacity: 0; pointer-events: none; }
+    .bfv-topbar-menu { cursor: pointer; user-select: none; -webkit-user-select: none; }
+    .bfv-drawer-overlay {
+        position: fixed; inset: 0; z-index: 60;
+        background: rgba(20, 19, 18, 0);
+        opacity: 0; pointer-events: none;
+        transition: background .2s, opacity .2s;
+    }
+    .bfv-drawer-panel {
+        position: fixed;
+        top: 0; bottom: 0; left: 0;
+        width: min(320px, 86vw);
+        z-index: 61;
+        background: var(--bfv-bg);
+        color: var(--bfv-ink);
+        border-right: 1px solid var(--bfv-line-strong);
+        box-shadow: 4px 0 24px rgba(20,19,18,.10);
+        transform: translateX(-105%);
+        transition: transform .22s ease-out;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-family: var(--bfv-font-sans);
+    }
+    .bfv-drawer-toggle:checked ~ .bfv-drawer-overlay {
+        background: rgba(20,19,18,.42);
+        opacity: 1; pointer-events: auto;
+    }
+    .bfv-drawer-toggle:checked ~ .bfv-drawer-panel { transform: translateX(0); }
+    .bfv-drawer-head {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--bfv-line);
+        font-family: var(--bfv-font-mono);
+        font-size: 12px;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+        color: var(--bfv-ink-sub);
+    }
+    .bfv-drawer-close {
+        font-size: 20px; line-height: 1; cursor: pointer;
+        padding: 4px 8px;
+        border-radius: var(--bfv-radius-sm);
+        color: var(--bfv-ink);
+    }
+    .bfv-drawer-close:hover { background: var(--bfv-surface-sub); }
+    .bfv-drawer-section { padding: 14px 16px; border-bottom: 1px solid var(--bfv-line); }
+    .bfv-drawer-section:last-child { border-bottom: none; }
+    .bfv-drawer-label {
+        font-family: var(--bfv-font-mono);
+        font-size: 9.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--bfv-muted);
+        margin: 0 0 8px;
+    }
+    .bfv-drawer-list { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+    .bfv-drawer-link {
+        display: flex; align-items: center; gap: 10px;
+        padding: 9px 10px;
+        border-radius: var(--bfv-radius-sm);
+        color: var(--bfv-ink);
+        text-decoration: none;
+        font-size: 14px;
+        transition: background .15s, color .15s;
+    }
+    .bfv-drawer-link:hover { background: var(--bfv-surface-sub); color: var(--bfv-accent); }
+    .bfv-drawer-link.is-active { color: var(--bfv-accent); background: var(--bfv-surface-sub); }
+    .bfv-drawer-link-ico { width: 20px; text-align: center; font-size: 15px; }
+    .bfv-drawer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+    }
+    .bfv-drawer-grid a {
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 8px 4px;
+        border-radius: var(--bfv-radius-sm);
+        background: var(--bfv-surface);
+        border: 1px solid var(--bfv-line);
+        color: var(--bfv-ink-sub);
+        text-decoration: none;
+        font-size: 12px;
+        transition: background .15s, color .15s, border-color .15s;
+    }
+    .bfv-drawer-grid a:hover {
+        background: var(--bfv-bg);
+        border-color: var(--bfv-accent);
+        color: var(--bfv-accent);
+    }
+    .bfv-drawer-info {
+        font-family: var(--bfv-font-mono);
+        font-size: 10px;
+        color: var(--bfv-muted);
+        line-height: 1.65;
+        letter-spacing: 0.04em;
+    }

@@ -1,0 +1,442 @@
+        /* ===== Phase 5: archive (grid view, row-list cards) ===== */
+        body {
+            margin: 0;
+            background: var(--bfv-bg);
+            color: var(--bfv-ink);
+            font-family: var(--bfv-font-sans);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a { color: inherit; }
+
+        .bfva-shell {
+            width: min(1120px, calc(100% - 24px));
+            margin: 0 auto;
+            padding: 14px 0 72px;
+        }
+
+        /* ===== Phase 13: HERO (global HIT RATE KPI + sparkline) ===== */
+        .bfva-hero {
+            background: var(--bfv-surface);
+            color: var(--bfv-ink);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            padding: 14px 18px;
+            box-shadow: var(--bfv-shadow-xs);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+        .bfva-hero-kpi { display: grid; gap: 4px; min-width: 0; }
+        .bfva-hero-label {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--bfv-muted);
+        }
+        .bfva-hero-value {
+            font-family: var(--bfv-font-mono);
+            font-size: clamp(34px, 6vw, 46px);
+            font-weight: 500;
+            line-height: 1;
+            color: var(--bfv-ink);
+            letter-spacing: -0.01em;
+            display: inline-flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+        .bfva-hero-value small {
+            font-size: 0.42em;
+            color: var(--bfv-muted);
+            font-weight: 400;
+            letter-spacing: 0.04em;
+        }
+        .bfva-hero-value.is-null { color: var(--bfv-muted); }
+        .bfva-hero-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 10.5px;
+            color: var(--bfv-ink-sub);
+            letter-spacing: 0.04em;
+        }
+        .bfva-hero-spark {
+            color: var(--bfv-accent);
+            width: 140px;
+            height: 40px;
+            display: block;
+        }
+
+        /* ===== Phase 13: CHIPS (filter strip) ===== */
+        .bfva-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 0 0 12px;
+        }
+        .bfva-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border: 1px solid var(--bfv-line);
+            border-radius: 999px;
+            background: var(--bfv-surface);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            transition: background .15s, color .15s, border-color .15s;
+        }
+        .bfva-chip span {
+            font-size: 10px;
+            color: var(--bfv-muted);
+            font-weight: 500;
+        }
+        .bfva-chip:hover {
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink);
+        }
+        .bfva-chip.is-active {
+            background: var(--bfv-ink);
+            color: #fff;
+            border-color: var(--bfv-ink);
+        }
+        .bfva-chip.is-active span { color: rgba(255,255,255,.64); }
+
+        /* ===== GRID ===== */
+        .bfva-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        /* ===== CARD ===== */
+        .bfva-card {
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-line);
+            border-radius: var(--bfv-radius-md);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--bfv-shadow-xs);
+            transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .bfva-card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--bfv-shadow-md);
+            border-color: var(--bfv-line-strong);
+        }
+
+        /* card header */
+        .bfva-card-head {
+            padding: 12px 14px 10px;
+            border-bottom: 1px solid var(--bfv-line);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 0;
+        }
+        .bfva-card-head-left {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            min-width: 0;
+        }
+        .bfva-card h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+        }
+        .bfva-card-slug {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+        }
+        .bfva-card-link {
+            color: var(--bfv-ink);
+            text-decoration: none;
+        }
+        .bfva-card-link:hover { color: var(--bfv-accent); }
+        .bfva-card-date {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-ink-sub);
+            white-space: nowrap;
+        }
+
+        /* card meta row */
+        .bfva-card-meta {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--bfv-line);
+            display: flex;
+            gap: 14px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfva-card-meta strong {
+            color: var(--bfv-ink);
+            font-weight: 600;
+            font-size: 13px;
+            margin-right: 4px;
+            text-transform: none;
+        }
+
+        /* Phase 13: card KPI block (HIT / BOX averages + mini sparkline) */
+        .bfva-card-kpi {
+            padding: 12px 14px 10px;
+            border-bottom: 1px solid var(--bfv-line);
+            display: grid;
+            grid-template-columns: auto auto 1fr;
+            align-items: center;
+            gap: 16px;
+        }
+        .bfva-kpi-col { display: grid; gap: 2px; }
+        .bfva-kpi-num {
+            font-family: var(--bfv-font-mono);
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.01em;
+            color: var(--bfv-ink);
+            display: inline-flex;
+            align-items: baseline;
+            gap: 2px;
+        }
+        .bfva-kpi-num small {
+            font-size: 0.5em;
+            color: var(--bfv-muted);
+            font-weight: 400;
+        }
+        .bfva-kpi-num.is-null { color: var(--bfv-muted); }
+        .bfva-kpi-sub {
+            font-family: var(--bfv-font-mono);
+            font-size: 9.5px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .bfva-kpi-col.is-primary .bfva-kpi-num { color: var(--bfv-accent); }
+        .bfva-card-spark {
+            color: var(--bfv-accent);
+            width: 100%;
+            height: 28px;
+            justify-self: stretch;
+            display: block;
+        }
+
+        /* Phase 13: row with hit rate on right */
+        .bfva-card-row-hit {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--bfv-ink);
+        }
+        .bfva-card-row.has-review .bfva-card-row-hit { color: var(--bfv-accent); }
+        .bfva-card-row:not(.has-review) .bfva-card-row-hit { color: var(--bfv-muted); }
+
+        /* history row list (replaces the chip row) */
+        .bfva-card-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .bfva-card-row {
+            display: grid;
+            grid-template-columns: 10px 1fr auto;
+            gap: 10px;
+            align-items: center;
+            padding: 8px 14px;
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            border-bottom: 1px solid rgba(26,25,21,0.04);
+        }
+        .bfva-card-row:last-child { border-bottom: 0; }
+        .bfva-card-row:hover {
+            background: var(--bfv-surface-sub);
+            color: var(--bfv-ink);
+        }
+        .bfva-card-row-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 1px;
+            background: var(--bfv-line-strong);
+        }
+        .bfva-card-row.has-review .bfva-card-row-dot {
+            background: var(--bfv-accent);
+        }
+        .bfva-card-row-date {
+            color: inherit;
+        }
+        .bfva-card-row-tag {
+            font-size: 9px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfva-card-row.has-review .bfva-card-row-tag {
+            color: var(--bfv-accent);
+        }
+
+        /* card footer (cta) */
+        .bfva-card-foot {
+            margin-top: auto;
+            padding: 8px 14px;
+            background: var(--bfv-surface-sub);
+            border-top: 1px solid var(--bfv-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .bfva-card-foot-meta {
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            color: var(--bfv-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .bfva-card-cta {
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--bfv-accent);
+            text-decoration: none;
+            letter-spacing: 0.04em;
+        }
+        .bfva-card-cta::after { content: " →"; }
+
+        /* ===== Phase 22: venue-specific list view (warm + mono-forward) ===== */
+        .bfva-meta {
+            color: var(--bfv-ink-sub);
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 14px;
+            letter-spacing: 0.02em;
+        }
+        .bfva-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+        .bfva-badge {
+            background: var(--bfv-surface-sub);
+            padding: 3px 9px;
+            border-radius: 999px;
+            font-family: var(--bfv-font-mono);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--bfv-ink-sub);
+            border: 1px solid var(--bfv-border);
+        }
+        .bfva-badge.is-review {
+            background: var(--bfv-accent-soft);
+            color: var(--bfv-accent);
+            border-color: transparent;
+        }
+        .bfva-crumbs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 0 0 12px;
+            font-family: var(--bfv-font-mono);
+            color: var(--bfv-muted);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .bfva-crumbs a { color: inherit; text-decoration: none; }
+        .bfva-crumbs a:hover { color: var(--bfv-accent); text-decoration: none; }
+        .bfva-list {
+            display: grid;
+            gap: 8px;
+            margin-top: 14px;
+        }
+        .bfva-row {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: minmax(0, 1.2fr) minmax(200px, .8fr);
+            padding: 12px 14px;
+            background: var(--bfv-surface);
+            border: 1px solid var(--bfv-border);
+            border-radius: var(--bfv-radius-sm);
+            box-shadow: var(--bfv-shadow-xs);
+            transition: border-color .15s, box-shadow .15s;
+        }
+        .bfva-row:hover {
+            border-color: var(--bfv-line-strong);
+            box-shadow: var(--bfv-shadow-sm);
+        }
+        .bfva-row h2 {
+            margin: 0 0 6px;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+        }
+        .bfva-row h2 a { color: var(--bfv-ink); text-decoration: none; }
+        .bfva-row h2 a:hover { color: var(--bfv-accent); }
+        .bfva-side {
+            display: grid;
+            gap: 6px;
+            align-content: start;
+            font-family: var(--bfv-font-mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .bfva-side a {
+            color: var(--bfv-ink-sub);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color .15s;
+        }
+        .bfva-side a:hover { color: var(--bfv-accent); }
+        .bfva-side a::after { content: " →"; color: var(--bfv-muted); }
+
+        @media (max-width: 720px) {
+            .bfva-row { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .bfva-shell { width: calc(100% - 16px); padding-top: 14px; }
+            .bfva-hero { padding: 12px 14px; }
+            .bfva-grid { grid-template-columns: 1fr; gap: 8px; }
+        }
+
+        /* ===== グローバルナビ (archive) ===== */
+        .bfv-gnav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 14px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,.85);
+            border: 1px solid var(--bfv-line);
+            border-radius: 999px;
+            backdrop-filter: blur(8px);
+        }
+        .bfv-gnav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--bfv-ink);
+            text-decoration: none;
+            transition: background .15s, color .15s;
+        }
+        .bfv-gnav-link:hover { background: rgba(26,25,21,.06); text-decoration: none; }
+        .bfv-gnav-active { background: var(--bfv-ink) !important; color: #fff !important; }
