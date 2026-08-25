@@ -190,10 +190,15 @@ LZHパーサの `flush()` タイミングの誤りで、**各会場ブロック�
 見通しの悪さが事故に直結している。
 
 - [x] C-0 `deploy-wp.yml` に `php -l` の関門を追加（2026-08-16 実施）
-- [ ] C-1 ファイルの構造マップを作る（関数・テンプレート・CSS・JSの境界と行数）
-- [ ] C-2 分割案を作る（どの単位でファイルを切るか、WPプラグインとしての制約込みで）
-- [ ] C-3 リスクの低いものから分割（まずCSS/JSの外出し、次にテンプレート）
-- [ ] C-4 各ステップで `php -l` が通ることを確認
+- [x] C-1 構造マップ（`docs/wp_plugin_refactor_plan.md`）。**JSは0行**でCSSが57.6%と判明
+- [x] C-2 分割案（レイヤ軸×画面軸。`inc/` `views/` `assets/css/`。`src/` はデプロイ除外なので不可）
+- [x] C-3 **Step 1 完了（2026-08-25）**: CSS を `assets/css/*.css` 6本へ外出し。
+      `boat-forecast-viewer.php` **5,643 → 2,421行（-57%）**。
+      本番6URLがページ全体でバイト一致することを確認済み
+- [ ] C-3 続き: Step 2（`<head>`/`render_nav` → `inc/`）/ Step 3（ヘルパ・データ・
+      ルーティング → `inc/`）/ Step 4（`render_*` → `views/` 遅延require）
+- [x] C-4 `php -l` は `deploy-wp.yml` の lint ジョブが `find wordpress -name '*.php'`
+      で全件見るため、新規ファイルも自動で対象。deploy の `needs:` になっている
 
 **担当**: サブエージェント（C-1・C-2の調査と提案まで）。**実際の分割は提案を見てから判断**
 **成果物**: `docs/wp_plugin_refactor_plan.md`
