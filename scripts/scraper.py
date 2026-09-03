@@ -436,6 +436,22 @@ def scrape_racecard(jcd: str, date: str, race_no: int) -> dict | None:
                     break
     race_name = re.sub(r"\s+", "", race_name).strip()
 
+    # 「進入固定」は見出しではなく <span class="label2"> に別出しされる。
+    # results_csv 側の race_type は "予選 進入固定" のように連結された形で入るので、
+    # 同じ形に揃えて分類（classify_race_type）が results と同じ判定になるようにする。
+    #
+    # ⚠️ これを見ていなかったため、進入固定の 89.5%（実測 488/545）が予測時に
+    #    素通りしていた。fixed_entry は RACE_TYPE_BONUS が最も強い区分
+    #    （1.226。レース番号を割り戻した実測でも 1.352 と最大）なので、
+    #    取り逃すと一番効くはずの補正が効かない。
+    #
+    # 進入固定だけを対象にする。label2 には他の語も入りうるが語彙を把握できて
+    # いないため、無条件に連結すると "特選" 等が紛れて分類が変わる恐れがある。
+    for _el in soup.select("span.label2"):
+        if "進入固定" in _el.get_text(strip=True):
+            race_name = (race_name + " 進入固定").strip()
+            break
+
     # ── 大会グレードを検出して保存 ────────────────────────────────
     # SG / G1 / G2 / G3 / 一般 / レディース
     tournament_grade = _detect_tournament_grade(soup)
