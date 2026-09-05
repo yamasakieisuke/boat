@@ -248,6 +248,39 @@ def _collect_axis_ev_combos(combo_stats: dict, date_str: str, race_no: int,
     return [(combo, ev, avg_pay, "/".join(srcs[:2])) for combo, (ev, avg_pay, srcs) in sorted_combos]
 
 
+_NATIONAL_WIN_FREQ_CACHE: list[float] | None = None
+# ハードコードの旧値。実測(79,867R)と大きくズレていたので既定では使わない。
+#   枠1 0.559→0.545 / 枠2 0.176→0.136 / 枠3 0.092→0.128
+#   枠4 0.070→0.101 / 枠5 0.054→0.060 / 枠6 0.046→0.031
+# これを分母に使うと、会場の特性と無関係に**全会場で枠2を0.77倍に潰し、
+# 枠3-4を1.4倍に持ち上げる**系統的な歪みが入る。出典不明の定数を分母にしないこと。
+_NATIONAL_WIN_FREQ_FALLBACK = [0.545, 0.136, 0.128, 0.101, 0.060, 0.031]
+
+
+def _national_win_freq() -> list[float]:
+    """全国の枠別1着率。data/stats/_all_combo_freq.json（会場別と同じ生成物）から取る。
+
+    分子(会場別)と分母(全国)を同じデータ源・同じ期間から取ることで、
+    定義や集計期間の食い違いによる系統誤差が入らないようにする。
+    """
+    global _NATIONAL_WIN_FREQ_CACHE
+    if _NATIONAL_WIN_FREQ_CACHE is None:
+        path = DATA_DIR / "stats" / "_all_combo_freq.json"
+        vals = None
+        try:
+            wf = json.loads(path.read_text(encoding="utf-8")).get("win_freq") or {}
+            vals = [float(wf.get(str(i + 1), 0) or 0) for i in range(6)]
+            if not all(v > 0 for v in vals):
+                vals = None
+        except Exception:
+            vals = None
+        if vals is None:
+            print(f"[WARN] 全国の枠別1着率が読めない: {path} → 既定値で代用")
+            vals = list(_NATIONAL_WIN_FREQ_FALLBACK)
+        _NATIONAL_WIN_FREQ_CACHE = vals
+    return _NATIONAL_WIN_FREQ_CACHE
+
+
 def _get_venue_win_freq_mod(jcd: str) -> list[float]:
     """
     会場別 combo_freq の win_freq（各枠の実測1着率）を全国平均比に変換して返す。
@@ -259,15 +292,26 @@ def _get_venue_win_freq_mod(jcd: str) -> list[float]:
     if not stats or "win_freq" not in stats:
         return [1.0] * 6
     wf = stats["win_freq"]
-    national = [0.559, 0.176, 0.092, 0.070, 0.054, 0.046]  # 全国平均（年次中央値）
+    national = _national_win_freq()
+    races = int(stats.get("total_races", 0) or 0)
+
+    # 観測数に応じて中立(1.0)へ縮める。
+    # 外枠ほど1着が少なく、比が暴れる。期間を前後半に割って測ると
+    #   枠1 r=0.903(最大差0.07) → 枠6 r=0.480(最大差0.52)
+    # と、枠6は会場あたり約93勝しかなくほぼノイズになる。
+    # 縮小率 w = 勝ち数/(勝ち数+SHRINK_K)。枠1は w≈0.95 でほぼ素通し、
+    # 枠6は w≈0.48 で半分ほど中立に寄る。
+    SHRINK_K = 100.0
     mods = []
     for i in range(6):
         v = float(wf.get(str(i + 1), 0) or 0)
         na = national[i]
-        if v > 0 and na > 0:
-            mods.append(round(v / na, 4))
-        else:
+        if v <= 0 or na <= 0:
             mods.append(1.0)
+            continue
+        wins = v * races
+        w = wins / (wins + SHRINK_K) if races else 0.0
+        mods.append(round(1.0 + (v / na - 1.0) * w, 4))
     return mods
 
 BASE_DIR                  = Path(__file__).parent.parent

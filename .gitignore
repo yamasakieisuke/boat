@@ -24,6 +24,14 @@ logs/
 !data/odds_archive/
 !data/odds_archive/**
 
+# Exception: 会場別の出目頻度（2026-09-05）
+# predictor.load_combo_stats() がこれを読む。無いと全会場で None が返り、
+# _get_venue_win_freq_mod() が [1.0]*6 に落ちて会場別 win_freq のブレンド
+# (v5.13 1-C) が丸ごと無効になる。_all_combo_freq.json は全国平均の分母
+# としても使う（ハードコードの旧値は実測と最大1.4倍ズレていた）。
+!data/stats/
+!data/stats/**
+
 # Exception: 大会グレード補正（2026-09-05）
 # predictor.get_tournament_grade_mods() はこれが無いと全グレードに対して
 # course_mod=[1.0]*6 を返し、補正が丸ごと死ぬ。実際このファイルは git に
