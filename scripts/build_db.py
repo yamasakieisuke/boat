@@ -75,6 +75,23 @@ def build() -> int:
             batch = [[r.get(c, "") for c in cols] for r in csv.DictReader(f)]
         con.executemany(ins, batch)
         total += len(batch)
+    # 決まり手（Open API 由来・2026-01-01以降のみ）。results_csv とは出所が
+    # 違うので別テーブルに置き、(date, jcd, race_no) で結合する。
+    import json as _json
+    tdir = BASE_DIR / "data" / "techniques"
+    if tdir.exists():
+        con.execute("CREATE TABLE techniques (date TEXT, jcd TEXT, race_no TEXT, "
+                    "technique TEXT, code INTEGER)")
+        rows = []
+        for tp in sorted(tdir.glob("2*.json")):
+            doc = _json.loads(tp.read_text(encoding="utf-8"))
+            for jcd, races in doc.items():
+                for rno, v in races.items():
+                    rows.append((tp.stem, jcd, rno, v.get("technique"), v.get("code")))
+        con.executemany("INSERT INTO techniques VALUES (?,?,?,?,?)", rows)
+        con.execute("CREATE INDEX i_tech ON techniques(date, jcd, race_no)")
+        print(f"  techniques: {len(rows):,}行")
+
     # よく使う絞り込みに索引を張る
     for idx in ("CREATE INDEX i_date ON results(date)",
                 "CREATE INDEX i_venue ON results(venue_name)",
