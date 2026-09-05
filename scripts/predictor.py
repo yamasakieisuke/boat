@@ -3388,17 +3388,30 @@ def _generate_tournament_guide_md(out_dir: Path) -> None:
         "|:---:|:---:|:---:|:---:|:---|",
     ]
 
+    # ⚠️ 数値前提で書式化しない。calibrate_tournament_grades.py が作る表には
+    #    course1_win_pct / avg_payout_3t が無いことがあり、既定値 "-" を
+    #    f"¥{...:,}" に渡して ValueError で落ちていた。テーブルが存在しない間は
+    #    このループに入らなかったため、2026-09-05 に有効化して初めて表面化した。
+    #    **「データが無いと通らない経路」はデータを入れた瞬間に初走行になる。**
+    def _num(v, fmt: str) -> str:
+        try:
+            return format(float(v), fmt)
+        except (TypeError, ValueError):
+            return "-"
+
     grades_dict = data.get("grades", {})
     order = ["SG", "G1", "G2", "G3", "一般", "レディース"]
     for gkey in order:
         g = grades_dict.get(gkey)
         if not g:
             continue
-        c1     = g.get("course1_win_pct", "-")
-        payout = g.get("avg_payout_3t", "-")
-        vol    = g.get("volatility", 1.0)
-        note   = g.get("note", "")[:40] + ("…" if len(g.get("note","")) > 40 else "")
-        lines.append(f"| **{gkey}** | {c1}% | ¥{payout:,} | {vol:.2f} | {note} |")
+        c1     = _num(g.get("course1_win_pct"), ".1f")
+        payout = _num(g.get("avg_payout_3t"), ",.0f")
+        vol    = _num(g.get("volatility", 1.0), ".2f")
+        note   = (g.get("note") or "")[:40] + ("…" if len(g.get("note") or "") > 40 else "")
+        c1_str     = f"{c1}%" if c1 != "-" else "-"
+        payout_str = f"¥{payout}" if payout != "-" else "-"
+        lines.append(f"| **{gkey}** | {c1_str} | {payout_str} | {vol} | {note} |")
 
     lines += [
         "",
@@ -3416,15 +3429,19 @@ def _generate_tournament_guide_md(out_dir: Path) -> None:
         cm_str = " / ".join(
             f"{i+1}コース×{v:.2f}" for i, v in enumerate(cm)
         )
+        # 数値前提の書式化はしない（欠損時は "-" が来るため。上の _num と同じ理由）
+        c1_d     = _num(g.get("course1_win_pct"), ".1f")
+        payout_d = _num(g.get("avg_payout_3t"), ",.0f")
+        vol_d    = _num(g.get("volatility", 1.0), ".2f")
         lines += [
             f"### {gkey} ({g.get('display', gkey)})",
             "",
-            f"- **1コース平均勝率**: {g.get('course1_win_pct', '-')}%",
-            f"- **3連単平均払戻**: ¥{g.get('avg_payout_3t', '-'):,}",
-            f"- **荒れ指数 (volatility)**: {g.get('volatility', 1.0):.2f}  "
+            f"- **1コース平均勝率**: {c1_d + '%' if c1_d != '-' else '-'}",
+            f"- **3連単平均払戻**: {'¥' + payout_d if payout_d != '-' else '-'}",
+            f"- **荒れ指数 (volatility)**: {vol_d}  "
             "（1.0=標準、1.15以上=荒れやすい、0.90以下=堅い）",
             f"- **コース補正係数**: {cm_str}",
-            f"- **特徴**: {g.get('note', '')}",
+            f"- **特徴**: {g.get('note', '') or '-'}",
             "",
         ]
 

@@ -15,7 +15,9 @@
       ],
       "volatility": 1.0,
       "races": 11714,
-      "kept_cells": 0
+      "kept_cells": 0,
+      "course1_win_pct": 56.0,
+      "note": "実測11,714R。有意かつ安定なセルが無く全中立"
     },
     "G1": {
       "course_mod": [
@@ -28,7 +30,9 @@
       ],
       "volatility": 1.0,
       "races": 2219,
-      "kept_cells": 1
+      "kept_cells": 1,
+      "course1_win_pct": 59.9,
+      "note": "実測2,219R。採用1セル"
     },
     "G3": {
       "course_mod": [
@@ -41,7 +45,9 @@
       ],
       "volatility": 1.0,
       "races": 1592,
-      "kept_cells": 2
+      "kept_cells": 2,
+      "course1_win_pct": 53.6,
+      "note": "実測1,592R。採用2セル"
     },
     "レディース": {
       "course_mod": [
@@ -54,7 +60,9 @@
       ],
       "volatility": 1.0,
       "races": 533,
-      "kept_cells": 2
+      "kept_cells": 2,
+      "course1_win_pct": 52.0,
+      "note": "実測533R。採用2セル"
     },
     "G2": {
       "course_mod": [
@@ -67,7 +75,9 @@
       ],
       "volatility": 1.0,
       "races": 352,
-      "kept_cells": 0
+      "kept_cells": 0,
+      "course1_win_pct": 59.1,
+      "note": "実測352R。有意かつ安定なセルが無く全中立"
     },
     "SG": {
       "course_mod": [
@@ -80,7 +90,9 @@
       ],
       "volatility": 1.0,
       "races": 245,
-      "kept_cells": 0
+      "kept_cells": 0,
+      "course1_win_pct": 60.8,
+      "note": "実測245R。有意かつ安定なセルが無く全中立"
     }
   },
   "ladies_tournaments": {}

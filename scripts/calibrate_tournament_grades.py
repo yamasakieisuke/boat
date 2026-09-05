@@ -148,8 +148,17 @@ def main() -> int:
                 kept += 1
             else:
                 mods.append(1.0)
-        out_grades[g] = {"course_mod": mods, "volatility": 1.0,
-                         "races": cnt, "kept_cells": kept}
+        c1_n, c1_w = n[(g, 1)], w[(g, 1)]
+        out_grades[g] = {
+            "course_mod": mods,
+            "volatility": 1.0,
+            "races": cnt,
+            "kept_cells": kept,
+            # 表示用（predictor._generate_tournament_guide_md が読む）
+            "course1_win_pct": round(c1_w / c1_n * 100, 1) if c1_n else None,
+            "note": (f"実測{cnt:,}R。採用{kept}セル"
+                     if kept else f"実測{cnt:,}R。有意かつ安定なセルが無く全中立"),
+        }
         mark = "  ← 全セル中立" if kept == 0 else f"  ← {kept}セル採用"
         print(f"{g:<12}{cnt:>6}   " + "".join(f"{m:>9.3f}" for m in mods) + mark)
 
