@@ -247,6 +247,28 @@ def evaluate_prediction(pred_log: dict, actual_results: list) -> dict:
 # 「頻度上位を買えば当たる」のは当たり前で、それは市場も織り込んでいるためオッズが
 # 安い。ここを外した的中＝展開を読めた的中であり、達成感の源泉はそちら側にある。
 # 回収率とは別軸の指標として数える（回収率だけ見ていると定番連打が最適解に見える）。
+def classify_race_type_for_review(race_name: str) -> str:
+    """レース種別の区分。predictor.classify_race_type と同じ判定順。
+
+    verify から predictor を import すると重い初期化（統計ファイル読み込み）が
+    走るので、判定だけをここに持つ。**predictor 側を変えたらここも直すこと。**
+    """
+    name = (race_name or "").strip()
+    if not name:
+        return "unknown"
+    if "進入固定" in name:
+        return "fixed_entry"
+    if re.search(r"(優勝戦|準優勝戦)", name):
+        return "finalist"
+    if re.search(r"(特選|選抜|ドリーム|トライアル|マスターズ|シリーズ)", name):
+        return "senbatsu"
+    if re.search(r"(予選|敗者復活|B級|選考|補充|組合せ|順位決定)", name):
+        return "qualifier"
+    if re.search(r"(一般|特賞)", name):
+        return "general"
+    return "kikaku"
+
+
 STANDARD_COMBOS = frozenset({"1-2-3", "1-3-2", "1-2-4", "1-3-4", "1-2-5", "1-4-2"})
 
 
@@ -984,6 +1006,13 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     hit_bet_any = 0        # ★主指標: 3連単の買い目のいずれかが的中した数
     hit_nonstd  = 0        # ★達成感指標: 定番出目以外での的中数
     nonstd_races = 0       # 結果が定番出目以外だったレース数（母数）
+    # 判定基準が効いているかを後から振り返るための素材。
+    # pred.json には is_rough / confidence / w1_estimate が入っているのに
+    # これまで集計に残していなかったため、「荒れ判定は当たっていたのか」
+    # 「信頼度は的中率と相関しているのか」を過去に遡って検証できなかった。
+    # scripts/review_criteria.py がこれを読んで効果を判定する。
+    criteria: dict = defaultdict(lambda: defaultdict(
+        lambda: {"races": 0, "hits": 0, "points": 0, "payout": 0, "w1_won": 0}))
     hit_bet1 = 0
     hit_bet2 = 0
     hit_bet3 = 0
@@ -1049,6 +1078,42 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         hit_nonstd   += int(bet_ev.get("hit_nonstd", False))
         if not bet_ev.get("won3_is_std", False):
             nonstd_races += 1
+
+        # ── 判定基準ごとの実績を積む（review_criteria.py が読む）──────────
+        _hit = bool(bet_ev["hit_bet_any"])
+        _pts = len(bet_ev.get("cell_combos") or bet_ev.get("bet_combos") or [])
+        _pay = int(race_data.get("won3_pay", 0) or 0) if (race_data and _hit) else 0
+        _w1  = 1 if (race_data or {}).get("won3", "").startswith("1-") else 0
+
+        def _bucket(group: str, label: str) -> None:
+            c = criteria[group][label]
+            c["races"] += 1
+            c["hits"] += int(_hit)
+            c["points"] += _pts
+            c["payout"] += _pay
+            c["w1_won"] += _w1
+
+        _bucket("is_rough", "荒れ判定あり" if pred_log.get("is_rough") else "荒れ判定なし")
+
+        try:
+            _conf = int(str(pred_log.get("confidence", "")).replace("%", "").strip())
+        except ValueError:
+            _conf = -1
+        if _conf >= 0:
+            _bucket("confidence", f"{min(_conf // 10 * 10, 90)}-{min(_conf // 10 * 10 + 9, 99)}%")
+
+        _sr = ((pred_log.get("w1_estimate") or {}).get("sink_risk"))
+        if isinstance(_sr, (int, float)):
+            for _lo, _hi, _lb in ((0, .35, "〜0.35"), (.35, .45, "0.35-0.45"),
+                                  (.45, .55, "0.45-0.55"), (.55, .65, "0.55-0.65"),
+                                  (.65, 1.01, "0.65〜")):
+                if _lo <= _sr < _hi:
+                    _bucket("sink_risk", _lb)
+                    break
+
+        _rt = (race_data or {}).get("race_type", "").strip()
+        if _rt:
+            _bucket("race_category", classify_race_type_for_review(_rt))
         hit_bet1     += int(bet_ev["hit_bet1"])
         hit_bet2     += int(bet_ev["hit_bet2"])
         hit_bet3     += int(bet_ev["hit_bet3"])
@@ -1395,6 +1460,8 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         # ★主指標: 3連単の買い目のいずれかが的中したレース数
         "hit_bet_any":   hit_bet_any,
         # ★達成感指標: 定番出目(上位6通り)以外での的中数と、その母数
+        # 判定基準ごとの実績（review_criteria.py が横断集計する）
+        "criteria_stats": {g: dict(v) for g, v in criteria.items()},
         "hit_nonstd":     hit_nonstd,
         "nonstd_races":   nonstd_races,
         "hit_nonstd_pct": round(hit_nonstd / nonstd_races * 100, 1) if nonstd_races else 0.0,

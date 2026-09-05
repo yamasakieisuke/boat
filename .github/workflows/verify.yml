@@ -143,6 +143,17 @@ jobs:
         env:
           TZ: Asia/Tokyo
 
+      # 判定基準（荒れ判定・信頼度・沈みリスク・レース種別・買い目の並び順・
+      # セオリーパターン）が実際に効いているかを毎日ログに出す。
+      # 「入れた」ことは記録されても「効いていたか」を確かめる場所が無かった。
+      # ページが要るときは --html を付けてローカルで生成する（output/ は
+      # gitignore なので、古い状態を貼り付けたままにしないため commit しない）。
+      - name: 判定基準の効果検証
+        continue-on-error: true
+        run: python3 scripts/review_criteria.py 2>&1 | tail -60
+        env:
+          TZ: Asia/Tokyo
+
       - name: Commit updated stats & results CSV
         run: |
           git config user.name "github-actions[bot]"
