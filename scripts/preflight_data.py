@@ -67,7 +67,7 @@ MANIFEST: list[tuple[str, str, str, str]] = [
      "load_combo_stats() が全会場で None を返し、_get_venue_win_freq_mod() の "
      "会場別 win_freq ブレンド(v5.13 1-C)が丸ごと無効になる",
      "python3 scripts/analyze_combo_freq.py"),
-    ("data/results_csv/results_all.csv", REQUIRED,
+    ("data/results_csv", REQUIRED,
      "統計ビルダーの入力が無く、選手・モーター統計を作り直せない",
      "python3 scripts/fetch_results.py"),
     # 日次取得ぶん（当日ぶんが無いのは正常。ディレクトリの有無だけ見る）

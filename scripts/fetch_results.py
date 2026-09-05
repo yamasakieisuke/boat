@@ -32,7 +32,6 @@ from fetch_results_official import fetch_official_results
 BASE_DIR = Path(__file__).parent.parent
 RAW_DIR  = BASE_DIR / "data" / "results_raw"
 CSV_DIR  = BASE_DIR / "data" / "results_csv"
-OUT_CSV  = CSV_DIR  / "results_all.csv"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 CSV_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -467,9 +466,12 @@ def main():
 
         time.sleep(WAIT_SEC)
 
-    if not args.no_merge and all_records:
-        print(f"\n全期間CSV書き込み中: {OUT_CSV}")
-        write_csv(all_records, OUT_CSV, append=True)
+    # results_all.csv（全期間の連結）は廃止した（2026-09-05）。
+    # 日別CSVの単なる派生物なのに66MBがgitに載り、GitHubの50MB警告を出しながら
+    # 毎回まるごと書き換わって .git を肥大させていた。しかも append 運用のため
+    # **12,096行ぶん古くなっていた**（20260823以降の13日が欠落）のを誰も
+    # 検知していなかった。分析用途は data/boat.db（scripts/build_db.py で
+    # 日別CSVから毎回作り直す）に置き換える。
 
     print(f"\n完了: 取得{ok}日 / スキップ{skip}日 / 新規{len(all_records)}レコード")
 

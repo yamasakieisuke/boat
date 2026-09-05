@@ -75,6 +75,14 @@ data/logs/*
 # - motors: モーター成績（predictor が直接読む）
 !data/results_csv/
 !data/results_csv/**
+# results_all.csv は廃止（2026-09-05）。日別CSVの派生物なのに66MBがgitに載り、
+# GitHubの50MB警告を出しながら毎回書き換わって .git を肥大させていた。
+# しかも append 運用で12,096行ぶん古くなっていたのを誰も検知していなかった。
+# 分析用途は data/boat.db（build_db.py で日別CSVから毎回作り直す）に置き換え。
+data/results_csv/results_all.csv
+# 分析用SQLite。日別CSVから再生成できる派生物なので git には載せない
+# （バイナリで差分が読めず、3つのワークフローが同時にcommitすると衝突する）
+data/boat.db
 !data/players/
 !data/players/**
 !data/motors/

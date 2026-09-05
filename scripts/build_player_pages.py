@@ -44,6 +44,9 @@ VENUE_NAMES = {
 
 def aggregate_results_by_player_year_waku() -> dict:
     """results_all.csv を walk して {reg_no: {year: {waku: {total, ranks: [_, n1..n6]}}}}."""
+    # results_all.csv は 2026-09-05 に廃止（日別CSVの派生物が古くなっていたため）。
+    # この変数は「もし残っていれば使う」程度の意味しか無く、通常は下の
+    # 日別CSVスキャンに落ちる。
     csv_path = RESULTS_DIR / "results_all.csv"
     out: dict = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: {"total": 0, "ranks": [0] * 7})))
 

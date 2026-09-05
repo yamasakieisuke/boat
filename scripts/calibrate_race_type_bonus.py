@@ -36,7 +36,7 @@ sys.path.insert(0, str(BASE_DIR / "scripts"))
 
 from predictor import classify_race_type, RACE_TYPE_BONUS  # noqa: E402
 
-RESULTS = BASE_DIR / "data" / "results_csv" / "results_all.csv"
+RESULTS_DIR = BASE_DIR / "data" / "results_csv"
 
 # ── v5.26 以前の分類とボーナス（目標平均を出すためだけに残す）─────────────
 # 「course_advantage にかかる係数の平均を変えない」を不変条件にするので、
@@ -66,8 +66,16 @@ def load_races() -> list[tuple[str, int, bool, str]]:
     """(新区分, レース番号, 1号艇が1着か, 旧区分) を1レース1件で返す。"""
     out: list[tuple[str, int, bool, str]] = []
     seen: set = set()
-    with open(RESULTS, encoding="utf-8-sig") as f:
-        for r in csv.DictReader(f):
+    # results_all.csv は廃止。日別CSVを読む（唯一のソース）
+    import glob as _glob
+    rows_iter = []
+    for _p in sorted(_glob.glob(str(RESULTS_DIR / "2*.csv"))):
+        if "results_all" in _p:
+            continue
+        with open(_p, encoding="utf-8-sig") as f:
+            rows_iter.extend(list(csv.DictReader(f)))
+    if True:
+        for r in rows_iter:
             key = (r["date"], r["venue_name"], r["race_no"])
             if key in seen:
                 continue
@@ -90,7 +98,7 @@ def main() -> int:
 
     races = load_races()
     if not races:
-        print("results_all.csv が読めません")
+        print("日別CSVが読めません")
         return 1
 
     # レース番号ごとの基準1着率（割り戻しに使う）
