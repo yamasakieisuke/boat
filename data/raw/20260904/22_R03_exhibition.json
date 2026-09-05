@@ -1,0 +1,94 @@
+{
+  "venue_code": "22",
+  "date": "20260904",
+  "race_no": 3,
+  "exhibition": [
+    {
+      "waku": 1,
+      "exhibition_time": "6.80",
+      "tilt": "0.0",
+      "entry_course": "",
+      "start_timing": "",
+      "handicap_dist": "0.0",
+      "prev_rank": ""
+    },
+    {
+      "waku": 2,
+      "exhibition_time": "6.71",
+      "tilt": "0.0",
+      "entry_course": "",
+      "start_timing": "",
+      "handicap_dist": "0.0",
+      "prev_rank": ""
+    },
+    {
+      "waku": 3,
+      "exhibition_time": "6.80",
+      "tilt": "0.0",
+      "entry_course": "",
+      "start_timing": "",
+      "handicap_dist": "0.0",
+      "prev_rank": ""
+    },
+    {
+      "waku": 4,
+      "exhibition_time": "6.85",
+      "tilt": "0.0",
+      "entry_course": "",
+      "start_timing": "",
+      "handicap_dist": "0.0",
+      "prev_rank": ""
+    },
+    {
+      "waku": 5,
+      "exhibition_time": "6.82",
+      "tilt": "0.0",
+      "entry_course": "",
+      "start_timing": "",
+      "handicap_dist": "0.5",
+      "prev_rank": ""
+    },
+    {
+      "waku": 6,
+      "exhibition_time": "6.77",
+      "tilt": "0.0",
+      "entry_course": "",
+      "start_timing": "",
+      "handicap_dist": "0.0",
+      "prev_rank": ""
+    }
+  ],
+  "course_order": [
+    {
+      "course": 1,
+      "foul": true,
+      "st": 0.13
+    },
+    {
+      "course": 2,
+      "foul": true,
+      "st": 0.11
+    },
+    {
+      "course": 3,
+      "foul": false,
+      "st": 0.23
+    },
+    {
+      "course": 4,
+      "foul": false,
+      "st": 0.11
+    },
+    {
+      "course": 5,
+      "foul": true,
+      "st": 0.04
+    },
+    {
+      "course": 6,
+      "foul": true,
+      "st": 0.05
+    }
+  ],
+  "weather": {}
+}
