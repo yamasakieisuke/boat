@@ -82,11 +82,17 @@ TARGET_COURSES = (2, 3, 4, 5)
 # ±0.25 くらい動く。それ以上は元の分布を壊すので頭を押さえる。
 MAX_SHIFT = 0.25
 
+# 2着分布に掛ける倍率の上限。縮約済みでも極端な選手×効果の大きいコースだと
+# 1.6倍ほどになる。それ以上は会場別の実測分布を壊すので頭を押さえる。
+MAX_RATIO = 1.8
+
 
 class DevelopmentModel:
     def __init__(self, stats: dict):
         self.meta = stats.get("meta") or {}
         self.marginal = stats.get("marginal") or {}
+        self.second_dist = stats.get("second_dist") or {}
+        self.second_marginal = stats.get("second_marginal") or {}
         self.payload = stats.get("payload") or {}
         self.racers = stats.get("racers") or {}
         self.base_makuri = float(self.meta.get("base_makuri_outer") or 0.4963)
@@ -152,13 +158,63 @@ class DevelopmentModel:
         return (p2, p3)
 
     # ── 条件付き確率の作り直し ─────────────────────────────────
+    def second_ratio(self, first_waku: int, reg_no: str) -> dict[int, float] | None:
+        """2着コースごとの「平均的な選手と比べた倍率」。
+
+        1コース艇の位置だけ動かす方式では、
+        「4コースがまくったとき2着=5が34.4%（周辺23.8%）に跳ねる」
+        構造を表現できなかった。まくりは外へ大きく張るので勝った艇のすぐ外が
+        付いてくる（3まくり→4,5 / 4まくり→5,6 / 5まくり→6）。
+        まくり差しは内を通すので1コースが残る。
+
+        平均的な選手なら全て 1.0 を返す＝既存挙動と一致する。
+        """
+        if first_waku not in TARGET_COURSES:
+            return None
+        marg = self.second_marginal.get(str(first_waku))
+        if not marg:
+            return None
+        mine, avg = self._tech_mix(first_waku, reg_no)
+        rows = {t: self.second_dist.get(f"{first_waku}|{t}") for t in mine}
+        if any(r is None for r in rows.values()):
+            return None
+        out: dict[int, float] = {}
+        for c in range(1, 7):
+            k = str(c)
+            m = marg.get(k, 0.0)
+            if m < 0.01:      # 母数が薄いところは動かさない
+                continue
+            mine_p = sum(mine[t] * rows[t].get(k, 0.0) for t in mine)
+            avg_p = sum(avg[t] * rows[t].get(k, 0.0) for t in avg)
+            if avg_p < 1e-6:
+                continue
+            r = mine_p / avg_p
+            out[c] = max(1.0 / MAX_RATIO, min(MAX_RATIO, r))
+        return out or None
+
+    def adjust_cond2(self, first_waku: int, reg_no: str,
+                     raw: dict[int, float]) -> dict[int, float]:
+        """{2着候補枠: 確率} を展開ぶん作り直す。
+
+        会場別の実測分布に倍率を掛けて再正規化する。会場ごとの癖は残しつつ、
+        その選手の決まり手傾向ぶんだけ形を変える。
+        """
+        ratio = self.second_ratio(first_waku, reg_no)
+        if not ratio:
+            return raw
+        total = sum(raw.values())
+        if total <= 0:
+            return raw
+        adj = {w: v * ratio.get(w, 1.0) for w, v in raw.items()}
+        t2 = sum(adj.values())
+        if t2 <= 0:
+            return raw
+        scale = total / t2          # 元の合計を保つ（cond2 は加点として使われる）
+        return {w: v * scale for w, v in adj.items()}
+
     @staticmethod
     def _reweight(dist: dict[int, float], target_waku: int, target_p: float) -> dict[int, float]:
-        """dist の target_waku だけ target_p に固定し、残りを比例配分し直す。
-
-        測った値（1コースがどこに残るか）だけを動かし、他艇の相対関係は
-        会場別の実測分布に任せる。
-        """
+        """dist の target_waku だけ target_p に固定し、残りを比例配分し直す。"""
         if target_waku not in dist:
             return dist
         total = sum(dist.values())
@@ -167,27 +223,16 @@ class DevelopmentModel:
         others = total - dist[target_waku]
         if others <= 0:
             return dist
-        # 元の分布のスケールを保つ（合計1でない場合があるので total 基準）
-        target_abs = target_p * total
-        target_abs = min(target_abs, total * 0.95)
+        target_abs = min(target_p * total, total * 0.95)
         scale = (total - target_abs) / others
         out = {w: v * scale for w, v in dist.items() if w != target_waku}
         out[target_waku] = target_abs
         return out
 
-    def adjust_cond2(self, first_waku: int, reg_no: str,
-                     raw: dict[int, float]) -> dict[int, float]:
-        """{2着候補枠: 確率} を展開ぶん作り直す。1号艇が候補に居ないときは素通し。"""
-        if 1 not in raw:
-            return raw
-        pl = self.c1_placement(first_waku, reg_no)
-        if pl is None:
-            return raw
-        return self._reweight(raw, 1, pl[0])
-
     def adjust_cond3(self, first_waku: int, second_waku: int, reg_no: str,
                      raw: dict[int, float]) -> dict[int, float]:
-        """3着ぶん。2着が既に1号艇なら動かす対象が無いので素通し。"""
+        """3着ぶん。(勝ち,決まり手,2着) 別の完全分布は疎すぎるので、
+        1号艇が3着に来る確率だけを動かす。2着が既に1号艇なら素通し。"""
         if second_waku == 1 or 1 not in raw:
             return raw
         pl = self.c1_placement(first_waku, reg_no)

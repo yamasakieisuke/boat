@@ -82,6 +82,7 @@ from __future__ import annotations
 """
 
 import json
+import math
 import os
 import re
 import datetime
@@ -960,9 +961,31 @@ def get_wind_direction(weather):
     if not weather: return ""
     return weather.get("風向","") or weather.get("wind_dir","")
 
+def _num_with_unit(val, default=0.0) -> float:
+    """先頭の数値だけを取り出す。単位付きの表示文字列に耐える。
+
+    ⚠️ safe_float は "%" と "秒" しか除去しないので、**scrape_weather が
+       保存する "4m" / "15cm" は全部 0.0 になっていた**。
+       その結果 calc_female_factor は女子選手が居ても常に中立を返し、
+       calc_venue_course_mod の風補正も一度も発火していなかった
+       （本番504艇・女子110艇のログで female_factor が完全な定数だった）。
+       安易に safe_float を書き換えると "1-2" のような値まで拾ってしまうので、
+       単位付きが来る場所だけこちらを使う。
+    """
+    import re as _re
+    m = _re.search(r"-?\d+(?:\.\d+)?", str(val))
+    return float(m.group()) if m else default
+
+
 def get_wind_speed(weather):
     if not weather: return 0.0
-    return safe_float(weather.get("風速",0) or weather.get("wind_speed",0))
+    return _num_with_unit(weather.get("風速", 0) or weather.get("wind_speed", 0))
+
+
+def get_wave_height(weather) -> float:
+    """波高(cm)。"15cm" のような単位付き表示で保存されている。"""
+    if not weather: return 0.0
+    return _num_with_unit(weather.get("波高", 0) or weather.get("wave_cm", 0))
 
 def get_wind_summary(weather, venue=None) -> str | None:
     """
@@ -1145,9 +1168,69 @@ def calc_st_score(racer, player_stats):
 #   tenkai  展開モデル。選手の決まり手傾向（まくり型/まくり差し型・2C差し型）から
 #           「1号艇がどこに残るか」を推定し、3連単の条件付き確率を作り直す。
 #           scripts/development.py 参照。
-SHADOW_VARIANT = ""            # "" / "exadj" / "oriten" / "tenkai" / 組み合わせ
+SHADOW_VARIANT = ""            # "" / "exadj" / "oriten" / "tenkai" / "wall" / 組み合わせ
 EXHIBITION_COURSE_BIAS_FILE = DATA_DIR / "venues" / "stats" / "exhibition_course_bias.json"
 _COURSE_BIAS_CACHE: dict | None = None
+
+
+# ── 壁（内側艇のST）による外コースの補正 / shadow "wall" ──────────────
+#
+# **仮説（ユーザー）**: 内側の艇のスタートが速いと壁になり、外からのまくりが
+# 成立しにくくなる。逆に内が遅いと外が届く。
+#
+# **検証**: 予想時点で使える量（そのレースより前までの平均ST）だけで測った。
+# 本人の平均STを3帯に層別してもなお、内側艇の平均STで1着率が動く:
+#
+#   3コース 本人ST速  内側ST 0.135→0.181 で 11.2% → 28.5%
+#           本人ST遅  同じく                6.0% → 13.1%
+#   4コース 本人ST速                        7.2% → 27.6%
+#           本人ST遅                        4.6% → 11.3%
+#
+# 9マス全て単調。**「他艇がどうなるか」を測れた初めてのケース**
+# （逃がし率・2コース殺しは選手特性として検出できなかった）。
+#
+# 対数オッズで見るときれいに線形なので、傾き（logit / 秒）で持つ:
+#   3コース 23.9 / 4コース 30.6 / 5コース 27.6
+#
+# **二重計上について**: calc_st_score は「本人の絶対ST」しか見ていないので、
+# 内側艇との相対関係は新しい情報。ただし内側艇のSTが遅ければその艇自身の
+# st_score が下がり、softmax 経由で外の艇の勝率が既に少し上がっている。
+# その取り分を概算すると測定値の2割ほど。安全側に倒して 0.60 を掛ける。
+# 展示タイムでイン有利を二重に数えた件と同じ失敗を繰り返さないため。
+# 展開モデルの2着倍率を score と同じ土俵に載せるための重み。
+# 倍率は 0.69〜1.32（縮約後の極端な選手）なので ln で ±0.28。
+# 0.10 を掛けて ±0.028 = 隣接する艇のスコア差と同程度にしてある。
+TENKAI_WEIGHT = 0.10
+
+WALL_LOGIT_PER_SEC = {3: 23.9, 4: 30.6, 5: 27.6}
+WALL_NEUTRAL_ST = {3: 0.1611, 4: 0.1620, 5: 0.1625}   # 内側平均STの実測中央値
+WALL_DAMPING = 0.60
+WALL_MAX_DELTA = 0.06        # score への加算の上限。course_advantage(0.20)の3割
+_SOFTMAX_TEMP = 6.0          # _calc_win_probs と揃える
+
+
+def apply_wall_adjustment(scored: list) -> None:
+    """内側艇の平均STから、3〜5コースの score を上下させる（その場で書き換える）。
+
+    全艇のSTが揃わないと計算できないので、採点が終わったあとの後処理として当てる。
+    breakdown に wall_score を残すので、効いたかどうかは後から追える。
+    """
+    st_by_waku = {r["waku"]: _avg_st_from_scored(r) for r in scored}
+    for r in scored:
+        waku = r["waku"]
+        slope = WALL_LOGIT_PER_SEC.get(waku)
+        if slope is None:
+            continue
+        inner = [st_by_waku[w] for w in range(1, waku) if w in st_by_waku]
+        if len(inner) < waku - 1:
+            continue
+        gap = (sum(inner) / len(inner)) - WALL_NEUTRAL_ST[waku]
+        delta = gap * slope / _SOFTMAX_TEMP * WALL_DAMPING
+        delta = max(-WALL_MAX_DELTA, min(WALL_MAX_DELTA, delta))
+        if abs(delta) < 1e-6:
+            continue
+        r["score"] = round(r["score"] + delta, 5)
+        r["breakdown"]["wall_score"] = round(delta, 5)
 
 
 _DEV_MODEL_CACHE = "unset"
@@ -1358,7 +1441,7 @@ def calc_female_factor(reg_no: str, player_stats: dict, weather) -> float:
         return 0.50  # 男性: ニュートラル
 
     wind  = get_wind_speed(weather) if weather else 0.0
-    wave  = safe_float((weather or {}).get("波高", (weather or {}).get("wave_cm", 0)), 0.0)
+    wave  = get_wave_height(weather)
 
     if wind >= 4.0 or wave >= 15.0:
         return 0.20   # 強風・高波 → ペナルティ大
@@ -1946,6 +2029,10 @@ def predict(jcd: str, date: str, race_no: int, verbose: bool = True,
                                  player_review=player_review),
         })
 
+    # 壁の補正はスコアの並べ替えより前に当てる（順位そのものが変わるため）
+    if "wall" in SHADOW_VARIANT:
+        apply_wall_adjustment(scored)
+
     scored.sort(key=lambda x: x["score"], reverse=True)
     combo_stats = load_combo_stats(jcd) if _COMBO_STATS_AVAILABLE else None
     bets = _suggest_3rentan(scored, weather, combo_stats=combo_stats, exhibition_data=exhibition,
@@ -2094,6 +2181,24 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
         # v5.24: 展示/オッズが反映済みかのフラグ（verify で層別するため）
         "has_exhibition":     bool(exhibition_data),
         "has_odds":           bool(odds_data and odds_data.get("odds_3t")),
+        # 入力の有無を全部残す（2026-09-05）。
+        # **補正が「効かなかった」のか「入力が無くて中立に落ちた」のかを
+        # 事後に区別できなかった**のが、死んだロジックが何ヶ月も生き延びた原因。
+        # 例: female_factor は天候が無いと女子選手が居ても必ず 0.50（中立）を返す。
+        # ログには結果しか残らないので、外からは「効いていない」と見分けがつかない。
+        # scripts/audit_dead_logic.py がこれを読んで検出する。
+        "inputs": {
+            "weather":      bool(weather),
+            "tide":         bool(tide_data),
+            "exhibition":   bool(exhibition_data),
+            "odds":         bool(odds_data and odds_data.get("odds_3t")),
+            "comments":     any((r.get("comment_data") for r in scored)),
+            "pitreport":    any((r.get("pitreport_data") for r in scored)),
+            "engine_report": any((r.get("engine_report") for r in scored)),
+            "player_review": any((r.get("player_review") for r in scored)),
+            "player_stats": sum(1 for r in scored if r.get("player_stats")),
+            "motor_stats":  sum(1 for r in scored if r.get("motor_stats")),
+        },
         # v5.24: is_rough の判定材料を残す。
         # is_rough は (gap12 <= 0.015) or (sink_risk >= 0.55) で決まるが、これまで
         # 判定結果しか記録しておらず、閾値を動かしたときの影響を事後に評価できなかった。
@@ -2357,6 +2462,23 @@ def _suggest_3rentan(scored: list, weather=None,
     def _raw_cond3(first_waku: int, second_waku: int, third_waku: int) -> float:
         return get_cond_3rd_prob(combo_stats, str(first_waku), str(second_waku), str(third_waku)) if combo_stats else 0.0
 
+    # 展開モデルの倍率を「独立した項」として持つ。
+    # cond2 の重み(0.35)は会場別出目統計向けに調整された値で、そこに混ぜると
+    # score との比で埋もれる（買い目の集合が変わるのは3%だけだった）。
+    # 展開はレース固有の情報なので、自前の重みを与える。
+    _tenkai_ratio_cache: dict[int, dict[int, float]] = {}
+
+    def _tenkai_term(first_waku: int, second_waku: int) -> float:
+        """2着候補への加点。平均的な選手なら 0（既存挙動と一致）。"""
+        if _dev is None:
+            return 0.0
+        r = _tenkai_ratio_cache.get(first_waku)
+        if r is None:
+            r = _dev.second_ratio(first_waku, _reg_by_waku.get(first_waku, "")) or {}
+            _tenkai_ratio_cache[first_waku] = r
+        v = r.get(second_waku)
+        return math.log(v) * TENKAI_WEIGHT if v and v > 0 else 0.0
+
     def _cond2(first_waku: int, second_waku: int) -> float:
         raw = _raw_cond2(first_waku, second_waku)
         if _dev is None:
@@ -2391,7 +2513,7 @@ def _suggest_3rentan(scored: list, weather=None,
             score_val = score_map.get(waku, 0.0)
             cond2 = _cond2(first_waku, waku)
             # v5.13 (1-B): cond_2nd の重みを 0.18 → 0.35 に倍増
-            mixed = score_val + cond2 * 0.35
+            mixed = score_val + cond2 * 0.35 + _tenkai_term(first_waku, waku)
             ranked.append((waku, mixed, cond2))
         ranked.sort(key=lambda x: x[1], reverse=True)
         return ranked
@@ -2418,6 +2540,7 @@ def _suggest_3rentan(scored: list, weather=None,
             + score_map.get(third_waku, 0.0) * 0.65
             # v5.13 (1-B): 条件付き確率の重みを引き上げ
             + _cond2(first_waku, second_waku) * 0.55
+            + _tenkai_term(first_waku, second_waku)
             + _cond3(first_waku, second_waku, third_waku) * 0.42
         )
 
@@ -4302,7 +4425,7 @@ def _print_result(jcd, date, race_no, scored, venue, exhibition, weather,
         w_tide = weather.get("潮汐", "")
         w_str  = (f'<p>🌤 気象: {_he(str(weather.get("天候","-")))} &nbsp;'
                   f' 風向:{_he(str(weather.get("風向","-")))} &nbsp;'
-                  f' 風速:{_he(str(weather.get("風速","-")))}m')
+                  f' 風速:{get_wind_speed(weather):.0f}m')   # 保存値は "4m" 形式なのでそのまま出すと "4mm" になる
         if w_tide and not tide_source:
             w_str += f' &nbsp; 潮汐:{_he(w_tide)}'
         print(w_str + '</p>')
@@ -4374,7 +4497,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", default="auto",
                         help="出力先ファイルパス (auto=自動, none=ターミナルのみ)")
     parser.add_argument("--shadow", default="",
-                        choices=["", "exadj", "oriten", "exadj+oriten", "tenkai", "exadj+tenkai", "oriten+tenkai", "exadj+oriten+tenkai"],
+                        choices=["", "exadj", "oriten", "exadj+oriten", "tenkai", "exadj+tenkai", "oriten+tenkai", "exadj+oriten+tenkai", "wall", "wall+tenkai"],
                         help="シャドー実行の変種。別ログに出し WordPress へは投稿しない。"
                              "公開は現行ロジックのみのまま。"
                              "exadj=展示をコース補正 / oriten=福岡オリジナル展示を加算")

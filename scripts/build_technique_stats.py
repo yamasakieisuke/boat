@@ -115,6 +115,7 @@ def build() -> dict:
     # 勝者の (コース, 決まり手, 選手) と、同レースの1コース艇の着順を集める
     win = {}     # key -> (course, reg_no)
     c1_rank = {}  # key -> rank文字列
+    second_course = {}  # key -> 2着艇の進入コース
     for row in _iter_results():
         jcd = VENUE_CODE_MAP.get(row.get("venue_name", ""))
         if not jcd:
@@ -130,6 +131,8 @@ def build() -> dict:
             win[key] = (course, row.get("reg_no", ""))
         if course == 1:
             c1_rank[key] = row.get("rank", "")
+        if row.get("rank") == "2":
+            second_course[key] = course
 
     print(f"結合できたレース: {len(win):,}")
 
@@ -174,6 +177,35 @@ def build() -> dict:
             "c1_2nd": round(d["c1_2nd"] / d["n"], 4),
             "c1_3rd": round(d["c1_3rd"] / d["n"], 4),
         }
+
+    # ── 1b) 決まり手ごとの【2着コースの完全分布】────────────────
+    # 1コース艇の位置だけを動かして残りを比例配分する方式では、
+    # 「4コースがまくったとき2着=5が34.4%に跳ねる」構造を表現できない。
+    # まくりは外へ大きく張るので勝った艇のすぐ外が付いてくる
+    # （3まくり→4,5 / 4まくり→5,6 / 5まくり→6）。まくり差しは内を通すので
+    # 1コースが残る。いわゆるスジ舟券のセオリーで、実測とも一致する。
+    sec_cnt = defaultdict(lambda: defaultdict(int))
+    sec_marg = defaultdict(lambda: defaultdict(int))
+    for key, (course, _reg) in win.items():
+        if course < 2:
+            continue
+        sec = second_course.get(key)
+        if not sec:
+            continue
+        tech = tech_map[key]
+        sec_cnt[f"{course}|{tech}"][str(sec)] += 1
+        sec_marg[str(course)][str(sec)] += 1
+
+    def _norm(d: dict, floor: int) -> dict | None:
+        n = sum(d.values())
+        if n < floor:
+            return None
+        out = {k: round(v / n, 4) for k, v in sorted(d.items())}
+        out["n"] = n
+        return out
+
+    second_dist = {k: v for k, v in ((k, _norm(d, 300)) for k, d in sec_cnt.items()) if v}
+    second_marginal = {k: v for k, v in ((k, _norm(d, 500)) for k, d in sec_marg.items()) if v}
 
     # ── 2) 選手別の決まり手傾向 ──────────────────────────────
     outer = defaultdict(lambda: [0, 0])   # reg -> [まくり数, 総数]
@@ -220,6 +252,8 @@ def build() -> dict:
             "K_c2": K_C2,
         },
         "marginal": marginal,
+        "second_dist": second_dist,
+        "second_marginal": second_marginal,
         "payload": payload,
         "racers": racers,
     }
@@ -244,6 +278,13 @@ def main() -> int:
     for k in sorted(data["payload"], key=lambda x: (int(x.split('|')[0]), x)):
         v = data["payload"][k]
         print(f"{k:<22}{v['n']:>7,}{v['c1_2nd']*100:>8.1f}%{v['c1_3rd']*100:>8.1f}%")
+
+    print(f"\n2着コース分布: 決まり手別 {len(data['second_dist'])}件 / "
+          f"周辺 {len(data['second_marginal'])}件")
+    for k in sorted(data["second_dist"], key=lambda x: (int(x.split('|')[0]), x)):
+        v = data["second_dist"][k]
+        cells = "".join(f"{v.get(str(c), 0)*100:>7.1f}%" for c in range(1, 7))
+        print(f"  {k:<16}{v['n']:>7,}{cells}")
 
     if args.write:
         OUT_PATH.parent.mkdir(parents=True, exist_ok=True)

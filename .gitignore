@@ -116,3 +116,10 @@ venv/
 # 1日約8KB・開催日のみなので容量は問題にならない。
 !data/techniques/
 !data/techniques/*.json
+
+# Exception: スタート展示（2026-09-05）
+# 展示ST（符号付き）・展示進入コース・展示タイム。壁ロジックのST源の候補で、
+# 展示進入コースは「枠なり前提」を外すための唯一の手がかりでもある。
+# 使う3項目だけに絞ってあるので1日約32KB。
+!data/previews/
+!data/previews/*.json
