@@ -77,6 +77,9 @@ MANIFEST: list[tuple[str, str, str, str]] = [
     ("data/motors", OPTIONAL, "モーター別統計", "python3 scripts/build_stats.py"),
     ("data/odds_archive", OPTIONAL, "オッズ履歴（分析用）",
      ".github/workflows/archive_odds.yml"),
+    ("data/raw", OPTIONAL,
+     "福岡オリジナル展示（一周/まわり足/直線）。results_csv の該当7列の元データ",
+     "自動: fetch_pending.yml / 過去分: scripts/backfill_fukuoka_tenji.py"),
 ]
 
 
