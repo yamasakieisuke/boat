@@ -114,6 +114,25 @@ jobs:
           WP_SYNC_TOKEN: ${{ secrets.WP_SYNC_TOKEN }}
           TZ: Asia/Tokyo
 
+      # シャドー実行。本番の買い目には一切影響しない（別ログ / WP非投稿）。
+      # verify 側が by_version で拾うので、日々の的中を本番と横並びで比較できる。
+      #
+      # ⚠️ ここに繋ぐまで exadj / oriten は「作ったが一度も走っていない」状態だった。
+      #    仕組みだけ作ってワークフローに載せ忘れる事故が繰り返し起きている。
+      - name: シャドー実行（本番の予想には影響しない）
+        if: always()
+        continue-on-error: true
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          for V in tenkai exadj; do
+            echo "--- shadow: $V ---"
+            python3 scripts/predictor.py \
+              --jcd "${{ matrix.jcd }}" \
+              --date "${{ needs.prep.outputs.target_date }}" \
+              --shadow "$V" 2>&1 | tail -3
+          done
+
       - name: Upload pred.json artifact piece
         if: always()
         uses: actions/upload-artifact@v4

@@ -1142,9 +1142,36 @@ def calc_st_score(racer, player_stats):
 # となり、course_advantage が既に持つイン有利を**二重に数える**。
 # 補正しても展示の効果自体は残る（枠1で展示1位vs6位が +16.8pt）ので、
 # 外すのではなく分離する。
-SHADOW_VARIANT = ""            # "" / "exadj" / "oriten" / "exadj+oriten"
+#   tenkai  展開モデル。選手の決まり手傾向（まくり型/まくり差し型・2C差し型）から
+#           「1号艇がどこに残るか」を推定し、3連単の条件付き確率を作り直す。
+#           scripts/development.py 参照。
+SHADOW_VARIANT = ""            # "" / "exadj" / "oriten" / "tenkai" / 組み合わせ
 EXHIBITION_COURSE_BIAS_FILE = DATA_DIR / "venues" / "stats" / "exhibition_course_bias.json"
 _COURSE_BIAS_CACHE: dict | None = None
+
+
+_DEV_MODEL_CACHE = "unset"
+
+
+def _development_model():
+    """展開モデル。読めなければ None＝展開の補正なしで動く。
+
+    ⚠️ 黙って None になると「入れたのに効いていない」事故になるので、
+       欠けているときは必ず WARN を出す。preflight_data.py の MANIFEST にも
+       data/stats/racer_technique.json が入っている。
+    """
+    global _DEV_MODEL_CACHE
+    if _DEV_MODEL_CACHE == "unset":
+        try:
+            from development import DevelopmentModel
+            _DEV_MODEL_CACHE = DevelopmentModel.load()
+        except Exception as e:
+            print(f"[WARN] 展開モデルの読み込みに失敗: {e}")
+            _DEV_MODEL_CACHE = None
+        if _DEV_MODEL_CACHE is None:
+            print("[WARN] 展開モデルが無効（data/stats/racer_technique.json）。"
+                  "作り直し: python3 scripts/build_technique_stats.py --write")
+    return _DEV_MODEL_CACHE
 
 
 def _course_bias() -> dict:
@@ -2316,11 +2343,44 @@ def _suggest_3rentan(scored: list, weather=None,
             bets.append((label, combo, reason))
             existing_combos.add(combo)
 
-    def _cond2(first_waku: int, second_waku: int) -> float:
+    # ── 展開モデル（shadow "tenkai" 専用。本番の並びは変えない）──────
+    # 会場別の出目統計を置き換えるのではなく、実測した「1号艇がどこに残るか」
+    # だけを動かして残りを比例配分し直す。平均的な選手なら既存挙動と一致する。
+    _dev = _development_model() if "tenkai" in SHADOW_VARIANT else None
+    _reg_by_waku = {r["waku"]: str(r.get("reg_no") or "") for r in scored}
+    _c2_cache: dict[int, dict[int, float]] = {}
+    _c3_cache: dict[tuple[int, int], dict[int, float]] = {}
+
+    def _raw_cond2(first_waku: int, second_waku: int) -> float:
         return get_cond_2nd_prob(combo_stats, str(first_waku), str(second_waku)) if combo_stats else 0.0
 
-    def _cond3(first_waku: int, second_waku: int, third_waku: int) -> float:
+    def _raw_cond3(first_waku: int, second_waku: int, third_waku: int) -> float:
         return get_cond_3rd_prob(combo_stats, str(first_waku), str(second_waku), str(third_waku)) if combo_stats else 0.0
+
+    def _cond2(first_waku: int, second_waku: int) -> float:
+        raw = _raw_cond2(first_waku, second_waku)
+        if _dev is None:
+            return raw
+        d = _c2_cache.get(first_waku)
+        if d is None:
+            d = {w: _raw_cond2(first_waku, w) for w in range(1, 7) if w != first_waku}
+            d = _dev.adjust_cond2(first_waku, _reg_by_waku.get(first_waku, ""), d)
+            _c2_cache[first_waku] = d
+        return d.get(second_waku, raw)
+
+    def _cond3(first_waku: int, second_waku: int, third_waku: int) -> float:
+        raw = _raw_cond3(first_waku, second_waku, third_waku)
+        if _dev is None:
+            return raw
+        key = (first_waku, second_waku)
+        d = _c3_cache.get(key)
+        if d is None:
+            d = {w: _raw_cond3(first_waku, second_waku, w)
+                 for w in range(1, 7) if w not in (first_waku, second_waku)}
+            d = _dev.adjust_cond3(first_waku, second_waku,
+                                  _reg_by_waku.get(first_waku, ""), d)
+            _c3_cache[key] = d
+        return d.get(third_waku, raw)
 
     def _rank_second_candidates(first_waku: int, excluded: set[int] | None = None) -> list[tuple[int, float, float]]:
         excluded = excluded or set()
@@ -4314,7 +4374,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", default="auto",
                         help="出力先ファイルパス (auto=自動, none=ターミナルのみ)")
     parser.add_argument("--shadow", default="",
-                        choices=["", "exadj", "oriten", "exadj+oriten"],
+                        choices=["", "exadj", "oriten", "exadj+oriten", "tenkai", "exadj+tenkai", "oriten+tenkai", "exadj+oriten+tenkai"],
                         help="シャドー実行の変種。別ログに出し WordPress へは投稿しない。"
                              "公開は現行ロジックのみのまま。"
                              "exadj=展示をコース補正 / oriten=福岡オリジナル展示を加算")

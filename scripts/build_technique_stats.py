@@ -149,6 +149,22 @@ def build() -> dict:
         elif rank == "3":
             d["c1_3rd"] += 1
 
+    # コース別の周辺分布（決まり手を問わない）。展開モデルはこれを基準にして、
+    # 「その選手の決まり手傾向が平均からどれだけズレているか」ぶんだけ動かす。
+    # こうすると平均的な選手では既存の挙動と一致し、副作用が出ない。
+    marg_cnt = defaultdict(lambda: {"n": 0, "c1_2nd": 0, "c1_3rd": 0})
+    for k, d in payload_cnt.items():
+        course = k.split("|")[0]
+        m = marg_cnt[course]
+        for f in ("n", "c1_2nd", "c1_3rd"):
+            m[f] += d[f]
+    marginal = {
+        c: {"n": d["n"],
+            "c1_2nd": round(d["c1_2nd"] / d["n"], 4),
+            "c1_3rd": round(d["c1_3rd"] / d["n"], 4)}
+        for c, d in marg_cnt.items() if d["n"] >= 300
+    }
+
     payload = {}
     for k, d in payload_cnt.items():
         if d["n"] < 150:   # これ未満は会場差・年度差に埋もれる
@@ -203,6 +219,7 @@ def build() -> dict:
             "K_outer": K_OUTER,
             "K_c2": K_C2,
         },
+        "marginal": marginal,
         "payload": payload,
         "racers": racers,
     }
@@ -218,6 +235,11 @@ def main() -> int:
     print(f"\n全体まくり率(外コース)={m['base_makuri_outer']:.4f} "
           f"全体差し率(2コース)={m['base_sashi_c2']:.4f}")
     print(f"選手: {len(data['racers']):,}人  決まり手別テーブル: {len(data['payload'])}件\n")
+    print(f"{'勝ちコース':<22}{'n':>7}{'1が2着':>9}{'1が3着':>9}  ← 周辺分布(基準)")
+    for c in sorted(data["marginal"]):
+        v = data["marginal"][c]
+        print(f"{c+'コース':<22}{v['n']:>7,}{v['c1_2nd']*100:>8.1f}%{v['c1_3rd']*100:>8.1f}%")
+    print()
     print(f"{'勝ちコース|決まり手':<22}{'n':>7}{'1が2着':>9}{'1が3着':>9}")
     for k in sorted(data["payload"], key=lambda x: (int(x.split('|')[0]), x)):
         v = data["payload"][k]

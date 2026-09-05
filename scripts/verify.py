@@ -998,7 +998,11 @@ def run_verification(jcd: str, date_from: str, date_to: str,
     print(f"  📊 予測精度検証  会場={jcd}  {date_from}〜{date_to}")
     print(f"{'='*72}")
 
-    # 対象ログを収集
+    # 対象ログを収集（本番ぶんのみ）。
+    # シャドー実行は {jcd}_R{n}_pred_{variant}.json に出る。**ここに混ぜてはいけない**。
+    # total / hit_bet_any / criteria / ROI を同じレースで二重に数えてしまい、
+    # 全体の的中率が水増しされる。シャドーは後段の別パスで
+    # バージョン別集計(ver_stats)にだけ流す。
     log_files = sorted(LOG_DIR.rglob(f"{jcd}_R*_pred.json"))
 
     total     = 0
@@ -1309,6 +1313,40 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         for name in pattern_thresholds
     }
     all_details = [d for details in race_details_by_date.values() for d in details]
+
+    # ── シャドー実行ぶん（v5.29 / 2026-09-05）─────────────────────
+    # {jcd}_R{n}_pred_{variant}.json を読み、**バージョン別集計にだけ**足す。
+    # 本番と同じレースなので、全体の的中率・ROI・criteria には入れない。
+    #
+    # ⚠️ これを繋ぐまで exadj / oriten は「別ログには出ているが誰も読まない」
+    #    状態だった。仕組みを作って配線を忘れる事故が繰り返し起きている。
+    shadow_details: list[dict] = []
+    for log_path in sorted(LOG_DIR.rglob(f"{jcd}_R*_pred_*.json")):
+        date_str = log_path.parent.name
+        if not (date_from <= date_str <= date_to):
+            continue
+        pred_log = load_json(log_path)
+        if not pred_log:
+            continue
+        race_no = pred_log.get("race_no", 0)
+        if date_str not in cached_results:
+            cached_results[date_str] = load_results_for_date(date_str)
+        race_data = cached_results[date_str].get((jcd, race_no))
+        if not race_data or not race_data.get("racers"):
+            continue
+        ev = evaluate_prediction(pred_log, race_data["racers"])
+        if not ev:
+            continue
+        bet_ev = evaluate_bets(pred_log, race_data.get("won3", ""))
+        shadow_details.append({
+            "version":      pred_log.get("version") or "shadow",
+            "hit_bet_any":  bet_ev["hit_bet_any"],
+            "hit_honmei":   bet_ev.get("hit_honmei", False),
+            "hit_nonstd":   bet_ev.get("hit_nonstd", False),
+            "won3_is_std":  bet_ev.get("won3_is_std", False),
+            "bet_points":   len(bet_ev.get("bet_cells", [])),
+            "won3_pay":     race_data.get("won3_pay", 0),
+        })
     for d in all_details:
         tp = d.get("triggered_patterns") or {}
         ap = d.get("applied_patterns") or []
@@ -1362,7 +1400,7 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         "total": 0, "hit_bet_any": 0, "hit_honmei": 0, "points": 0, "payout": 0,
         "nonstd_total": 0, "hit_nonstd": 0,
     })
-    for d in all_details:
+    for d in all_details + shadow_details:   # シャドーはここにだけ入れる
         v = d.get("version") or "pre-v5.20"
         s = ver_stats[v]
         s["total"] += 1
