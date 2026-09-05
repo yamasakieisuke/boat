@@ -195,8 +195,9 @@ LZHパーサの `flush()` タイミングの誤りで、**各会場ブロック�
 - [x] C-3 **Step 1 完了（2026-08-25）**: CSS を `assets/css/*.css` 6本へ外出し。
       `boat-forecast-viewer.php` **5,643 → 2,421行（-57%）**。
       本番6URLがページ全体でバイト一致することを確認済み
-- [ ] C-3 続き: Step 2（`<head>`/`render_nav` → `inc/`）/ Step 3（ヘルパ・データ・
-      ルーティング → `inc/`）/ Step 4（`render_*` → `views/` 遅延require）
+- [x] C-3 続き → ✅ **フェーズC完了（2026-09-05）**。Step 2/3/4 をすべて実施し、
+      `boat-forecast-viewer.php` は **5,628 → 85行**。最大ファイルは views/single.php の850行。
+      全ステップで本番6URLがバイト一致することを確認済み
 - [x] C-4 `php -l` は `deploy-wp.yml` の lint ジョブが `find wordpress -name '*.php'`
       で全件見るため、新規ファイルも自動で対象。deploy の `needs:` になっている
 
