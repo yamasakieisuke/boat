@@ -1,0 +1,87 @@
+{
+  "_generated_by": "scripts/calibrate_tournament_grades.py",
+  "_method": "racecards の tournament_grade と results_csv を結合し、(グレード,コース)の1着率をそのコースの全体1着率で割った比。採用条件は2つ: (1)信頼区間が1.0を含まない (2)期間を前後半に割っても符号が一致し開きが0.25以内。どちらか外れたセルは1.0に据え置く。区間だけだと母数の薄いセルが通ってしまう。",
+  "_races": 16655,
+  "_min_races_per_grade": 500,
+  "grades": {
+    "一般": {
+      "course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volatility": 1.0,
+      "races": 11714,
+      "kept_cells": 0
+    },
+    "G1": {
+      "course_mod": [
+        1.064,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volatility": 1.0,
+      "races": 2219,
+      "kept_cells": 1
+    },
+    "G3": {
+      "course_mod": [
+        0.952,
+        1.136,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volatility": 1.0,
+      "races": 1592,
+      "kept_cells": 2
+    },
+    "レディース": {
+      "course_mod": [
+        0.923,
+        1.244,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volatility": 1.0,
+      "races": 533,
+      "kept_cells": 2
+    },
+    "G2": {
+      "course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volatility": 1.0,
+      "races": 352,
+      "kept_cells": 0
+    },
+    "SG": {
+      "course_mod": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "volatility": 1.0,
+      "races": 245,
+      "kept_cells": 0
+    }
+  },
+  "ladies_tournaments": {}
+}
