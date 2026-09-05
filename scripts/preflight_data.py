@@ -67,6 +67,14 @@ MANIFEST: list[tuple[str, str, str, str]] = [
      "load_combo_stats() が全会場で None を返し、_get_venue_win_freq_mod() の "
      "会場別 win_freq ブレンド(v5.13 1-C)が丸ごと無効になる",
      "python3 scripts/analyze_combo_freq.py"),
+    ("data/techniques", REQUIRED,
+     "決まり手が無いと build_technique_stats.py が選手別の「まくり型/まくり差し型」を"
+     "作れず、展開モデル（_cond2/_cond3 への注入）が黙って無効になる",
+     "python3 scripts/import_techniques_openapi.py --from YYYYMMDD --to YYYYMMDD"),
+    ("data/stats/racer_technique.json", REQUIRED,
+     "展開モデルが選手の決まり手傾向を引けず、全員が全体平均（まくり率0.496 / "
+     "2コース差し率0.675）として扱われる。レースごとの差が消える",
+     "python3 scripts/build_technique_stats.py --write"),
     ("data/results_csv", REQUIRED,
      "統計ビルダーの入力が無く、選手・モーター統計を作り直せない",
      "python3 scripts/fetch_results.py"),

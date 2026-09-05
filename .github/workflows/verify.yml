@@ -86,6 +86,21 @@ jobs:
         env:
           TZ: Asia/Tokyo
 
+      # 決まり手（逃げ/まくり/差し/まくり差し）を Open API から日次で取り込む。
+      # 展開モデルの土台。これが止まると racer_technique.json が古いまま凍り、
+      # 「まくり型/まくり差し型」の判定が新人・移籍後の選手で効かなくなる。
+      #
+      # 相手は非公式の有志プロジェクトなので落ちていることがある。
+      # verify 本体を巻き込まないよう continue-on-error にしてある。
+      - name: 決まり手を取り込む
+        continue-on-error: true
+        env:
+          TZ: Asia/Tokyo
+        run: |
+          D="${{ steps.dateres.outputs.date }}"
+          python3 scripts/import_techniques_openapi.py --from "$D" --to "$D" 2>&1 | tail -10
+          python3 scripts/build_technique_stats.py --write 2>&1 | tail -30
+
       # ── 直近N日の verify を作り直す（D-6 / 2026-08-18）──────────────
       # verify_history は「その時点の results_csv」で計算された結果を持つ。
       # 2026-08-16 に会場ズレのバグを直して505日ぶんを再生成したが、
@@ -159,6 +174,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/players/ data/motors/ data/results_csv/ 2>/dev/null || true
+          # 決まり手と、そこから作る選手別傾向（展開モデルの入力）。
+          # data/techniques/ を commit し忘れると Actions 側では常に空になる。
+          git add -f data/techniques/ data/stats/racer_technique.json 2>/dev/null || true
           # 精度の蓄積（P0-1）。verify_history は以降の全ての検証の土台になる。
           # wordpress/ 配下は deploy-wp.yml が push 契機で heteml へ自動デプロイする。
           git add -f data/logs/verify_history.json 2>/dev/null || true

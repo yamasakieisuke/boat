@@ -105,3 +105,14 @@ venv/
 
 # Claude Code local overrides
 .claude/settings.local.json
+
+# Exception: 決まり手（2026-09-05）
+# 逃げ/まくり/差し/まくり差し は展開予想の土台。これが無いと
+# build_technique_stats.py が選手別の「まくり型/まくり差し型」を作れず、
+# 展開モデル（_cond2/_cond3 への注入）が黙って無効になる。
+#
+# 取り込み元は Open API（第三者の有志プロジェクト）なので、
+# 向こうが消えたらローカルのこれが唯一の控えになる。
+# 1日約8KB・開催日のみなので容量は問題にならない。
+!data/techniques/
+!data/techniques/*.json
