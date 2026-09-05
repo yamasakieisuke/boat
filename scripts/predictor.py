@@ -3032,7 +3032,8 @@ def _load_venue_w1_winrate() -> dict:
                 _VENUE_W1_WINRATE_CACHE = {}
         else:
             print(f"[WARN] 会場別1号艇勝率が無い: {path}\n"
-                  f"       沈みリスクの基準値が定数0.578に固定される（生成スクリプト未実装）")
+                  f"       沈みリスクの基準値が全国平均0.545に固定され会場差が消える。"
+                  f"作り直し: python3 scripts/build_w1_winrate.py --write")
             _VENUE_W1_WINRATE_CACHE = {}
     return _VENUE_W1_WINRATE_CACHE
 
@@ -3087,7 +3088,10 @@ def estimate_w1_winrate(scored: list, jcd: str) -> dict:
     の各条件で1着率が -15〜-27pt 低下することが判明。これらの合成で推定。
     """
     venue_data = _load_venue_w1_winrate().get(jcd, {})
-    base_rate = float(venue_data.get("overall_w1_winrate", 0.578))
+    # フォールバックは実測の全国平均 54.5%（79,867レース）。
+    # 以前は 0.578 だったが出典不明で、実測より 3.3pt 高い＝全会場で一律に
+    # 1号艇を堅く見積もり、sink_risk が低く出て荒れ判定が鈍る方向にズレていた。
+    base_rate = float(venue_data.get("overall_w1_winrate", 0.545))
 
     # waku=1 の艇を探す
     w1_row = next((r for r in scored if int(r.get("waku", 0)) == 1), None)

@@ -62,7 +62,7 @@ MANIFEST: list[tuple[str, str, str, str]] = [
      "python3 scripts/calibrate_tournament_grades.py --write"),
     ("data/venues/stats/w1_winrate.json", REQUIRED,
      "1号艇の沈みリスク推定の基準値が定数 0.578 に固定され、会場差が消える",
-     "生成スクリプトが存在しない（未実装）"),
+     "python3 scripts/build_w1_winrate.py --write"),
     ("data/stats/_all_combo_freq.json", REQUIRED,
      "load_combo_stats() が全会場で None を返し、_get_venue_win_freq_mod() の "
      "会場別 win_freq ブレンド(v5.13 1-C)が丸ごと無効になる",

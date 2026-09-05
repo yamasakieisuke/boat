@@ -1,0 +1,223 @@
+{
+  "_generated_by": "scripts/build_w1_winrate.py",
+  "_meaning": "会場ごとの「枠番1号艇の1着率」。predictor.estimate_w1_winrate() の base_rate として使われ、級別/スコア順位/ST/全国勝率の4係数がこれに掛かる。裏返した sink_risk が荒れ判定(is_rough)と信頼度%を動かす。",
+  "_national": 0.545,
+  "_races": 79867,
+  "_min_races": 300,
+  "18": {
+    "venue_name": "徳山",
+    "overall_w1_winrate": 0.6134,
+    "races": 3370,
+    "ci95": [
+      0.5968,
+      0.6297
+    ]
+  },
+  "24": {
+    "venue_name": "大村",
+    "overall_w1_winrate": 0.6082,
+    "races": 3502,
+    "ci95": [
+      0.5919,
+      0.6243
+    ]
+  },
+  "19": {
+    "venue_name": "下関",
+    "overall_w1_winrate": 0.6068,
+    "races": 3128,
+    "ci95": [
+      0.5895,
+      0.6238
+    ]
+  },
+  "13": {
+    "venue_name": "尼崎",
+    "overall_w1_winrate": 0.5911,
+    "races": 3343,
+    "ci95": [
+      0.5743,
+      0.6076
+    ]
+  },
+  "21": {
+    "venue_name": "芦屋",
+    "overall_w1_winrate": 0.5864,
+    "races": 3385,
+    "ci95": [
+      0.5697,
+      0.6029
+    ]
+  },
+  "22": {
+    "venue_name": "福岡",
+    "overall_w1_winrate": 0.5791,
+    "races": 3371,
+    "ci95": [
+      0.5623,
+      0.5956
+    ]
+  },
+  "08": {
+    "venue_name": "常滑",
+    "overall_w1_winrate": 0.5768,
+    "races": 3646,
+    "ci95": [
+      0.5607,
+      0.5927
+    ]
+  },
+  "20": {
+    "venue_name": "若松",
+    "overall_w1_winrate": 0.5718,
+    "races": 3477,
+    "ci95": [
+      0.5552,
+      0.5881
+    ]
+  },
+  "09": {
+    "venue_name": "津",
+    "overall_w1_winrate": 0.5697,
+    "races": 3444,
+    "ci95": [
+      0.5531,
+      0.5861
+    ]
+  },
+  "17": {
+    "venue_name": "宮島",
+    "overall_w1_winrate": 0.5658,
+    "races": 3420,
+    "ci95": [
+      0.5491,
+      0.5823
+    ]
+  },
+  "12": {
+    "venue_name": "住之江",
+    "overall_w1_winrate": 0.5651,
+    "races": 3371,
+    "ci95": [
+      0.5483,
+      0.5818
+    ]
+  },
+  "15": {
+    "venue_name": "丸亀",
+    "overall_w1_winrate": 0.5623,
+    "races": 3420,
+    "ci95": [
+      0.5456,
+      0.5788
+    ]
+  },
+  "16": {
+    "venue_name": "児島",
+    "overall_w1_winrate": 0.5563,
+    "races": 3106,
+    "ci95": [
+      0.5388,
+      0.5737
+    ]
+  },
+  "07": {
+    "venue_name": "蒲郡",
+    "overall_w1_winrate": 0.5541,
+    "races": 3472,
+    "ci95": [
+      0.5376,
+      0.5706
+    ]
+  },
+  "23": {
+    "venue_name": "唐津",
+    "overall_w1_winrate": 0.5412,
+    "races": 3285,
+    "ci95": [
+      0.5242,
+      0.5582
+    ]
+  },
+  "05": {
+    "venue_name": "多摩川",
+    "overall_w1_winrate": 0.5347,
+    "races": 3329,
+    "ci95": [
+      0.5177,
+      0.5516
+    ]
+  },
+  "11": {
+    "venue_name": "びわこ",
+    "overall_w1_winrate": 0.5228,
+    "races": 3152,
+    "ci95": [
+      0.5054,
+      0.5402
+    ]
+  },
+  "06": {
+    "venue_name": "浜名湖",
+    "overall_w1_winrate": 0.5174,
+    "races": 3624,
+    "ci95": [
+      0.5011,
+      0.5336
+    ]
+  },
+  "10": {
+    "venue_name": "三国",
+    "overall_w1_winrate": 0.5153,
+    "races": 3311,
+    "ci95": [
+      0.4982,
+      0.5322
+    ]
+  },
+  "01": {
+    "venue_name": "桐生",
+    "overall_w1_winrate": 0.4931,
+    "races": 3417,
+    "ci95": [
+      0.4764,
+      0.5099
+    ]
+  },
+  "14": {
+    "venue_name": "鳴門",
+    "overall_w1_winrate": 0.4833,
+    "races": 2959,
+    "ci95": [
+      0.4653,
+      0.5013
+    ]
+  },
+  "03": {
+    "venue_name": "江戸川",
+    "overall_w1_winrate": 0.4633,
+    "races": 2942,
+    "ci95": [
+      0.4453,
+      0.4813
+    ]
+  },
+  "04": {
+    "venue_name": "平和島",
+    "overall_w1_winrate": 0.4478,
+    "races": 3144,
+    "ci95": [
+      0.4305,
+      0.4653
+    ]
+  },
+  "02": {
+    "venue_name": "戸田",
+    "overall_w1_winrate": 0.4247,
+    "races": 3249,
+    "ci95": [
+      0.4078,
+      0.4418
+    ]
+  }
+}
