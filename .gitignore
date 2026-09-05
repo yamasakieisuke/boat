@@ -24,6 +24,13 @@ logs/
 !data/odds_archive/
 !data/odds_archive/**
 
+# Exception: 大会グレード補正（2026-09-05）
+# predictor.get_tournament_grade_mods() はこれが無いと全グレードに対して
+# course_mod=[1.0]*6 を返し、補正が丸ごと死ぬ。実際このファイルは git に
+# 一度も入っておらず、SG/G1 のイン有利もレディースのイン弱体も
+# コード上は存在するのに一度も効いていなかった。data/venues/ と同じ事故。
+!data/tournament_grades.json
+
 # Exception: 会場特性（v5.25 / 2026-08-16）
 # predictor.calc_venue_course_mod() はこれが無いと `if not venue: return base` で
 # 即座に抜ける。つまり会場・季節・潮汐の補正が丸ごと無効化される。

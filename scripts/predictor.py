@@ -329,12 +329,27 @@ def get_official_seasonal_course_mod(jcd: str, season: str) -> list[float]:
 
 # ── 大会グレード別コース補正 (v5.3) ─────────────────────────────
 def _load_tournament_grades():
-    """data/tournament_grades.json から大会グレード別補正テーブルを読み込む"""
+    """data/tournament_grades.json から大会グレード別補正テーブルを読み込む。
+
+    ⚠️ このファイルが無いと get_tournament_grade_mods() は全グレードに対して
+       course_mod=[1.0]*6 を返し、**大会グレード補正が丸ごと無効になる**。
+       2026-09-05 時点でファイルは存在せず、git にも一度も入っていなかった
+       （.gitignore の `data/*` に飲まれていた）。SG/G1 のイン有利増幅も
+       レディースのイン弱体も、コード上は存在するのに一度も効いていない。
+
+       同じ事故が `data/venues/`（2026-08-10）でも起きている。**予想の挙動を
+       決めるデータは必ず git に載せ、欠けたら黙らずに警告すること。**
+    """
+    if not TOURNAMENT_GRADES_FILE.exists():
+        print(f"[WARN] 大会グレード補正テーブルが無い: {TOURNAMENT_GRADES_FILE}\n"
+              f"       全グレードが中立(course_mod=[1.0]*6)で動く。"
+              f"再作成は scripts/calibrate_tournament_grades.py")
+        return {}
     try:
         with open(TOURNAMENT_GRADES_FILE, encoding="utf-8") as f:
-            data = json.load(f)
-        return data
-    except Exception:
+            return json.load(f)
+    except Exception as e:
+        print(f"[WARN] 大会グレード補正テーブルを読めない: {e} → 中立で動く")
         return {}
 
 _TOURNAMENT_GRADE_DATA = _load_tournament_grades()
@@ -406,7 +421,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.27"
+PREDICTOR_VERSION = "v5.28"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
