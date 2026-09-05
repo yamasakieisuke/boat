@@ -24,6 +24,19 @@ logs/
 !data/odds_archive/
 !data/odds_archive/**
 
+# Exception: 福岡オリジナル展示（2026-09-05）
+# 一周/まわり足/直線タイムは福岡公式にしか無く、公式の標準展示とは別物で
+# 参照者も少ない。公開データが全部オッズに織り込まれている以上、
+# **広く使われていないこのデータだけが残された情報優位**。
+#
+# 収集自体は fetch_pending.yml が10分毎に走らせて成功していたが、
+# data/raw/ が data/* に飲まれて commit されず、**別ワークフローの verify で
+# fetch_results.py が join しようとした時には存在しない**状態だった。
+# そのため results_csv の該当7列は19,304行すべて空のまま。
+# 1ファイル約1.5KB・福岡開催日のみなので容量は問題にならない。
+!data/raw/
+!data/raw/**/*_original_exhibition.json
+
 # Exception: 会場別の出目頻度（2026-09-05）
 # predictor.load_combo_stats() がこれを読む。無いと全会場で None が返り、
 # _get_venue_win_freq_mod() が [1.0]*6 に落ちて会場別 win_freq のブレンド

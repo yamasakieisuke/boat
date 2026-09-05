@@ -109,6 +109,26 @@ jobs:
             echo "has_success=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # 福岡オリジナル展示（一周/まわり足/直線）を残す。
+      # これを commit しないと、verify の fetch_results.py が join する時点で
+      # runner が変わっていて存在せず、results_csv の該当列が永久に空になる。
+      # 実際 19,304行すべて空だった原因がこれ。
+      - name: 福岡オリジナル展示を commit
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/raw/*/22_R*_original_exhibition.json 2>/dev/null || true
+          if ! git diff --staged --quiet; then
+            git commit -m "raw: 福岡オリジナル展示を保存 (${{ steps.dateres.outputs.date }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin main && git push origin main && break
+              echo "push retry $i"; sleep 5
+            done
+          else
+            echo "新しいオリジナル展示なし"
+          fi
+
       - name: Re-run prediction & WP publish for successful venues
         if: steps.pending.outputs.has_success == 'true'
         env:
