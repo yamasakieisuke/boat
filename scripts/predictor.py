@@ -124,10 +124,27 @@ except ImportError:
 _COMBO_STATS_CACHE: dict[str, dict] = {}
 
 
+_COMBO_STATS_WARNED = False
+
+
 def load_combo_stats(jcd: str) -> dict | None:
+    """会場別の出目頻度統計。
+
+    ⚠️ data/stats/*_combo_freq.json が無いと全会場で None を返し、
+       _get_venue_win_freq_mod() が [1.0]*6 に落ちる＝**会場別 win_freq の
+       25%ブレンド(v5.13 1-C)が丸ごと無効**になる。
+       2026-09-05 時点で data/stats/ 自体が存在しなかった。
+       作り直しは `python3 scripts/analyze_combo_freq.py`。
+    """
+    global _COMBO_STATS_WARNED
     if jcd in _COMBO_STATS_CACHE:
         return _COMBO_STATS_CACHE[jcd]
     stats = _raw_load_combo_stats(jcd) if _COMBO_STATS_AVAILABLE else None
+    if stats is None and not _COMBO_STATS_WARNED:
+        _COMBO_STATS_WARNED = True
+        print(f"[WARN] 会場別 combo_freq が無い（jcd={jcd} で確認）。"
+              f"会場別 win_freq のブレンドが効かない。"
+              f"作り直し: python3 scripts/analyze_combo_freq.py")
     _COMBO_STATS_CACHE[jcd] = stats
     return stats
 
@@ -2997,16 +3014,25 @@ _TOP1_FOLLOWERS_CACHE: dict | None = None
 
 
 def _load_venue_w1_winrate() -> dict:
-    """data/venues/stats/w1_winrate.json をロード（キャッシュ）"""
+    """data/venues/stats/w1_winrate.json をロード（キャッシュ）。
+
+    ⚠️ 無いと 1号艇の沈みリスク推定の基準値が定数 0.578 に固定され、
+       会場差が消える。2026-09-05 時点でファイルは無く、**生成するスクリプトも
+       存在しない**（機能が未完のまま配線だけ入っている）。
+       黙って劣化しないよう一度だけ警告する。点検は scripts/preflight_data.py。
+    """
     global _VENUE_W1_WINRATE_CACHE
     if _VENUE_W1_WINRATE_CACHE is None:
         path = BASE_DIR / "data" / "venues" / "stats" / "w1_winrate.json"
         if path.exists():
             try:
                 _VENUE_W1_WINRATE_CACHE = json.loads(path.read_text(encoding="utf-8"))
-            except Exception:
+            except Exception as e:
+                print(f"[WARN] w1_winrate.json を読めない: {e} → 基準値0.578で動く")
                 _VENUE_W1_WINRATE_CACHE = {}
         else:
+            print(f"[WARN] 会場別1号艇勝率が無い: {path}\n"
+                  f"       沈みリスクの基準値が定数0.578に固定される（生成スクリプト未実装）")
             _VENUE_W1_WINRATE_CACHE = {}
     return _VENUE_W1_WINRATE_CACHE
 

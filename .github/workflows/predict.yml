@@ -43,6 +43,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # 予想の挙動を決めるデータが揃っているかを毎日見る。
+      # 「ファイルが無いと補正が黙って中立に落ちる」事故が繰り返し起きており
+      # （data/venues 消失・tournament_grades が git に無い・combo_freq 未生成）、
+      # 動いているように見えたまま補正だけ消えるので出力からは気づけない。
+      # continue-on-error: 欠けていても予想自体は出す（劣化はするが止めない）。
+      # Actions の画面に赤い ✗ が出るので、そこで気づける。
+      - name: データ点検（欠けていても続行・赤マークで気づく用）
+        continue-on-error: true
+        run: python3 scripts/preflight_data.py --strict
+
       - name: STEP 1-2 list venues
         id: list
         run: |
