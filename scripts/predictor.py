@@ -482,7 +482,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.28"
+PREDICTOR_VERSION = "v5.29"
 
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分

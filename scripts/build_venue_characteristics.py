@@ -10,17 +10,18 @@
 `data/results_csv/`（2026-08-16 に修復済み・約76,800レース）の実測から作る。
 
 方針:
-  race_no_tendency … 中立(1.0)のまま。効果自体は実測で大きい（late帯のコース1は
-                     全国平均比 +15%超）。
+  race_no_tendency … **実測値を適用（2026-09-05 に有効化）**。
                      元の無効化理由は「R9-12 は優勝戦・準優勝戦を多く含み、
                      RACE_TYPE_BONUS["finalist"] と二重計上になる」だったが、
-                     **v5.27 (2026-08-23) で RACE_TYPE_BONUS からレース番号の効果を
-                     割り戻したので、その理由は解消している**
-                     （scripts/calibrate_race_type_bonus.py 参照）。
-                     一方で v5.27 の時点ではレース番号の効果がモデルのどこにも
-                     入っていない状態でもある。有効化は course_advantage の挙動を
-                     大きく変えるうえバックテスト手段が無い（racecards が未完）ため、
-                     種別の較正と同時に入れず、切り分けて判断する
+                     v5.27 で RACE_TYPE_BONUS からレース番号の効果を割り戻した
+                     （scripts/calibrate_race_type_bonus.py）ため解消済み。
+                     切り分けが済んだので、番号の効果はこちらが per-waku で持つ。
+                     実測(79,867R)は前後半に割っても最大差0.055と非常に安定:
+                       early  枠1 0.906 / 枠2-6 1.05〜1.13
+                       middle 枠1 0.941 / 枠6 1.209
+                       late   枠1 1.155 / 枠2-6 0.74〜0.85
+                     旧クランプ(0.85,1.15)では18セル中6セルを切り捨てていたので
+                     (0.70,1.30) に広げた
   tidal            … venue_config.py の tidal_influence から
   seasonal         … 中立(1.0)。official_course_stats.json が優先されるため
   tidal_conditions … 中立(1.0)。潮汐ラベル別の実測を持っていないため
@@ -57,7 +58,11 @@ PERIODS = {"early": range(1, 5), "middle": range(5, 9), "late": range(9, 13)}
 
 # 実測が少ない層で極端な補正が出ないようにする
 MIN_RACES_PER_CELL = 200
-MOD_CLAMP = (0.85, 1.15)
+# レース番号帯のクランプ。実測(79,867R)の範囲は 0.739〜1.209 で、
+# 旧値 (0.85, 1.15) では 18セル中6セルが切り捨てられていた。
+# 期間を前後半に割った差は最大 0.055（大半は0.04未満）と非常に安定しているので、
+# 実測を潰さない幅に広げる。ノイズ避けの上限としては残す。
+MOD_CLAMP = (0.70, 1.30)
 
 
 def period_of(race_no: int) -> str:
@@ -145,7 +150,7 @@ def build(stat: dict) -> dict:
             "water_type": cfg.get("water_type"),
             "tidal": bool(cfg.get("tidal_influence")),
             "tidal_influence": cfg.get("tidal_influence"),
-            "race_no_tendency": neutral,
+            "race_no_tendency": measured,
             # 以下は中立。理由は本ファイル冒頭の docstring を参照
             "seasonal": {s: {"course_mod": [1.0] * 6}
                          for s in ("spring", "summer", "autumn", "winter")},
@@ -160,7 +165,10 @@ def build(stat: dict) -> dict:
     out["_default"] = {
         "name": "default",
         "tidal": False,
-        "race_no_tendency": {p: {"course_mod": [1.0] * 6} for p in PERIODS},
+        # 会場が引けないときの既定。レース番号の傾向は全国プールで測った
+        # 同じ値なので、ここも中立ではなく実測を入れる（会場不明でも番号の
+        # 効果は等しく効くべき）。
+        "race_no_tendency": measured,
         "seasonal": {s: {"course_mod": [1.0] * 6}
                      for s in ("spring", "summer", "autumn", "winter")},
         "tidal_conditions": {},
