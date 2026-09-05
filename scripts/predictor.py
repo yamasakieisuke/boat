@@ -484,6 +484,11 @@ def is_all_female_race(racers: list) -> bool:
 # 軽微な表示変更や運用ロジックはバージョンを変えない
 PREDICTOR_VERSION = "v5.29"
 
+
+def _version_label() -> str:
+    """シャドー実行は版名に印を付ける。verify の by_version で並べて比較できる。"""
+    return PREDICTOR_VERSION + (f"+{SHADOW_VARIANT}" if SHADOW_VARIANT else "")
+
 WEIGHTS = {
     # v5.20 (2026-04-18): 541R breakdown寄与度分析に基づき再配分
     # 効いている指標を強化 / 効かない指標を縮小、合計1.00維持
@@ -1121,6 +1126,109 @@ def calc_st_score(racer, player_stats):
 
 
 # ── 展示スコア ───────────────────────────────────────────────────
+# ── シャドー実験（v5.30 / 2026-09-05）─────────────────────────────────
+# 本番の予想は変えずに、変種を同じ点時点データで並走させて後日比較する。
+# 過去に遡ったバックテストはその時点の選手統計を再現できず look-ahead になるが、
+# 並走なら統計もオッズも両者で完全に同一になる。
+#
+# 変種:
+#   exadj   展示タイムをコース補正してから正規化する
+#   oriten  福岡オリジナル展示（一周/まわり足/直線）を加える。同じくコース補正
+#   exadj+oriten  両方
+#
+# **なぜコース補正が要るか**: 展示タイムは引き波の影響を受け、前に艇がいない
+# 1コースが構造的に速く出る（実測で0.015〜0.023秒、レース内のばらつきの約17%）。
+# 生のまま正規化すると現行 exhibition_score のように1枠だけ平均0.6285（中立は0.5）
+# となり、course_advantage が既に持つイン有利を**二重に数える**。
+# 補正しても展示の効果自体は残る（枠1で展示1位vs6位が +16.8pt）ので、
+# 外すのではなく分離する。
+SHADOW_VARIANT = ""            # "" / "exadj" / "oriten" / "exadj+oriten"
+EXHIBITION_COURSE_BIAS_FILE = DATA_DIR / "venues" / "stats" / "exhibition_course_bias.json"
+_COURSE_BIAS_CACHE: dict | None = None
+
+
+def _course_bias() -> dict:
+    """コース別の展示タイム偏り（1コース基準の秒差）。無ければ全て0＝補正なし。"""
+    global _COURSE_BIAS_CACHE
+    if _COURSE_BIAS_CACHE is None:
+        try:
+            d = json.loads(EXHIBITION_COURSE_BIAS_FILE.read_text(encoding="utf-8"))
+            _COURSE_BIAS_CACHE = {int(k): float(v) for k, v in d["national"].items()}
+        except Exception:
+            print(f"[WARN] 展示のコース偏り表が読めない: {EXHIBITION_COURSE_BIAS_FILE}"
+                  " → 補正なしで動く（作り直し: scripts/build_exhibition_course_bias.py --write）")
+            _COURSE_BIAS_CACHE = {}
+    return _COURSE_BIAS_CACHE
+
+
+def _entry_course_of(waku, exhibition_data) -> int:
+    """展示時点の進入コース。取れなければ枠番で代用する。"""
+    for e in (exhibition_data or {}).get("exhibition", []) or []:
+        if int(safe_float(e.get("waku", 0))) == int(waku):
+            c = int(safe_float(e.get("entry_course", 0)))
+            if 1 <= c <= 6:
+                return c
+    return int(waku)
+
+
+def _normalize_in_race(values: dict, key) -> float:
+    """レース内で最速=1.0 最遅=0.0。既存 calc_exhibition_score と同じ形。"""
+    if len(values) < 3 or key not in values:
+        return 0.5
+    mn, mx = min(values.values()), max(values.values())
+    if mx - mn < 0.01:
+        return 0.5
+    return round(1.0 - (values[key] - mn) / (mx - mn), 4)
+
+
+def calc_exhibition_score_adj(waku, exhibition_data):
+    """展示タイムをコース補正してから正規化する（シャドー exadj 用）。"""
+    if not exhibition_data:
+        return 0.5
+    bias = _course_bias()
+    times = {}
+    for e in exhibition_data.get("exhibition", []) or []:
+        w = int(safe_float(e.get("waku", 0)))
+        t = safe_float(e.get("exhibition_time", 0))
+        if w > 0 and t > 0:
+            times[w] = t - bias.get(_entry_course_of(w, exhibition_data), 0.0)
+    return _normalize_in_race(times, int(waku))
+
+
+def load_fukuoka_oriten(jcd: str, date: str, race_no: int):
+    """福岡オリジナル展示。福岡(22)以外は None。"""
+    if str(jcd) != "22":
+        return None
+    return load_json(DATA_DIR / "raw" / date /
+                     f"22_R{race_no:02d}_original_exhibition.json")
+
+
+def calc_oriten_score(waku, oriten_data, exhibition_data=None):
+    """一周/まわり足/直線をコース補正して正規化し、平均する。
+
+    ⚠️ 生タイムのまま使うと「1コースかどうか」を測る変数になる。標準展示と
+       同じ理由でコース補正する。3項目のうち取れているものだけで平均する
+       （上位艇しか値が入らない日があるため）。
+    """
+    if not oriten_data:
+        return 0.5
+    bias = _course_bias()
+    rows = oriten_data.get("rows") or []
+    parts = []
+    for col in ("lap_time", "turn_time", "straight_time"):
+        times = {}
+        for r in rows:
+            w = int(safe_float(r.get("waku", 0)))
+            t = safe_float(r.get(col, 0))
+            if w > 0 and t > 0:
+                times[w] = t - bias.get(_entry_course_of(w, exhibition_data), 0.0)
+        if len(times) >= 3 and int(waku) in times:
+            parts.append(_normalize_in_race(times, int(waku)))
+    if not parts:
+        return 0.5
+    return round(sum(parts) / len(parts), 4)
+
+
 def calc_exhibition_score(waku, exhibition_data, player_stats=None, jcd: str = ""):
     """
     展示タイム（直線スピード）の相対スコア。最速=1.0、最遅=0.0
@@ -1629,7 +1737,20 @@ def score_racer(racer, waku, jcd, race_no, date_str,
     ex_score             = (calc_exhibition_score(waku, exhibition_data, player_stats, jcd) * 0.6
                           + calc_exhibition_st_score(waku, exhibition_data) * 0.3
                           + calc_tilt_score(waku, exhibition_data)          * 0.1)
+    # シャドー exadj: 展示タイムをコース補正した版で置き換える
+    if "exadj" in SHADOW_VARIANT and exhibition_data:
+        ex_score = (calc_exhibition_score_adj(waku, exhibition_data)         * 0.6
+                  + calc_exhibition_st_score(waku, exhibition_data)          * 0.3
+                  + calc_tilt_score(waku, exhibition_data)                   * 0.1)
     b["exhibition_score"]= round(ex_score * WEIGHTS["exhibition_score"], 5)
+
+    # シャドー oriten: 福岡オリジナル展示を加える（本番の予想には入れない）
+    if "oriten" in SHADOW_VARIANT:
+        _ori = load_fukuoka_oriten(jcd, date_str, race_no)
+        if _ori:
+            b["oriten_score"] = round(
+                calc_oriten_score(waku, _ori, exhibition_data)
+                * WEIGHTS["exhibition_score"], 5)
 
     # 当地・当枠の実績1着率
     b["hist_waku_score"] = round(
@@ -1894,7 +2015,7 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
         "jcd":        jcd,
         "date":       date,
         "race_no":    race_no,
-        "version":    PREDICTOR_VERSION,  # v5.20〜: バージョン別的中率追跡用
+        "version":    _version_label(),   # v5.20〜: バージョン別的中率追跡用
         "predicted_at": datetime.datetime.now().isoformat(timespec="seconds"),
         "confidence": confidence.strip(),
         "is_rough": is_rough,
@@ -1957,7 +2078,10 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
     }
     log_dir = DATA_DIR / "logs" / date
     log_dir.mkdir(parents=True, exist_ok=True)
-    out = log_dir / f"{jcd}_R{race_no:02d}_pred.json"
+    # シャドー実行は別ファイルに書く。verify の主集計は "*_pred.json" を
+    # rglob するので、名前を分けておけば二重計上されない。
+    suffix = f"_pred_{SHADOW_VARIANT}.json" if SHADOW_VARIANT else "_pred.json"
+    out = log_dir / f"{jcd}_R{race_no:02d}{suffix}"
 
     # ── v5.24: 展示/オッズ更新“前”の買い目を保存する ──────────────
     # このファイルは同一レースで朝の予測→展示/オッズ反映と2回以上書かれるが、
@@ -4189,6 +4313,11 @@ if __name__ == "__main__":
                         help="レース番号 1〜12 (省略時: 全レース)")
     parser.add_argument("--output", default="auto",
                         help="出力先ファイルパス (auto=自動, none=ターミナルのみ)")
+    parser.add_argument("--shadow", default="",
+                        choices=["", "exadj", "oriten", "exadj+oriten"],
+                        help="シャドー実行の変種。別ログに出し WordPress へは投稿しない。"
+                             "公開は現行ロジックのみのまま。"
+                             "exadj=展示をコース補正 / oriten=福岡オリジナル展示を加算")
     parser.add_argument("--no-tide", action="store_true",
                         help="気象庁潮汐データを使わない（weatherのみ使用）")
     parser.add_argument("--wp-publish", action="store_true",
@@ -4200,6 +4329,13 @@ if __name__ == "__main__":
     parser.add_argument("--wp-timeout", type=float, default=10.0,
                         help="WordPress 投稿時のHTTPタイムアウト秒数")
     args = parser.parse_args()
+
+    if args.shadow:
+        # 本番の予想には影響させない。別ログに書き、WordPress へは投稿しない。
+        globals()["SHADOW_VARIANT"] = args.shadow
+        args.wp_publish = False
+        print(f"[INFO] シャドー実行 variant={args.shadow}。"
+              "別ログに出力し WordPress へは投稿しない")
 
     races = [args.race] if args.race else list(range(1, 13))
 
