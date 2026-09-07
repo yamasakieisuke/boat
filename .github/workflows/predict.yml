@@ -125,7 +125,10 @@ jobs:
         env:
           TZ: Asia/Tokyo
         run: |
-          for V in tenkai exadj; do
+          # tenkai は外してある。買い目の精度が上がらないことが 1,092レースで
+          # 確認済みで（development.py の docstring 参照）、頭別2着の変化率が
+          # 1.7% しかないため1年回しても有意差が出ない。手動なら --shadow tenkai。
+          for V in wall exadj; do
             echo "--- shadow: $V ---"
             python3 scripts/predictor.py \
               --jcd "${{ matrix.jcd }}" \
