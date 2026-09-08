@@ -1209,6 +1209,18 @@ _COURSE_BIAS_CACHE: dict | None = None
 # 2着=1 が 40.4%→23.1%）ので、順位を動かせるだけの重みを与える根拠はある。
 TENKAI_WEIGHT = 0.20
 
+# STの出所は「通算平均」でよい。今節・展示と比べて最も強い（2026-09-08 実測）。
+# 各軸の実データの四分位で切って、内側艇のSTと外コース1着率の関係を見た結果:
+#
+#   コース    通算平均        今節         展示
+#   3コース  +7.6pt 単調   +4.7pt 単調   +2.9pt 単調
+#   4コース  +7.4pt 単調   +5.4pt 単調   +0.0pt 非単調
+#   5コース  +4.0pt 単調   +2.1pt 単調   +1.5pt 単調
+#
+# 展示STが弱いのは、スタート展示が本番と同じ本気度で行われるとは限らないため
+# と思われる。今節STは方向は同じだが通算の6〜7割で、しかも通算と強く相関する
+# （通算を固定すると今節の効きはほぼ消える）ので足す価値が無い。
+# → 展示ST・今節STを壁に混ぜる必要は無い。
 WALL_LOGIT_PER_SEC = {3: 23.9, 4: 30.6, 5: 27.6}
 WALL_NEUTRAL_ST = {3: 0.1611, 4: 0.1620, 5: 0.1625}   # 内側平均STの実測中央値
 WALL_DAMPING = 0.60
@@ -1216,22 +1228,36 @@ WALL_MAX_DELTA = 0.06        # score への加算の上限。course_advantage(0.
 _SOFTMAX_TEMP = 6.0          # _calc_win_probs と揃える
 
 
-def apply_wall_adjustment(scored: list) -> None:
+def apply_wall_adjustment(scored: list, exhibition_data=None) -> None:
     """内側艇の平均STから、3〜5コースの score を上下させる（その場で書き換える）。
 
     全艇のSTが揃わないと計算できないので、採点が終わったあとの後処理として当てる。
     breakdown に wall_score を残すので、効いたかどうかは後から追える。
+
+    ⚠️ **枠ではなく進入コースで判定する**。壁の係数は結果CSVの course_enter
+       （実進入）で較正したので、枠で当てると較正と食い違う。
+       枠と進入が違う艇は 9.5%（会場差は 江戸川0.9% 〜 蒲郡13.4%）。
+       展示の entry_course は実進入を 94.71% 当てる（枠のままだと 90.38%）。
+       進入変更のあった艇に限れば展示進入が 59.9% 的中させる。
+       calc_venue_course_mod は既に actual_course を使っており、壁だけが
+       枠のままだった。
     """
-    st_by_waku = {r["waku"]: _avg_st_from_scored(r) for r in scored}
+    course_of = {r["waku"]: get_actual_entry_course(r["waku"], exhibition_data)
+                 for r in scored}
+    # 進入コースは 1..n の並べ替えになるはず。壊れていたら枠にフォールバックする
+    if sorted(course_of.values()) != list(range(1, len(scored) + 1)):
+        course_of = {r["waku"]: r["waku"] for r in scored}
+    st_by_course = {course_of[r["waku"]]: _avg_st_from_scored(r) for r in scored}
+
     for r in scored:
-        waku = r["waku"]
-        slope = WALL_LOGIT_PER_SEC.get(waku)
+        course = course_of[r["waku"]]
+        slope = WALL_LOGIT_PER_SEC.get(course)
         if slope is None:
             continue
-        inner = [st_by_waku[w] for w in range(1, waku) if w in st_by_waku]
-        if len(inner) < waku - 1:
+        inner = [st_by_course[c] for c in range(1, course) if c in st_by_course]
+        if len(inner) < course - 1:
             continue
-        gap = (sum(inner) / len(inner)) - WALL_NEUTRAL_ST[waku]
+        gap = (sum(inner) / len(inner)) - WALL_NEUTRAL_ST[course]
         delta = gap * slope / _SOFTMAX_TEMP * WALL_DAMPING
         delta = max(-WALL_MAX_DELTA, min(WALL_MAX_DELTA, delta))
         if abs(delta) < 1e-6:
@@ -2038,7 +2064,7 @@ def predict(jcd: str, date: str, race_no: int, verbose: bool = True,
 
     # 壁の補正はスコアの並べ替えより前に当てる（順位そのものが変わるため）
     if "wall" in SHADOW_VARIANT:
-        apply_wall_adjustment(scored)
+        apply_wall_adjustment(scored, exhibition)
 
     scored.sort(key=lambda x: x["score"], reverse=True)
     combo_stats = load_combo_stats(jcd) if _COMBO_STATS_AVAILABLE else None
