@@ -1339,6 +1339,7 @@ def run_verification(jcd: str, date_from: str, date_to: str,
             continue
         bet_ev = evaluate_bets(pred_log, race_data.get("won3", ""))
         shadow_details.append({
+            "_race":        (date_str, race_no),   # 本番と突き合わせるための鍵
             "version":      pred_log.get("version") or "shadow",
             "hit_bet_any":  bet_ev["hit_bet_any"],
             "hit_honmei":   bet_ev.get("hit_honmei", False),
@@ -1411,6 +1412,39 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         s["points"]      += int(d.get("bet_points", 0) or 0)
         if d.get("hit_bet_any"):
             s["payout"]  += int(d.get("won3_pay", 0) or 0)
+    # ── シャドーと本番の「同じレースでの対戦成績」（2026-09-09）──────
+    # version_stats は集計値しか持たないので、日をまたいで足しても
+    # McNemar のような対応のある検定ができなかった。**同じレースで
+    # どちらが当てたか**の不一致数を残しておけば、後から日をまたいで
+    # 合算するだけで検定できる。シャドーは変化するレースが一部なので、
+    # 集計値の差（ほとんどが共通部分）を見ていても差が埋もれる。
+    prod_by_race = {}
+    for d in all_details:
+        rn = d.get("race_no")
+        if rn is not None:
+            prod_by_race[rn] = d
+    shadow_pairs: dict[str, dict[str, int]] = {}
+    for d in shadow_details:
+        rn = (d.get("_race") or (None, None))[1]
+        base = prod_by_race.get(rn)
+        if not base:
+            continue
+        rec = shadow_pairs.setdefault(d.get("version") or "shadow", {
+            "n": 0, "both": 0, "prod_only": 0, "shadow_only": 0, "neither": 0,
+            "ns_n": 0, "ns_both": 0, "ns_prod_only": 0, "ns_shadow_only": 0,
+        })
+        a, b = bool(base.get("hit_bet_any")), bool(d.get("hit_bet_any"))
+        rec["n"] += 1
+        rec["both" if (a and b) else
+            "prod_only" if a else
+            "shadow_only" if b else "neither"] += 1
+        if not base.get("won3_is_std"):
+            x, y = bool(base.get("hit_nonstd")), bool(d.get("hit_nonstd"))
+            rec["ns_n"] += 1
+            if x and y: rec["ns_both"] += 1
+            elif x: rec["ns_prod_only"] += 1
+            elif y: rec["ns_shadow_only"] += 1
+
     if len(ver_stats) > 0:
         # ロジック改修のA/B用。的中率だけでなく回収率も並べる
         print("  ── バージョン別（v5.20〜）──")
@@ -1537,6 +1571,7 @@ def run_verification(jcd: str, date_from: str, date_to: str,
         "series_stats": series_stats,
         # v5.20〜: バージョン別集計
         "version_stats": dict(ver_stats),
+        "shadow_pairs":  shadow_pairs,
         # P0-3: 回収率（100円/点均等購入の仮定）
         "roi": roi,
         "roi_pct": roi.get("roi_pct", 0.0),
