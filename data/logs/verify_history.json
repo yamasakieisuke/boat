@@ -131941,7 +131941,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "01",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -132258,7 +132258,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "01",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -132575,7 +132575,331 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "02",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 3,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 7,
+          "hits": 1,
+          "points": 33,
+          "payout": 810,
+          "w1_won": 2
+        },
+        "荒れ判定なし": {
+          "races": 5,
+          "hits": 2,
+          "points": 22,
+          "payout": 1720,
+          "w1_won": 4
+        }
+      },
+      "confidence": {
+        "50-59%": {
+          "races": 6,
+          "hits": 0,
+          "points": 28,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "60-69%": {
+          "races": 1,
+          "hits": 1,
+          "points": 5,
+          "payout": 810,
+          "w1_won": 1
+        },
+        "70-79%": {
+          "races": 5,
+          "hits": 2,
+          "points": 22,
+          "payout": 1720,
+          "w1_won": 4
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 7,
+          "hits": 1,
+          "points": 33,
+          "payout": 810,
+          "w1_won": 2
+        },
+        "0.35-0.45": {
+          "races": 4,
+          "hits": 1,
+          "points": 17,
+          "payout": 710,
+          "w1_won": 3
+        },
+        "0.45-0.55": {
+          "races": 1,
+          "hits": 1,
+          "points": 5,
+          "payout": 1010,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "general": {
+          "races": 6,
+          "hits": 1,
+          "points": 29,
+          "payout": 810,
+          "w1_won": 1
+        },
+        "kikaku": {
+          "races": 2,
+          "hits": 0,
+          "points": 8,
+          "payout": 0,
+          "w1_won": 2
+        },
+        "senbatsu": {
+          "races": 3,
+          "hits": 2,
+          "points": 13,
+          "payout": 1720,
+          "w1_won": 3
+        },
+        "finalist": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        }
+      }
+    },
+    "hit_nonstd": 1,
+    "nonstd_races": 8,
+    "hit_nonstd_pct": 12.5,
+    "hit_1st": 6,
+    "hit_bet1": 1,
+    "hit_bet2": 1,
+    "hit_bet3": 1,
+    "hit_honmei": 3,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 25.0,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 10.42,
+    "hit_1st_pct": 50.0,
+    "hit_bet_any_pct": 25.0,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 50.0,
+        "hit_bet_any_pct": 25.0
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 5,
+        "triggered_hit": 1,
+        "applied": 2,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 1,
+        "triggered_hit": 1,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 5,
+        "honmei_hit": 0,
+        "top2_rt_sum": 1.6666666666666665,
+        "avg_rk_sum": 16.5
+      },
+      "7走+": {
+        "n": 7,
+        "honmei_hit": 3,
+        "top2_rt_sum": 2.75,
+        "avg_rk_sum": 23.21428571428571
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 55,
+        "payout": 2530,
+        "nonstd_total": 8,
+        "hit_nonstd": 1
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 55,
+        "payout": 2530,
+        "nonstd_total": 8,
+        "hit_nonstd": 1
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 55,
+        "payout": 1520,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 3,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 9,
+        "ns_n": 8,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 1,
+        "shadow_only": 0,
+        "neither": 9,
+        "ns_n": 8,
+        "ns_both": 0,
+        "ns_prod_only": 1,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 55,
+      "stake": 5500,
+      "payout": 2530,
+      "roi_pct": 46.0,
+      "points_per_race": 4.58,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 3,
+          "payout": 2530,
+          "hit_pct": 6.25,
+          "roi_pct": 52.7
+        },
+        "穴": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 710,
+          "hit_pct": 8.33,
+          "roi_pct": 59.2
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 810,
+          "hit_pct": 8.33,
+          "roi_pct": 67.5
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 1,
+          "payout": 1010,
+          "hit_pct": 8.33,
+          "roi_pct": 84.2
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 1,
+      "hit_pop_dist": {
+        "1-3": 3,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 46.0,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "02",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -132885,7 +133209,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "02",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -133202,7 +133526,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "02",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -133533,7 +133857,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "02",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -133857,7 +134181,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "02",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -134188,7 +134512,331 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "03",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 8,
+          "hits": 0,
+          "points": 37,
+          "payout": 0,
+          "w1_won": 4
+        },
+        "荒れ判定なし": {
+          "races": 4,
+          "hits": 2,
+          "points": 19,
+          "payout": 2260,
+          "w1_won": 3
+        }
+      },
+      "confidence": {
+        "50-59%": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "60-69%": {
+          "races": 6,
+          "hits": 0,
+          "points": 27,
+          "payout": 0,
+          "w1_won": 3
+        },
+        "70-79%": {
+          "races": 5,
+          "hits": 2,
+          "points": 24,
+          "payout": 2260,
+          "w1_won": 4
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 6,
+          "hits": 0,
+          "points": 27,
+          "payout": 0,
+          "w1_won": 3
+        },
+        "0.35-0.45": {
+          "races": 2,
+          "hits": 1,
+          "points": 9,
+          "payout": 730,
+          "w1_won": 1
+        },
+        "0.55-0.65": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "0.45-0.55": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "〜0.35": {
+          "races": 1,
+          "hits": 1,
+          "points": 5,
+          "payout": 1530,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "general": {
+          "races": 10,
+          "hits": 1,
+          "points": 46,
+          "payout": 730,
+          "w1_won": 5
+        },
+        "finalist": {
+          "races": 2,
+          "hits": 1,
+          "points": 10,
+          "payout": 1530,
+          "w1_won": 2
+        }
+      }
+    },
+    "hit_nonstd": 0,
+    "nonstd_races": 8,
+    "hit_nonstd_pct": 0.0,
+    "hit_1st": 8,
+    "hit_bet1": 2,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.67,
+    "hit_1st_pct": 66.7,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 16.7,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 66.7,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 6,
+        "triggered_hit": 0,
+        "applied": 3,
+        "applied_hit": 0
+      },
+      "3カド": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 12,
+        "honmei_hit": 2,
+        "top2_rt_sum": 4.5,
+        "avg_rk_sum": 40.5
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 2260,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 2260,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 1,
+        "hit_honmei": 1,
+        "points": 56,
+        "payout": 730,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 8,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 1,
+        "prod_only": 1,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 8,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 56,
+      "stake": 5600,
+      "payout": 2260,
+      "roi_pct": 40.4,
+      "points_per_race": 4.67,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 2260,
+          "hit_pct": 4.17,
+          "roi_pct": 47.1
+        },
+        "穴": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 2,
+          "payout": 2260,
+          "hit_pct": 16.67,
+          "roi_pct": 188.3
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 5,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 1,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 40.4,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "03",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -134505,7 +135153,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "03",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -134808,7 +135456,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "03",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -135118,7 +135766,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "03",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -135435,7 +136083,324 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "04",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 11,
+          "hits": 2,
+          "points": 51,
+          "payout": 1570,
+          "w1_won": 4
+        },
+        "荒れ判定なし": {
+          "races": 1,
+          "hits": 0,
+          "points": 4,
+          "payout": 0,
+          "w1_won": 0
+        }
+      },
+      "confidence": {
+        "60-69%": {
+          "races": 4,
+          "hits": 1,
+          "points": 19,
+          "payout": 700,
+          "w1_won": 2
+        },
+        "50-59%": {
+          "races": 4,
+          "hits": 0,
+          "points": 19,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "70-79%": {
+          "races": 4,
+          "hits": 1,
+          "points": 17,
+          "payout": 870,
+          "w1_won": 2
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 7,
+          "hits": 0,
+          "points": 33,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "0.35-0.45": {
+          "races": 1,
+          "hits": 0,
+          "points": 4,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "0.55-0.65": {
+          "races": 4,
+          "hits": 2,
+          "points": 18,
+          "payout": 1570,
+          "w1_won": 3
+        }
+      },
+      "race_category": {
+        "qualifier": {
+          "races": 8,
+          "hits": 1,
+          "points": 38,
+          "payout": 700,
+          "w1_won": 2
+        },
+        "kikaku": {
+          "races": 2,
+          "hits": 1,
+          "points": 8,
+          "payout": 870,
+          "w1_won": 1
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 0,
+          "points": 9,
+          "payout": 0,
+          "w1_won": 1
+        }
+      }
+    },
+    "hit_nonstd": 1,
+    "nonstd_races": 11,
+    "hit_nonstd_pct": 9.1,
+    "hit_1st": 6,
+    "hit_bet1": 0,
+    "hit_bet2": 1,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 18.33,
+    "hit_1st_pct": 50.0,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 50.0,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 9,
+        "triggered_hit": 1,
+        "applied": 3,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 1,
+        "applied": 1,
+        "applied_hit": 1
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 10,
+        "honmei_hit": 2,
+        "top2_rt_sum": 3.0,
+        "avg_rk_sum": 36.666666666666664
+      },
+      "4-6走": {
+        "n": 2,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.25,
+        "avg_rk_sum": 7.75
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 55,
+        "payout": 1570,
+        "nonstd_total": 11,
+        "hit_nonstd": 1
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 55,
+        "payout": 1570,
+        "nonstd_total": 11,
+        "hit_nonstd": 1
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 54,
+        "payout": 1570,
+        "nonstd_total": 11,
+        "hit_nonstd": 1
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 11,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 11,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 55,
+      "stake": 5500,
+      "payout": 1570,
+      "roi_pct": 28.5,
+      "points_per_race": 4.58,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 1570,
+          "hit_pct": 4.17,
+          "roi_pct": 32.7
+        },
+        "穴": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 700,
+          "hit_pct": 8.33,
+          "roi_pct": 58.3
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 1,
+          "payout": 870,
+          "hit_pct": 8.33,
+          "roi_pct": 72.5
+        },
+        "穴#1": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 2,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 28.5,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "04",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -135752,7 +136717,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "04",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -136069,7 +137034,338 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "05",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 10,
+          "hits": 2,
+          "points": 49,
+          "payout": 2490,
+          "w1_won": 2
+        },
+        "荒れ判定なし": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "confidence": {
+        "60-69%": {
+          "races": 3,
+          "hits": 0,
+          "points": 15,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "50-59%": {
+          "races": 5,
+          "hits": 1,
+          "points": 24,
+          "payout": 1460,
+          "w1_won": 0
+        },
+        "70-79%": {
+          "races": 4,
+          "hits": 1,
+          "points": 20,
+          "payout": 1030,
+          "w1_won": 3
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 8,
+          "hits": 1,
+          "points": 39,
+          "payout": 1460,
+          "w1_won": 0
+        },
+        "〜0.35": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "0.45-0.55": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "0.55-0.65": {
+          "races": 2,
+          "hits": 1,
+          "points": 10,
+          "payout": 1030,
+          "w1_won": 2
+        }
+      },
+      "race_category": {
+        "general": {
+          "races": 8,
+          "hits": 1,
+          "points": 39,
+          "payout": 1460,
+          "w1_won": 1
+        },
+        "kikaku": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "finalist": {
+          "races": 1,
+          "hits": 1,
+          "points": 5,
+          "payout": 1030,
+          "w1_won": 1
+        }
+      }
+    },
+    "hit_nonstd": 1,
+    "nonstd_races": 9,
+    "hit_nonstd_pct": 11.1,
+    "hit_1st": 5,
+    "hit_bet1": 0,
+    "hit_bet2": 1,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 2.5,
+    "hit_1st_pct": 41.7,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 41.7,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 10,
+        "triggered_hit": 2,
+        "applied": 8,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 4,
+        "triggered_hit": 2,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 12,
+        "honmei_hit": 2,
+        "top2_rt_sum": 4.648809523809523,
+        "avg_rk_sum": 40.851190476190474
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 59,
+        "payout": 2490,
+        "nonstd_total": 9,
+        "hit_nonstd": 1
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 59,
+        "payout": 2490,
+        "nonstd_total": 9,
+        "hit_nonstd": 1
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 60,
+        "payout": 2490,
+        "nonstd_total": 9,
+        "hit_nonstd": 1
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 9,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 9,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 59,
+      "stake": 5900,
+      "payout": 2490,
+      "roi_pct": 42.2,
+      "points_per_race": 4.92,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 2490,
+          "hit_pct": 4.17,
+          "roi_pct": 51.9
+        },
+        "穴": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 1030,
+          "hit_pct": 8.33,
+          "roi_pct": 85.8
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 1,
+          "payout": 1460,
+          "hit_pct": 8.33,
+          "roi_pct": 121.7
+        },
+        "穴#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 5,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 1,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 42.2,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "05",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -136386,7 +137682,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "05",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -136696,7 +137992,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "05",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -137013,7 +138309,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "05",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -137330,7 +138626,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "05",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -137647,7 +138943,324 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "06",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 3,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 11,
+          "hits": 3,
+          "points": 51,
+          "payout": 10940,
+          "w1_won": 6
+        },
+        "荒れ判定なし": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "confidence": {
+        "50-59%": {
+          "races": 4,
+          "hits": 2,
+          "points": 20,
+          "payout": 3870,
+          "w1_won": 2
+        },
+        "70-79%": {
+          "races": 7,
+          "hits": 1,
+          "points": 32,
+          "payout": 7070,
+          "w1_won": 5
+        },
+        "60-69%": {
+          "races": 1,
+          "hits": 0,
+          "points": 4,
+          "payout": 0,
+          "w1_won": 0
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 5,
+          "hits": 2,
+          "points": 24,
+          "payout": 3870,
+          "w1_won": 2
+        },
+        "0.55-0.65": {
+          "races": 6,
+          "hits": 1,
+          "points": 27,
+          "payout": 7070,
+          "w1_won": 4
+        },
+        "0.35-0.45": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "qualifier": {
+          "races": 8,
+          "hits": 2,
+          "points": 38,
+          "payout": 3870,
+          "w1_won": 4
+        },
+        "kikaku": {
+          "races": 2,
+          "hits": 1,
+          "points": 8,
+          "payout": 7070,
+          "w1_won": 2
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 1
+        }
+      }
+    },
+    "hit_nonstd": 2,
+    "nonstd_races": 10,
+    "hit_nonstd_pct": 20.0,
+    "hit_1st": 8,
+    "hit_bet1": 1,
+    "hit_bet2": 1,
+    "hit_bet3": 1,
+    "hit_honmei": 3,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 25.0,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 9.42,
+    "hit_1st_pct": 66.7,
+    "hit_bet_any_pct": 25.0,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 66.7,
+        "hit_bet_any_pct": 25.0
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 7,
+        "triggered_hit": 2,
+        "applied": 4,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 4,
+        "triggered_hit": 1,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 2,
+        "triggered_hit": 1,
+        "applied": 2,
+        "applied_hit": 1
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 12,
+        "honmei_hit": 3,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 56,
+        "payout": 10940,
+        "nonstd_total": 10,
+        "hit_nonstd": 2
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 56,
+        "payout": 10940,
+        "nonstd_total": 10,
+        "hit_nonstd": 2
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 55,
+        "payout": 10940,
+        "nonstd_total": 10,
+        "hit_nonstd": 2
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 3,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 9,
+        "ns_n": 10,
+        "ns_both": 2,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 3,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 9,
+        "ns_n": 10,
+        "ns_both": 2,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 56,
+      "stake": 5600,
+      "payout": 10940,
+      "roi_pct": 195.4,
+      "points_per_race": 4.67,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 3,
+          "payout": 10940,
+          "hit_pct": 6.25,
+          "roi_pct": 227.9
+        },
+        "穴": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 7070,
+          "hit_pct": 8.33,
+          "roi_pct": 589.2
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 2960,
+          "hit_pct": 8.33,
+          "roi_pct": 246.7
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 1,
+          "payout": 910,
+          "hit_pct": 8.33,
+          "roi_pct": 75.8
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 12,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 0,
+        "11-30": 2,
+        "31+": 0
+      }
+    },
+    "roi_pct": 195.4,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "06",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -137978,7 +139591,331 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "07",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 11,
+          "hits": 2,
+          "points": 55,
+          "payout": 1570,
+          "w1_won": 7
+        },
+        "荒れ判定なし": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "confidence": {
+        "60-69%": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "70-79%": {
+          "races": 8,
+          "hits": 2,
+          "points": 40,
+          "payout": 1570,
+          "w1_won": 5
+        },
+        "50-59%": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 2
+        },
+        "80-89%": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 6,
+          "hits": 1,
+          "points": 30,
+          "payout": 810,
+          "w1_won": 5
+        },
+        "0.55-0.65": {
+          "races": 5,
+          "hits": 1,
+          "points": 25,
+          "payout": 760,
+          "w1_won": 2
+        },
+        "0.45-0.55": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "qualifier": {
+          "races": 9,
+          "hits": 1,
+          "points": 45,
+          "payout": 810,
+          "w1_won": 6
+        },
+        "fixed_entry": {
+          "races": 1,
+          "hits": 1,
+          "points": 5,
+          "payout": 760,
+          "w1_won": 1
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 1
+        }
+      }
+    },
+    "hit_nonstd": 0,
+    "nonstd_races": 10,
+    "hit_nonstd_pct": 0.0,
+    "hit_1st": 8,
+    "hit_bet1": 1,
+    "hit_bet2": 1,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 2.08,
+    "hit_1st_pct": 66.7,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 66.7,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 9,
+        "triggered_hit": 2,
+        "applied": 8,
+        "applied_hit": 2
+      },
+      "3カド": {
+        "triggered": 6,
+        "triggered_hit": 2,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 2,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 12,
+        "honmei_hit": 2,
+        "top2_rt_sum": 1.5,
+        "avg_rk_sum": 50.5
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 60,
+        "payout": 1570,
+        "nonstd_total": 10,
+        "hit_nonstd": 0
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 60,
+        "payout": 1570,
+        "nonstd_total": 10,
+        "hit_nonstd": 0
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 59,
+        "payout": 2780,
+        "nonstd_total": 10,
+        "hit_nonstd": 1
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 10,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 1,
+        "neither": 9,
+        "ns_n": 10,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 1
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 60,
+      "stake": 6000,
+      "payout": 1570,
+      "roi_pct": 26.2,
+      "points_per_race": 5.0,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 1570,
+          "hit_pct": 4.17,
+          "roi_pct": 32.7
+        },
+        "穴": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 810,
+          "hit_pct": 8.33,
+          "roi_pct": 67.5
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 760,
+          "hit_pct": 8.33,
+          "roi_pct": 63.3
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 2,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 26.2,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "07",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -138302,7 +140239,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "08",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -138626,7 +140563,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "08",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -138943,7 +140880,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "08",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -139274,7 +141211,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "08",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -139605,7 +141542,324 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "09",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定なし": {
+          "races": 6,
+          "hits": 1,
+          "points": 28,
+          "payout": 430,
+          "w1_won": 4
+        },
+        "荒れ判定あり": {
+          "races": 6,
+          "hits": 1,
+          "points": 28,
+          "payout": 3740,
+          "w1_won": 3
+        }
+      },
+      "confidence": {
+        "70-79%": {
+          "races": 6,
+          "hits": 1,
+          "points": 28,
+          "payout": 430,
+          "w1_won": 4
+        },
+        "60-69%": {
+          "races": 5,
+          "hits": 1,
+          "points": 23,
+          "payout": 3740,
+          "w1_won": 3
+        },
+        "50-59%": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        }
+      },
+      "sink_risk": {
+        "0.45-0.55": {
+          "races": 3,
+          "hits": 0,
+          "points": 13,
+          "payout": 0,
+          "w1_won": 2
+        },
+        "0.65〜": {
+          "races": 6,
+          "hits": 1,
+          "points": 28,
+          "payout": 3740,
+          "w1_won": 3
+        },
+        "〜0.35": {
+          "races": 3,
+          "hits": 1,
+          "points": 15,
+          "payout": 430,
+          "w1_won": 2
+        }
+      },
+      "race_category": {
+        "kikaku": {
+          "races": 2,
+          "hits": 0,
+          "points": 8,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "qualifier": {
+          "races": 8,
+          "hits": 1,
+          "points": 38,
+          "payout": 3740,
+          "w1_won": 4
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 1,
+          "points": 10,
+          "payout": 430,
+          "w1_won": 2
+        }
+      }
+    },
+    "hit_nonstd": 0,
+    "nonstd_races": 8,
+    "hit_nonstd_pct": 0.0,
+    "hit_1st": 7,
+    "hit_bet1": 0,
+    "hit_bet2": 1,
+    "hit_bet3": 1,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.67,
+    "hit_1st_pct": 58.3,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 0.0,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 58.3,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 7,
+        "triggered_hit": 1,
+        "applied": 5,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 4,
+        "triggered_hit": 1,
+        "applied": 3,
+        "applied_hit": 1
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 12,
+        "honmei_hit": 2,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 4170,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 4170,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 0,
+        "hit_honmei": 0,
+        "points": 56,
+        "payout": 0,
+        "nonstd_total": 8,
+        "hit_nonstd": 0
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 8,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 0,
+        "prod_only": 2,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 8,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 56,
+      "stake": 5600,
+      "payout": 4170,
+      "roi_pct": 74.5,
+      "points_per_race": 4.67,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 4170,
+          "hit_pct": 4.17,
+          "roi_pct": 86.9
+        },
+        "穴": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 430,
+          "hit_pct": 8.33,
+          "roi_pct": 35.8
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 1,
+          "payout": 3740,
+          "hit_pct": 8.33,
+          "roi_pct": 311.7
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 19,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 0,
+        "11-30": 1,
+        "31+": 0
+      }
+    },
+    "roi_pct": 74.5,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "09",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -139929,7 +142183,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "09",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -140253,7 +142507,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "09",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -140584,7 +142838,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "09",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -140901,7 +143155,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "09",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -141218,7 +143472,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "10",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -141542,7 +143796,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "10",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -141859,7 +144113,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "11",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -142183,7 +144437,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "11",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -142493,7 +144747,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "11",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -142803,7 +145057,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "11",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -143120,7 +145374,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "13",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -143451,7 +145705,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "13",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -143775,7 +146029,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "13",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -144099,7 +146353,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "13",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -144423,7 +146677,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "13",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -144747,7 +147001,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "13",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -145078,7 +147332,338 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "14",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定なし": {
+          "races": 3,
+          "hits": 2,
+          "points": 14,
+          "payout": 1100,
+          "w1_won": 2
+        },
+        "荒れ判定あり": {
+          "races": 9,
+          "hits": 0,
+          "points": 42,
+          "payout": 0,
+          "w1_won": 2
+        }
+      },
+      "confidence": {
+        "70-79%": {
+          "races": 5,
+          "hits": 2,
+          "points": 23,
+          "payout": 1100,
+          "w1_won": 3
+        },
+        "50-59%": {
+          "races": 5,
+          "hits": 0,
+          "points": 23,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "60-69%": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 0
+        }
+      },
+      "sink_risk": {
+        "0.45-0.55": {
+          "races": 2,
+          "hits": 1,
+          "points": 10,
+          "payout": 560,
+          "w1_won": 1
+        },
+        "0.65〜": {
+          "races": 6,
+          "hits": 0,
+          "points": 29,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "0.55-0.65": {
+          "races": 3,
+          "hits": 0,
+          "points": 13,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "〜0.35": {
+          "races": 1,
+          "hits": 1,
+          "points": 4,
+          "payout": 540,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "kikaku": {
+          "races": 4,
+          "hits": 1,
+          "points": 19,
+          "payout": 560,
+          "w1_won": 2
+        },
+        "qualifier": {
+          "races": 4,
+          "hits": 0,
+          "points": 19,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "general": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 1,
+          "points": 8,
+          "payout": 540,
+          "w1_won": 2
+        }
+      }
+    },
+    "hit_nonstd": 0,
+    "nonstd_races": 9,
+    "hit_nonstd_pct": 0.0,
+    "hit_1st": 3,
+    "hit_bet1": 1,
+    "hit_bet2": 1,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 3.0,
+    "hit_1st_pct": 25.0,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 25.0,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 5,
+        "triggered_hit": 1,
+        "applied": 3,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 12,
+        "honmei_hit": 2,
+        "top2_rt_sum": 3.9499999999999997,
+        "avg_rk_sum": 41.7
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 1100,
+        "nonstd_total": 9,
+        "hit_nonstd": 0
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 1100,
+        "nonstd_total": 9,
+        "hit_nonstd": 0
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 56,
+        "payout": 1100,
+        "nonstd_total": 9,
+        "hit_nonstd": 0
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 9,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 9,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 56,
+      "stake": 5600,
+      "payout": 1100,
+      "roi_pct": 19.6,
+      "points_per_race": 4.67,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 1100,
+          "hit_pct": 4.17,
+          "roi_pct": 22.9
+        },
+        "穴": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 540,
+          "hit_pct": 8.33,
+          "roi_pct": 45.0
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 560,
+          "hit_pct": 8.33,
+          "roi_pct": 46.7
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 8,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 2,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 19.6,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "14",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -145416,7 +148001,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "14",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -145754,7 +148339,331 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "15",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 4,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 7,
+          "hits": 3,
+          "points": 33,
+          "payout": 4130,
+          "w1_won": 6
+        },
+        "荒れ判定なし": {
+          "races": 5,
+          "hits": 1,
+          "points": 22,
+          "payout": 590,
+          "w1_won": 4
+        }
+      },
+      "confidence": {
+        "50-59%": {
+          "races": 2,
+          "hits": 0,
+          "points": 9,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "60-69%": {
+          "races": 2,
+          "hits": 1,
+          "points": 10,
+          "payout": 2340,
+          "w1_won": 2
+        },
+        "70-79%": {
+          "races": 8,
+          "hits": 3,
+          "points": 36,
+          "payout": 2380,
+          "w1_won": 7
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 4,
+          "hits": 1,
+          "points": 19,
+          "payout": 2340,
+          "w1_won": 3
+        },
+        "0.55-0.65": {
+          "races": 3,
+          "hits": 2,
+          "points": 14,
+          "payout": 1790,
+          "w1_won": 3
+        },
+        "0.45-0.55": {
+          "races": 1,
+          "hits": 0,
+          "points": 4,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "0.35-0.45": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "〜0.35": {
+          "races": 3,
+          "hits": 1,
+          "points": 13,
+          "payout": 590,
+          "w1_won": 2
+        }
+      },
+      "race_category": {
+        "general": {
+          "races": 8,
+          "hits": 2,
+          "points": 36,
+          "payout": 3650,
+          "w1_won": 7
+        },
+        "kikaku": {
+          "races": 4,
+          "hits": 2,
+          "points": 19,
+          "payout": 1070,
+          "w1_won": 3
+        }
+      }
+    },
+    "hit_nonstd": 1,
+    "nonstd_races": 7,
+    "hit_nonstd_pct": 14.3,
+    "hit_1st": 10,
+    "hit_bet1": 2,
+    "hit_bet2": 1,
+    "hit_bet3": 1,
+    "hit_honmei": 4,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 33.3,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 9.42,
+    "hit_1st_pct": 83.3,
+    "hit_bet_any_pct": 33.3,
+    "hit_bet1_pct": 16.7,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 83.3,
+        "hit_bet_any_pct": 33.3
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 5,
+        "triggered_hit": 2,
+        "applied": 5,
+        "applied_hit": 2
+      },
+      "3カド": {
+        "triggered": 3,
+        "triggered_hit": 0,
+        "applied": 2,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 4,
+        "honmei_hit": 1,
+        "top2_rt_sum": 1.3333333333333333,
+        "avg_rk_sum": 13.833333333333334
+      },
+      "7走+": {
+        "n": 8,
+        "honmei_hit": 3,
+        "top2_rt_sum": 3.428571428571428,
+        "avg_rk_sum": 25.571428571428573
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 4,
+        "hit_honmei": 4,
+        "points": 55,
+        "payout": 4720,
+        "nonstd_total": 7,
+        "hit_nonstd": 1
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 4,
+        "hit_honmei": 4,
+        "points": 55,
+        "payout": 4720,
+        "nonstd_total": 7,
+        "hit_nonstd": 1
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 4,
+        "hit_honmei": 4,
+        "points": 56,
+        "payout": 4720,
+        "nonstd_total": 7,
+        "hit_nonstd": 1
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 4,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 8,
+        "ns_n": 7,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 4,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 8,
+        "ns_n": 7,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 55,
+      "stake": 5500,
+      "payout": 4720,
+      "roi_pct": 85.8,
+      "points_per_race": 4.58,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 4,
+          "payout": 4720,
+          "hit_pct": 8.33,
+          "roi_pct": 98.3
+        },
+        "穴": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 2,
+          "payout": 1070,
+          "hit_pct": 16.67,
+          "roi_pct": 89.2
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 1310,
+          "hit_pct": 8.33,
+          "roi_pct": 109.2
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 1,
+          "payout": 2340,
+          "hit_pct": 8.33,
+          "roi_pct": 195.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 3,
+      "hit_pop_dist": {
+        "1-3": 3,
+        "4-10": 1,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 85.8,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "15",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -146099,7 +149008,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "15",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -146437,7 +149346,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "15",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -146768,7 +149677,310 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "16",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 1,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定なし": {
+          "races": 8,
+          "hits": 0,
+          "points": 39,
+          "payout": 0,
+          "w1_won": 6
+        },
+        "荒れ判定あり": {
+          "races": 4,
+          "hits": 1,
+          "points": 20,
+          "payout": 790,
+          "w1_won": 2
+        }
+      },
+      "confidence": {
+        "70-79%": {
+          "races": 9,
+          "hits": 0,
+          "points": 44,
+          "payout": 0,
+          "w1_won": 6
+        },
+        "50-59%": {
+          "races": 3,
+          "hits": 1,
+          "points": 15,
+          "payout": 790,
+          "w1_won": 2
+        }
+      },
+      "sink_risk": {
+        "〜0.35": {
+          "races": 4,
+          "hits": 0,
+          "points": 19,
+          "payout": 0,
+          "w1_won": 2
+        },
+        "0.55-0.65": {
+          "races": 4,
+          "hits": 1,
+          "points": 20,
+          "payout": 790,
+          "w1_won": 2
+        },
+        "0.45-0.55": {
+          "races": 3,
+          "hits": 0,
+          "points": 15,
+          "payout": 0,
+          "w1_won": 3
+        },
+        "0.35-0.45": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "qualifier": {
+          "races": 12,
+          "hits": 1,
+          "points": 59,
+          "payout": 790,
+          "w1_won": 8
+        }
+      }
+    },
+    "hit_nonstd": 0,
+    "nonstd_races": 9,
+    "hit_nonstd_pct": 0.0,
+    "hit_1st": 8,
+    "hit_bet1": 1,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 1,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 8.3,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.83,
+    "hit_1st_pct": 66.7,
+    "hit_bet_any_pct": 8.3,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 66.7,
+        "hit_bet_any_pct": 8.3
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 8,
+        "triggered_hit": 1,
+        "applied": 8,
+        "applied_hit": 1
+      },
+      "3カド": {
+        "triggered": 7,
+        "triggered_hit": 1,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 7,
+        "triggered_hit": 0,
+        "applied": 3,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 12,
+        "honmei_hit": 1,
+        "top2_rt_sum": 2.6666666666666665,
+        "avg_rk_sum": 48.333333333333336
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 1,
+        "hit_honmei": 1,
+        "points": 59,
+        "payout": 790,
+        "nonstd_total": 9,
+        "hit_nonstd": 0
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 1,
+        "hit_honmei": 1,
+        "points": 59,
+        "payout": 790,
+        "nonstd_total": 9,
+        "hit_nonstd": 0
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 5,
+        "hit_honmei": 5,
+        "points": 59,
+        "payout": 6410,
+        "nonstd_total": 9,
+        "hit_nonstd": 3
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 1,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 11,
+        "ns_n": 9,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 1,
+        "prod_only": 0,
+        "shadow_only": 4,
+        "neither": 7,
+        "ns_n": 9,
+        "ns_both": 0,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 3
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 59,
+      "stake": 5900,
+      "payout": 790,
+      "roi_pct": 13.4,
+      "points_per_race": 4.92,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 1,
+          "payout": 790,
+          "hit_pct": 2.08,
+          "roi_pct": 16.5
+        },
+        "穴": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 790,
+          "hit_pct": 8.33,
+          "roi_pct": 65.8
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "穴#1": {
+          "points": 11,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 1,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 13.4,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "16",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -147085,7 +150297,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "16",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -147395,7 +150607,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "18",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -147733,7 +150945,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "18",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -148050,7 +151262,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "18",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -148388,7 +151600,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "19",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -148719,7 +151931,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "19",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -149050,7 +152262,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "19",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -149388,7 +152600,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "19",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -149733,7 +152945,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "19",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -150078,7 +153290,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "19",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -150416,7 +153628,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "20",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -150712,7 +153924,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "20",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -151008,7 +154220,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "20",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -151297,7 +154509,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "20",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -151607,7 +154819,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "21",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -151945,7 +155157,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "21",
     "date_from": "20260928",
     "date_to": "20260928",
@@ -152276,7 +155488,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "21",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -152607,7 +155819,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "21",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -152931,7 +156143,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "21",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -153262,7 +156474,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "21",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -153600,7 +156812,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "22",
     "date_from": "20260927",
     "date_to": "20260927",
@@ -153945,7 +157157,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "22",
     "date_from": "20260926",
     "date_to": "20260926",
@@ -154269,7 +157481,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "22",
     "date_from": "20260925",
     "date_to": "20260925",
@@ -154593,7 +157805,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "22",
     "date_from": "20260924",
     "date_to": "20260924",
@@ -154917,7 +158129,669 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
+    "jcd": "23",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 2,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 9,
+          "hits": 1,
+          "points": 43,
+          "payout": 950,
+          "w1_won": 4
+        },
+        "荒れ判定なし": {
+          "races": 3,
+          "hits": 1,
+          "points": 14,
+          "payout": 650,
+          "w1_won": 1
+        }
+      },
+      "confidence": {
+        "70-79%": {
+          "races": 5,
+          "hits": 1,
+          "points": 24,
+          "payout": 950,
+          "w1_won": 3
+        },
+        "80-89%": {
+          "races": 3,
+          "hits": 1,
+          "points": 14,
+          "payout": 650,
+          "w1_won": 1
+        },
+        "50-59%": {
+          "races": 4,
+          "hits": 0,
+          "points": 19,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "sink_risk": {
+        "0.55-0.65": {
+          "races": 2,
+          "hits": 1,
+          "points": 9,
+          "payout": 950,
+          "w1_won": 2
+        },
+        "〜0.35": {
+          "races": 3,
+          "hits": 1,
+          "points": 14,
+          "payout": 650,
+          "w1_won": 1
+        },
+        "0.65〜": {
+          "races": 7,
+          "hits": 0,
+          "points": 34,
+          "payout": 0,
+          "w1_won": 2
+        }
+      },
+      "race_category": {
+        "kikaku": {
+          "races": 5,
+          "hits": 1,
+          "points": 22,
+          "payout": 950,
+          "w1_won": 3
+        },
+        "general": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "qualifier": {
+          "races": 4,
+          "hits": 0,
+          "points": 20,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 1,
+          "points": 10,
+          "payout": 650,
+          "w1_won": 1
+        }
+      }
+    },
+    "hit_nonstd": 1,
+    "nonstd_races": 10,
+    "hit_nonstd_pct": 10.0,
+    "hit_1st": 5,
+    "hit_bet1": 1,
+    "hit_bet2": 0,
+    "hit_bet3": 0,
+    "hit_honmei": 2,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 16.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 2.25,
+    "hit_1st_pct": 41.7,
+    "hit_bet_any_pct": 16.7,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 41.7,
+        "hit_bet_any_pct": 16.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 7,
+        "triggered_hit": 0,
+        "applied": 6,
+        "applied_hit": 0
+      },
+      "3カド": {
+        "triggered": 3,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 2,
+        "triggered_hit": 1,
+        "applied": 1,
+        "applied_hit": 1
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 12,
+        "honmei_hit": 2,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "4-6走": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 57,
+        "payout": 1600,
+        "nonstd_total": 10,
+        "hit_nonstd": 1
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 2,
+        "hit_honmei": 2,
+        "points": 57,
+        "payout": 1600,
+        "nonstd_total": 10,
+        "hit_nonstd": 1
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 3,
+        "hit_honmei": 3,
+        "points": 57,
+        "payout": 2940,
+        "nonstd_total": 10,
+        "hit_nonstd": 2
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 10,
+        "ns_n": 10,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 2,
+        "prod_only": 0,
+        "shadow_only": 1,
+        "neither": 9,
+        "ns_n": 10,
+        "ns_both": 1,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 1
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 57,
+      "stake": 5700,
+      "payout": 1600,
+      "roi_pct": 28.1,
+      "points_per_race": 4.75,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 2,
+          "payout": 1600,
+          "hit_pct": 4.17,
+          "roi_pct": 33.3
+        },
+        "穴": {
+          "points": 9,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 650,
+          "hit_pct": 8.33,
+          "roi_pct": 54.2
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 1,
+          "payout": 950,
+          "hit_pct": 8.33,
+          "roi_pct": 79.2
+        },
+        "穴#1": {
+          "points": 9,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 3,
+      "hit_pop_dist": {
+        "1-3": 2,
+        "4-10": 0,
+        "11-30": 0,
+        "31+": 0
+      }
+    },
+    "roi_pct": 28.1,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
+    "jcd": "24",
+    "date_from": "20260930",
+    "date_to": "20260930",
+    "total_races": 12,
+    "hit_bet_any": 5,
+    "criteria_stats": {
+      "is_rough": {
+        "荒れ判定あり": {
+          "races": 5,
+          "hits": 3,
+          "points": 23,
+          "payout": 8830,
+          "w1_won": 5
+        },
+        "荒れ判定なし": {
+          "races": 7,
+          "hits": 2,
+          "points": 32,
+          "payout": 1230,
+          "w1_won": 3
+        }
+      },
+      "confidence": {
+        "70-79%": {
+          "races": 3,
+          "hits": 1,
+          "points": 14,
+          "payout": 1680,
+          "w1_won": 3
+        },
+        "60-69%": {
+          "races": 3,
+          "hits": 3,
+          "points": 13,
+          "payout": 7530,
+          "w1_won": 3
+        },
+        "80-89%": {
+          "races": 6,
+          "hits": 1,
+          "points": 28,
+          "payout": 850,
+          "w1_won": 2
+        }
+      },
+      "sink_risk": {
+        "0.65〜": {
+          "races": 4,
+          "hits": 3,
+          "points": 18,
+          "payout": 8830,
+          "w1_won": 4
+        },
+        "0.35-0.45": {
+          "races": 1,
+          "hits": 1,
+          "points": 4,
+          "payout": 380,
+          "w1_won": 1
+        },
+        "0.45-0.55": {
+          "races": 3,
+          "hits": 1,
+          "points": 13,
+          "payout": 850,
+          "w1_won": 1
+        },
+        "〜0.35": {
+          "races": 3,
+          "hits": 0,
+          "points": 15,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "0.55-0.65": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      },
+      "race_category": {
+        "qualifier": {
+          "races": 8,
+          "hits": 5,
+          "points": 35,
+          "payout": 10060,
+          "w1_won": 6
+        },
+        "fixed_entry": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 0
+        },
+        "senbatsu": {
+          "races": 2,
+          "hits": 0,
+          "points": 10,
+          "payout": 0,
+          "w1_won": 1
+        },
+        "general": {
+          "races": 1,
+          "hits": 0,
+          "points": 5,
+          "payout": 0,
+          "w1_won": 1
+        }
+      }
+    },
+    "hit_nonstd": 2,
+    "nonstd_races": 8,
+    "hit_nonstd_pct": 25.0,
+    "hit_1st": 8,
+    "hit_bet1": 1,
+    "hit_bet2": 1,
+    "hit_bet3": 2,
+    "hit_honmei": 5,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_honmei_pct": 41.7,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.67,
+    "hit_1st_pct": 66.7,
+    "hit_bet_any_pct": 41.7,
+    "hit_bet1_pct": 8.3,
+    "monthly": {
+      "202609": {
+        "total": 12,
+        "hit_1st_pct": 66.7,
+        "hit_bet_any_pct": 41.7
+      }
+    },
+    "pattern_stats": {
+      "2差し": {
+        "triggered": 7,
+        "triggered_hit": 5,
+        "applied": 6,
+        "applied_hit": 4
+      },
+      "3カド": {
+        "triggered": 4,
+        "triggered_hit": 2,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "4カドまくり": {
+        "triggered": 1,
+        "triggered_hit": 0,
+        "applied": 1,
+        "applied_hit": 0
+      },
+      "外差し": {
+        "triggered": 0,
+        "triggered_hit": 0,
+        "applied": 0,
+        "applied_hit": 0
+      }
+    },
+    "series_stats": {
+      "0走(初日)": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      },
+      "1-3走": {
+        "n": 8,
+        "honmei_hit": 4,
+        "top2_rt_sum": 2.333333333333333,
+        "avg_rk_sum": 33.0
+      },
+      "4-6走": {
+        "n": 4,
+        "honmei_hit": 1,
+        "top2_rt_sum": 1.25,
+        "avg_rk_sum": 14.25
+      },
+      "7走+": {
+        "n": 0,
+        "honmei_hit": 0,
+        "top2_rt_sum": 0.0,
+        "avg_rk_sum": 0.0
+      }
+    },
+    "version_stats": {
+      "v5.29": {
+        "total": 12,
+        "hit_bet_any": 5,
+        "hit_honmei": 5,
+        "points": 55,
+        "payout": 10060,
+        "nonstd_total": 8,
+        "hit_nonstd": 2
+      },
+      "v5.29+exadj": {
+        "total": 12,
+        "hit_bet_any": 5,
+        "hit_honmei": 5,
+        "points": 55,
+        "payout": 10060,
+        "nonstd_total": 8,
+        "hit_nonstd": 2
+      },
+      "v5.29+wall": {
+        "total": 12,
+        "hit_bet_any": 4,
+        "hit_honmei": 4,
+        "points": 55,
+        "payout": 7080,
+        "nonstd_total": 8,
+        "hit_nonstd": 1
+      }
+    },
+    "shadow_pairs": {
+      "v5.29+exadj": {
+        "n": 12,
+        "both": 5,
+        "prod_only": 0,
+        "shadow_only": 0,
+        "neither": 7,
+        "ns_n": 8,
+        "ns_both": 2,
+        "ns_prod_only": 0,
+        "ns_shadow_only": 0
+      },
+      "v5.29+wall": {
+        "n": 12,
+        "both": 4,
+        "prod_only": 1,
+        "shadow_only": 0,
+        "neither": 7,
+        "ns_n": 8,
+        "ns_both": 1,
+        "ns_prod_only": 1,
+        "ns_shadow_only": 0
+      }
+    },
+    "roi": {
+      "unit": 100,
+      "points": 55,
+      "stake": 5500,
+      "payout": 10060,
+      "roi_pct": 182.9,
+      "points_per_race": 4.58,
+      "by_tier": {
+        "本命": {
+          "points": 48,
+          "hits": 5,
+          "payout": 10060,
+          "hit_pct": 10.42,
+          "roi_pct": 209.6
+        },
+        "穴": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "by_cell": {
+        "本命#1": {
+          "points": 12,
+          "hits": 1,
+          "payout": 380,
+          "hit_pct": 8.33,
+          "roi_pct": 31.7
+        },
+        "本命#2": {
+          "points": 12,
+          "hits": 1,
+          "payout": 850,
+          "hit_pct": 8.33,
+          "roi_pct": 70.8
+        },
+        "本命#3": {
+          "points": 12,
+          "hits": 2,
+          "payout": 4660,
+          "hit_pct": 16.67,
+          "roi_pct": 388.3
+        },
+        "本命#4": {
+          "points": 12,
+          "hits": 1,
+          "payout": 4170,
+          "hit_pct": 8.33,
+          "roi_pct": 347.5
+        },
+        "穴#1": {
+          "points": 7,
+          "hits": 0,
+          "payout": 0,
+          "hit_pct": 0.0,
+          "roi_pct": 0.0
+        }
+      },
+      "hit_pop_median": 6,
+      "hit_pop_dist": {
+        "1-3": 1,
+        "4-10": 3,
+        "11-30": 1,
+        "31+": 0
+      }
+    },
+    "roi_pct": 182.9,
+    "update_effect": {
+      "before": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      },
+      "after": {
+        "races": 0,
+        "points": 0,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0,
+        "points_per_race": 0.0
+      }
+    }
+  },
+  {
+    "run_date": "2026-10-01",
     "jcd": "24",
     "date_from": "20260929",
     "date_to": "20260929",
@@ -155241,7 +159115,7 @@
     }
   },
   {
-    "run_date": "2026-09-30",
+    "run_date": "2026-10-01",
     "jcd": "24",
     "date_from": "20260928",
     "date_to": "20260928",
