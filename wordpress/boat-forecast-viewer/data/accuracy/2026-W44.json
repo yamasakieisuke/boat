@@ -1,0 +1,330 @@
+{
+  "week": "2026-W44",
+  "date_from": "20261026",
+  "date_to": "20261027",
+  "generated_at": "2026-10-27T05:30:46",
+  "overall": {
+    "total_races": 144,
+    "venues_with_data": 12,
+    "hit_1st": 75,
+    "hit_bet_any": 36,
+    "hit_bet1": 11,
+    "hit_bet2": 11,
+    "hit_bet3": 6,
+    "hit_honmei": 33,
+    "hit_others": 3,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 3,
+    "hit_1st_pct": 52.1,
+    "hit_bet_any_pct": 25.0,
+    "hit_bet1_pct": 7.6,
+    "hit_bet2_pct": 7.6,
+    "hit_bet3_pct": 4.2,
+    "hit_honmei_pct": 22.9,
+    "hit_others_pct": 2.1,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 2.1,
+    "avg_rank": 4.01,
+    "roi_pct": 62.8
+  },
+  "by_venue": [
+    {
+      "jcd": "24",
+      "name": "大村",
+      "n": 12,
+      "hit_1st_pct": 91.7,
+      "hit_bet_any_pct": 58.3,
+      "hit_honmei_pct": 58.3,
+      "roi_pct": 93.1,
+      "avg_rank": 1.08
+    },
+    {
+      "jcd": "05",
+      "name": "多摩川",
+      "n": 12,
+      "hit_1st_pct": 83.3,
+      "hit_bet_any_pct": 50.0,
+      "hit_honmei_pct": 50.0,
+      "roi_pct": 137.5,
+      "avg_rank": 1.58
+    },
+    {
+      "jcd": "01",
+      "name": "桐生",
+      "n": 12,
+      "hit_1st_pct": 41.7,
+      "hit_bet_any_pct": 33.3,
+      "hit_honmei_pct": 25.0,
+      "roi_pct": 91.4,
+      "avg_rank": 2.08
+    },
+    {
+      "jcd": "06",
+      "name": "浜名湖",
+      "n": 12,
+      "hit_1st_pct": 66.7,
+      "hit_bet_any_pct": 33.3,
+      "hit_honmei_pct": 33.3,
+      "roi_pct": 63.6,
+      "avg_rank": 1.67
+    },
+    {
+      "jcd": "08",
+      "name": "常滑",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 25.0,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 50.5,
+      "avg_rank": 10.5
+    },
+    {
+      "jcd": "15",
+      "name": "丸亀",
+      "n": 12,
+      "hit_1st_pct": 25.0,
+      "hit_bet_any_pct": 25.0,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 137.0,
+      "avg_rank": 10.5
+    },
+    {
+      "jcd": "04",
+      "name": "平和島",
+      "n": 12,
+      "hit_1st_pct": 58.3,
+      "hit_bet_any_pct": 16.7,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 50.4,
+      "avg_rank": 1.58
+    },
+    {
+      "jcd": "10",
+      "name": "三国",
+      "n": 12,
+      "hit_1st_pct": 33.3,
+      "hit_bet_any_pct": 16.7,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 63.2,
+      "avg_rank": 3.0
+    },
+    {
+      "jcd": "21",
+      "name": "芦屋",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 16.7,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 21.9,
+      "avg_rank": 1.58
+    },
+    {
+      "jcd": "09",
+      "name": "津",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 8.3,
+      "hit_honmei_pct": 8.3,
+      "roi_pct": 21.9,
+      "avg_rank": 1.83
+    },
+    {
+      "jcd": "11",
+      "name": "びわこ",
+      "n": 12,
+      "hit_1st_pct": 25.0,
+      "hit_bet_any_pct": 8.3,
+      "hit_honmei_pct": 8.3,
+      "roi_pct": 12.2,
+      "avg_rank": 2.58
+    },
+    {
+      "jcd": "22",
+      "name": "福岡",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 8.3,
+      "hit_honmei_pct": 8.3,
+      "roi_pct": 10.7,
+      "avg_rank": 10.17
+    }
+  ],
+  "by_pattern": {
+    "2差し": {
+      "triggered": 66,
+      "triggered_hit": 17,
+      "applied": 53,
+      "applied_hit": 17,
+      "triggered_hit_pct": 25.8,
+      "applied_hit_pct": 32.1
+    },
+    "3カド": {
+      "triggered": 33,
+      "triggered_hit": 13,
+      "applied": 15,
+      "applied_hit": 4,
+      "triggered_hit_pct": 39.4,
+      "applied_hit_pct": 26.7
+    },
+    "4カドまくり": {
+      "triggered": 24,
+      "triggered_hit": 2,
+      "applied": 18,
+      "applied_hit": 1,
+      "triggered_hit_pct": 8.3,
+      "applied_hit_pct": 5.6
+    },
+    "外差し": {
+      "triggered": 0,
+      "triggered_hit": 0,
+      "applied": 0,
+      "applied_hit": 0,
+      "triggered_hit_pct": 0.0,
+      "applied_hit_pct": 0.0
+    }
+  },
+  "by_series_band": {
+    "0走(初日)": {
+      "n": 12,
+      "honmei_hit": 2,
+      "top2_rt_sum": 0.0,
+      "avg_rk_sum": 0.0,
+      "honmei_hit_pct": 16.7,
+      "avg_top2_rt": 0.0,
+      "avg_rk": 0.0
+    },
+    "1-3走": {
+      "n": 44,
+      "honmei_hit": 8,
+      "top2_rt_sum": 14.166666666666668,
+      "avg_rk_sum": 165.66666666666666,
+      "honmei_hit_pct": 18.2,
+      "avg_top2_rt": 0.32,
+      "avg_rk": 3.77
+    },
+    "4-6走": {
+      "n": 49,
+      "honmei_hit": 12,
+      "top2_rt_sum": 16.233333333333334,
+      "avg_rk_sum": 172.6,
+      "honmei_hit_pct": 24.5,
+      "avg_top2_rt": 0.33,
+      "avg_rk": 3.52
+    },
+    "7走+": {
+      "n": 39,
+      "honmei_hit": 11,
+      "top2_rt_sum": 13.912698412698411,
+      "avg_rk_sum": 130.13492063492066,
+      "honmei_hit_pct": 28.2,
+      "avg_top2_rt": 0.36,
+      "avg_rk": 3.34
+    }
+  },
+  "by_version": {
+    "v5.29": {
+      "n": 144,
+      "total": 144,
+      "hit_bet_any": 36,
+      "hit_bet_any_pct": 25.0,
+      "hit_honmei": 33,
+      "hit_honmei_pct": 22.9,
+      "points": 664,
+      "payout": 41720,
+      "roi_pct": 62.8
+    },
+    "v5.29+exadj": {
+      "n": 144,
+      "total": 144,
+      "hit_bet_any": 36,
+      "hit_bet_any_pct": 25.0,
+      "hit_honmei": 33,
+      "hit_honmei_pct": 22.9,
+      "points": 664,
+      "payout": 41720,
+      "roi_pct": 62.8
+    },
+    "v5.29+wall": {
+      "n": 144,
+      "total": 144,
+      "hit_bet_any": 38,
+      "hit_bet_any_pct": 26.4,
+      "hit_honmei": 35,
+      "hit_honmei_pct": 24.3,
+      "points": 668,
+      "payout": 46590,
+      "roi_pct": 69.7
+    }
+  },
+  "roi": {
+    "unit": 100,
+    "points": 664,
+    "stake": 66400,
+    "payout": 41720,
+    "roi_pct": 62.8,
+    "points_per_race": 4.61,
+    "by_tier": {
+      "本命": {
+        "points": 576,
+        "hits": 33,
+        "payout": 30730,
+        "hit_pct": 5.73,
+        "roi_pct": 53.4
+      },
+      "穴": {
+        "points": 88,
+        "hits": 3,
+        "payout": 10990,
+        "hit_pct": 3.41,
+        "roi_pct": 124.9
+      }
+    },
+    "by_cell": {
+      "本命#1": {
+        "points": 144,
+        "hits": 11,
+        "payout": 8600,
+        "hit_pct": 7.64,
+        "roi_pct": 59.7
+      },
+      "本命#2": {
+        "points": 144,
+        "hits": 11,
+        "payout": 10050,
+        "hit_pct": 7.64,
+        "roi_pct": 69.8
+      },
+      "本命#3": {
+        "points": 144,
+        "hits": 6,
+        "payout": 4700,
+        "hit_pct": 4.17,
+        "roi_pct": 32.6
+      },
+      "本命#4": {
+        "points": 144,
+        "hits": 5,
+        "payout": 7380,
+        "hit_pct": 3.47,
+        "roi_pct": 51.2
+      },
+      "穴#1": {
+        "points": 88,
+        "hits": 3,
+        "payout": 10990,
+        "hit_pct": 3.41,
+        "roi_pct": 124.9
+      }
+    },
+    "hit_pop_median": 2,
+    "hit_pop_dist": {
+      "1-3": 25,
+      "4-10": 8,
+      "11-30": 3,
+      "31+": 0
+    }
+  },
+  "diff_prev_week": {}
+}
