@@ -68,6 +68,10 @@ logs/
 !data/logs/
 data/logs/*
 !data/logs/verify_history.json
+# 「効いていないロジック」の監査結果（2026-10-28）。
+# pred.json は artifact なのでローカルから本番ログに監査をかけられない。
+# 結果だけを git に載せて、いつでも本番の状態を確認できるようにする。
+!data/logs/audit_dead_logic.json
 
 # Exception: 予想に必要な統計データ（verify.yml が build_stats.py で更新→commit）
 # - results_csv: build_stats.py の入力ソース（過去レース結果）

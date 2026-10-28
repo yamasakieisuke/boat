@@ -82,6 +82,9 @@ def main() -> int:
     ap.add_argument("--from", dest="date_from", default="")
     ap.add_argument("--to", dest="date_to", default="")
     ap.add_argument("--days", type=int, default=0, help="直近N日")
+    ap.add_argument("--out", default="",
+                    help="結果の書き出し先（例 data/logs/audit_dead_logic.json）。"
+                         "commit しておけばローカルから本番の状態を確認できる")
     args = ap.parse_args()
 
     if args.days:
@@ -174,6 +177,30 @@ def main() -> int:
                 flag = "← 出口が詰まっている。検証しても差が出ない"
                 problems.append(f"シャドー {var} の買い目が {rate*100:.1f}% しか変わらない")
             print(f"  {var:<20}{rate*100:>6.1f}%  ({diff}/{tot})  {flag}")
+
+    # ── 結果をファイルに残す（2026-10-28）───────────────────────
+    # pred.json は git に載らず artifact なので、**ローカルからは本番ログに
+    # 監査をかけられない**。Actions のログを見るしかなく、gh が無い環境では
+    # 確認不能だった。結果だけを commit されるファイルに書き出しておけば、
+    # いつでもローカルから「本番で効いているか」を確認できる。
+    if args.out:
+        out = BASE_DIR / args.out
+        out.parent.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "generated_at": datetime.datetime.now().isoformat(timespec="seconds"),
+            "date_from": date_from,
+            "date_to": date_to,
+            "races": len(prod),
+            "score_components": {
+                k: {"min": round(min(v), 5), "max": round(max(v), 5),
+                    "stdev": round(statistics.pstdev(v), 6)}
+                for k, v in sorted(vals.items())
+            },
+            "input_rates": {k: round(sum(v) / len(v), 4) for k, v in sorted(inp.items())},
+            "problems": problems,
+        }
+        out.write_text(json.dumps(payload, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"\n書き出し: {out.relative_to(BASE_DIR)}")
 
     print("\n" + "=" * 74)
     if problems:

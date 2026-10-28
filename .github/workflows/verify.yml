@@ -169,7 +169,9 @@ jobs:
       # ここでは出力の分散と入力の取得率を見る。
       - name: 効いていないロジックの検出
         continue-on-error: true
-        run: python3 scripts/audit_dead_logic.py --days 7 2>&1 | tail -50
+        run: |
+          python3 scripts/audit_dead_logic.py --days 7 \
+            --out data/logs/audit_dead_logic.json 2>&1 | tail -50
         env:
           TZ: Asia/Tokyo
 
@@ -190,6 +192,8 @@ jobs:
           # 精度の蓄積（P0-1）。verify_history は以降の全ての検証の土台になる。
           # wordpress/ 配下は deploy-wp.yml が push 契機で heteml へ自動デプロイする。
           git add -f data/logs/verify_history.json 2>/dev/null || true
+          # 監査結果。これが無いとローカルから本番の状態を確認できない。
+          git add -f data/logs/audit_dead_logic.json 2>/dev/null || true
           git add -f wordpress/boat-forecast-viewer/data/accuracy/ 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "verify: 統計データ・精度履歴を更新 (${{ steps.dateres.outputs.date }})"

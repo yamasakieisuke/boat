@@ -483,7 +483,7 @@ def is_all_female_race(racers: list) -> bool:
 # ── バージョン管理（v5.20〜、予測ロジック変更時に繰り上げ）──
 # WEIGHTS 変更 / 主要ロジック変更 / 買い目生成方式変更 等で繰り上げ
 # 軽微な表示変更や運用ロジックはバージョンを変えない
-PREDICTOR_VERSION = "v5.29"
+PREDICTOR_VERSION = "v5.30"
 
 
 def _version_label() -> str:
@@ -2063,8 +2063,17 @@ def predict(jcd: str, date: str, race_no: int, verbose: bool = True,
         })
 
     # 壁の補正はスコアの並べ替えより前に当てる（順位そのものが変わるため）
-    if "wall" in SHADOW_VARIANT:
-        apply_wall_adjustment(scored, exhibition)
+    # v5.30: 壁を本番に採用（2026-10-28）。
+    # 本番シャドー 7,270レース・48日の対応のある検定で確認:
+    #   全レース  本番のみ的中 289 / 壁のみ 246  差 -43  p=0.069
+    #   非定番    本番のみ的中 109 / 壁のみ 165  差 +56  p=0.001
+    #   → 定番の的中を99本手放して非定番を56本取るトレードオフ
+    # 買い目的中は 24.9%→24.3% と下がるが、非定番的中 9.6%→10.7% を取る判断。
+    # 「定番出目に絞るのは展開を予測するロジックが無かったからで、
+    #   ロジックが強くなれば絞る必要はない」という方針に沿う。
+    # 外すときは apply_wall_adjustment の呼び出しを消すのではなく
+    # WALL_DAMPING を 0.0 にすれば breakdown に記録が残る。
+    apply_wall_adjustment(scored, exhibition)
 
     scored.sort(key=lambda x: x["score"], reverse=True)
     combo_stats = load_combo_stats(jcd) if _COMBO_STATS_AVAILABLE else None

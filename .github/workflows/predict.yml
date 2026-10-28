@@ -125,10 +125,20 @@ jobs:
         env:
           TZ: Asia/Tokyo
         run: |
-          # tenkai は外してある。買い目の精度が上がらないことが 1,092レースで
-          # 確認済みで（development.py の docstring 参照）、頭別2着の変化率が
-          # 1.7% しかないため1年回しても有意差が出ない。手動なら --shadow tenkai。
-          for V in wall exadj; do
+          # 2026-10-28: wall は本番に昇格（v5.30）、exadj は外した。
+          #   exadj … 7,270レース・48日で的中の不一致が **0件**。買い目は変わるのに
+          #           結果が1つも動かない。展示のコース補正自体は正しい
+          #           （二重計上の解消）が、買い目には届かない。
+          #   tenkai … 1,092レースで頭別2着の変化率が1.7%。1年回しても有意差なし。
+          # どちらも手動なら --shadow で動く。
+          # 次の候補ができたらここに足す（スペース区切り）。
+          # ⚠️ 空のまま `for V in ; do` と書くと bash の構文エラーになる。
+          VARIANTS=""
+          if [ -z "$VARIANTS" ]; then
+            echo "回すシャドーが無いのでスキップ"
+            exit 0
+          fi
+          for V in $VARIANTS; do
             echo "--- shadow: $V ---"
             python3 scripts/predictor.py \
               --jcd "${{ matrix.jcd }}" \

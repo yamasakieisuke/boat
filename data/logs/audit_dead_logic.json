@@ -1,0 +1,101 @@
+{
+ "generated_at": "2026-10-28T09:09:07",
+ "date_from": "20260904",
+ "date_to": "20260904",
+ "races": 12,
+ "score_components": {
+  "_entry_course_note": {
+   "min": 1.0,
+   "max": 6.0,
+   "stdev": 1.658829
+  },
+  "boat_2rate": {
+   "min": 0.00327,
+   "max": 0.0099,
+   "stdev": 0.001422
+  },
+  "comment_score": {
+   "min": 0.015,
+   "max": 0.015,
+   "stdev": 0.0
+  },
+  "course_advantage": {
+   "min": 0.02756,
+   "max": 0.23052,
+   "stdev": 0.051725
+  },
+  "exhibition_score": {
+   "min": 0.006,
+   "max": 0.0546,
+   "stdev": 0.012646
+  },
+  "female_factor": {
+   "min": 0.01,
+   "max": 0.01,
+   "stdev": 0.0
+  },
+  "global_win_rate": {
+   "min": 0.00215,
+   "max": 0.03458,
+   "stdev": 0.008708
+  },
+  "grade_bonus": {
+   "min": 0.0125,
+   "max": 0.05,
+   "stdev": 0.011153
+  },
+  "hist_waku_score": {
+   "min": 0.0,
+   "max": 0.09,
+   "stdev": 0.038668
+  },
+  "local_win_rate": {
+   "min": 0.0,
+   "max": 0.0402,
+   "stdev": 0.00906
+  },
+  "motor_2rate": {
+   "min": 0.01792,
+   "max": 0.04396,
+   "stdev": 0.003921
+  },
+  "series_score": {
+   "min": 0.007,
+   "max": 0.01148,
+   "stdev": 0.00102
+  },
+  "st_score": {
+   "min": 0.053,
+   "max": 0.114,
+   "stdev": 0.016179
+  },
+  "wall_score": {
+   "min": 0.03036,
+   "max": 0.04182,
+   "stdev": 0.004691
+  }
+ },
+ "input_rates": {
+  "comments": 0.0,
+  "engine_report": 0.0,
+  "exhibition": 1.0,
+  "motor_stats": 1.0,
+  "odds": 0.0,
+  "pitreport": 0.0,
+  "player_review": 0.0,
+  "player_stats": 1.0,
+  "tide": 0.0,
+  "weather": 0.0
+ },
+ "problems": [
+  "スコア項目 comment_score が定数（値 0.015）",
+  "スコア項目 female_factor が定数（値 0.01）",
+  "入力 weather の取得率が 0%",
+  "入力 tide の取得率が 0%",
+  "入力 odds の取得率が 0%",
+  "入力 comments の取得率が 0%",
+  "入力 pitreport の取得率が 0%",
+  "入力 engine_report の取得率が 0%",
+  "入力 player_review の取得率が 0%"
+ ]
+}
