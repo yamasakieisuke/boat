@@ -1,33 +1,28 @@
 {
- "generated_at": "2026-10-28T09:09:07",
- "date_from": "20260904",
- "date_to": "20260904",
- "races": 12,
+ "generated_at": "2026-10-29T05:18:20",
+ "date_from": "20261022",
+ "date_to": "20261029",
+ "races": 1116,
  "score_components": {
-  "_entry_course_note": {
-   "min": 1.0,
-   "max": 6.0,
-   "stdev": 1.658829
-  },
   "boat_2rate": {
-   "min": 0.00327,
-   "max": 0.0099,
-   "stdev": 0.001422
+   "min": 0.0,
+   "max": 0.01818,
+   "stdev": 0.002202
   },
   "comment_score": {
-   "min": 0.015,
-   "max": 0.015,
-   "stdev": 0.0
+   "min": 0.003,
+   "max": 0.03,
+   "stdev": 0.001514
   },
   "course_advantage": {
-   "min": 0.02756,
-   "max": 0.23052,
-   "stdev": 0.051725
+   "min": 0.01285,
+   "max": 0.30031,
+   "stdev": 0.055826
   },
   "exhibition_score": {
-   "min": 0.006,
-   "max": 0.0546,
-   "stdev": 0.012646
+   "min": 0.012,
+   "max": 0.048,
+   "stdev": 0.008478
   },
   "female_factor": {
    "min": 0.01,
@@ -35,67 +30,62 @@
    "stdev": 0.0
   },
   "global_win_rate": {
-   "min": 0.00215,
-   "max": 0.03458,
-   "stdev": 0.008708
+   "min": 0.0016,
+   "max": 0.04534,
+   "stdev": 0.009192
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.011153
+   "stdev": 0.011593
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.038668
+   "stdev": 0.034256
   },
   "local_win_rate": {
    "min": 0.0,
-   "max": 0.0402,
-   "stdev": 0.00906
+   "max": 0.07604,
+   "stdev": 0.009566
   },
   "motor_2rate": {
-   "min": 0.01792,
-   "max": 0.04396,
-   "stdev": 0.003921
+   "min": 0.0,
+   "max": 0.072,
+   "stdev": 0.008989
   },
   "series_score": {
-   "min": 0.007,
-   "max": 0.01148,
-   "stdev": 0.00102
+   "min": 0.0024,
+   "max": 0.01577,
+   "stdev": 0.001143
   },
   "st_score": {
-   "min": 0.053,
-   "max": 0.114,
-   "stdev": 0.016179
-  },
-  "wall_score": {
-   "min": 0.03036,
-   "max": 0.04182,
-   "stdev": 0.004691
+   "min": 0.0,
+   "max": 0.142,
+   "stdev": 0.021606
   }
  },
  "input_rates": {
-  "comments": 0.0,
+  "comments": 0.1828,
   "engine_report": 0.0,
-  "exhibition": 1.0,
-  "motor_stats": 1.0,
+  "exhibition": 0.0,
+  "motor_stats": 0.0645,
   "odds": 0.0,
   "pitreport": 0.0,
   "player_review": 0.0,
   "player_stats": 1.0,
-  "tide": 0.0,
-  "weather": 0.0
+  "tide": 0.7204,
+  "weather": 1.0
  },
  "problems": [
-  "スコア項目 comment_score が定数（値 0.015）",
   "スコア項目 female_factor が定数（値 0.01）",
-  "入力 weather の取得率が 0%",
-  "入力 tide の取得率が 0%",
+  "入力 exhibition の取得率が 0%",
   "入力 odds の取得率が 0%",
-  "入力 comments の取得率が 0%",
   "入力 pitreport の取得率が 0%",
   "入力 engine_report の取得率が 0%",
-  "入力 player_review の取得率が 0%"
+  "入力 player_review の取得率が 0%",
+  "入力 motor_stats の取得率が 6%",
+  "入力 comments の取得率が 18%",
+  "シャドー exadj の買い目が 0.0% しか変わらない"
  ]
 }
