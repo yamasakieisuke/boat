@@ -1,28 +1,28 @@
 {
- "generated_at": "2026-10-29T05:18:20",
- "date_from": "20261022",
- "date_to": "20261029",
- "races": 1116,
+ "generated_at": "2026-10-30T05:19:23",
+ "date_from": "20261023",
+ "date_to": "20261030",
+ "races": 1068,
  "score_components": {
   "boat_2rate": {
    "min": 0.0,
    "max": 0.01818,
-   "stdev": 0.002202
+   "stdev": 0.002075
   },
   "comment_score": {
    "min": 0.003,
    "max": 0.03,
-   "stdev": 0.001514
+   "stdev": 0.00159
   },
   "course_advantage": {
    "min": 0.01285,
    "max": 0.30031,
-   "stdev": 0.055826
+   "stdev": 0.05585
   },
   "exhibition_score": {
    "min": 0.012,
    "max": 0.048,
-   "stdev": 0.008478
+   "stdev": 0.008482
   },
   "female_factor": {
    "min": 0.01,
@@ -31,50 +31,55 @@
   },
   "global_win_rate": {
    "min": 0.0016,
-   "max": 0.04534,
-   "stdev": 0.009192
+   "max": 0.04543,
+   "stdev": 0.009216
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.011593
+   "stdev": 0.011637
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.034256
+   "stdev": 0.034281
   },
   "local_win_rate": {
    "min": 0.0,
    "max": 0.07604,
-   "stdev": 0.009566
+   "stdev": 0.009492
   },
   "motor_2rate": {
    "min": 0.0,
    "max": 0.072,
-   "stdev": 0.008989
+   "stdev": 0.008995
   },
   "series_score": {
-   "min": 0.0024,
+   "min": 0.00381,
    "max": 0.01577,
-   "stdev": 0.001143
+   "stdev": 0.001142
   },
   "st_score": {
    "min": 0.0,
-   "max": 0.142,
-   "stdev": 0.021606
+   "max": 0.141,
+   "stdev": 0.021752
+  },
+  "wall_score": {
+   "min": -0.06,
+   "max": 0.06,
+   "stdev": 0.036759
   }
  },
  "input_rates": {
-  "comments": 0.1828,
+  "comments": 0.2022,
   "engine_report": 0.0,
   "exhibition": 0.0,
-  "motor_stats": 0.0645,
+  "motor_stats": 0.0674,
   "odds": 0.0,
   "pitreport": 0.0,
   "player_review": 0.0,
   "player_stats": 1.0,
-  "tide": 0.7204,
+  "tide": 0.8539,
   "weather": 1.0
  },
  "problems": [
@@ -84,8 +89,8 @@
   "入力 pitreport の取得率が 0%",
   "入力 engine_report の取得率が 0%",
   "入力 player_review の取得率が 0%",
-  "入力 motor_stats の取得率が 6%",
-  "入力 comments の取得率が 18%",
+  "入力 motor_stats の取得率が 7%",
+  "入力 comments の取得率が 20%",
   "シャドー exadj の買い目が 0.0% しか変わらない"
  ]
 }
