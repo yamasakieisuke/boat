@@ -1,28 +1,28 @@
 {
- "generated_at": "2026-11-01T04:18:58",
- "date_from": "20261025",
- "date_to": "20261101",
+ "generated_at": "2026-11-02T04:40:20",
+ "date_from": "20261026",
+ "date_to": "20261102",
  "races": 1032,
  "score_components": {
   "boat_2rate": {
    "min": 0.0,
    "max": 0.01818,
-   "stdev": 0.001762
+   "stdev": 0.001657
   },
   "comment_score": {
-   "min": 0.003,
+   "min": 0.0009,
    "max": 0.03,
-   "stdev": 0.001691
+   "stdev": 0.001694
   },
   "course_advantage": {
-   "min": 0.01353,
+   "min": 0.01311,
    "max": 0.30031,
-   "stdev": 0.055978
+   "stdev": 0.056247
   },
   "exhibition_score": {
    "min": 0.012,
    "max": 0.048,
-   "stdev": 0.008704
+   "stdev": 0.008904
   },
   "female_factor": {
    "min": 0.01,
@@ -30,48 +30,48 @@
    "stdev": 0.0
   },
   "global_win_rate": {
-   "min": 0.00125,
+   "min": 0.0,
    "max": 0.04543,
-   "stdev": 0.009362
+   "stdev": 0.009486
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.011738
+   "stdev": 0.011826
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.03427
+   "stdev": 0.034358
   },
   "local_win_rate": {
    "min": 0.0,
    "max": 0.07529,
-   "stdev": 0.009441
+   "stdev": 0.009604
   },
   "motor_2rate": {
    "min": 0.0,
-   "max": 0.072,
-   "stdev": 0.008741
+   "max": 0.08,
+   "stdev": 0.00853
   },
   "series_score": {
-   "min": 0.00381,
-   "max": 0.01476,
-   "stdev": 0.001122
+   "min": 0.0039,
+   "max": 0.01583,
+   "stdev": 0.001077
   },
   "st_score": {
    "min": 0.0,
    "max": 0.141,
-   "stdev": 0.021985
+   "stdev": 0.021893
   },
   "wall_score": {
    "min": -0.06,
    "max": 0.06,
-   "stdev": 0.034855
+   "stdev": 0.034012
   }
  },
  "input_rates": {
-  "comments": 0.2209,
+  "comments": 0.2326,
   "engine_report": 0.0,
   "exhibition": 0.0,
   "motor_stats": 0.0465,
@@ -90,7 +90,7 @@
   "入力 engine_report の取得率が 0%",
   "入力 player_review の取得率が 0%",
   "入力 motor_stats の取得率が 5%",
-  "入力 comments の取得率が 22%",
+  "入力 comments の取得率が 23%",
   "シャドー exadj の買い目が 0.0% しか変わらない"
  ]
 }
