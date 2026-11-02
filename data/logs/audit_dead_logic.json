@@ -1,13 +1,13 @@
 {
- "generated_at": "2026-11-02T04:40:20",
- "date_from": "20261026",
- "date_to": "20261102",
- "races": 1032,
+ "generated_at": "2026-11-03T08:09:17",
+ "date_from": "20261027",
+ "date_to": "20261103",
+ "races": 1044,
  "score_components": {
   "boat_2rate": {
    "min": 0.0,
-   "max": 0.01818,
-   "stdev": 0.001657
+   "max": 0.016,
+   "stdev": 0.00168
   },
   "comment_score": {
    "min": 0.0009,
@@ -15,14 +15,14 @@
    "stdev": 0.001694
   },
   "course_advantage": {
-   "min": 0.01311,
-   "max": 0.30031,
-   "stdev": 0.056247
+   "min": 0.01297,
+   "max": 0.30051,
+   "stdev": 0.056109
   },
   "exhibition_score": {
    "min": 0.012,
    "max": 0.048,
-   "stdev": 0.008904
+   "stdev": 0.008897
   },
   "female_factor": {
    "min": 0.01,
@@ -32,54 +32,54 @@
   "global_win_rate": {
    "min": 0.0,
    "max": 0.04543,
-   "stdev": 0.009486
+   "stdev": 0.009488
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.011826
+   "stdev": 0.011804
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.034358
+   "stdev": 0.034364
   },
   "local_win_rate": {
    "min": 0.0,
    "max": 0.07529,
-   "stdev": 0.009604
+   "stdev": 0.009789
   },
   "motor_2rate": {
    "min": 0.0,
    "max": 0.08,
-   "stdev": 0.00853
+   "stdev": 0.008635
   },
   "series_score": {
    "min": 0.0039,
    "max": 0.01583,
-   "stdev": 0.001077
+   "stdev": 0.001073
   },
   "st_score": {
    "min": 0.0,
    "max": 0.141,
-   "stdev": 0.021893
+   "stdev": 0.021625
   },
   "wall_score": {
    "min": -0.06,
    "max": 0.06,
-   "stdev": 0.034012
+   "stdev": 0.03354
   }
  },
  "input_rates": {
-  "comments": 0.2326,
+  "comments": 0.2299,
   "engine_report": 0.0,
   "exhibition": 0.0,
-  "motor_stats": 0.0465,
+  "motor_stats": 0.046,
   "odds": 0.0,
   "pitreport": 0.0,
   "player_review": 0.0,
   "player_stats": 1.0,
-  "tide": 0.8488,
+  "tide": 0.8506,
   "weather": 1.0
  },
  "problems": [
