@@ -48,17 +48,17 @@
   "hist_global_win_rate": 1.27,
   "hist_avg_st": {
     "avg_st": 0.198,
-    "st_count": 155,
+    "st_count": 156,
     "course_st": {
       "3": 0.21,
-      "4": 0.189,
+      "4": 0.185,
       "5": 0.197,
       "6": 0.199
     }
   },
   "hist_exhibition": {
     "overall_avg": 6.79,
-    "count": 157,
+    "count": 158,
     "by_venue": {
       "07": {
         "avg": 6.73,
@@ -77,8 +77,8 @@
         "count": 9
       },
       "11": {
-        "avg": 6.82,
-        "count": 11
+        "avg": 6.81,
+        "count": 12
       },
       "12": {
         "avg": 6.93,
@@ -111,6 +111,6 @@
     },
     "recent_avg": 6.78,
     "recent_count": 20,
-    "recent_deviation": 0.004
+    "recent_deviation": 0.003
   }
 }
