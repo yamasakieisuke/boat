@@ -1,28 +1,28 @@
 {
- "generated_at": "2026-11-09T04:40:55",
- "date_from": "20261102",
- "date_to": "20261109",
- "races": 1010,
+ "generated_at": "2026-11-10T08:49:44",
+ "date_from": "20261103",
+ "date_to": "20261110",
+ "races": 986,
  "score_components": {
   "boat_2rate": {
    "min": 0.0,
-   "max": 0.016,
-   "stdev": 0.001831
+   "max": 0.02,
+   "stdev": 0.001778
   },
   "comment_score": {
    "min": 0.0,
    "max": 0.0261,
-   "stdev": 0.001354
+   "stdev": 0.001312
   },
   "course_advantage": {
    "min": 0.01282,
-   "max": 0.30051,
-   "stdev": 0.054048
+   "max": 0.29778,
+   "stdev": 0.05421
   },
   "exhibition_score": {
    "min": 0.012,
    "max": 0.048,
-   "stdev": 0.008555
+   "stdev": 0.008651
   },
   "female_factor": {
    "min": 0.01,
@@ -32,54 +32,54 @@
   "global_win_rate": {
    "min": 0.0,
    "max": 0.04245,
-   "stdev": 0.009389
+   "stdev": 0.009538
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.011751
+   "stdev": 0.011913
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.034215
+   "stdev": 0.034227
   },
   "local_win_rate": {
    "min": 0.0,
    "max": 0.07529,
-   "stdev": 0.009827
+   "stdev": 0.009844
   },
   "motor_2rate": {
    "min": 0.0,
    "max": 0.08,
-   "stdev": 0.008572
+   "stdev": 0.008468
   },
   "series_score": {
    "min": 0.00237,
    "max": 0.01621,
-   "stdev": 0.001158
+   "stdev": 0.001159
   },
   "st_score": {
    "min": 0.0,
    "max": 0.14,
-   "stdev": 0.021607
+   "stdev": 0.022097
   },
   "wall_score": {
    "min": -0.06,
    "max": 0.06,
-   "stdev": 0.033103
+   "stdev": 0.033715
   }
  },
  "input_rates": {
-  "comments": 0.1307,
+  "comments": 0.1339,
   "engine_report": 0.0,
   "exhibition": 0.0,
-  "motor_stats": 0.0594,
+  "motor_stats": 0.0487,
   "odds": 0.0,
   "pitreport": 0.0,
   "player_review": 0.0,
   "player_stats": 1.0,
-  "tide": 0.7267,
+  "tide": 0.7201,
   "weather": 1.0
  },
  "problems": [
@@ -89,7 +89,7 @@
   "入力 pitreport の取得率が 0%",
   "入力 engine_report の取得率が 0%",
   "入力 player_review の取得率が 0%",
-  "入力 motor_stats の取得率が 6%",
+  "入力 motor_stats の取得率が 5%",
   "入力 comments の取得率が 13%"
  ]
 }
