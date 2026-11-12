@@ -10,15 +10,15 @@
   "st_5着": "10.0%（7回）",
   "hist_global_waku_stats": {
     "4": {
-      "races": 10,
-      "1st_pct": 0.0,
-      "2nd_pct": 30.0,
-      "3rd_pct": 10.0,
+      "races": 11,
+      "1st_pct": 9.1,
+      "2nd_pct": 27.3,
+      "3rd_pct": 9.1,
       "4th_pct": 0.0,
-      "5th_pct": 10.0,
-      "6th_pct": 50.0,
-      "top2_pct": 30.0,
-      "top3_pct": 40.0
+      "5th_pct": 9.1,
+      "6th_pct": 45.5,
+      "top2_pct": 36.4,
+      "top3_pct": 45.5
     },
     "5": {
       "races": 62,
@@ -32,25 +32,25 @@
       "top3_pct": 16.1
     },
     "6": {
-      "races": 134,
+      "races": 135,
       "1st_pct": 0.0,
       "2nd_pct": 0.7,
       "3rd_pct": 2.2,
-      "4th_pct": 12.7,
-      "5th_pct": 17.2,
-      "6th_pct": 67.2,
+      "4th_pct": 12.6,
+      "5th_pct": 17.0,
+      "6th_pct": 67.4,
       "top2_pct": 0.7,
       "top3_pct": 3.0
     }
   },
-  "hist_global_win_rate": 0.48,
+  "hist_global_win_rate": 0.95,
   "hist_avg_st": {
     "avg_st": 0.148,
-    "st_count": 207,
+    "st_count": 209,
     "course_st": {
-      "4": 0.127,
+      "4": 0.11,
       "5": 0.151,
-      "6": 0.147
+      "6": 0.148
     }
   },
   "hist_local_waku_stats": {
@@ -81,11 +81,11 @@
   "gender": "F",
   "hist_exhibition": {
     "overall_avg": 6.82,
-    "count": 209,
+    "count": 211,
     "by_venue": {
       "21": {
         "avg": 6.77,
-        "count": 31
+        "count": 33
       },
       "20": {
         "avg": 6.9,
@@ -138,6 +138,6 @@
     },
     "recent_avg": 6.79,
     "recent_count": 20,
-    "recent_deviation": -0.026
+    "recent_deviation": -0.034
   }
 }
