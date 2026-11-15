@@ -142,6 +142,23 @@ jobs:
             python3 scripts/run_morning.py --jcd "$JCD" --skip-verify --date "$DATE" || echo "[WARN] predict失敗 jcd=$JCD"
           done < "$GITHUB_WORKSPACE/_success.tsv"
 
+      # 再予想した pred.json を artifact に上げる（2026-11-15）。
+      #
+      # ⚠️ これが無いと **サイトに出ている予想と精度を測っている予想が別物**になる。
+      #    展示が届いて再予想した結果は WP には投稿されるが、runner は使い捨てなので
+      #    pred.json は消える。verify が落とすのは predict.yml の朝の版（展示なし）。
+      #    そのため監査で exhibition の取得率が 0% と出ていた。
+      #    進入コース補正（展示の entry_course）も測定対象に入っていなかった。
+      - name: Upload re-predicted pred.json (展示反映後)
+        if: steps.pending.outputs.has_success == 'true'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: predlogs-final-${{ steps.dateres.outputs.date }}-${{ github.run_id }}
+          path: data/logs/${{ steps.dateres.outputs.date }}/
+          retention-days: 90
+          if-no-files-found: ignore
+
       - name: Upload fetch-state artifact (for next poll)
         if: always()
         uses: actions/upload-artifact@v4

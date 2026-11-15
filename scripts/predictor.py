@@ -2230,7 +2230,14 @@ def _save_prediction_log(jcd, date, race_no, scored, tide_data, bets=None,
         # ログには結果しか残らないので、外からは「効いていない」と見分けがつかない。
         # scripts/audit_dead_logic.py がこれを読んで検出する。
         "inputs": {
-            "weather":      bool(weather),
+            # ⚠️ bool(weather) ではダメ。scrape_weather は venue_code/date/race_no の
+            #    3キーで初期化するので、**天候の解析が完全に失敗していても True** になる。
+            #    実際2026-11-15 まで公式のクラス名変更に気づけず、風速ゼロのまま
+            #    female_factor と風補正が死んでいた。**使える値が入っているか**を見る。
+            "weather":      bool(weather and (weather.get("風速") or weather.get("波高"))),
+            "weather_file": bool(weather),
+            "wind_ms":      get_wind_speed(weather),
+            "wave_cm":      get_wave_height(weather),
             "tide":         bool(tide_data),
             "exhibition":   bool(exhibition_data),
             "odds":         bool(odds_data and odds_data.get("odds_3t")),

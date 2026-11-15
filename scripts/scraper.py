@@ -826,13 +826,26 @@ def scrape_weather(jcd: str, date: str, race_no: int) -> dict | None:
     soup = BeautifulSoup(html, "html.parser")
     weather = {"venue_code": jcd, "date": date, "race_no": race_no}
 
+    # ⚠️ 2026-11-15: 公式のクラス名が変わっていた。
+    #   旧 .weather1_bodyUnitTitle      / .weather1_bodyUnitData
+    #   新 .weather1_bodyUnitLabelTitle / .weather1_bodyUnitLabelData  （Label が挿入）
+    # 旧セレクタは静かに空振りし、**weather は初期化の3キーだけを返していた**。
+    # それでも `bool(weather)` は True なので「取得できている」ように見え、
+    # 風速・波高に依存する補正（female_factor / 会場の風補正 / 荒れ判定）が
+    # 全部中立のまま走っていた。両方のセレクタを試して将来の変更にも耐える。
     section = soup.select_one("div.weather1_body")
     if section:
         for unit in section.select("div.weather1_bodyUnit"):
-            title = unit.select_one(".weather1_bodyUnitTitle")
-            data  = unit.select_one(".weather1_bodyUnitData")
+            title = (unit.select_one(".weather1_bodyUnitLabelTitle")
+                     or unit.select_one(".weather1_bodyUnitTitle"))
+            data  = (unit.select_one(".weather1_bodyUnitLabelData")
+                     or unit.select_one(".weather1_bodyUnitData"))
             if title and data:
                 weather[title.get_text(strip=True)] = data.get_text(strip=True)
+    if len(weather) <= 3:
+        # 天候の項目が1つも取れていない。セレクタ変更を見逃さないための警告。
+        print(f"[WARN] 気象データが空: {jcd} {race_no}R。"
+              "公式のHTML構造が変わった可能性がある（scrape_weather のセレクタを確認）")
 
     save_dir = DATA_DIR / "weather" / date
     save_dir.mkdir(parents=True, exist_ok=True)

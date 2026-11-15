@@ -72,6 +72,31 @@ jobs:
           done
           echo "::warning::predlogs-${DATE} が直近20件の predict run に見つからず（pred.json なしで verify を試行）"
 
+      # 展示反映後の再予想ぶんを**朝の版の上に重ねる**（2026-11-15）。
+      # fetch_pending.yml が predlogs-final-{DATE}-{run_id} として上げている。
+      # 同じファイル名なので後から展開したものが勝ち、サイトに出た最終版で
+      # 精度を測れる。無い場合（展示が届かなかった日）は朝の版がそのまま残る。
+      - name: Overlay re-predicted predlogs (展示反映後)
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DATE="${{ steps.dateres.outputs.date }}"
+          N=0
+          for RUN_ID in $(gh run list --workflow=fetch_pending.yml --limit=40 \
+                            --json databaseId --jq '.[].databaseId'); do
+            if gh run download "$RUN_ID" --pattern "predlogs-final-${DATE}-*" \
+                 --dir "data/logs/${DATE}" 2>/dev/null; then
+              N=$((N+1))
+            fi
+          done
+          echo "再予想ぶんを ${N} 件重ねた"
+          # upload-artifact は pattern 指定だとサブディレクトリに展開するので平す
+          find "data/logs/${DATE}" -mindepth 2 -name '*_pred*.json' \
+            -exec mv -f {} "data/logs/${DATE}/" \; 2>/dev/null || true
+          find "data/logs/${DATE}" -mindepth 1 -type d -empty -delete 2>/dev/null || true
+          ls "data/logs/${DATE}" | head -5
+
       - name: Run morning_verify
         run: |
           python3 scripts/morning_verify.py --date "${{ steps.dateres.outputs.date }}"

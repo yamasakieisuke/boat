@@ -133,6 +133,8 @@ def main() -> int:
             continue
         n_with += 1
         for k, v in block.items():
+            if k in ("wind_ms", "wave_cm"):
+                continue          # 数値そのもの。取得率ではないので別扱い
             inp[k].append(1.0 if v is True else (0.0 if v is False else float(bool(v))))
 
     print(f"\n■ 入力の取得率（inputs ブロックのある {n_with:,}レース）")
@@ -149,6 +151,19 @@ def main() -> int:
             flag = "← 取得率が低い。上流を確認"
             problems.append(f"入力 {k} の取得率が {rate*100:.0f}%")
         print(f"  {k:<20}{rate*100:>6.1f}%  {flag}")
+
+    # ── 2b) 天候の数値が実際に入っているか ──────────────────
+    # 「ファイルが有る」と「使える値が入っている」は別。
+    # ここが全部ゼロなら公式のHTML構造が変わった疑いがある。
+    winds = [log["inputs"]["wind_ms"] for _d, log in prod
+             if isinstance((log.get("inputs") or {}).get("wind_ms"), (int, float))]
+    if winds:
+        nz = sum(1 for w in winds if w > 0) / len(winds)
+        print(f"\n■ 風速の実測値（{len(winds):,}レース）")
+        print(f"  非ゼロ率 {nz*100:.1f}%  平均 {sum(winds)/len(winds):.2f}m  最大 {max(winds):.0f}m")
+        if nz < 0.5:
+            problems.append(f"風速が非ゼロのレースが {nz*100:.0f}% しかない"
+                            "（公式のHTML構造が変わった疑い）")
 
     # ── 3) シャドー変種が出口に届いているか ────────────────
     if shadow:
