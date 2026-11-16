@@ -1,0 +1,288 @@
+{
+  "week": "2026-W47",
+  "date_from": "20261116",
+  "date_to": "20261117",
+  "generated_at": "2026-11-17T08:47:17",
+  "overall": {
+    "total_races": 120,
+    "venues_with_data": 10,
+    "hit_1st": 69,
+    "hit_bet_any": 27,
+    "hit_bet1": 13,
+    "hit_bet2": 7,
+    "hit_bet3": 4,
+    "hit_honmei": 27,
+    "hit_others": 0,
+    "hit_taikou": 0,
+    "hit_oshi": 0,
+    "hit_ana": 0,
+    "hit_1st_pct": 57.5,
+    "hit_bet_any_pct": 22.5,
+    "hit_bet1_pct": 10.8,
+    "hit_bet2_pct": 5.8,
+    "hit_bet3_pct": 3.3,
+    "hit_honmei_pct": 22.5,
+    "hit_others_pct": 0.0,
+    "hit_taikou_pct": 0.0,
+    "hit_oshi_pct": 0.0,
+    "hit_ana_pct": 0.0,
+    "avg_rank": 1.96,
+    "roi_pct": 53.2
+  },
+  "by_venue": [
+    {
+      "jcd": "23",
+      "name": "唐津",
+      "n": 12,
+      "hit_1st_pct": 91.7,
+      "hit_bet_any_pct": 41.7,
+      "hit_honmei_pct": 41.7,
+      "roi_pct": 116.4,
+      "avg_rank": 1.08
+    },
+    {
+      "jcd": "08",
+      "name": "常滑",
+      "n": 12,
+      "hit_1st_pct": 58.3,
+      "hit_bet_any_pct": 33.3,
+      "hit_honmei_pct": 33.3,
+      "roi_pct": 46.9,
+      "avg_rank": 2.08
+    },
+    {
+      "jcd": "15",
+      "name": "丸亀",
+      "n": 12,
+      "hit_1st_pct": 58.3,
+      "hit_bet_any_pct": 33.3,
+      "hit_honmei_pct": 33.3,
+      "roi_pct": 67.9,
+      "avg_rank": 1.83
+    },
+    {
+      "jcd": "20",
+      "name": "若松",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 33.3,
+      "hit_honmei_pct": 33.3,
+      "roi_pct": 95.2,
+      "avg_rank": 2.33
+    },
+    {
+      "jcd": "13",
+      "name": "尼崎",
+      "n": 12,
+      "hit_1st_pct": 66.7,
+      "hit_bet_any_pct": 25.0,
+      "hit_honmei_pct": 25.0,
+      "roi_pct": 26.4,
+      "avg_rank": 1.67
+    },
+    {
+      "jcd": "11",
+      "name": "びわこ",
+      "n": 12,
+      "hit_1st_pct": 58.3,
+      "hit_bet_any_pct": 16.7,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 48.3,
+      "avg_rank": 1.75
+    },
+    {
+      "jcd": "16",
+      "name": "児島",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 16.7,
+      "hit_honmei_pct": 16.7,
+      "roi_pct": 49.8,
+      "avg_rank": 2.08
+    },
+    {
+      "jcd": "03",
+      "name": "江戸川",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 8.3,
+      "hit_honmei_pct": 8.3,
+      "roi_pct": 28.3,
+      "avg_rank": 2.33
+    },
+    {
+      "jcd": "18",
+      "name": "徳山",
+      "n": 12,
+      "hit_1st_pct": 41.7,
+      "hit_bet_any_pct": 8.3,
+      "hit_honmei_pct": 8.3,
+      "roi_pct": 41.8,
+      "avg_rank": 2.25
+    },
+    {
+      "jcd": "24",
+      "name": "大村",
+      "n": 12,
+      "hit_1st_pct": 50.0,
+      "hit_bet_any_pct": 8.3,
+      "hit_honmei_pct": 8.3,
+      "roi_pct": 11.7,
+      "avg_rank": 2.17
+    }
+  ],
+  "by_pattern": {
+    "2差し": {
+      "triggered": 65,
+      "triggered_hit": 17,
+      "applied": 50,
+      "applied_hit": 13,
+      "triggered_hit_pct": 26.2,
+      "applied_hit_pct": 26.0
+    },
+    "3カド": {
+      "triggered": 39,
+      "triggered_hit": 9,
+      "applied": 15,
+      "applied_hit": 3,
+      "triggered_hit_pct": 23.1,
+      "applied_hit_pct": 20.0
+    },
+    "4カドまくり": {
+      "triggered": 29,
+      "triggered_hit": 7,
+      "applied": 11,
+      "applied_hit": 4,
+      "triggered_hit_pct": 24.1,
+      "applied_hit_pct": 36.4
+    },
+    "外差し": {
+      "triggered": 11,
+      "triggered_hit": 4,
+      "applied": 11,
+      "applied_hit": 4,
+      "triggered_hit_pct": 36.4,
+      "applied_hit_pct": 36.4
+    }
+  },
+  "by_series_band": {
+    "0走(初日)": {
+      "n": 0,
+      "honmei_hit": 0,
+      "top2_rt_sum": 0.0,
+      "avg_rk_sum": 0.0,
+      "honmei_hit_pct": 0.0,
+      "avg_top2_rt": null,
+      "avg_rk": null
+    },
+    "1-3走": {
+      "n": 36,
+      "honmei_hit": 7,
+      "top2_rt_sum": 5.5,
+      "avg_rk_sum": 147.0,
+      "honmei_hit_pct": 19.4,
+      "avg_top2_rt": 0.15,
+      "avg_rk": 4.08
+    },
+    "4-6走": {
+      "n": 45,
+      "honmei_hit": 13,
+      "top2_rt_sum": 14.083333333333332,
+      "avg_rk_sum": 159.26666666666665,
+      "honmei_hit_pct": 28.9,
+      "avg_top2_rt": 0.31,
+      "avg_rk": 3.54
+    },
+    "7走+": {
+      "n": 39,
+      "honmei_hit": 7,
+      "top2_rt_sum": 13.708730158730157,
+      "avg_rk_sum": 130.12261904761905,
+      "honmei_hit_pct": 17.9,
+      "avg_top2_rt": 0.35,
+      "avg_rk": 3.34
+    }
+  },
+  "by_version": {
+    "v5.30": {
+      "n": 120,
+      "total": 120,
+      "hit_bet_any": 27,
+      "hit_bet_any_pct": 22.5,
+      "hit_honmei": 27,
+      "hit_honmei_pct": 22.5,
+      "points": 570,
+      "payout": 30320,
+      "roi_pct": 53.2
+    }
+  },
+  "roi": {
+    "unit": 100,
+    "points": 570,
+    "stake": 57000,
+    "payout": 30320,
+    "roi_pct": 53.2,
+    "points_per_race": 4.75,
+    "by_tier": {
+      "本命": {
+        "points": 480,
+        "hits": 27,
+        "payout": 30320,
+        "hit_pct": 5.62,
+        "roi_pct": 63.2
+      },
+      "穴": {
+        "points": 90,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0
+      }
+    },
+    "by_cell": {
+      "本命#1": {
+        "points": 120,
+        "hits": 13,
+        "payout": 11110,
+        "hit_pct": 10.83,
+        "roi_pct": 92.6
+      },
+      "本命#2": {
+        "points": 120,
+        "hits": 7,
+        "payout": 7820,
+        "hit_pct": 5.83,
+        "roi_pct": 65.2
+      },
+      "本命#3": {
+        "points": 120,
+        "hits": 4,
+        "payout": 7200,
+        "hit_pct": 3.33,
+        "roi_pct": 60.0
+      },
+      "本命#4": {
+        "points": 120,
+        "hits": 3,
+        "payout": 4190,
+        "hit_pct": 2.5,
+        "roi_pct": 34.9
+      },
+      "穴#1": {
+        "points": 90,
+        "hits": 0,
+        "payout": 0,
+        "hit_pct": 0.0,
+        "roi_pct": 0.0
+      }
+    },
+    "hit_pop_median": 3,
+    "hit_pop_dist": {
+      "1-3": 21,
+      "4-10": 5,
+      "11-30": 1,
+      "31+": 0
+    }
+  },
+  "diff_prev_week": {}
+}
