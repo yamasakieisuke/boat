@@ -53,6 +53,25 @@ LOG_DIR = BASE_DIR / "data" / "logs"
 # 「定数でも異常ではない」項目。中立が正しい状態のもの。
 EXPECTED_CONSTANT: set[str] = set()
 
+# 入力の期待取得率。**仕様上そこまでしか取れないもの**をここに書く。
+# 毎晩「問題」として出し続けると誰も読まなくなり、本物の故障を見逃す。
+# (下限, 理由) ── 実測がこれを下回ったときだけ問題として挙げる。
+EXPECTED_INPUT_RATE: dict[str, tuple[float, str]] = {
+    # 対応会場が5つだけ（蒲郡/芦屋/福岡/唐津/大村）。1日12-14会場開催なので2〜4割。
+    "comments":      (0.15, "対応5会場のみ（蒲郡/芦屋/福岡/唐津/大村）"),
+    # 大村のみ
+    "engine_report": (0.00, "大村のみ。scraper CLI 専用で朝バッチからは呼ばない"),
+    # 大村・福岡のみ
+    "player_review": (0.00, "大村/福岡のみ。scraper CLI 専用"),
+    # 展示は本番の約1時間前にしか出ない。朝バッチ時点では取れないのが正常で、
+    # fetch_pending が展示到着後に再予想する。verify はその再予想ぶんを
+    # 重ねて見る（2026-11-15〜）。重ね合わせが効いていれば高くなるはず。
+    "exhibition":    (0.50, "朝バッチ時点では未公開。再予想ぶんの重ね合わせ待ち"),
+    "odds":          (0.40, "同上"),
+    "pitreport":     (0.20, "R7-12のみ＝最大50%。展示と同時取得なので同じ事情"),
+    "tide":          (0.70, "海水面の会場のみ"),
+}
+
 # 分散がこれ未満なら定数とみなす
 FLAT_EPS = 1e-9
 
@@ -143,13 +162,13 @@ def main() -> int:
         print("  （2026-09-05 以降のログにしか入っていない）")
     for k in sorted(inp, key=lambda x: sum(inp[x]) / len(inp[x])):
         rate = sum(inp[k]) / len(inp[k])
+        floor, why = EXPECTED_INPUT_RATE.get(k, (0.5, ""))
         flag = ""
-        if rate == 0.0:
-            flag = "← 一度も取れていない。これに依存する補正は全部死んでいる"
-            problems.append(f"入力 {k} の取得率が 0%")
-        elif rate < 0.5:
-            flag = "← 取得率が低い。上流を確認"
-            problems.append(f"入力 {k} の取得率が {rate*100:.0f}%")
+        if rate < floor:
+            flag = "← 期待を下回る。上流を確認"
+            problems.append(f"入力 {k} の取得率が {rate*100:.0f}%（期待 {floor*100:.0f}%以上）")
+        elif why:
+            flag = f"（仕様: {why}）"
         print(f"  {k:<20}{rate*100:>6.1f}%  {flag}")
 
     # ── 2b) 天候の数値が実際に入っているか ──────────────────

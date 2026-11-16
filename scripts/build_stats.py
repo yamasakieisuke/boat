@@ -380,8 +380,23 @@ def main():
     print("\n選手統計を構築中...")
     build_player_stats(all_rows, local_rows, args.jcd)
 
-    print("\nモーター統計を構築中...")
-    build_motor_stats(local_rows, args.jcd)
+    # モーター統計は**全会場ぶん**作る（2026-11-16）。
+    # ⚠️ 以前は --jcd の既定（22 福岡）だけだった。verify.yml は引数なしで呼ぶので、
+    #    福岡以外の全会場で motor_stats が空のまま走っていた。
+    #    本番監査の「motor_stats 取得率 6.7%」= 1日12-14会場中の福岡1会場、と一致。
+    #    モーター番号は会場ごとに独立なので {jcd}_{motor_no} の命名はそのままでよい。
+    print("\nモーター統計を構築中（全会場）...")
+    if all_rows is local_rows:
+        build_motor_stats(local_rows, args.jcd)
+    else:
+        code_of = {k: v for k, v in VENUE_CODE_MAP.items()}
+        by_venue: dict[str, list[dict]] = defaultdict(list)
+        for row in all_rows:
+            jcd_ = code_of.get(row.get("venue_name", "").strip())
+            if jcd_:
+                by_venue[jcd_].append(row)
+        for jcd_, rows_ in sorted(by_venue.items()):
+            build_motor_stats(rows_, jcd_)
 
     if not args.no_global:
         print("\n会場別連動テーブルを構築中（v5.23）...")
