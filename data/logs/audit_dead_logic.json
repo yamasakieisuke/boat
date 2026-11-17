@@ -1,99 +1,98 @@
 {
- "generated_at": "2026-11-17T08:47:18",
- "date_from": "20261110",
- "date_to": "20261117",
- "races": 1056,
+ "generated_at": "2026-11-18T07:55:57",
+ "date_from": "20261111",
+ "date_to": "20261118",
+ "races": 1032,
  "score_components": {
   "_entry_course_note": {
    "min": 1.0,
    "max": 6.0,
-   "stdev": 1.86093
+   "stdev": 1.608988
   },
   "boat_2rate": {
    "min": 0.0,
    "max": 0.02,
-   "stdev": 0.001776
+   "stdev": 0.001893
   },
   "comment_score": {
-   "min": 0.003,
+   "min": 0.0045,
    "max": 0.027,
-   "stdev": 0.001886
+   "stdev": 0.001857
   },
   "course_advantage": {
-   "min": 0.01284,
-   "max": 0.29376,
-   "stdev": 0.057226
+   "min": 0.01393,
+   "max": 0.29275,
+   "stdev": 0.056885
   },
   "exhibition_score": {
    "min": 0.0084,
-   "max": 0.05365,
-   "stdev": 0.009241
+   "max": 0.06,
+   "stdev": 0.00913
   },
   "female_factor": {
-   "min": 0.01,
+   "min": 0.007,
    "max": 0.01,
-   "stdev": 0.0
+   "stdev": 0.000126
   },
   "global_win_rate": {
    "min": 0.0,
    "max": 0.04516,
-   "stdev": 0.009437
+   "stdev": 0.009418
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.011727
+   "stdev": 0.011744
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.033938
+   "stdev": 0.034037
   },
   "local_win_rate": {
    "min": 0.0,
-   "max": 0.07542,
-   "stdev": 0.010026
+   "max": 0.07547,
+   "stdev": 0.010104
   },
   "motor_2rate": {
    "min": 0.0,
-   "max": 0.05714,
-   "stdev": 0.006735
+   "max": 0.05053,
+   "stdev": 0.006509
   },
   "series_score": {
-   "min": 0.00395,
+   "min": 0.00383,
    "max": 0.01477,
-   "stdev": 0.001097
+   "stdev": 0.001122
   },
   "st_score": {
    "min": 0.0,
    "max": 0.142,
-   "stdev": 0.021616
+   "stdev": 0.021809
   },
   "wall_score": {
    "min": -0.06,
    "max": 0.06,
-   "stdev": 0.033587
+   "stdev": 0.033989
   }
  },
  "input_rates": {
-  "comments": 0.25,
+  "comments": 0.2442,
   "engine_report": 0.0,
-  "exhibition": 0.0114,
-  "motor_stats": 0.0909,
-  "odds": 0.0114,
-  "pitreport": 0.0009,
+  "exhibition": 0.0068,
+  "motor_stats": 0.186,
+  "odds": 0.0058,
+  "pitreport": 0.001,
   "player_review": 0.0,
   "player_stats": 1.0,
-  "tide": 0.875,
-  "weather": 0.9091,
+  "tide": 0.8721,
+  "weather": 0.7907,
   "weather_file": 1.0
  },
  "problems": [
-  "スコア項目 female_factor が定数（値 0.01）",
   "入力 pitreport の取得率が 0%（期待 20%以上）",
-  "入力 exhibition の取得率が 1%（期待 50%以上）",
   "入力 odds の取得率が 1%（期待 40%以上）",
-  "入力 motor_stats の取得率が 9%（期待 50%以上）",
-  "風速が非ゼロのレースが 20% しかない（公式のHTML構造が変わった疑い）"
+  "入力 exhibition の取得率が 1%（期待 50%以上）",
+  "入力 motor_stats の取得率が 19%（期待 50%以上）",
+  "風速が非ゼロのレースが 12% しかない（公式のHTML構造が変わった疑い）"
  ]
 }
