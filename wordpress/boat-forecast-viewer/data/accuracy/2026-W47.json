@@ -1,25 +1,25 @@
 {
   "week": "2026-W47",
   "date_from": "20261116",
-  "date_to": "20261118",
-  "generated_at": "2026-11-18T07:55:57",
+  "date_to": "20261119",
+  "generated_at": "2026-11-19T07:37:29",
   "overall": {
     "total_races": 252,
     "venues_with_data": 13,
-    "hit_1st": 137,
+    "hit_1st": 138,
     "hit_bet_any": 53,
-    "hit_bet1": 22,
-    "hit_bet2": 14,
+    "hit_bet1": 23,
+    "hit_bet2": 13,
     "hit_bet3": 10,
     "hit_honmei": 51,
     "hit_others": 2,
     "hit_taikou": 0,
     "hit_oshi": 0,
     "hit_ana": 2,
-    "hit_1st_pct": 54.4,
+    "hit_1st_pct": 54.8,
     "hit_bet_any_pct": 21.0,
-    "hit_bet1_pct": 8.7,
-    "hit_bet2_pct": 5.6,
+    "hit_bet1_pct": 9.1,
+    "hit_bet2_pct": 5.2,
     "hit_bet3_pct": 4.0,
     "hit_honmei_pct": 20.2,
     "hit_others_pct": 0.8,
@@ -104,11 +104,11 @@
       "jcd": "15",
       "name": "丸亀",
       "n": 24,
-      "hit_1st_pct": 45.8,
+      "hit_1st_pct": 50.0,
       "hit_bet_any_pct": 20.8,
       "hit_honmei_pct": 20.8,
       "roi_pct": 45.0,
-      "avg_rank": 1.79
+      "avg_rank": 1.75
     },
     {
       "jcd": "18",
@@ -163,33 +163,33 @@
   ],
   "by_pattern": {
     "2差し": {
-      "triggered": 134,
-      "triggered_hit": 26,
-      "applied": 104,
-      "applied_hit": 21,
-      "triggered_hit_pct": 19.4,
-      "applied_hit_pct": 20.2
+      "triggered": 135,
+      "triggered_hit": 27,
+      "applied": 106,
+      "applied_hit": 22,
+      "triggered_hit_pct": 20.0,
+      "applied_hit_pct": 20.8
     },
     "3カド": {
-      "triggered": 77,
+      "triggered": 78,
       "triggered_hit": 17,
-      "applied": 28,
-      "applied_hit": 7,
-      "triggered_hit_pct": 22.1,
-      "applied_hit_pct": 25.0
+      "applied": 27,
+      "applied_hit": 6,
+      "triggered_hit_pct": 21.8,
+      "applied_hit_pct": 22.2
     },
     "4カドまくり": {
-      "triggered": 63,
-      "triggered_hit": 16,
-      "applied": 21,
+      "triggered": 62,
+      "triggered_hit": 15,
+      "applied": 20,
       "applied_hit": 7,
-      "triggered_hit_pct": 25.4,
-      "applied_hit_pct": 33.3
+      "triggered_hit_pct": 24.2,
+      "applied_hit_pct": 35.0
     },
     "外差し": {
-      "triggered": 2,
+      "triggered": 0,
       "triggered_hit": 0,
-      "applied": 2,
+      "applied": 0,
       "applied_hit": 0,
       "triggered_hit_pct": 0.0,
       "applied_hit_pct": 0.0
@@ -208,11 +208,11 @@
     "1-3走": {
       "n": 55,
       "honmei_hit": 11,
-      "top2_rt_sum": 9.166666666666666,
-      "avg_rk_sum": 221.83333333333334,
+      "top2_rt_sum": 8.666666666666666,
+      "avg_rk_sum": 224.33333333333334,
       "honmei_hit_pct": 20.0,
-      "avg_top2_rt": 0.17,
-      "avg_rk": 4.03
+      "avg_top2_rt": 0.16,
+      "avg_rk": 4.08
     },
     "4-6走": {
       "n": 78,
@@ -272,17 +272,17 @@
     "by_cell": {
       "本命#1": {
         "points": 252,
-        "hits": 22,
-        "payout": 21790,
-        "hit_pct": 8.73,
-        "roi_pct": 86.5
+        "hits": 23,
+        "payout": 22560,
+        "hit_pct": 9.13,
+        "roi_pct": 89.5
       },
       "本命#2": {
         "points": 252,
-        "hits": 14,
-        "payout": 15030,
-        "hit_pct": 5.56,
-        "roi_pct": 59.6
+        "hits": 13,
+        "payout": 14260,
+        "hit_pct": 5.16,
+        "roi_pct": 56.6
       },
       "本命#3": {
         "points": 252,
