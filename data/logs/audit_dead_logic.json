@@ -1,94 +1,94 @@
 {
- "generated_at": "2026-11-23T06:02:43",
- "date_from": "20261116",
- "date_to": "20261123",
- "races": 252,
+ "generated_at": "2026-11-24T11:10:33",
+ "date_from": "20261117",
+ "date_to": "20261124",
+ "races": 132,
  "score_components": {
   "boat_2rate": {
    "min": 0.0,
    "max": 0.016,
-   "stdev": 0.002395
+   "stdev": 0.002456
   },
   "comment_score": {
-   "min": 0.0045,
-   "max": 0.0267,
-   "stdev": 0.001481
+   "min": 0.0096,
+   "max": 0.0201,
+   "stdev": 0.000695
   },
   "course_advantage": {
    "min": 0.01836,
-   "max": 0.28368,
-   "stdev": 0.056648
+   "max": 0.26812,
+   "stdev": 0.054952
   },
   "exhibition_score": {
    "min": 0.012,
    "max": 0.048,
-   "stdev": 0.008665
+   "stdev": 0.008775
   },
   "female_factor": {
    "min": 0.007,
    "max": 0.01,
-   "stdev": 0.000255
+   "stdev": 0.000351
   },
   "global_win_rate": {
    "min": 0.0,
-   "max": 0.04211,
-   "stdev": 0.009604
+   "max": 0.04202,
+   "stdev": 0.009653
   },
   "grade_bonus": {
    "min": 0.0125,
    "max": 0.05,
-   "stdev": 0.012302
+   "stdev": 0.012274
   },
   "hist_waku_score": {
    "min": 0.0,
    "max": 0.09,
-   "stdev": 0.034409
+   "stdev": 0.03478
   },
   "local_win_rate": {
    "min": 0.0,
    "max": 0.07547,
-   "stdev": 0.010591
+   "stdev": 0.010571
   },
   "motor_2rate": {
-   "min": 0.00258,
-   "max": 0.0487,
-   "stdev": 0.005715
+   "min": 0.01246,
+   "max": 0.03976,
+   "stdev": 0.004757
   },
   "series_score": {
    "min": 0.00383,
    "max": 0.01471,
-   "stdev": 0.001201
+   "stdev": 0.001155
   },
   "st_score": {
    "min": 0.0,
    "max": 0.142,
-   "stdev": 0.022942
+   "stdev": 0.023178
   },
   "wall_score": {
    "min": -0.06,
    "max": 0.06,
-   "stdev": 0.038017
+   "stdev": 0.038588
   }
  },
  "input_rates": {
-  "comments": 0.1429,
+  "comments": 0.0909,
   "engine_report": 0.0,
   "exhibition": 0.0,
-  "motor_stats": 0.5238,
+  "motor_stats": 1.0,
   "odds": 0.0,
   "pitreport": 0.0,
   "player_review": 0.0,
   "player_stats": 1.0,
-  "tide": 0.8571,
-  "weather": 0.0952,
+  "tide": 0.8182,
+  "weather": 0.1818,
   "weather_file": 1.0
  },
  "problems": [
   "入力 exhibition の取得率が 0%（期待 50%以上）",
   "入力 odds の取得率が 0%（期待 40%以上）",
   "入力 pitreport の取得率が 0%（期待 20%以上）",
-  "入力 weather の取得率が 10%（期待 50%以上）",
-  "入力 comments の取得率が 14%（期待 15%以上）",
-  "風速が非ゼロのレースが 10% しかない（公式のHTML構造が変わった疑い）"
+  "入力 comments の取得率が 9%（期待 15%以上）",
+  "入力 weather の取得率が 18%（期待 50%以上）",
+  "風速が非ゼロのレースが 18% しかない（公式のHTML構造が変わった疑い）"
  ]
 }
